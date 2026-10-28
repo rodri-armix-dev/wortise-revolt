@@ -1,0 +1,39 @@
+// sass-lint:disable no-mergeable-selectors
+// Global primitive colors support shared semantic roles only.
+// sass-lint:disable no-color-literals
+:root
+{
+	// Primitive palette values.
+	--color-primitive-neutral-0: #fff;
+	--color-primitive-neutral-400: #9e9e9e;
+	--color-primitive-neutral-900: #272727;
+
+	--color-primitive-ink-950: #11080b;
+
+	--color-primitive-burgundy-900: #201015;
+
+	--color-primitive-brand-600: #d10e4e;
+
+	--color-primitive-pink-300: #ff8fb4;
+}
+// sass-lint:enable no-color-literals
+
+:root
+{
+	// Semantic roles shared by the UI.
+	--color-background-page: var(--color-primitive-ink-950);
+	--color-background-control: var(--color-primitive-neutral-900);
+
+	--color-surface-card: var(--color-primitive-burgundy-900);
+
+	--color-action-primary: var(--color-primitive-brand-600);
+
+	--color-text-primary: var(--color-primitive-neutral-0);
+	--color-text-secondary: color-mix(in srgb, var(--color-primitive-neutral-0) 82%, transparent);
+
+	--color-text-muted: var(--color-primitive-neutral-400);
+	--color-text-highlight: var(--color-primitive-pink-300);
+
+	--color-border-subtle: color-mix(in srgb, var(--color-primitive-neutral-0) 8%, transparent);
+	--color-border-focus: var(--color-primitive-brand-600);
+}

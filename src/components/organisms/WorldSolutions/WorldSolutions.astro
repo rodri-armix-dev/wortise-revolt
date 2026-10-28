@@ -1,0 +1,60 @@
+---
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import World3D from '../../molecules/World3D/World3D.astro';
+import WorldContactCard from '../../molecules/WorldContactCard/WorldContactCard.astro';
+import Icon from '../../atoms/Icon/Icon.astro';
+import { formatLabel, getUiText } from '../../../i18n/ui';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	content: Pick<ComponentProps<typeof TextBlock>, 'eyebrow' | 'heading' | 'description'>;
+	locations: ComponentProps<typeof WorldContactCard>['location'][];
+}
+
+const { content, locations } = Astro.props;
+const ui = getUiText(Astro.currentLocale);
+const instanceId = `world-${crypto.randomUUID()}`;
+---
+
+<world-solutions class="world-solutions">
+	<div class="world-solutions__inner global-inner">
+		<div class="world-solutions__text-block">
+			<TextBlock {...content} alignment="center" responsiveAlignment={{ l: 'left' }} />
+		</div>
+	</div>
+	<nav class="world-solutions__navigation global-inner" aria-label={ui.worldNavigation}>
+		<button class="world-solutions__arrow" type="button" data-city-step="-1" aria-label={ui.previousCity}>
+			<Icon name="chevron-left" size={20} />
+		</button>
+		<span class="world-solutions__current" aria-live="polite" aria-atomic="true" data-city-status>{locations[0]?.city} · 1 / {locations.length}</span>
+		<button class="world-solutions__arrow" type="button" data-city-step="1" aria-label={ui.nextCity}>
+			<Icon name="chevron-right" size={20} />
+		</button>
+	</nav>
+	<div class="world-solutions__map" data-world-map>
+		<div class="world-solutions__world-3d">
+			<World3D locations={locations} />
+		</div>
+		<div class="world-solutions__locations">
+			{locations.map((location, index) => (
+				<div class="world-solutions__location" data-location={location.id} data-selected={index === 0 ? '' : undefined} hidden={index !== 0}>
+					<button class="world-solutions__point" type="button" data-city-select={location.id} aria-label={formatLabel(ui.openCity, location.city)} aria-controls={`${instanceId}-${location.id}`} aria-expanded={index === 0 ? 'true' : 'false'}></button>
+					<button class="world-solutions__pill" type="button" data-city-select={location.id} aria-controls={`${instanceId}-${location.id}`} aria-expanded={index === 0 ? 'true' : 'false'}>{location.city} · {location.countryCode}</button>
+				</div>
+			))}
+		</div>
+		{locations.map((location, index) => (
+			<div class="world-solutions__card" id={`${instanceId}-${location.id}`} data-city-card={location.id} hidden={index !== 0}>
+				<WorldContactCard location={location} />
+			</div>
+		))}
+	</div>
+</world-solutions>
+
+<script>
+	import './world-solutions';
+</script>
+
+<style lang="scss">
+	@use './world-solutions';
+</style>

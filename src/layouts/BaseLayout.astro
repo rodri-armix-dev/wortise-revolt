@@ -1,0 +1,50 @@
+---
+import type { ComponentProps } from 'astro/types';
+import type FooterCTA from '../components/organisms/FooterCTA/FooterCTA.astro';
+import { getSiteData } from '../data/site';
+import Footer from '../components/organisms/Footer/Footer.astro';
+import Header from '../components/organisms/Header/Header.astro';
+import type { Locale } from '../i18n/config';
+import '../styles/global.scss';
+
+export interface Props {
+	locale: Locale;
+	footerCTA?: ComponentProps<typeof FooterCTA>;
+	title: string;
+	description?: string;
+	headerOverlay?: boolean;
+}
+
+const { locale, title, description, footerCTA, headerOverlay = false } = Astro.props;
+const site = getSiteData(locale, Astro.url.pathname);
+const FooterCTAComponent = site.includeFooterCTA && footerCTA ? (await import('../components/organisms/FooterCTA/FooterCTA.astro')).default : undefined;
+---
+
+<!doctype html>
+<html lang={locale}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		{description && (
+			<meta name="description" content={description} />
+		)}
+		<title>{title}</title>
+		<script>
+			import '../i18n/preference';
+		</script>
+	</head>
+	<body class="base-layout">
+		<Header {...site.header} />
+		<main class:list={['base-layout__main', { 'base-layout__main--header-overlay': headerOverlay }]} id="main-content">
+			<slot />
+		</main>
+		{FooterCTAComponent && footerCTA && (
+			<FooterCTAComponent {...footerCTA} />
+		)}
+		<Footer locale={locale} {...site.footer} />
+	</body>
+</html>
+
+<style lang="scss">
+	@use './base-layout';
+</style>

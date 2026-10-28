@@ -1,0 +1,88 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Icon from '../Icon/Icon.astro';
+
+export type ButtonVariant = 'primary' | 'primary-special' | 'secondary' | 'tertiary';
+
+export type ButtonSize = 'small' | 'medium' | 'large';
+
+export type ButtonState = 'default' | 'hover' | 'pressed' | 'disabled';
+
+export interface Props {
+	label: string;
+	variant?: ButtonVariant;
+	size?: ButtonSize;
+	state?: ButtonState;
+	href?: string;
+	target?: '_self' | '_blank';
+	type?: 'button' | 'submit' | 'reset';
+	disabled?: boolean;
+	icon?: ComponentProps<typeof Icon>['name'];
+	iconPosition?: 'start' | 'end';
+	ariaLabel?: string;
+	class?: string;
+}
+
+const {
+	label,
+	variant = 'primary',
+	size = variant === 'tertiary' || variant === 'primary-special' ? 'medium' : 'small',
+	state = 'default',
+	href,
+	target = '_self',
+	type = 'button',
+	disabled = false,
+	icon = variant === 'primary-special' ? 'arrow-up-right' : undefined,
+	iconPosition = 'end',
+	ariaLabel,
+	class: className = '',
+} = Astro.props;
+
+const resolvedState = disabled ? 'disabled' : state;
+const isDisabled = resolvedState === 'disabled';
+const iconSize = size === 'small' ? 14 : 18;
+
+const classes = [
+	'button',
+	`button--${variant}`,
+	`button--${size}`,
+	`button--${resolvedState}`,
+	className,
+];
+---
+
+{
+	href !== undefined ? (
+		<a class:list={classes} href={isDisabled ? undefined : href} target={target} rel={target === '_blank' ? 'noopener noreferrer' : undefined} aria-label={ariaLabel} aria-disabled={isDisabled ? 'true' : undefined} tabindex={isDisabled ? -1 : undefined} data-state={resolvedState} data-variant={variant} data-size={size} data-icon={icon} >
+			{icon && iconPosition === 'start' && (
+				<span class="button__icon button__icon--start">
+					<Icon name={icon} size={iconSize} />
+				</span>
+			)}
+			<span class="button__label">{label}</span>
+			{icon && iconPosition === 'end' && (
+				<span class="button__icon button__icon--end">
+					<Icon name={icon} size={iconSize} />
+				</span>
+			)}
+		</a>
+	) : (
+		<button class:list={classes} type={type} disabled={isDisabled} aria-label={ariaLabel} data-state={resolvedState} data-variant={variant} data-size={size} data-icon={icon} >
+			{icon && iconPosition === 'start' && (
+				<span class="button__icon button__icon--start">
+					<Icon name={icon} size={iconSize} />
+				</span>
+			)}
+			<span class="button__label">{label}</span>
+			{icon && iconPosition === 'end' && (
+				<span class="button__icon button__icon--end">
+					<Icon name={icon} size={iconSize} />
+				</span>
+			)}
+		</button>
+	)
+}
+
+<style lang="scss">
+	@use './button';
+</style>

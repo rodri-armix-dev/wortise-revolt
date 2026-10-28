@@ -1,0 +1,16 @@
+.logo
+{
+	display: inline-block;
+	height: var(--logo-height, auto);
+	text-align: center;
+	vertical-align: middle;
+	width: var(--logo-width, auto);
+
+	&__link,
+	&__image
+	{
+		display: block;
+		height: inherit;
+		width: inherit;
+	}
+}

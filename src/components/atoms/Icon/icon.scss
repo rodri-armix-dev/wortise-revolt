@@ -1,0 +1,6 @@
+.icon
+{
+	color: var(--icon-color, inherit);
+	height: var(--icon-size, var(--icon-default-size, 24px));
+	width: calc(var(--icon-size, var(--icon-default-size, 24px)) * var(--icon-aspect-ratio, 1));
+}

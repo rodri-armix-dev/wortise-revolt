@@ -1,0 +1,28 @@
+---
+import type { LanguageItem } from '../../../data/navigation';
+export interface Props { title: string; unavailableLabel: string; currentCode: string; items: LanguageItem[]; }
+const { title, unavailableLabel, currentCode, items } = Astro.props;
+---
+
+<nav class="lang-switcher" aria-label={title}>
+	<h2 class="lang-switcher__title">{title}</h2>
+	<ul class="lang-switcher__list" role="list">
+		{items.map((item) =>
+			<li class="lang-switcher__item">
+				{item.available ? (
+					<a class:list={['lang-switcher__link', { 'lang-switcher__link--current': item.code === currentCode }]} href={item.href} lang={item.code} hreflang={item.code} data-language-choice={item.code} aria-label={item.label} aria-current={item.code === currentCode ? 'page' : undefined}>
+						{item.code.toUpperCase()}
+					</a>
+				) : (
+					<span class="lang-switcher__unavailable" aria-disabled="true" aria-label={unavailableLabel.replace('{label}', item.label)}>
+						{item.code.toUpperCase()}
+					</span>
+				)}
+			</li>
+		)}
+	</ul>
+</nav>
+
+<style lang="scss">
+	@use './lang-switcher';
+</style>

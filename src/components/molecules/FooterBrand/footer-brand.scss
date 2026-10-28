@@ -1,0 +1,43 @@
+.footer-brand
+{
+	align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	gap: 45px;
+	width: 232px;
+
+	&__image
+	{
+		height: auto;
+		width: 118px;
+	}
+
+	&__tagline
+	{
+		font-size: 21px;
+		font-weight: 500;
+		line-height: 26px;
+		margin: 0;
+		width: 196px;
+	}
+
+	&__secondary
+	{
+		color: var(--color-text-muted);
+	}
+}
+
+@include xl
+{
+	.footer-brand
+	{
+		align-items: center;
+		gap: var(--spacing-48);
+		text-align: center;
+
+		&__image
+		{
+			width: 232px;
+		}
+	}
+}

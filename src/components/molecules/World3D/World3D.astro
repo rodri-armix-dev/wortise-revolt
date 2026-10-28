@@ -1,0 +1,26 @@
+---
+import fallback from '../../../assets/world/globe-fallback.svg?url';
+
+export interface Props {
+	locations: { id: string; latitude: number; longitude: number }[];
+}
+
+const { locations } = Astro.props;
+
+---
+
+<world-3d class="world-3d" data-locations={JSON.stringify(locations.map(({ id, latitude, longitude }) => ({ id, latitude, longitude })))}>
+	<img class="world-3d__fallback" src={fallback} alt="" width="1440" height="703" loading="lazy" aria-hidden="true" />
+	<noscript>
+		<img class="world-3d__static-fallback" src={fallback} alt="" width="1440" height="703" loading="lazy" aria-hidden="true" />
+	</noscript>
+	<canvas class="world-3d__canvas" aria-hidden="true"></canvas>
+</world-3d>
+
+<script>
+	import './world-3d';
+</script>
+
+<style lang="scss">
+	@use './world-3d';
+</style>

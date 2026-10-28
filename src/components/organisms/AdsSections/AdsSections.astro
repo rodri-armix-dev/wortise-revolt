@@ -1,0 +1,51 @@
+---
+import AdsSectionsItem from '../../molecules/AdsSectionsItem/AdsSectionsItem.astro';
+import PhoneMockup from '../../molecules/PhoneMockup/PhoneMockup.astro';
+import Image from '../../atoms/Image/Image.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	items: Omit<ComponentProps<typeof AdsSectionsItem>, 'previousHeadings'>[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="ads-sections">
+	<div class="ads-sections__viewport-measure" aria-hidden="true"></div>
+	{items.map((item) => (
+		<div class="ads-sections__glow" data-variant={item.variant} aria-hidden="true"></div>
+	))}
+	<div class="ads-sections__scene">
+		{items.map((item, index) => (
+			<div class="ads-sections__panel" data-variant={item.variant}>
+				<AdsSectionsItem {...item} previousHeadings={items.slice(0, index).map(({ heading }) => heading)} />
+			</div>
+		))}
+	</div>
+	{items.length > 0 && (
+		<div class="ads-sections__phone-layout" aria-hidden="true">
+			<div class="ads-sections__phone">
+				<div class="ads-sections__phone-zoom">
+					<PhoneMockup image={items[0].image}>
+						<div slot="screen" class="ads-sections__screens">
+							{items.map(({ image }) => (
+								<div class="ads-sections__screen">
+									<Image {...image} loading="eager" />
+								</div>
+							))}
+						</div>
+					</PhoneMockup>
+				</div>
+			</div>
+		</div>
+	)}
+</div>
+
+<script>
+	import './ads-sections';
+</script>
+
+<style lang="scss">
+	@use './ads-sections';
+</style>

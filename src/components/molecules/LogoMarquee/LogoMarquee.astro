@@ -1,0 +1,42 @@
+---
+import Image from '../../atoms/Image/Image.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface MarqueeLogo {
+	id: string;
+	src: ComponentProps<typeof Image>['src'];
+	name: string;
+	width: number;
+	height: number;
+	mirrored?: boolean;
+}
+
+export interface Props {
+	logos: MarqueeLogo[];
+	label: string;
+}
+
+const { logos, label } = Astro.props;
+---
+
+<div class="logo-marquee" role="group" aria-label={label}>
+	<div class="logo-marquee__track">
+		{[false, true].map((duplicate) => (
+			<ul class:list={['logo-marquee__group', { 'logo-marquee__group--duplicate': duplicate }]} aria-hidden={duplicate ? 'true' : undefined}>
+				{logos.map((logo) => (
+					<li class:list={['logo-marquee__item', { 'logo-marquee__item--mirrored': logo.mirrored }]} data-logo={logo.id} style={{ '--logo-marquee-item-width': `${logo.width}px`, '--logo-marquee-item-height': `${logo.height}px` }}>
+						<Image src={logo.src} alt={duplicate ? '' : logo.name} loading="eager" />
+					</li>
+				))}
+			</ul>
+		))}
+	</div>
+</div>
+
+<script>
+	import './logo-marquee';
+</script>
+
+<style lang="scss">
+	@use './logo-marquee';
+</style>

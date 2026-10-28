@@ -1,0 +1,22 @@
+---
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	textBlock: ComponentProps<typeof TextBlock>;
+}
+
+const { textBlock } = Astro.props;
+---
+
+<section class="ads-cover">
+	<div class="ads-cover__inner global-inner">
+		<div class="ads-cover__text-block">
+			<TextBlock {...textBlock} />
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './ads-cover';
+</style>

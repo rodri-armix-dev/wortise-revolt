@@ -1,0 +1,27 @@
+// sass-lint:disable no-vendor-prefixes
+html
+{
+	max-width: 100vw;
+	min-width: var(--layout-min-width);
+	scroll-behavior: smooth;
+}
+
+body
+{
+	-webkit-text-size-adjust: 100%;
+	background: var(--color-background-page);
+	color: var(--color-text-secondary);
+	font-family: var(--font-family-primary);
+	font-optical-sizing: auto;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.45;
+	max-width: 100vw;
+	min-width: var(--layout-min-width);
+	overflow-x: clip;
+}
+
+main
+{
+	position: relative;
+}

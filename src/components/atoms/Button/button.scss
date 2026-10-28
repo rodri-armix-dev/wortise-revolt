@@ -1,0 +1,187 @@
+// Compound BEM states preserve specificity without additional nesting.
+// sass-lint:disable force-pseudo-nesting, force-element-nesting
+.button
+{
+	--button-size-height: auto;
+	--button-size-padding-inline: 0;
+	align-items: center;
+	background: transparent;
+	border: 0;
+	border-radius: var(--radius-full);
+	color: var(--color-text-primary);
+	cursor: pointer;
+	display: inline-flex;
+	font-size: inherit;
+	font-weight: inherit;
+	gap: 5px;
+	height: var(--button-height, var(--button-size-height));
+	justify-content: var(--button-justify-content, center);
+	line-height: 20px;
+	padding-block: var(--spacing-12);
+	padding-inline: var(--button-padding-inline, var(--button-size-padding-inline));
+	text-decoration: none;
+	transition: background-color 160ms ease, color 160ms ease;
+	white-space: nowrap;
+	width: var(--button-width, auto);
+
+	&:disabled,
+	&[aria-disabled='true'],
+	&.button--disabled
+	{
+		cursor: not-allowed;
+	}
+
+	&__label
+	{
+		display: block;
+	}
+
+	&__icon
+	{
+		align-items: center;
+		display: var(--button-icon-display, inline-flex);
+		flex: 0 0 auto;
+		justify-content: center;
+
+		.button--primary-special &
+		{
+			background: #b0003a; // sass-lint:disable-line no-color-literals
+			border-radius: var(--radius-full);
+			height: 34px;
+			width: 34px;
+		}
+
+		.button--primary-special:hover:not(:disabled, [aria-disabled='true']) &,
+		.button--primary-special.button--hover &
+		{
+			background: var(--color-action-primary);
+		}
+
+		.button--primary-special:active:not(:disabled, [aria-disabled='true']) &,
+		.button--primary-special.button--pressed &
+		{
+			background: #b0003a; // sass-lint:disable-line no-color-literals
+		}
+
+		.button--primary-special:disabled &,
+		.button--primary-special[aria-disabled='true'] &,
+		.button--primary-special.button--disabled &
+		{
+			background: var(--color-background-control);
+		}
+	}
+
+	&--small
+	{
+		--button-size-height: 44px;
+		--button-size-padding-inline: var(--spacing-16);
+	}
+
+	&--medium
+	{
+		--button-size-height: 50px;
+		--button-size-padding-inline: var(--spacing-16);
+	}
+
+	&--large
+	{
+		--button-size-height: 56px;
+		--button-size-padding-inline: var(--spacing-24);
+	}
+
+	&--primary,
+	&--primary-special
+	{
+		background: var(--color-action-primary);
+
+		&:hover:not(:disabled, [aria-disabled='true']),
+		&.button--hover
+		{
+			background: #b0003a; // sass-lint:disable-line no-color-literals
+		}
+
+		&:active:not(:disabled, [aria-disabled='true']),
+		&.button--pressed
+		{
+			background: #330b19; // sass-lint:disable-line no-color-literals
+		}
+
+		&:disabled,
+		&[aria-disabled='true'],
+		&.button--disabled
+		{
+			background: #4f4f4f; // sass-lint:disable-line no-color-literals
+			color: #888; // sass-lint:disable-line no-color-literals
+		}
+	}
+
+	&--secondary
+	{
+		background: var(--color-background-control);
+
+		&:hover:not(:disabled, [aria-disabled='true']),
+		&.button--hover
+		{
+			background: #392e39; // sass-lint:disable-line no-color-literals
+		}
+
+		&:active:not(:disabled, [aria-disabled='true']),
+		&.button--pressed
+		{
+			background: #201015; // sass-lint:disable-line no-color-literals
+		}
+
+		&:disabled,
+		&[aria-disabled='true'],
+		&.button--disabled
+		{
+			background: #201015; // sass-lint:disable-line no-color-literals
+			color: #888; // sass-lint:disable-line no-color-literals
+		}
+	}
+
+	&--tertiary
+	{
+		--button-size-height: auto;
+		--button-size-padding-inline: 0;
+		padding-block: 0;
+
+		&:hover:not(:disabled, [aria-disabled='true']),
+		&.button--hover
+		{
+			color: var(--color-text-highlight);
+		}
+
+		&:active:not(:disabled, [aria-disabled='true']),
+		&.button--pressed
+		{
+			color: #d10e4e; // sass-lint:disable-line no-color-literals
+		}
+
+		&:disabled,
+		&[aria-disabled='true'],
+		&.button--disabled
+		{
+			color: #888; // sass-lint:disable-line no-color-literals
+		}
+	}
+
+	&--primary-special
+	{
+		padding-block: 0;
+
+		&.button--medium
+		{
+			gap: var(--spacing-8);
+			padding-left: var(--spacing-16);
+			padding-right: 10px;
+		}
+
+		&.button--large
+		{
+			gap: var(--button-gap, var(--spacing-8));
+			padding-left: var(--spacing-24);
+			padding-right: var(--spacing-8);
+		}
+	}
+}

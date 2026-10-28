@@ -1,0 +1,57 @@
+.rich-text
+{
+	> p,
+	> ul,
+	> ol,
+	> blockquote
+	{
+		margin-bottom: 1em;
+	}
+
+	> :last-child
+	{
+		margin-bottom: 0;
+	}
+
+	ul,
+	ol
+	{
+		padding-inline-start: 1.5em;
+	}
+
+	ul
+	{
+		list-style: disc;
+	}
+
+	ol
+	{
+		list-style: decimal;
+	}
+
+	strong,
+	b
+	{
+		color: var(--rich-text-strong-color, inherit);
+		font-weight: var(--rich-text-strong-font-weight, 700);
+	}
+
+	em,
+	i
+	{
+		font-style: italic;
+	}
+
+	a
+	{
+		color: var(--rich-text-link-color, var(--color-text-highlight));
+		text-decoration: underline;
+		text-underline-offset: .15em; // sass-lint:disable-line no-misspelled-properties
+	}
+
+	blockquote
+	{
+		border-inline-start: .125em solid var(--rich-text-border-color, #3d1a26); // sass-lint:disable-line no-color-literals
+		padding-inline-start: 1em;
+	}
+}

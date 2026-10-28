@@ -1,0 +1,145 @@
+.kpis
+{
+	isolation: isolate;
+	overflow: hidden;
+	padding-block: var(--spacing-48);
+
+	&__inner
+	{
+		--global-item-gap: 50px;
+		align-items: stretch;
+
+		.kpis--vision &
+		{
+			--global-item-gap: 104px;
+		}
+	}
+
+	&__text-block
+	{
+		--heading-font-size: 36px;
+		--heading-font-weight: 400;
+		--heading-line-height: 40px;
+		--text-block-intro-gap: var(--spacing-12);
+		max-width: 755px;
+	}
+
+	&__items
+	{
+		display: flex;
+		flex-direction: column;
+		gap: 58px;
+		margin: 0;
+		min-height: 592px;
+		padding-left: 57px;
+		position: relative;
+
+		&::before
+		{
+			background: url('../../../assets/kpis/kpi-s.jpg') center / 100% 100% no-repeat;
+			content: '';
+			height: 600px;
+			left: -108px;
+			pointer-events: none;
+			position: absolute;
+			top: -37px;
+			width: 240px;
+			z-index: -1;
+		}
+	}
+
+	&__item
+	{
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-4);
+		min-width: 0;
+	}
+
+	&__label
+	{
+		color: #888; // sass-lint:disable-line no-color-literals
+		font-size: 21px;
+		font-weight: 500;
+		line-height: 26px;
+	}
+
+	&__value
+	{
+		color: var(--color-text-primary);
+		font-size: 60px;
+		line-height: 64px;
+		margin: 0;
+		order: -1;
+	}
+}
+
+@include l
+{
+	.kpis
+	{
+		padding-block: 120px;
+		position: relative;
+
+		&::after
+		{
+			background: linear-gradient(to bottom, var(--color-background-page), transparent 160px, transparent calc(100% - 160px), var(--color-background-page));
+			content: '';
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+			pointer-events: none;
+			position: absolute;
+			z-index: -1;
+		}
+
+		&__inner
+		{
+			--global-item-gap: 140px;
+
+			.kpis--vision &
+			{
+				--global-item-gap: 264px;
+			}
+		}
+
+		&__text-block
+		{
+			--heading-font-size: 52px;
+			--heading-line-height: 58px;
+			--text-block-intro-gap: 30px;
+
+			.kpis--vision &
+			{
+				--heading-font-size: 60px;
+				--heading-line-height: 64px;
+				--text-block-intro-gap: var(--spacing-12);
+				max-width: 712px;
+			}
+		}
+
+		&__items
+		{
+			flex-direction: row;
+			gap: var(--spacing-32);
+			justify-content: space-between;
+			min-height: 0;
+			padding-left: 0;
+
+			&::before
+			{
+				aspect-ratio: 2880 / 1242; // sass-lint:disable-line no-misspelled-properties
+				background-image: url('../../../assets/kpis/kpi-l.jpg');
+				bottom: -120px;
+				height: auto;
+				left: calc(-1 * var(--layout-gutter));
+				top: auto;
+				width: calc(100% + var(--layout-gutter) * 2);
+			}
+		}
+
+		&__item
+		{
+			gap: 9px;
+			min-width: 169px;
+		}
+	}
+}

@@ -1,0 +1,109 @@
+.hero-visual
+{
+	aspect-ratio: 370 / 269; // sass-lint:disable-line no-misspelled-properties
+	isolation: isolate;
+	position: relative;
+	width: 100%;
+
+	&::before
+	{
+		aspect-ratio: 554 / 558; // sass-lint:disable-line no-misspelled-properties
+		background: var(--hero-visual-background) center / 100% 100% no-repeat;
+		content: '';
+		left: calc(50% - 10px);
+		position: absolute;
+		top: -12.27%;
+		transform: translateX(-50%);
+		width: 97.3%;
+		z-index: -1;
+	}
+
+	&__object
+	{
+		aspect-ratio: 375.052 / 309; // sass-lint:disable-line no-misspelled-properties
+		left: 50%;
+		overflow: hidden;
+		position: absolute;
+		top: 13.01%;
+		transform: translateX(-50%);
+		width: 81.03%;
+
+		&:has([data-ready]:not([data-preview-png]))
+		{
+			overflow: visible;
+		}
+	}
+
+	&__image
+	{
+		--image-height: 100%;
+		height: 159.25%;
+		left: -24.26%;
+		opacity: .75;
+		position: absolute;
+		top: -34.17%;
+		width: 157.69%;
+
+		&[data-3d]
+		{
+			opacity: 0;
+		}
+
+		[data-preview-png] ~ &
+		{
+			opacity: .75;
+		}
+	}
+
+	&__scene
+	{
+		display: block;
+		height: 100%;
+		inset: 0;
+		opacity: 0;
+		position: absolute;
+		width: 100%;
+
+		&[data-ready]
+		{
+			opacity: 1;
+
+			&[data-preview-png]
+			{
+				opacity: 0;
+			}
+		}
+	}
+
+	&__canvas
+	{
+		display: block;
+		height: calc(100% + var(--hero-visual-canvas-overscan, 0%) * 2);
+		left: calc(-1 * var(--hero-visual-canvas-overscan, 0%));
+		max-width: none;
+		position: absolute;
+		top: calc(-1 * var(--hero-visual-canvas-overscan, 0%));
+		width: calc(100% + var(--hero-visual-canvas-overscan, 0%) * 2);
+	}
+}
+
+@include l
+{
+	.hero-visual
+	{
+		aspect-ratio: 554 / 558; // sass-lint:disable-line no-misspelled-properties
+
+		&::before
+		{
+			left: 50%;
+			top: 0;
+			width: 100%;
+		}
+
+		&__object
+		{
+			top: 17.38%;
+			width: 67.7%;
+		}
+	}
+}

@@ -1,0 +1,299 @@
+---
+import Video from '../../components/atoms/Video/Video.astro';
+import VideoSection from '../../components/organisms/VideoSection/VideoSection.astro';
+import { landscapeVideoDemo, portraitVideoDemo, videoSectionDemo } from '../../data/video-demo';
+import Button from '../../components/atoms/Button/Button.astro';
+import Eyebrow from '../../components/atoms/Eyebrow/Eyebrow.astro';
+import Icon from '../../components/atoms/Icon/Icon.astro';
+import { getIconOptions } from '../../../config/icons';
+import Heading from '../../components/atoms/Heading/Heading.astro';
+import Description from '../../components/atoms/Description/Description.astro';
+import TextBlock from '../../components/molecules/TextBlock/TextBlock.astro';
+import Image from '../../components/atoms/Image/Image.astro';
+import aboutUsCoverImage from '../../assets/images/about-us-cover.png';
+import type { ComponentProps } from 'astro/types';
+
+type HeadingSize = NonNullable<ComponentProps<typeof Heading>['size']>;
+type ButtonProps = ComponentProps<typeof Button>;
+type ButtonSize = NonNullable<ButtonProps['size']>;
+type ButtonState = NonNullable<ButtonProps['state']>;
+type ButtonVariant = NonNullable<ButtonProps['variant']>;
+import { isLocale, locales } from '../../i18n/config';
+import { getPagePath } from '../../i18n/routes';
+import type FooterCTA from '../../components/organisms/FooterCTA/FooterCTA.astro';
+import { footerCTAVisuals } from '../../data/footer-cta';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+	return locales.filter((locale) => getPagePath(locale, 'ui')).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) return new Response(null, { status: 404 });
+
+const footerCTA = {
+	...footerCTAVisuals,
+	text: {
+		heading: { html: 'Conectemos tu próxima oportunidad', tag: 'h2' },
+		description: { html: '<p>Cuéntanos qué quieres lograr. El equipo de Wortise te ayuda a encontrar el mejor punto de partida.</p>' },
+		actions: { primary: { label: 'Contactar al equipo', href: '', variant: 'primary-special', size: 'large' } },
+	},
+} satisfies ComponentProps<typeof FooterCTA>;
+
+const states: ButtonState[] = ['default', 'hover', 'pressed', 'disabled'];
+const headingSizes: HeadingSize[] = ['small', 'normal', 'large'];
+const descriptionSizes: NonNullable<ComponentProps<typeof Description>['size']>[] = ['inherit', 'normal', 'large'];
+const variants: { name: ButtonVariant; label: string; sizes: ButtonSize[] }[] = [
+	{ name: 'primary', label: 'Contactar', sizes: ['small', 'medium', 'large'] },
+	{ name: 'primary-special', label: 'Contactar al equipo', sizes: ['medium', 'large'] },
+	{ name: 'secondary', label: 'Ingresar', sizes: ['small', 'medium', 'large'] },
+	{ name: 'tertiary', label: 'Solicitar una demo', sizes: ['medium'] },
+];
+---
+
+<BaseLayout locale={locale} title="UI | Wortise" description="Catálogo de componentes de Wortise." footerCTA={footerCTA}>
+	<div class="ui">
+		<header class="ui__intro">
+			<p class="ui__eyebrow">Componentes</p>
+			<h1>UI</h1>
+			<p>Botones · variantes, tamaños y estados.</p>
+			<p>Probá hover, clic y foco con Tab en los ejemplos default.</p>
+		</header>
+		<section class="ui__section" aria-labelledby="icon-title">
+			<h2 id="icon-title">Icon · Lucide y SVG local</h2>
+			<div class="ui__states">
+				{getIconOptions().map(({ value, label }) =>
+					<div class="ui__example">
+						<span class="ui__state">{label}</span>
+						<Icon name={value} />
+					</div>
+				)}
+				<div class="ui__example">
+					<span class="ui__state">SVG local · etiqueta accesible · tamaño CSS</span>
+					<Icon name="linkedin" label="LinkedIn" size="1.5em" />
+				</div>
+			</div>
+		</section>
+		<section class="ui__section" aria-labelledby="image-title">
+			<h2 id="image-title">Image</h2>
+			<div class="ui__states">
+				<div class="ui__example">
+					<span class="ui__state">none · img</span>
+					<Image src={aboutUsCoverImage} alt="Equipo de Wortise en la oficina." />
+				</div>
+				<div class="ui__example">
+					<span class="ui__state">normal · picture</span>
+					<Image src={aboutUsCoverImage} alt="Equipo de Wortise en la oficina." radius="normal" responsiveImages={{ m: aboutUsCoverImage }} />
+				</div>
+			</div>
+		</section>
+		<section class="ui__section" aria-labelledby="video-title">
+			<h2 id="video-title">Video · autoplay al entrar en pantalla</h2>
+			<div class="ui__video-demos">
+				<div class="ui__example">
+					<span class="ui__state">16:9 · horizontal</span>
+					<Video {...landscapeVideoDemo} />
+				</div>
+				<div class="ui__example">
+					<span class="ui__state">9:16 · vertical</span>
+					<Video {...portraitVideoDemo} />
+				</div>
+			</div>
+		</section>
+		<section class="ui__section" aria-labelledby="video-section-title">
+			<h2 id="video-section-title">VideoSection · 16:9 en todas las resoluciones</h2>
+			<VideoSection {...videoSectionDemo} />
+		</section>
+		<section class="ui__section" aria-labelledby="text-block-title">
+			<h2 id="text-block-title">TextBlock</h2>
+			<TextBlock alignment="left" responsiveAlignment={{ m: 'center' }} eyebrow={{ label: 'Wortise' }} heading={{ tag: 'h4', size: 'normal', html: 'Un bloque de texto' }} description={{ html: '<p>Contenido con <strong>formato</strong>. Alineado a la izquierda en S y al centro desde M.</p>' }} actions={{ primary: { label: 'Nosotros', href: `/${locale}/nosotros/`, size: 'medium' }, secondary: { label: 'Wortise Ads', href: `/${locale}/wortise-ads/`, size: 'medium', icon: 'arrow-up-right' }, }} />
+		</section>
+		<section class="ui__section" aria-labelledby="description-title">
+			<h2 id="description-title">Description</h2>
+			<Description html={'<p>Texto con <strong>negritas</strong>, <em>cursivas</em>, <u>subrayado</u> y un <a href="/es/nosotros/">enlace a Nosotros</a>.</p><p>Un segundo párrafo con contenido del editor WYSIWYG.</p><ul><li>Primer elemento</li><li>Segundo elemento</li></ul>'} />
+			<div class="ui__states">
+				{descriptionSizes.map((size) =>
+					<div class="ui__example">
+						<span class="ui__state">{size}</span>
+						<Description size={size} html="<p>Contenido de Wortise.</p>" />
+					</div>
+				)}
+				<div class="ui__example">
+					<span class="ui__state">Responsive · inherit → L large → XL normal</span>
+					<Description id="description-responsive-example" responsiveSize={{ l: 'large', xl: 'normal' }} html="<p>Contenido con tamaño responsive.</p>" />
+				</div>
+			</div>
+		</section>
+		<section class="ui__section" aria-labelledby="heading-title">
+			<h2 id="heading-title">Heading</h2>
+			<div class="ui__states">
+				{headingSizes.map((size) =>
+					<div class="ui__example">
+						<span class="ui__state">{size} · h4</span>
+						<Heading tag="h4" size={size} html="Wortise" />
+					</div>
+				)}
+				<div class="ui__example">
+					<span class="ui__state">normal · span · HTML con dos tonos</span>
+					<Heading tag="span" html='<span data-tone="muted">Conectamos marcas</span><br>con personas' />
+				</div>
+				<div class="ui__example">
+					<span class="ui__state">Responsive · small → L normal → XL large</span>
+					<Heading id="heading-responsive-example" tag="h3" html="Wortise" size="small" responsiveSize={{ l: 'normal', xl: 'large' }} />
+				</div>
+			</div>
+		</section>
+		<section class="ui__section" aria-labelledby="eyebrow-title">
+			<h2 id="eyebrow-title">Eyebrow</h2>
+			<div class="ui__states">
+				<div class="ui__example">
+					<span class="ui__state">Animado</span>
+					<Eyebrow label="Wortise" />
+				</div>
+				<div class="ui__example">
+					<span class="ui__state">Estático</span>
+					<Eyebrow label="Wortise" />
+				</div>
+			</div>
+		</section>
+		{variants.map(({ name, label, sizes }) =>
+			<section class="ui__section" aria-labelledby={`title-${name}`}>
+				<h2 id={`title-${name}`}>{name}</h2>
+				{sizes.map((size) =>
+					<div class="ui__size">
+						<h3>{name === 'tertiary' ? 'Inline' : size}</h3>
+						<div class="ui__states">
+							{states.map((state) =>
+								<div class="ui__example">
+									<span class="ui__state">{state}</span>
+									<Button label={label} variant={name} size={size} state={state} icon={name === 'tertiary' ? 'arrow-up-right' : undefined} />
+								</div>
+							)}
+						</div>
+					</div>
+				)}
+			</section>
+		)}
+		<section class="ui__section" aria-labelledby="header-buttons">
+			<h2 id="header-buttons">Botones del header</h2>
+			<div class="ui__states">
+				<div class="ui__example">
+					<Button label="Contactar" variant="secondary" size="small" disabled />
+				</div>
+				<div class="ui__example">
+					<Button label="Ingresar" variant="primary" size="small" icon="chevron-down" />
+				</div>
+			</div>
+		</section>
+	</div>
+</BaseLayout>
+
+<style lang="scss">
+	.ui
+	{
+		margin-inline: auto;
+		max-width: 1280px;
+		padding-block: var(--spacing-40);
+		padding-inline: var(--spacing-16);
+
+		&__intro
+		{
+			margin-bottom: var(--spacing-48);
+		}
+
+		&__eyebrow
+		{
+			color: var(--color-text-highlight);
+		}
+
+		h1
+		{
+			font-size: 48px;
+			margin-block: var(--spacing-8);
+		}
+
+		h2
+		{
+			font-size: 24px;
+			margin: 0 0 var(--spacing-24);
+		}
+
+		h3
+		{
+			color: var(--color-text-secondary);
+			font-size: 16px;
+			font-weight: 400;
+		}
+
+		&__section
+		{
+			border-top: 1px solid color-mix(in srgb, #fff 16%, transparent); // sass-lint:disable-line no-color-literals
+			padding-block: var(--spacing-32);
+		}
+
+		&__video-demos
+		{
+			display: grid;
+			gap: var(--spacing-24);
+			grid-template-columns: minmax(0, 16fr) minmax(0, 5fr);
+		}
+
+		&__states
+		{
+			display: grid;
+			gap: var(--spacing-12);
+		}
+
+		&__example
+		{
+			align-items: center;
+			background: var(--color-surface-card);
+			border-radius: var(--radius-md);
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-24);
+			justify-content: center;
+			padding-block: var(--spacing-24);
+			padding-inline: var(--spacing-12);
+		}
+
+		&__state
+		{
+			color: var(--color-text-muted);
+			font-size: 12px;
+			letter-spacing: .1em;
+			text-transform: uppercase;
+		}
+	}
+
+	@include m
+	{
+		.ui
+		{
+			&__states
+			{
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+	}
+
+	@include l
+	{
+		.ui
+		{
+			padding-block: var(--spacing-64);
+			padding-inline: var(--spacing-32);
+		}
+	}
+
+	@include xxl
+	{
+		.ui
+		{
+			&__states
+			{
+				grid-template-columns: repeat(4, minmax(0, 1fr));
+			}
+		}
+	}
+</style>

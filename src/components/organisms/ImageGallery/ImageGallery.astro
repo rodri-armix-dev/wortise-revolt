@@ -1,0 +1,35 @@
+---
+import ImageCarousel from '../../molecules/ImageCarousel/ImageCarousel.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	textBlock?: ComponentProps<typeof TextBlock>;
+	items: ComponentProps<typeof ImageCarousel>['items'];
+	label: string;
+	variant?: 'team' | 'office';
+}
+
+const { textBlock, items, label, variant = 'team' } = Astro.props;
+---
+
+<image-gallery class:list={['image-gallery', `image-gallery--${variant}`]}>
+	{textBlock && (
+		<div class="image-gallery__inner global-inner">
+			<div class="image-gallery__text-block">
+				<TextBlock {...textBlock} />
+			</div>
+		</div>
+	)}
+	<div class="image-gallery__carousel">
+		<ImageCarousel items={items} label={label} />
+	</div>
+</image-gallery>
+
+<script>
+	import './image-gallery';
+</script>
+
+<style lang="scss">
+	@use './image-gallery';
+</style>

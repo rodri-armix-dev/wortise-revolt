@@ -1,0 +1,38 @@
+.about-us-cover
+{
+	padding-block: var(--spacing-32);
+
+	&__inner
+	{
+		--global-item-gap: var(--spacing-48);
+		align-items: stretch;
+	}
+
+	&__text-block
+	{
+		--description-line-height: 20px;
+		--heading-font-size: 36px;
+		--heading-font-weight: 400;
+		--heading-line-height: 1.1;
+		margin-inline: auto;
+		max-width: 663px;
+		width: 100%;
+	}
+
+	&__media
+	{
+		width: 100%;
+	}
+}
+
+@include xl
+{
+	.about-us-cover
+	{
+		&__text-block
+		{
+			--heading-font-size: 60px;
+			--heading-line-height: 64px;
+		}
+	}
+}

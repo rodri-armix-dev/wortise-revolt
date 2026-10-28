@@ -1,0 +1,264 @@
+$glow-size: 511px;
+
+// Glows are local design treatments, independent of shared color roles.
+// sass-lint:disable no-color-literals
+.ads-sections
+{
+	--ads-sections-inset: 0px; // sass-lint:disable-line zero-unit
+	--ads-sections-item-height: calc(100dvh - var(--ads-sections-inset) * 2);
+	background-color: var(--color-background-page);
+	display: flow-root; // sass-lint:disable-line no-misspelled-properties
+	overflow-anchor: none; // sass-lint:disable-line no-misspelled-properties
+	position: relative;
+
+	&__viewport-measure
+	{
+		height: calc(100svh - var(--ads-sections-inset) * 2);
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		visibility: hidden;
+		width: 0;
+	}
+
+	&__panel,
+	&__glow
+	{
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: $glow-size $glow-size;
+
+		&[data-variant='efficiency']
+		{
+			background-image: radial-gradient(circle closest-side, rgba(204, 14, 210, .35), rgba(210, 14, 168, 0));
+		}
+
+		&[data-variant='projection']
+		{
+			background-image: radial-gradient(circle closest-side, rgba(14, 17, 210, .35), rgba(14, 50, 210, 0));
+		}
+
+		&[data-variant='creative']
+		{
+			background-image: radial-gradient(circle closest-side, rgba(204, 46, 64, .32), rgba(203, 40, 60, 0));
+		}
+
+		&[data-variant='reporting']
+		{
+			background-image: radial-gradient(circle closest-side, rgba(210, 14, 128, .35), rgba(210, 14, 161, 0));
+		}
+	}
+
+	&__scene
+	{
+		isolation: isolate;
+		position: relative;
+	}
+
+	&__glow
+	{
+		display: none;
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		pointer-events: none;
+		position: absolute;
+	}
+
+	&__phone-layout
+	{
+		height: var(--ads-sections-item-height);
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		visibility: hidden;
+		width: 100%;
+		z-index: 1;
+	}
+
+	&__phone
+	{
+		left: var(--ads-sections-phone-left, 50%);
+		position: absolute;
+		top: var(--ads-sections-phone-top, 0);
+		width: var(--ads-sections-phone-width, 180px);
+	}
+
+	&__screens
+	{
+		height: 100%;
+		position: relative;
+	}
+
+	&__screen
+	{
+		height: 100%;
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		position: absolute;
+	}
+
+	&[data-enhanced]
+	{
+		--ads-sections-item-preview-opacity: 0;
+		height: var(--ads-sections-track-height, auto);
+
+		@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+		{
+			// Protect every viewport-constrained layer, including reverse entry/exit.
+			// Keep this applied throughout the track; never toggle position to avoid sampling.
+			.ads-sections__scene,
+			.ads-sections__glow,
+			.ads-sections__phone-layout
+			{
+				backdrop-filter: opacity(1); // sass-lint:disable-line no-misspelled-properties
+			}
+		}
+
+		.ads-sections__scene
+		{
+			height: var(--ads-sections-item-height);
+			margin-block: var(--ads-sections-inset);
+			min-width: var(--layout-min-width);
+			overflow: clip;
+		}
+
+		.ads-sections__panel
+		{
+			background-image: none;
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+			position: absolute;
+			z-index: 2;
+
+			@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+			{
+				// An identity backdrop keeps WebKit from extending a sampled solid color.
+				backdrop-filter: opacity(1); // sass-lint:disable-line no-misspelled-properties
+			}
+		}
+
+		.ads-sections__glow
+		{
+			background-position: calc(var(--ads-sections-glow-x) - #{$glow-size * .5}) calc(var(--ads-sections-glow-y) - #{$glow-size * .5} + var(--ads-sections-glow-offset-y, 0px)); // sass-lint:disable-line zero-unit
+			display: block;
+		}
+
+		.ads-sections__phone-layout
+		{
+			visibility: visible;
+		}
+	}
+
+	&[data-pinning='sticky']
+	{
+		--ads-sections-item-height: calc(100svh - var(--ads-sections-inset) * 2);
+		display: grid;
+		grid-template-areas: 'scene';
+
+		.ads-sections__scene
+		{
+			align-self: start;
+			background-color: transparent;
+			grid-area: scene;
+			position: sticky;
+			top: var(--ads-sections-inset);
+			z-index: 2;
+		}
+
+		.ads-sections__glow
+		{
+			align-self: start;
+			grid-area: scene;
+			height: var(--ads-sections-item-height);
+			inset: auto; // sass-lint:disable-line no-misspelled-properties
+			margin-block: var(--ads-sections-inset);
+			position: sticky;
+			top: var(--ads-sections-inset);
+			width: 100%;
+			z-index: 0;
+		}
+
+		.ads-sections__phone-layout
+		{
+			align-self: start;
+			background-color: transparent;
+			display: grid;
+			gap: var(--ads-sections-phone-gap);
+			grid-area: scene;
+			grid-template-rows: var(--ads-sections-item-rows);
+			height: var(--ads-sections-item-height);
+			left: auto;
+			margin-block: var(--ads-sections-inset);
+			min-width: var(--layout-min-width);
+			padding-block: var(--ads-sections-item-padding-block);
+			padding-inline: var(--layout-gutter);
+			position: sticky;
+			top: var(--ads-sections-inset);
+			width: 100%;
+		}
+
+		.ads-sections__phone
+		{
+			align-self: center;
+			grid-row: 2;
+			justify-self: center;
+			left: 0;
+			position: relative;
+			top: 0;
+			width: var(--ads-sections-phone-width);
+		}
+
+		.ads-sections__phone-zoom
+		{
+			transform: translateY(var(--ads-sections-phone-center-offset)) scale(1.5);
+		}
+
+	}
+
+	@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+	{
+		&[data-pinning='sticky'][data-offscreen]
+		{
+			.ads-sections__scene,
+			.ads-sections__glow,
+			.ads-sections__phone-layout
+			{
+				visibility: hidden;
+			}
+		}
+	}
+
+	@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+	{
+		--ads-sections-inset: var(--spacing-8);
+	}
+}
+
+@include osm
+{
+	.ads-sections
+	{
+		--ads-sections-inset: var(--spacing-8);
+		--ads-sections-item-padding-block: var(--spacing-24);
+	}
+}
+
+@include l
+{
+	.ads-sections
+	{
+		--ads-sections-glow-offset-y: -103px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+	.ads-sections
+	{
+		&[data-pinning='sticky']
+		{
+			.ads-sections__phone-zoom
+			{
+				transform: none;
+			}
+		}
+	}
+}

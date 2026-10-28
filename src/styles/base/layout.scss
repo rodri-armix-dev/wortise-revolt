@@ -1,0 +1,12 @@
+.global-inner
+{
+	// El ancho reserva los gutters laterales sin añadir padding al contenedor.
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: var(--global-item-gap, 40px);
+	justify-content: center;
+	margin-inline: auto;
+	max-width: var(--layout-content-max-width);
+	width: calc(100% - var(--layout-gutter) * 2);
+}

@@ -1,0 +1,108 @@
+---
+import type { ComponentProps } from 'astro/types';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import Eyebrow from '../../atoms/Eyebrow/Eyebrow.astro';
+import Button from '../../atoms/Button/Button.astro';
+import Icon from '../../atoms/Icon/Icon.astro';
+import { getHomePage, getLocaleFromPath, getPagePath } from '../../../i18n/routes';
+import { getUiText } from '../../../i18n/ui';
+
+export interface Props {
+	intro: ComponentProps<typeof TextBlock>;
+	reasonLabel: string;
+	reasons: { id: string; label: string }[];
+	fields: { name: 'name' | 'email' | 'phone' | 'message'; label: string; placeholder: string; required?: boolean }[];
+	submitLabel: string;
+	success: ComponentProps<typeof TextBlock>;
+	homeLabel: string;
+	resetLabel: string;
+	directLabel: string;
+	email: string;
+	telegramLabel: string;
+}
+
+const { intro, reasonLabel, reasons, fields, submitLabel, success, homeLabel, resetLabel, directLabel, email, telegramLabel } = Astro.props;
+const locale = getLocaleFromPath(Astro.url.pathname);
+const ui = getUiText(locale);
+const homeHref = getPagePath(locale, getHomePage());
+const id = `contact-${crypto.randomUUID()}`;
+---
+
+<section class="contact-section" aria-labelledby={`${id}-heading`} data-contact-section>
+	<div class="contact-section__inner global-inner">
+		<div class="contact-section__intro">
+			<TextBlock {...intro} heading={intro.heading && { ...intro.heading, id: `${id}-heading` }} alignment="center" />
+		</div>
+		<div class="contact-section__panel">
+			<form class="contact-section__form" method="dialog" data-contact-form data-required-message={ui.requiredField} data-email-message={ui.invalidEmail}>
+				<fieldset class="contact-section__controls" disabled data-contact-controls>
+					<legend class="contact-section__accessible-label">{intro.eyebrow?.label}</legend>
+					<fieldset class="contact-section__reasons">
+						<legend class="contact-section__reason-label">{reasonLabel}</legend>
+						<div class="contact-section__options">
+							{reasons.map((reason, index) => (
+								<label class="contact-section__option">
+									<input class="contact-section__radio" type="radio" name="reason" value={reason.id} checked={index === 0} required />
+									<span class="contact-section__pill">{reason.label}</span>
+								</label>
+							))}
+						</div>
+					</fieldset>
+					<div class="contact-section__fields">
+						{fields.map((field) => (
+							<div class="contact-section__field" data-contact-field>
+								<label class="contact-section__control" for={`${id}-${field.name}`}>
+									<span class="contact-section__label">
+										{field.label}
+										{!field.required && (
+											<span class="contact-section__optional"> ({ui.optionalField})</span>
+										)}
+									</span>
+									{field.name === 'message' ? (
+										<textarea class="contact-section__input contact-section__input--message" id={`${id}-${field.name}`} name={field.name} placeholder={field.placeholder} required={field.required} rows={4} aria-describedby={`${id}-${field.name}-error`} />
+									) : (
+										<input class="contact-section__input" id={`${id}-${field.name}`} name={field.name} type={field.name === 'email' ? 'email' : field.name === 'phone' ? 'tel' : 'text'} autocomplete={field.name === 'phone' ? 'tel' : field.name} placeholder={field.placeholder} required={field.required} aria-describedby={`${id}-${field.name}-error`} />
+									)}
+								</label>
+								<p class="contact-section__error" id={`${id}-${field.name}-error`} data-contact-error hidden></p>
+							</div>
+						))}
+					</div>
+					<div class="contact-section__submit">
+						<Button label={submitLabel} type="submit" variant="primary-special" size="medium" />
+					</div>
+				</fieldset>
+				<noscript>
+					<p class="contact-section__notice">{ui.contactJavascript}</p>
+				</noscript>
+			</form>
+			<div class="contact-section__success" data-contact-success hidden>
+				<div class="contact-section__success-icon">
+					<Icon name="check" size={16} />
+				</div>
+				<div class="contact-section__success-copy" tabindex="-1" role="status" aria-live="polite" data-contact-confirmation>
+					<TextBlock {...success} alignment="center" />
+				</div>
+				<div class="contact-section__success-actions">
+					<Button label={homeLabel} href={homeHref} variant="primary-special" size="medium" />
+					<div data-contact-reset>
+						<Button label={resetLabel} variant="tertiary" icon="arrow-up-right" />
+					</div>
+				</div>
+			</div>
+			<div class="contact-section__direct">
+				<Eyebrow label={directLabel} />
+				<div class="contact-section__channels">
+					<Button label={email} href={`mailto:${email}`} variant="secondary" size="medium" />
+					<Button label={telegramLabel} variant="secondary" size="medium" icon="arrow-up-right" disabled />
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script src="./contact-section.ts"></script>
+
+<style lang="scss">
+	@use './contact-section';
+</style>

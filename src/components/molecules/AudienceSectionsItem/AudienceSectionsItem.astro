@@ -1,0 +1,51 @@
+---
+import Eyebrow from '../../atoms/Eyebrow/Eyebrow.astro';
+import Heading from '../../atoms/Heading/Heading.astro';
+import PhoneMockup from '../PhoneMockup/PhoneMockup.astro';
+import Description from '../../atoms/Description/Description.astro';
+import Button from '../../atoms/Button/Button.astro';
+import { getLocaleFromPath, getPagePath, isPage } from '../../../i18n/routes';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	variant: 'developers' | 'advertisers' | 'wortise-ads';
+	eyebrow: string;
+	heading: string;
+	description: string;
+	image: ComponentProps<typeof PhoneMockup>['image'];
+	action: { label: string; page?: string };
+}
+
+const { variant, eyebrow, heading, description, image, action } = Astro.props;
+const headingId = `audience-${variant}-heading`;
+const href = action.page && isPage(action.page) ? getPagePath(getLocaleFromPath(Astro.url.pathname), action.page) : undefined;
+---
+
+<section class:list={['audience-sections-item', `audience-sections-item--${variant}`]} aria-labelledby={headingId}>
+	<div class="audience-sections-item__background" aria-hidden="true"></div>
+	<div class="audience-sections-item__inner global-inner">
+		<div class="audience-sections-item__intro">
+			<div class="audience-sections-item__eyebrow">
+				<Eyebrow label={eyebrow} />
+			</div>
+			<div class="audience-sections-item__heading">
+				<Heading id={headingId} html={heading} />
+			</div>
+		</div>
+		<div class="audience-sections-item__visual">
+			<PhoneMockup image={image} />
+		</div>
+		<div class="audience-sections-item__content">
+			<div class="audience-sections-item__description">
+				<Description html={description} />
+			</div>
+			<div class="audience-sections-item__action">
+				<Button label={action.label} href={href} variant="primary-special" size="medium" />
+			</div>
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './audience-sections-item';
+</style>

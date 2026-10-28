@@ -1,0 +1,105 @@
+.header
+{
+	align-items: center;
+	border-bottom: 1px solid #3d1a26; // sass-lint:disable-line no-color-literals
+	display: flex;
+	height: var(--layout-header-height);
+	inset-block-start: 0;
+	inset-inline: 0;
+	min-width: var(--layout-min-width);
+	position: absolute;
+	z-index: 30;
+
+	&__inner
+	{
+		--global-item-gap: 0;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	&__logo
+	{
+		--logo-height: 36px;
+	}
+
+	&__main-menu
+	{
+		display: none;
+	}
+
+	&__controls
+	{
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		width: 212px;
+
+		.header--compact &
+		{
+			gap: var(--spacing-16);
+			width: auto;
+		}
+	}
+}
+
+@include l
+{
+	.header
+	{
+		&__logo
+		{
+			--logo-height: 43px;
+		}
+	}
+}
+
+@include xl
+{
+	.header
+	{
+		border-bottom-color: #392e39; // sass-lint:disable-line no-color-literals
+
+		&__inner
+		{
+			--global-item-gap: var(--spacing-16);
+			display: grid;
+			grid-template-columns: 1fr auto 1fr;
+
+			.header--compact &
+			{
+				display: flex;
+			}
+		}
+
+		&__main-menu
+		{
+			--main-menu-gap: var(--spacing-16);
+
+			display: block;
+		}
+
+		&__controls
+		{
+			gap: var(--spacing-16);
+			justify-self: end;
+			width: max-content;
+		}
+
+		&__lang-menu
+		{
+			--lang-menu-gap: 6px;
+			--lang-menu-icon-size: 14px;
+		}
+	}
+}
+
+@include xxl
+{
+	.header
+	{
+		&__main-menu
+		{
+			--main-menu-gap: 30px;
+		}
+	}
+}

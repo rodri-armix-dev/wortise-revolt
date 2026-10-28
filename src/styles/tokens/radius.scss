@@ -1,0 +1,32 @@
+// sass-lint:disable no-mergeable-selectors
+:root
+{
+	// Primitives.
+	--radius-primitive-0: 0;
+	--radius-primitive-2: 2px;
+	--radius-primitive-8: 8px;
+	--radius-primitive-10: 10px;
+	--radius-primitive-12: 12px;
+	--radius-primitive-14: 14px;
+	--radius-primitive-16: 16px;
+	--radius-primitive-18: 18px;
+	--radius-primitive-24: 24px;
+	--radius-primitive-36: 36px;
+	--radius-primitive-999: 999px;
+}
+
+:root
+{
+	// Semantic aliases consumed by the UI.
+	--radius-none: var(--radius-primitive-0);
+	--radius-active-indicator: var(--radius-primitive-2);
+	--radius-contact-panel: var(--radius-primitive-36);
+	--radius-normal: var(--radius-primitive-18);
+	--radius-md: var(--radius-primitive-12);
+	--radius-menu: var(--radius-primitive-14);
+	--radius-menu-option: var(--radius-primitive-10);
+	--radius-full: var(--radius-primitive-999);
+	--radius-gallery-card: var(--radius-primitive-14);
+	--radius-gallery-office-card: var(--radius-primitive-16);
+	--radius-ads-card: var(--radius-primitive-16);
+}

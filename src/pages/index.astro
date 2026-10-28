@@ -1,0 +1,8 @@
+---
+import { defaultLocale } from '../i18n/config';
+import { getHomePage, getPagePath } from '../i18n/routes';
+
+const home = getPagePath(defaultLocale, getHomePage());
+if (!home) throw new Error('The default locale must have a published home page.');
+return Astro.redirect(home);
+---

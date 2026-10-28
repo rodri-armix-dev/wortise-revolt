@@ -1,0 +1,21 @@
+.video-section
+{
+	padding-block: var(--spacing-48);
+
+	&__media
+	{
+		background: var(--color-background-control) url('../../../assets/video/video-placeholder.svg') center / 71px 71px no-repeat;
+		border: 8.277px solid rgba(85, 85, 85, .29); // sass-lint:disable-line no-color-literals
+		border-radius: var(--radius-menu-option);
+		overflow: hidden;
+		width: 100%;
+	}
+}
+
+@include l
+{
+	.video-section
+	{
+		padding-block: var(--spacing-64);
+	}
+}

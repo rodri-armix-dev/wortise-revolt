@@ -1,0 +1,41 @@
+{
+  "name": "",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint:scss": "sass-lint -c .sass-lint.yml -v --max-warnings 0",
+    "lint:lang-menu": "sass-lint -c .sass-lint.yml -v --max-warnings 0 src/components/molecules/LangMenu/lang-menu.scss",
+    "astro": "astro",
+    "dev:launch": "astro dev --mode launch",
+    "build:launch": "astro build --mode launch",
+    "preview:launch": "astro preview --mode launch",
+    "test:publication": "node --test integrations/publication-assets/prune.test.mjs && node scripts/test-publication.mjs",
+    "test:vercel-language": "node scripts/test-vercel-language.mjs"
+  },
+  "dependencies": {
+    "@lucide/astro": "^1.48.0",
+    "astro": "^7.3.5",
+    "gsap": "^3.15.0",
+    "sanitize-html": "^2.17.7",
+    "three": "^0.186.1"
+  },
+  "allowScripts": {
+    "esbuild": true
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.6.3",
+    "@types/sanitize-html": "^2.16.2",
+    "@types/three": "^0.186.0",
+    "sass": "^1.105.0",
+    "sass-lint": "^1.13.1",
+    "typescript": "^5.9.2"
+  }
+}

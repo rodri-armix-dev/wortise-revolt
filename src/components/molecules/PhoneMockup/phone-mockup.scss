@@ -1,0 +1,45 @@
+.phone-mockup
+{
+	aspect-ratio: 410 / 788; // sass-lint:disable-line no-misspelled-properties
+	isolation: isolate;
+	overflow: hidden;
+	position: relative;
+	width: var(--phone-mockup-width, 100%);
+
+	&::before
+	{
+		// Reuse AdsGPT's original device crop at the 410 × 788 composition size.
+		background-image: image-set(url('/phone-mockup/device-384.webp') 1x, url('/phone-mockup/device-768.webp') 2x);
+		background-size: 100% 100%;
+		content: '';
+		height: 112.77%;
+		left: -22.25%;
+		position: absolute;
+		top: -6.61%;
+		width: 144.49%;
+	}
+
+	&__screen
+	{
+		--image-height: 100%;
+		--image-object-fit: cover;
+
+		// Screen bounds: x=20, y=15, width=370, height=758.
+		border-radius: 12.162162% / 5.936675%;
+		height: 96.192893%;
+		left: 4.878049%;
+		overflow: hidden;
+		position: absolute;
+		top: 1.903553%;
+		width: 90.243902%;
+	}
+
+	&__overlay
+	{
+		height: 100%;
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		pointer-events: none;
+		position: absolute;
+		width: 100%;
+	}
+}

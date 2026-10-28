@@ -1,0 +1,49 @@
+---
+import Image from '../../atoms/Image/Image.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface GalleryItem {
+	id: string;
+	image: ComponentProps<typeof Image>;
+	caption?: { name: string; role?: string };
+}
+
+export interface Props {
+	items: GalleryItem[];
+	label: string;
+}
+
+const { items, label } = Astro.props;
+---
+
+<image-carousel class="image-carousel">
+	<div class="image-carousel__viewport" role="region" aria-label={label} tabindex="0" data-carousel-viewport>
+		<ul class="image-carousel__track" data-carousel-track>
+			{items.map((item) => (
+				<li class="image-carousel__item" data-gallery-item={item.id}>
+					<figure class="image-carousel__card">
+						<div class="image-carousel__media">
+							<Image {...item.image} />
+						</div>
+						{item.caption && (
+							<figcaption class="image-carousel__caption">
+								<span class="image-carousel__name">{item.caption.name}</span>
+								{item.caption.role && (
+									<span class="image-carousel__role">{item.caption.role}</span>
+								)}
+							</figcaption>
+						)}
+					</figure>
+				</li>
+			))}
+		</ul>
+	</div>
+</image-carousel>
+
+<script>
+	import './image-carousel';
+</script>
+
+<style lang="scss">
+	@use './image-carousel';
+</style>

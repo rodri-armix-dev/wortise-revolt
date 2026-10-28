@@ -1,0 +1,19 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="272" height="436" viewBox="0 0 272 436" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Contact / Glow mobile / SVG" clip-path="url(#clip0_0_4)">
+<g id="Transparent export bounds">
+</g>
+<g id="Vector 1" opacity="0.4" filter="url(#filter0_f_0_4)">
+<path d="M113.965 93.6716L91.1351 344.999L180.865 91.1776L113.965 93.6716Z" fill="#D10E4E"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_0_4" x="16.3351" y="16.3776" width="239.33" height="403.421" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="37.4" result="effect1_foregroundBlur_0_4"/>
+</filter>
+<clipPath id="clip0_0_4">
+<rect width="272" height="436" fill="white"/>
+</clipPath>
+</defs>
+</svg>

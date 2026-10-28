@@ -1,0 +1,102 @@
+---
+import type ContactSection from '../../organisms/ContactSection/ContactSection.astro';
+import type LogoMarquee from '../../molecules/LogoMarquee/LogoMarquee.astro';
+import type Hero from '../../organisms/Hero/Hero.astro';
+import type AdsCover from '../../organisms/AdsCover/AdsCover.astro';
+import type AdsSections from '../../organisms/AdsSections/AdsSections.astro';
+import type AboutUsCover from '../../organisms/AboutUsCover/AboutUsCover.astro';
+import type AudienceSections from '../../organisms/AudienceSections/AudienceSections.astro';
+import type WorldSolutions from '../../organisms/WorldSolutions/WorldSolutions.astro';
+import type Kpis from '../../organisms/Kpis/Kpis.astro';
+import type VideoSection from '../../organisms/VideoSection/VideoSection.astro';
+import type ImageGallery from '../../organisms/ImageGallery/ImageGallery.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface ModulePropsByType {
+	'contact-section': ComponentProps<typeof ContactSection>;
+	hero: ComponentProps<typeof Hero>;
+	'ads-cover': ComponentProps<typeof AdsCover>;
+	'ads-sections': ComponentProps<typeof AdsSections>;
+	'logo-marquee': ComponentProps<typeof LogoMarquee>;
+	'about-us-cover': ComponentProps<typeof AboutUsCover>;
+	'audience-sections': ComponentProps<typeof AudienceSections>;
+	'world-solutions': ComponentProps<typeof WorldSolutions>;
+	kpis: ComponentProps<typeof Kpis>;
+	'video-section': ComponentProps<typeof VideoSection>;
+	'image-gallery': ComponentProps<typeof ImageGallery>;
+}
+
+export type PageModule = {
+	[Type in keyof ModulePropsByType]: {
+		type: Type;
+		props: ModulePropsByType[Type];
+	};
+}[keyof ModulePropsByType];
+
+export interface Props {
+	modules: PageModule[];
+}
+
+const { modules } = Astro.props;
+---
+
+<div class="modules-page">
+	{modules.map(async (module) => {
+		if (module.type === 'contact-section') {
+			const { default: ContactSection } = await import('../../organisms/ContactSection/ContactSection.astro');
+			return <ContactSection {...module.props} />;
+		}
+
+		if (module.type === 'hero') {
+			const { default: Hero } = await import('../../organisms/Hero/Hero.astro');
+			return <Hero {...module.props} />;
+		}
+
+		if (module.type === 'ads-cover') {
+			const { default: AdsCover } = await import('../../organisms/AdsCover/AdsCover.astro');
+			return <AdsCover {...module.props} />;
+		}
+
+		if (module.type === 'ads-sections') {
+			const { default: AdsSections } = await import('../../organisms/AdsSections/AdsSections.astro');
+			return <AdsSections {...module.props} />;
+		}
+
+		if (module.type === 'logo-marquee') {
+			const { default: LogoMarquee } = await import('../../molecules/LogoMarquee/LogoMarquee.astro');
+			return <LogoMarquee {...module.props} />;
+		}
+
+		if (module.type === 'audience-sections') {
+			const { default: AudienceSections } = await import('../../organisms/AudienceSections/AudienceSections.astro');
+			return <AudienceSections {...module.props} />;
+		}
+
+		if (module.type === 'world-solutions') {
+			const { default: WorldSolutions } = await import('../../organisms/WorldSolutions/WorldSolutions.astro');
+			return <WorldSolutions {...module.props} />;
+		}
+
+		if (module.type === 'kpis') {
+			const { default: Kpis } = await import('../../organisms/Kpis/Kpis.astro');
+			return <Kpis {...module.props} />;
+		}
+
+		if (module.type === 'video-section') {
+			const { default: VideoSection } = await import('../../organisms/VideoSection/VideoSection.astro');
+			return <VideoSection {...module.props} />;
+		}
+
+		if (module.type === 'image-gallery') {
+			const { default: ImageGallery } = await import('../../organisms/ImageGallery/ImageGallery.astro');
+			return <ImageGallery {...module.props} />;
+		}
+
+		const { default: AboutUsCover } = await import('../../organisms/AboutUsCover/AboutUsCover.astro');
+		return <AboutUsCover {...module.props} />;
+	})}
+</div>
+
+<style lang="scss">
+	@use './modules-page';
+</style>

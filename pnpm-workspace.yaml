@@ -1,0 +1,9 @@
+allowBuilds:
+  '@parcel/watcher': false
+  es5-ext: false
+  esbuild: true
+  sharp: true
+minimumReleaseAgeExclude:
+  - astro@7.3.5
+patchedDependencies:
+  sass-lint@1.13.1: patches/sass-lint@1.13.1.patch

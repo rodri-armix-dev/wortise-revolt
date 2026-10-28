@@ -1,0 +1,31 @@
+---
+import Image from '../../atoms/Image/Image.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	image: ComponentProps<typeof Image>;
+}
+
+const { image } = Astro.props;
+const cameraClipId = `phone-camera-${crypto.randomUUID()}`;
+---
+
+<div class="phone-mockup">
+	<div class="phone-mockup__screen">
+		<slot name="screen">
+			<Image {...image} />
+		</slot>
+	</div>
+	<svg class="phone-mockup__overlay" viewBox="0 0 410 788" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+		<defs>
+			<clipPath id={cameraClipId}>
+				<rect x="144.63" y="25.46" width="120.335" height="32.976" rx="17.067" />
+			</clipPath>
+		</defs>
+		<image href="/phone-mockup/camera.webp" x="140.01565625" y="20.25696354166667" width="133.06802734375" height="46.28541666666666" clip-path={`url(#${cameraClipId})`} />
+	</svg>
+</div>
+
+<style lang="scss">
+	@use './phone-mockup';
+</style>

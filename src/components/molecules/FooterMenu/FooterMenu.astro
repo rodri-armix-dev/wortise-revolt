@@ -1,0 +1,29 @@
+---
+import type { ComponentProps } from 'astro/types';
+import type { Page } from '../../../i18n/routes';
+import Button from '../../atoms/Button/Button.astro';
+export interface Props {
+	title: string;
+	items: { page?: Page; label: string; href: string; button?: Omit<ComponentProps<typeof Button>, 'label' | 'href' | 'class'> }[];
+}
+const { title, items } = Astro.props;
+---
+
+<nav class="footer-menu" aria-label={title}>
+	<h2 class="footer-menu__title">{title}</h2>
+	<ul class="footer-menu__list" role="list">
+		{items.map((item) =>
+			<li class:list={['footer-menu__item', { 'footer-menu__item--button': item.button?.variant === 'primary-special' }]}>
+				{item.button ? (
+					<Button {...item.button} label={item.label} href={item.href} disabled={!item.href} />
+				) : (
+					<a class="footer-menu__link" href={item.href || undefined} aria-disabled={!item.href ? "true" : undefined}>{item.label}</a>
+				)}
+			</li>
+		)}
+	</ul>
+</nav>
+
+<style lang="scss">
+	@use './footer-menu';
+</style>

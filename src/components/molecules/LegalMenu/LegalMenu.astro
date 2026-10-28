@@ -1,0 +1,18 @@
+---
+export interface Props { label: string; items: { label: string; href: string }[]; }
+const { label, items } = Astro.props;
+---
+
+<nav class="legal-menu" aria-label={label}>
+	<ul class="legal-menu__list" role="list">
+		{items.map((item) =>
+			<li class="legal-menu__item">
+				<a class="legal-menu__link" href={item.href || undefined} aria-disabled={!item.href ? "true" : undefined}>{item.label}</a>
+			</li>
+		)}
+	</ul>
+</nav>
+
+<style lang="scss">
+	@use './legal-menu';
+</style>

@@ -1,0 +1,121 @@
+// Local contact-card gradient and state colors follow the map design.
+// sass-lint:disable no-color-literals
+.world-contact-card
+{
+	background: linear-gradient(32deg, rgba(20, 11, 15, .98) 17.58%, rgba(104, 24, 51, .98) 130.83%);
+	border: 1px solid rgba(255, 134, 174, .34);
+	border-radius: var(--radius-normal);
+	box-shadow: 6px 18px 36px rgba(0, 0, 0, .52);
+	color: var(--color-text-primary);
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-16);
+	padding-block: var(--spacing-20);
+	padding-inline: var(--spacing-16);
+
+	&__header
+	{
+		align-items: center;
+		display: flex;
+		gap: var(--spacing-8);
+		justify-content: space-between;
+	}
+
+	&__country
+	{
+		background: rgba(210, 14, 78, .22);
+		border: 1px solid rgba(255, 134, 174, .34);
+		border-radius: var(--radius-full);
+		color: var(--color-text-highlight);
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: 3.12px;
+		line-height: 14px;
+		padding: 7px 11px;
+		text-transform: uppercase;
+	}
+
+	&__close
+	{
+		align-items: center;
+		background: transparent;
+		border: 0;
+		border-radius: var(--radius-full);
+		cursor: pointer;
+		display: flex;
+		flex: 0 0 44px;
+		height: 44px;
+		justify-content: center;
+		margin: -8px;
+		padding: var(--spacing-12);
+
+		&:hover
+		{
+			background: rgba(255, 255, 255, .08);
+		}
+	}
+
+	&__intro
+	{
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-4);
+	}
+
+	&__city
+	{
+		font-size: 24px;
+		font-weight: 500;
+		line-height: 34px;
+		margin: 0;
+	}
+
+	&__team
+	{
+		color: var(--color-text-secondary);
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 20px;
+		margin: 0;
+	}
+
+	&__details
+	{
+		border-top: 1px solid rgba(255, 255, 255, .14);
+		color: var(--color-text-secondary);
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 20px;
+		padding-top: var(--spacing-16);
+
+		p
+		{
+			margin: 0;
+		}
+	}
+
+	&__languages
+	{
+		text-transform: uppercase;
+	}
+
+	&__notice
+	{
+		color: var(--color-text-highlight);
+		font-size: 14px;
+		line-height: 20px;
+		margin: 0;
+
+		&[hidden]
+		{
+			display: none;
+		}
+	}
+
+	&__action
+	{
+		--button-height: 47px;
+		--button-width: 100%;
+		font-size: 16px;
+	}
+}

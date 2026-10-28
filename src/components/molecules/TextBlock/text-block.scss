@@ -1,0 +1,82 @@
+// Legacy Sass Lint miscounts Allman mixin braces.
+@mixin align($value)
+{ // sass-lint:disable-line indentation
+	text-align: $value;
+
+	@if $value == center
+	{
+		--text-block-actions-alignment: center;
+	}
+	@else
+	{
+		--text-block-actions-alignment: flex-start;
+	}
+}
+
+@mixin range-alignments($range)
+{ // sass-lint:disable-line indentation
+	@each $alignment in left, center
+	{
+		&--#{$range}-#{$alignment}
+		{
+			@include align($alignment);
+		}
+	}
+}
+
+.text-block
+{
+	display: flex;
+	flex-direction: column;
+	gap: var(--text-block-gap, var(--spacing-16));
+	min-width: 0;
+
+	&__intro
+	{
+		display: flex;
+		flex-direction: column;
+		gap: var(--text-block-intro-gap, var(--spacing-8));
+	}
+
+	&__eyebrow
+	{
+		max-width: var(--text-block-eyebrow-max-width, none);
+	}
+
+	&__description
+	{
+		margin-inline: var(--text-block-description-margin-inline, 0);
+		max-width: var(--text-block-description-max-width, none);
+	}
+
+	&__actions
+	{
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-16);
+		justify-content: var(--text-block-actions-alignment);
+		margin-top: var(--text-block-actions-offset, var(--spacing-16));
+	}
+
+	@each $alignment in left, center
+	{
+		&--#{$alignment}
+		{
+			@include align($alignment);
+		}
+	}
+
+}
+
+// Min-width rules first, then combined and exclusive overrides.
+@each $range in $range-order
+{
+	@include media($range)
+	{ // sass-lint:disable-line indentation
+		.text-block
+		{
+			@include range-alignments($range);
+		}
+	}
+}
+

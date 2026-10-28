@@ -1,0 +1,58 @@
+---
+import { getLanguageItems } from '../../../i18n/navigation';
+import { getLocaleFromPath } from '../../../i18n/routes';
+import { getUiText, formatLabel } from '../../../i18n/ui';
+import Icon from '../../atoms/Icon/Icon.astro';
+
+export interface Props {
+	expanded?: boolean;
+}
+
+const { expanded = false } = Astro.props;
+const items = getLanguageItems(Astro.url.pathname);
+const currentCode = getLocaleFromPath(Astro.url.pathname);
+
+const text = getUiText(currentCode);
+const normalizedCurrentCode = currentCode.toLowerCase();
+const currentItem = items.find(
+	(item) => item.code.toLowerCase() === normalizedCurrentCode,
+);
+const menuId = `lang-menu-options-${crypto.randomUUID()}`;
+---
+
+<nav class="lang-menu" aria-label={text.selectLanguage} data-lang-menu data-navigation-disclosure>
+	<button class="lang-menu__toggle" type="button" aria-expanded={expanded} aria-controls={menuId} data-open-label={formatLabel(text.openLanguage, currentItem?.label ?? currentCode)} data-close-label={formatLabel(text.closeLanguage, currentItem?.label ?? currentCode)} aria-label={formatLabel(expanded ? text.closeLanguage : text.openLanguage, currentItem?.label ?? currentCode)} >
+		<span class="lang-menu__code">{currentItem?.code.toUpperCase() ?? currentCode.toUpperCase()}</span>
+		<span class="lang-menu__indicator">
+			<Icon name="chevron-down" size={17} />
+		</span>
+	</button>
+
+	<ul id={menuId} class="lang-menu__list" hidden={!expanded}>
+		{items.map((item) => {
+			const isCurrent = item.code.toLowerCase() === normalizedCurrentCode;
+
+			return (
+				<li class:list={[ 'lang-menu__item', { 'lang-menu__item--current': isCurrent, 'lang-menu__item--disabled': !item.available, }, ]} >
+					{item.available ? (
+						<a class="lang-menu__link" href={item.href} hreflang={item.code.toLowerCase()} lang={item.code.toLowerCase()} data-language-choice={item.code} aria-current={isCurrent ? 'page' : undefined} >
+							<span class="lang-menu__code">{item.code.toUpperCase()}</span>
+							<span class="lang-menu__label">{item.label}</span>
+						</a>
+					) : (
+						<span class="lang-menu__unavailable" aria-disabled="true" aria-label={formatLabel(text.unavailableLanguage, item.label)}>
+							<span class="lang-menu__code">{item.code.toUpperCase()}</span>
+							<span class="lang-menu__label">{item.label}</span>
+						</span>
+					)}
+				</li>
+			);
+		})}
+	</ul>
+</nav>
+
+<script src="./lang-menu.ts"></script>
+
+<style lang="scss">
+	@use './lang-menu';
+</style>

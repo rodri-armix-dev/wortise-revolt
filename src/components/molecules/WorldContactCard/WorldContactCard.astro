@@ -1,0 +1,39 @@
+---
+import Button from '../../atoms/Button/Button.astro';
+import closeIcon from '../../../assets/world/contact-close.svg?url';
+import { getUiText } from '../../../i18n/ui';
+import type { WorldLocation } from '../../../data/world';
+
+export interface Props {
+	location: WorldLocation;
+}
+
+const { location } = Astro.props;
+const ui = getUiText(Astro.currentLocale);
+const zone = new Intl.DateTimeFormat('es', { timeZone: location.timeZone, timeZoneName: 'shortOffset' }).formatToParts(new Date()).find((part) => part.type === 'timeZoneName')?.value ?? location.timeZone;
+---
+
+<article class="world-contact-card" aria-label={location.city}>
+	<div class="world-contact-card__header">
+		<span class="world-contact-card__country">{location.country}</span>
+		<button class="world-contact-card__close" type="button" data-city-close aria-label={ui.closeCity}>
+			<img src={closeIcon} alt="" width="20" height="20" />
+		</button>
+	</div>
+	<div class="world-contact-card__intro">
+		<h3 class="world-contact-card__city">{location.city}</h3>
+		<p class="world-contact-card__team">{location.team}</p>
+	</div>
+	<div class="world-contact-card__details">
+		<p class="world-contact-card__languages">{location.languages} · {zone}</p>
+		<p>{location.response}</p>
+	</div>
+	<div class="world-contact-card__action" data-contact-pending={!location.contactHref ? 'true' : undefined}>
+		<Button label={ui.contactTeam} href={location.contactHref} />
+	</div>
+	<p class="world-contact-card__notice" role="status" data-contact-notice hidden>{ui.contactUnavailable}</p>
+</article>
+
+<style lang="scss">
+	@use './world-contact-card';
+</style>

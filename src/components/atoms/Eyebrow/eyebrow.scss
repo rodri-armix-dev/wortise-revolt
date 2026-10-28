@@ -1,0 +1,11 @@
+.eyebrow
+{
+	color: var(--eyebrow-color, var(--color-text-highlight));
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: .26em;
+	line-height: 14px;
+	margin: 0;
+	text-transform: uppercase;
+	white-space: var(--eyebrow-white-space, nowrap);
+}

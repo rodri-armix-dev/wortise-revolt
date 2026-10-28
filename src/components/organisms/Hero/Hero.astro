@@ -1,0 +1,46 @@
+---
+import Heading from '../../atoms/Heading/Heading.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import HeroVisual from '../../molecules/HeroVisual/HeroVisual.astro';
+import { getDestinationHref } from '../../../data/destinations';
+import { getLocaleFromPath, isPage } from '../../../i18n/routes';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	heading?: string;
+	content?: ComponentProps<typeof TextBlock>;
+	visual?: ComponentProps<typeof HeroVisual>;
+	actionPage?: string;
+}
+
+const { heading, content, visual, actionPage } = Astro.props;
+const href = actionPage && isPage(actionPage) ? getDestinationHref(getLocaleFromPath(Astro.url.pathname), actionPage) : undefined;
+const resolvedContent = content && {
+	...content,
+	actions: content.actions && {
+		...content.actions,
+		primary: content.actions.primary && { ...content.actions.primary, href: actionPage ? href : content.actions.primary.href, disabled: actionPage ? !href : content.actions.primary.disabled },
+	},
+};
+---
+
+<section class:list={['hero', { 'hero--cover': visual, 'hero--simple': !visual }]}>
+	<div class="hero__inner global-inner">
+		<div class="hero__text-block">
+			{resolvedContent ? (
+				<TextBlock {...resolvedContent} />
+			) : (
+				<Heading tag="h1" html={heading ?? ''} />
+			)}
+		</div>
+		{visual && (
+			<div class="hero__visual">
+				<HeroVisual {...visual} />
+			</div>
+		)}
+	</div>
+</section>
+
+<style lang="scss">
+	@use './hero';
+</style>

@@ -1,0 +1,104 @@
+.image-carousel
+{
+	display: block;
+
+	&__viewport
+	{
+		overflow-x: auto;
+		overscroll-behavior-x: contain; // sass-lint:disable-line no-misspelled-properties
+		scroll-padding-inline: var(--image-carousel-gutter, var(--layout-gutter)); // sass-lint:disable-line no-misspelled-properties
+		scroll-snap-type: x proximity; // sass-lint:disable-line no-misspelled-properties
+		scrollbar-width: none; // sass-lint:disable-line no-misspelled-properties
+
+		&[data-carousel-pinned]
+		{
+			overflow-x: hidden;
+			scroll-snap-type: none; // sass-lint:disable-line no-misspelled-properties
+			touch-action: pan-y pinch-zoom; // sass-lint:disable-line no-misspelled-properties
+		}
+
+		&::-webkit-scrollbar // sass-lint:disable-line no-vendor-prefixes
+		{
+			display: none;
+		}
+	}
+
+	&__track
+	{
+		display: flex;
+		gap: var(--image-carousel-gap, 21px);
+		margin: 0;
+		padding-block: var(--spacing-4);
+		padding-inline: var(--image-carousel-gutter, var(--layout-gutter));
+		transform: translate3d(var(--image-carousel-offset, 0), 0, 0);
+		width: max-content;
+		will-change: var(--image-carousel-will-change, auto); // sass-lint:disable-line no-misspelled-properties
+	}
+
+	&__item
+	{
+		flex: 0 0 auto;
+		scroll-snap-align: start; // sass-lint:disable-line no-misspelled-properties
+		width: var(--image-carousel-card-width, 313px);
+	}
+
+	&__card
+	{
+		border-radius: var(--image-carousel-card-radius, var(--radius-gallery-card));
+		height: var(--image-carousel-card-height, 437px);
+		isolation: isolate;
+		margin: 0;
+		overflow: hidden;
+		position: relative;
+
+		&::after
+		{
+			background: linear-gradient(to bottom, transparent 35%, color-mix(in srgb, var(--color-background-page) 40%, transparent) 70%, var(--color-background-page));
+			content: '';
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+			pointer-events: none;
+			position: absolute;
+			z-index: 1;
+		}
+	}
+
+	&__media
+	{
+		--image-height: 100%;
+		--image-object-fit: cover;
+		--image-object-position: center;
+		height: 100%;
+	}
+
+	&__caption
+	{
+		bottom: var(--spacing-24);
+		display: flex;
+		flex-direction: column;
+		font-size: 21px;
+		font-weight: 500;
+		gap: var(--spacing-8);
+		left: var(--spacing-24);
+		line-height: 26px;
+		position: absolute;
+		right: var(--spacing-24);
+		z-index: 2;
+	}
+
+	&__role
+	{
+		color: var(--color-text-muted);
+	}
+
+}
+
+@include l
+{
+	.image-carousel
+	{
+		&__viewport
+		{
+			scroll-snap-type: none; // sass-lint:disable-line no-misspelled-properties
+		}
+	}
+}

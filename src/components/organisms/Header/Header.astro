@@ -1,0 +1,45 @@
+---
+import HeaderActions from '../../molecules/HeaderActions/HeaderActions.astro';
+import Logo from '../../atoms/Logo/Logo.astro';
+import LangMenu from '../../molecules/LangMenu/LangMenu.astro';
+
+export interface Props {
+	variant?: 'full' | 'compact';
+}
+
+const { variant = 'full' } = Astro.props;
+const fullComponents = variant === 'full' ? await Promise.all([
+	import('../../molecules/MainMenu/MainMenu.astro'),
+	import('../../molecules/MobileMenu/MobileMenu.astro'),
+]) : undefined;
+const MainMenu = fullComponents?.[0].default;
+const MobileMenu = fullComponents?.[1].default;
+---
+
+<header class:list={['header', { 'header--compact': variant === 'compact' }]} data-header>
+	<div class="header__inner global-inner">
+		<div class="header__logo">
+			<Logo />
+		</div>
+		{MainMenu && (
+			<div class="header__main-menu">
+				<MainMenu />
+			</div>
+		)}
+		<div class="header__controls">
+			<div class="header__lang-menu">
+				<LangMenu />
+			</div>
+			<HeaderActions variant={variant} />
+			{MobileMenu && (
+				<MobileMenu />
+			)}
+		</div>
+	</div>
+</header>
+
+<script src="./header.ts"></script>
+
+<style lang="scss">
+	@use './header';
+</style>

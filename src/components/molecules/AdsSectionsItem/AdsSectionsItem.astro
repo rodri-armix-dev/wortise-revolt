@@ -1,0 +1,83 @@
+---
+import Heading from '../../atoms/Heading/Heading.astro';
+import Eyebrow from '../../atoms/Eyebrow/Eyebrow.astro';
+import PhoneMockup from '../PhoneMockup/PhoneMockup.astro';
+import Icon from '../../atoms/Icon/Icon.astro';
+import Description from '../../atoms/Description/Description.astro';
+import Button from '../../atoms/Button/Button.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	id: string;
+	variant: 'efficiency' | 'projection' | 'creative' | 'reporting';
+	heading: string;
+	badge: string;
+	image: ComponentProps<typeof PhoneMockup>['image'];
+	description: ComponentProps<typeof Description>;
+	action: Omit<ComponentProps<typeof Button>, 'class'>;
+	previousHeadings?: string[];
+	annotations?: {
+		position: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'side-end';
+		icon?: ComponentProps<typeof Icon>['name'];
+		value?: string;
+		label?: string;
+	}[];
+}
+
+const { id, variant, heading, badge, image, description, action, previousHeadings = [], annotations = [] } = Astro.props;
+const headingId = `ads-${id}-heading`;
+const annotationPositions = { 'top-start': 0, 'top-end': 0, 'side-end': 1, 'bottom-start': 2, 'bottom-end': 2 };
+const annotationOrder = annotations.map((annotation, index) => ({ index, position: annotationPositions[annotation.position] })).sort((a, b) => a.position - b.position);
+const cardStyle = (rank: number, annotation = false) => `--ads-sections-item-card-opacity: var(--ads-sections-item-reveal-${rank}-opacity, ${annotation ? 'var(--ads-sections-item-annotations-opacity, 1)' : '1'});`;
+
+---
+
+<section class:list={['ads-sections-item', `ads-sections-item--${variant}`]} id={`ads-${id}`} aria-labelledby={headingId}>
+	<div class="ads-sections-item__inner global-inner">
+		<div class="ads-sections-item__intro">
+			{previousHeadings.length > 0 && (
+				<div class="ads-sections-item__history" aria-hidden="true">
+					{previousHeadings.map((title, index) => (
+						<p class="ads-sections-item__previous" data-ads-reveal={previousHeadings.length - index - 1} style={cardStyle(previousHeadings.length - index - 1)}>{title}</p>
+					))}
+				</div>
+			)}
+			<div class="ads-sections-item__title-card">
+				<div class="ads-sections-item__heading">
+					<Heading html={heading} tag="h2" id={headingId} />
+				</div>
+				<div class="ads-sections-item__badge">
+					<Eyebrow label={badge} />
+				</div>
+			</div>
+		</div>
+		<div class="ads-sections-item__visual">
+			<div class="ads-sections-item__preview">
+				<PhoneMockup image={image} />
+			</div>
+			{annotations.map(({ position, icon, value, label }, index) => (
+				<div class:list={['ads-sections-item__annotation', `ads-sections-item__annotation--${position}`]} data-ads-reveal={previousHeadings.length + 1 + annotationOrder.findIndex((annotation) => annotation.index === index)} style={cardStyle(previousHeadings.length + 1 + annotationOrder.findIndex((annotation) => annotation.index === index), true)}>
+					{icon && (
+						<div class="ads-sections-item__annotation-icon" data-icon={icon}>
+							<Icon name={icon} />
+						</div>
+					)}
+					{value && (
+						<p class="ads-sections-item__annotation-value">{value}</p>
+					)}
+					{label && (
+						<p class="ads-sections-item__annotation-label">{label}</p>
+					)}
+				</div>
+			))}
+		</div>
+		<div class="ads-sections-item__content" data-ads-reveal={previousHeadings.length} style={cardStyle(previousHeadings.length)}>
+			<Description {...description} />
+			<Button {...action} />
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './ads-sections-item';
+</style>

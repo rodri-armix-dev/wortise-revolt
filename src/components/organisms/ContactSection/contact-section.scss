@@ -1,0 +1,397 @@
+// Form state colors belong to ContactSection.
+// sass-lint:disable no-color-literals
+.contact-section
+{
+	isolation: isolate;
+	overflow: clip;
+	padding-block: var(--spacing-48) var(--spacing-64);
+	position: relative;
+
+	&::before
+	{
+		background: url('../../../assets/decorations/cover-glow-secondary.svg') center / contain no-repeat;
+		content: '';
+		display: none;
+		height: 981.019px;
+		left: calc(62.5% + 355px);
+		pointer-events: none;
+		position: absolute;
+		top: -76px;
+		transform: translate(-50%, -50%) rotate(20.6deg);
+		width: 538.205px;
+		z-index: -1;
+	}
+
+	&__inner
+	{
+		--global-item-gap: var(--spacing-40);
+		align-items: stretch;
+	}
+
+	&__intro
+	{
+		--description-color: var(--color-text-primary);
+		--description-line-height: 20px;
+		--heading-font-size: 40px;
+		--heading-font-weight: 400;
+		--heading-line-height: 46px;
+		--text-block-intro-gap: var(--spacing-16);
+		margin-inline: auto;
+		max-width: 704px;
+		width: 100%;
+	}
+
+	&__panel
+	{
+		margin-inline: auto;
+		max-width: 764px;
+		position: relative;
+		width: 100%;
+
+		&::before,
+		&::after
+		{
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			content: '';
+			left: 50%;
+			pointer-events: none;
+			position: absolute;
+			transform: translateX(-50%);
+			z-index: -1;
+		}
+
+		&::before
+		{
+			background-image: url('../../../assets/contact/glow-mobile.svg');
+			height: 436px;
+			top: -160px;
+			width: 272px;
+		}
+
+		&::after
+		{
+			background-image: url('../../../assets/contact/orbit.svg');
+			display: none;
+			height: 868px;
+			top: 94px;
+			width: 868px;
+		}
+	}
+
+	&__form,
+	&__controls,
+	&__fields
+	{
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	&__form
+	{
+		&[hidden]
+		{
+			display: none;
+		}
+	}
+
+	&__controls
+	{
+		gap: var(--spacing-24);
+	}
+
+	&__accessible-label
+	{
+		clip-path: inset(50%);
+		height: 1px;
+		overflow: hidden;
+		position: absolute;
+		white-space: nowrap;
+		width: 1px;
+	}
+
+	&__reasons
+	{
+		min-width: 0;
+	}
+
+	&__reason-label
+	{
+		color: var(--color-text-highlight);
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: .26em;
+		line-height: 14px;
+		margin-bottom: var(--spacing-20);
+		text-align: center;
+		text-transform: uppercase;
+		width: 100%;
+	}
+
+	&__options
+	{
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-12);
+		justify-content: center;
+	}
+
+	&__option
+	{
+		cursor: pointer;
+		position: relative;
+	}
+
+	&__radio
+	{
+		border-radius: var(--radius-full);
+		height: 100%;
+		inset: 0;
+		position: absolute;
+		width: 100%;
+	}
+
+	&__pill
+	{
+		background: var(--color-background-control);
+		border: 1px solid #392e39;
+		border-radius: var(--radius-full);
+		color: var(--color-text-primary);
+		display: block;
+		line-height: 20px;
+		padding-block: var(--spacing-12);
+		padding-inline: var(--spacing-16);
+
+		.contact-section__radio:checked + & // sass-lint:disable-line force-pseudo-nesting
+		{
+			background: var(--color-action-primary);
+			border-color: var(--color-action-primary);
+		}
+
+	}
+
+	&__fields
+	{
+		gap: var(--spacing-20);
+	}
+
+	&__control
+	{
+		background: var(--color-background-control);
+		border: 1px solid #392e39;
+		border-radius: var(--radius-normal);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-8);
+		padding-block: var(--spacing-16);
+		padding-inline: var(--spacing-12);
+
+		&:focus-within
+		{
+			border-color: var(--color-border-focus);
+		}
+
+		.contact-section__field[data-invalid='true'] &
+		{
+			border-color: #ff2a2a;
+		}
+	}
+
+	&__label
+	{
+		color: #ff5994;
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: .26em;
+		line-height: 14px;
+		text-transform: uppercase;
+
+		.contact-section__field[data-invalid='true'] &
+		{
+			color: #ff2a2a;
+		}
+	}
+
+	&__optional
+	{
+		color: var(--color-text-muted);
+		letter-spacing: normal;
+		text-transform: none;
+	}
+
+	&__input
+	{
+		color: var(--color-text-primary);
+		line-height: 20px;
+		min-width: 0;
+		width: 100%;
+
+		&::placeholder
+		{
+			color: var(--color-text-muted);
+			opacity: 1;
+		}
+
+		&--message
+		{
+			min-height: 88px;
+			resize: vertical;
+		}
+	}
+
+	&__error
+	{
+		color: #ff2a2a;
+		font-size: 14px;
+		line-height: 20px;
+		margin-top: var(--spacing-8);
+	}
+
+	&__submit
+	{
+		--button-width: 100%;
+	}
+
+	&__success
+	{
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-24);
+
+		&[hidden]
+		{
+			display: none;
+		}
+	}
+
+	&__success-icon
+	{
+		align-items: center;
+		background: #70e938;
+		border-radius: var(--radius-full);
+		color: var(--color-background-page);
+		display: flex;
+		height: 34px;
+		justify-content: center;
+		width: 34px;
+	}
+
+	&__success-copy
+	{
+		--description-color: var(--color-text-muted);
+		--description-line-height: 20px;
+		--heading-line-height: 34px;
+		--text-block-intro-gap: var(--spacing-16);
+		max-width: 460px;
+	}
+
+	&__success-actions
+	{
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-32);
+	}
+
+	&__direct
+	{
+		--eyebrow-white-space: normal;
+		align-items: center;
+		border-top: 1px solid #392e39;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-20);
+		margin-top: var(--spacing-48);
+		padding-top: var(--spacing-48);
+		text-align: center;
+	}
+
+	&__channels
+	{
+		--button-padding-inline: var(--spacing-24);
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-20);
+	}
+
+	&__notice
+	{
+		margin-top: var(--spacing-16);
+	}
+}
+
+@include m
+{
+	.contact-section
+	{
+		&__channels
+		{
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+	}
+}
+
+@include l
+{
+	.contact-section
+	{
+		padding-block: 120px 200px;
+
+		&::before
+		{
+			display: block;
+		}
+
+		&__inner
+		{
+			--global-item-gap: var(--spacing-64);
+		}
+
+		&__intro
+		{
+			--description-color: var(--color-text-secondary);
+			--heading-font-size: 60px;
+			--heading-line-height: 64px;
+			--text-block-gap: var(--spacing-24);
+		}
+
+		&__panel
+		{
+			background: var(--color-background-page);
+			border: 2px solid #3d1a26;
+			border-radius: var(--radius-contact-panel);
+			padding-block: var(--spacing-48);
+			padding-inline: var(--spacing-64);
+
+			&::before
+			{
+				background-image: url('../../../assets/contact/glow-desktop.svg');
+				height: 1232px;
+				top: -198px;
+				width: 626px;
+			}
+
+			&::after
+			{
+				display: block;
+			}
+		}
+
+		&__control
+		{
+			padding-inline: var(--spacing-20);
+		}
+
+		&__success-copy
+		{
+			--heading-font-size: 21px;
+			--heading-line-height: 26px;
+		}
+	}
+}

@@ -1,0 +1,211 @@
+// These gradients belong to the audience variants, not shared color roles.
+// sass-lint:disable no-color-literals
+.audience-sections-item
+{
+	align-items: center;
+	display: flex;
+	isolation: isolate;
+	min-height: var(--audience-sections-item-height, 100vh);
+	overflow: hidden;
+	padding-block: var(--spacing-48);
+	position: relative;
+
+	&__inner
+	{
+		--global-item-gap: 36px;
+	}
+
+	&__intro
+	{
+		--eyebrow-white-space: normal;
+		--heading-font-size: 36px;
+		--heading-font-weight: 400;
+		--heading-line-height: 40px;
+		--heading-text-wrap: balance;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-12);
+		max-width: 414px;
+		opacity: var(--audience-sections-item-content-opacity, 1);
+		text-align: center;
+		width: 100%;
+		will-change: var(--audience-sections-item-content-will-change, auto); // sass-lint:disable-line no-misspelled-properties
+	}
+
+	&__visual
+	{
+		// Reserve at least 10% of the viewport around the device.
+		max-width: min(80vw, calc(80svh * 410 / 788));
+		opacity: calc(var(--audience-sections-item-content-opacity, 1) * var(--audience-sections-item-visual-opacity, 1));
+		scale: var(--audience-sections-item-visual-scale, 1); // sass-lint:disable-line no-misspelled-properties
+		translate: 0 var(--audience-sections-item-visual-y, 0); // sass-lint:disable-line no-misspelled-properties
+		width: min(100%, calc(var(--audience-sections-item-preview-height, 345.97px) * 410 / 788));
+		will-change: var(--audience-sections-item-visual-will-change, auto); // sass-lint:disable-line no-misspelled-properties
+	}
+
+	&__content
+	{
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 26px;
+		opacity: var(--audience-sections-item-content-opacity, 1);
+		text-align: center;
+		width: 100%;
+		will-change: var(--audience-sections-item-content-will-change, auto); // sass-lint:disable-line no-misspelled-properties
+	}
+
+	// Each content element owns its entrance; its parent owns the exit fade.
+	@each $part in (eyebrow, heading, description, action)
+	{
+		&__#{$part}
+		{
+			opacity: var(--audience-sections-item-#{$part}-opacity, 1);
+			translate: 0 var(--audience-sections-item-#{$part}-y, 0); // sass-lint:disable-line no-misspelled-properties
+			will-change: var(--audience-sections-item-content-will-change, auto); // sass-lint:disable-line no-misspelled-properties
+		}
+	}
+
+	&__description
+	{
+		--description-color: rgba(255, 255, 255, .75);
+		--description-line-height: 26px;
+		font-size: 18px;
+	}
+
+	&__background
+	{
+		background-color: var(--color-background-page);
+		clip-path: inset(var(--audience-sections-item-background-inset, 0%) 0); // sass-lint:disable-line no-misspelled-properties
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		opacity: var(--audience-sections-item-background-opacity, 1);
+		pointer-events: none;
+		position: absolute;
+		scale: var(--audience-sections-item-background-scale, 1); // sass-lint:disable-line no-misspelled-properties
+		will-change: var(--audience-sections-item-background-will-change, auto); // sass-lint:disable-line no-misspelled-properties
+		z-index: -1;
+
+		.audience-sections-item--developers &
+		{
+			background-image: linear-gradient(180deg, #2f0312, #630f2b 50%, #26020e);
+		}
+
+		.audience-sections-item--advertisers &
+		{
+			background-image: linear-gradient(180.426deg, #120a0d 5.0783%, #130d39 58.459%, #120a0d 112.86%);
+		}
+	}
+
+}
+
+@include m
+{
+	.audience-sections-item
+	{
+		&__description
+		{
+			max-width: 414px;
+		}
+	}
+}
+
+@include l
+{
+	.audience-sections-item
+	{
+		&__inner
+		{
+			align-items: center;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+		}
+
+		&__intro
+		{
+			--heading-font-size: 52px;
+			--heading-line-height: 58px;
+			gap: var(--spacing-16);
+			margin-top: -81px;
+			text-align: left;
+		}
+
+		&__visual
+		{
+			justify-self: center;
+			width: 230px;
+		}
+
+		&__content
+		{
+			align-items: flex-start;
+			gap: 36px;
+			justify-self: end;
+			max-width: 346px;
+			text-align: left;
+		}
+
+		&__description
+		{
+			font-size: 21px;
+			font-weight: 500;
+		}
+
+		&__background
+		{
+			.audience-sections-item--developers &
+			{
+				background-image: linear-gradient(85.472deg, #2f0312 28.766%, #630f2b 49.916%, #26020e 72.032%);
+			}
+
+			.audience-sections-item--advertisers &
+			{
+				background-image: linear-gradient(90deg, #120a0d 6.528%, #130d39 50.317%, #120a0d 92.083%);
+			}
+		}
+
+	}
+}
+
+@include xl
+{
+	.audience-sections-item
+	{
+		&__visual
+		{
+			width: 280px;
+		}
+	}
+}
+
+@include xxl
+{
+	.audience-sections-item
+	{
+		&__visual
+		{
+			width: 380px;
+		}
+	}
+}
+
+@include osm
+{
+	.audience-sections-item
+	{
+		&__visual
+		{
+			transition: width .2s ease-out;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+	.audience-sections-item
+	{
+		&__visual
+		{
+			transition: none;
+		}
+	}
+}

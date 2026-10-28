@@ -1,0 +1,151 @@
+.audience-sections
+{
+	--audience-sections-inset: 0px; // sass-lint:disable-line zero-unit
+	--audience-sections-scene-height: calc(100svh - var(--audience-sections-inset) * 2);
+	background-color: var(--color-background-page);
+	display: flow-root; // sass-lint:disable-line no-misspelled-properties
+	overflow-anchor: none; // sass-lint:disable-line no-misspelled-properties
+	position: relative;
+
+	&[data-pinning]
+	{
+		--audience-sections-item-height: var(--audience-sections-scene-height);
+	}
+
+	&[data-pinning='sticky']
+	{
+		height: var(--audience-sections-track-height);
+	}
+
+	&__scene
+	{
+		background-color: var(--color-background-page);
+		position: relative;
+
+		[data-pinning] &
+		{
+			height: var(--audience-sections-scene-height);
+			isolation: isolate;
+			margin-block: var(--audience-sections-inset);
+			min-width: var(--layout-min-width);
+			overflow: clip;
+		}
+
+		[data-pinning='sticky'] &
+		{
+			position: sticky;
+			top: var(--audience-sections-inset);
+		}
+
+		// Preserve the initial inset while entering outside Safari's sticky sampling.
+		[data-pinning='sticky'][data-before-pin] &
+		{
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+
+		// Match native sticky's lower limit without retaining a viewport layer.
+		[data-pinning='sticky'][data-exited] &
+		{
+			bottom: var(--audience-sections-inset);
+			left: 0;
+			margin-block: 0;
+			position: absolute;
+			top: auto;
+			width: 100%;
+		}
+
+		@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+		{
+			[data-pinning='sticky'] &
+			{
+				background-color: transparent;
+			}
+
+			&::after,
+			&::before
+			{
+				background-image: linear-gradient(to right, transparent, var(--color-background-page), transparent);
+				content: '';
+				height: 1px;
+				left: 0;
+				pointer-events: none;
+				position: absolute;
+				width: 100%;
+				z-index: 1;
+			}
+
+			&::after
+			{
+				bottom: 0;
+			}
+
+			&::before
+			{
+				top: 0;
+			}
+		}
+	}
+
+	&__panel
+	{
+		[data-pinning] &
+		{
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+			pointer-events: none;
+			position: absolute;
+			visibility: hidden;
+		}
+
+		[data-pinning] &[data-visible]
+		{
+			visibility: visible;
+		}
+
+		[data-pinning] &[data-active]
+		{
+			pointer-events: auto;
+		}
+
+		&[data-entering]
+		{
+			will-change: opacity; // sass-lint:disable-line no-misspelled-properties
+		}
+
+		[data-pinning] &[data-transitioning]
+		{
+			--audience-sections-item-background-will-change: clip-path, opacity, transform;
+			--audience-sections-item-content-will-change: opacity, translate;
+			--audience-sections-item-visual-will-change: opacity, scale, translate;
+		}
+	}
+
+	@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+	{
+		--audience-sections-inset: 8px;
+	}
+}
+
+@include l
+{
+	.audience-sections
+	{
+		--audience-sections-scene-height: calc(100dvh - var(--audience-sections-inset) * 2);
+	}
+}
+
+@media (scripting: enabled)
+{
+	.audience-sections
+	{
+		&__panel
+		{
+			&:first-child
+			{
+				opacity: var(--audience-sections-entry-opacity, 0);
+			}
+		}
+	}
+}

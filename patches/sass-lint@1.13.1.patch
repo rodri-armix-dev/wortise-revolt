@@ -1,0 +1,13 @@
+diff --git a/lib/rules/property-sort-order.js b/lib/rules/property-sort-order.js
+index adbecbf22dc82f8501a4efd70b24041edf60d724..5ccc8a0ad1b0e7772840f22e7bbbf21a9ac6fd8c 100644
+--- a/lib/rules/property-sort-order.js
++++ b/lib/rules/property-sort-order.js
+@@ -105,7 +105,7 @@ module.exports = {
+       if (block) {
+         block.forEach('declaration', function (dec) {
+           var prop = dec.first('property'),
+-              name = prop.first('ident');
++            name = prop && prop.first('ident');
+ 
+           if (name) {
+             if (parser.options['ignore-custom-properties']) {

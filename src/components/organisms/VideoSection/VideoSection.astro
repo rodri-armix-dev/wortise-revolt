@@ -1,0 +1,22 @@
+---
+import Video from '../../atoms/Video/Video.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	video: ComponentProps<typeof Video>;
+}
+
+const { video } = Astro.props;
+---
+
+<section class="video-section" aria-label={video.label}>
+	<div class="video-section__inner global-inner">
+		<div class="video-section__media">
+			<Video {...video} />
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './video-section';
+</style>

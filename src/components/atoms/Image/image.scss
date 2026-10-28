@@ -1,0 +1,31 @@
+.image
+{
+	border-radius: var(--image-radius);
+	display: block;
+
+	&--none
+	{
+		--image-radius: var(--radius-none);
+	}
+
+	&--normal
+	{
+		--image-radius: var(--radius-normal);
+	}
+
+	&--picture
+	{
+		overflow: hidden;
+	}
+
+	&:is(img),
+	&__element
+	{
+		border-radius: var(--image-radius);
+		display: block;
+		height: var(--image-height, auto);
+		object-fit: var(--image-object-fit, cover);
+		object-position: var(--image-object-position, center);
+		width: var(--image-width, 100%);
+	}
+}

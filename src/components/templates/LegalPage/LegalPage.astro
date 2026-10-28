@@ -1,0 +1,45 @@
+---
+import { getUiText } from '../../../i18n/ui';
+import type { Locale } from '../../../i18n/config';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import { sanitizeLegalDocument } from '../../../lib/sanitize-legal-document';
+
+export interface Props {
+	locale: Locale;
+	eyebrow: string;
+	title: string;
+	introduction?: string;
+	updatedAt?: string;
+	effectiveAt?: string;
+	html: string;
+}
+
+const { locale, eyebrow, title, introduction, updatedAt, effectiveAt, html } = Astro.props;
+const ui = getUiText(locale);
+const document = sanitizeLegalDocument(html);
+const dateFormatter = new Intl.DateTimeFormat(locale, { dateStyle: 'long', timeZone: 'UTC' });
+const formatDate = (value: string) => dateFormatter.format(new Date(`${value}T00:00:00Z`));
+---
+
+<article class="legal-page">
+	<header class="legal-page__cover global-inner">
+		<div class="legal-page__text-block">
+			<TextBlock alignment="center" eyebrow={{ label: eyebrow }} heading={{ html: title, tag: 'h1' }} description={introduction ? { html: introduction } : undefined} />
+		</div>
+		{(updatedAt || effectiveAt) && (
+			<div class="legal-page__dates">
+				{updatedAt && (
+					<p>{ui.legalUpdatedAt}: <time datetime={updatedAt}>{formatDate(updatedAt)}</time></p>
+				)}
+				{effectiveAt && (
+					<p>{ui.legalEffectiveAt}: <time datetime={effectiveAt}>{formatDate(effectiveAt)}</time></p>
+				)}
+			</div>
+		)}
+	</header>
+	<div class="legal-page__document global-inner rich-text" set:html={document} />
+</article>
+
+<style lang="scss">
+	@use './legal-page';
+</style>

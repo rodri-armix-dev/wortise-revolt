@@ -1,0 +1,50 @@
+// Sass Lint predates font metric override descriptors.
+// sass-lint:disable no-misspelled-properties
+
+@font-face
+{
+	ascent-override: 70%;
+	descent-override: 0%;
+	font-display: swap;
+	font-family: 'Aeonik Pro';
+	font-style: normal;
+	font-weight: 300;
+	line-gap-override: 0%;
+	src: url('../../assets/fonts/aeonik-pro/aeonik-pro-light.woff2') format('woff2');
+}
+
+@font-face
+{
+	ascent-override: 70%;
+	descent-override: 0%;
+	font-display: swap;
+	font-family: 'Aeonik Pro';
+	font-style: normal;
+	font-weight: 400;
+	line-gap-override: 0%;
+	src: url('../../assets/fonts/aeonik-pro/aeonik-pro-regular.woff2') format('woff2');
+}
+
+@font-face
+{
+	ascent-override: 70%;
+	descent-override: 0%;
+	font-display: swap;
+	font-family: 'Aeonik Pro';
+	font-style: normal;
+	font-weight: 500;
+	line-gap-override: 0%;
+	src: url('../../assets/fonts/aeonik-pro/aeonik-pro-medium.woff2') format('woff2');
+}
+
+@font-face
+{
+	ascent-override: 70%;
+	descent-override: 0%;
+	font-display: swap;
+	font-family: 'Aeonik Pro';
+	font-style: normal;
+	font-weight: 700;
+	line-gap-override: 0%;
+	src: url('../../assets/fonts/aeonik-pro/aeonik-pro-bold.woff2') format('woff2');
+}

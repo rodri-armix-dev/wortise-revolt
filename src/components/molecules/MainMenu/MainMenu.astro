@@ -1,0 +1,65 @@
+---
+import { getMainMenuItems } from '../../../data/navigation';
+import { getLocaleFromPath } from '../../../i18n/routes';
+import { getUiText, formatLabel } from '../../../i18n/ui';
+import Icon from '../../atoms/Icon/Icon.astro';
+
+export interface Props {
+	expandedItemIds?: string[];
+}
+
+const { expandedItemIds = [] } = Astro.props;
+const locale = getLocaleFromPath(Astro.url.pathname);
+const text = getUiText(locale);
+const items = getMainMenuItems(locale);
+const currentPath = Astro.url.pathname;
+
+const normalizePath = (path: string) => {
+	const normalizedPath = path.replace(/\/+$/, '');
+	return normalizedPath || '/';
+};
+
+const normalizedCurrentPath = normalizePath(currentPath);
+const isCurrent = (href: string) => normalizePath(href) === normalizedCurrentPath;
+const menuId = `main-menu-${crypto.randomUUID()}`;
+---
+
+<nav class="main-menu" aria-label={text.mainNavigation} data-main-menu>
+	<ul class="main-menu__list" role="list">
+		{items.map((item) => {
+			const hasChildren = Boolean(item.children?.length);
+			const isExpanded = expandedItemIds.includes(item.id);
+			const isChildCurrent = item.children?.some((child) => isCurrent(child.href)) ?? false;
+			const submenuId = `${menuId}-${item.id}`;
+
+			return (
+				<li data-navigation-disclosure={hasChildren ? true : undefined} class:list={['main-menu__item', { 'main-menu__item--current': isCurrent(item.href) || isChildCurrent, 'main-menu__item--expanded': hasChildren && isExpanded }]}>
+					{hasChildren ? (
+						<>
+							<a class:list={['main-menu__link', { 'main-menu__link--current': isCurrent(item.href) }]} href={item.href || undefined} aria-disabled={!item.href ? "true" : undefined} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+							<button class="main-menu__toggle" type="button" aria-expanded={isExpanded} aria-controls={submenuId} data-open-label={formatLabel(text.openSubmenu, item.label)} data-close-label={formatLabel(text.closeSubmenu, item.label)} aria-label={formatLabel(isExpanded ? text.closeSubmenu : text.openSubmenu, item.label)}>
+								<Icon name="chevron-down" size={14} />
+							</button>
+
+							<ul id={submenuId} class="main-menu__submenu" role="list" hidden={!isExpanded}>
+								{item.children?.map((child) =>
+									<li class="main-menu__submenu-item">
+										<a class:list={['main-menu__link', 'main-menu__link--submenu', { 'main-menu__link--current': isCurrent(child.href) }]} href={child.href || undefined} aria-disabled={!child.href ? "true" : undefined} aria-current={isCurrent(child.href) ? 'page' : undefined}>{child.label}</a>
+									</li>
+								)}
+							</ul>
+						</>
+					) : (
+						<a class:list={['main-menu__link', { 'main-menu__link--current': isCurrent(item.href) }]} href={item.href || undefined} aria-disabled={!item.href ? "true" : undefined} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+					)}
+				</li>
+			);
+		})}
+	</ul>
+</nav>
+
+<script src="./main-menu.ts"></script>
+
+<style lang="scss">
+	@use './main-menu';
+</style>

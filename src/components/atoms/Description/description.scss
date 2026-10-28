@@ -1,0 +1,38 @@
+// Preserve inherited sizing by default; named sizes use values already in Wortise.
+$sizes: (
+	inherit: inherit,
+	normal: 16px,
+	large: 18px,
+);
+
+.description
+{
+	color: var(--description-color, var(--color-text-secondary));
+	line-height: var(--description-line-height, 1.5);
+	overflow-wrap: break-word;
+
+	@each $name, $value in $sizes
+	{
+		&--#{$name}
+		{
+			font-size: var(--description-font-size, #{$value});
+		}
+	}
+}
+
+@each $range in $range-order
+{
+	@include media($range)
+	{ // sass-lint:disable-line indentation
+		.description
+		{
+			@each $name, $value in $sizes
+			{
+				&--#{$range}-#{$name}
+				{
+					font-size: var(--description-font-size, #{$value});
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,12 @@
+// sass-lint:disable no-mergeable-selectors
+:root
+{
+	// Primitive font family used by the design.
+	--font-family-primitive-aeonik-pro: 'Aeonik Pro', sans-serif;
+}
+
+:root
+{
+	// Semantic family consumed by the UI.
+	--font-family-primary: var(--font-family-primitive-aeonik-pro);
+}

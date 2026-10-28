@@ -1,0 +1,30 @@
+---
+import ModulesPage from '../../components/templates/ModulesPage/ModulesPage.astro';
+import LegalPage from '../../components/templates/LegalPage/LegalPage.astro';
+import { getPublishedPages } from '../../i18n/routes';
+import type { Locale } from '../../i18n/config';
+import type { EditorialPageData } from '../../data/pages/page.types';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export interface Props {
+	locale: Locale;
+	page: EditorialPageData;
+}
+
+export function getStaticPaths() {
+	return getPublishedPages().filter(({ page }) => page.slug !== '').map(({ locale, page }) => ({
+		params: { locale, slug: page.slug },
+		props: { locale, page } satisfies Props,
+	}));
+}
+
+const { locale, page } = Astro.props;
+---
+
+<BaseLayout locale={locale} title={page.meta.title} description={page.meta.description} footerCTA={page.template === 'legal' ? undefined : page.footerCTA} headerOverlay={page.template !== 'legal' && page.modules[0]?.type === 'ads-cover'}>
+	{page.template === 'legal' ? (
+		<LegalPage locale={locale} {...page.content} />
+	) : (
+		<ModulesPage modules={page.modules} />
+	)}
+</BaseLayout>

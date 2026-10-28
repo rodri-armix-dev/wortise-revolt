@@ -1,0 +1,33 @@
+---
+import { rangeOrder, type ResponsiveValues } from '../../../../config/breakpoints';
+
+export type VideoAspectRatio = '16/9' | '9/16';
+
+export interface Props {
+	src: string;
+	label: string;
+	width: number;
+	height: number;
+	aspectRatio?: VideoAspectRatio;
+	responsiveAspectRatio?: ResponsiveValues<VideoAspectRatio>;
+	poster?: string;
+	autoplay?: boolean;
+	loop?: boolean;
+	controls?: boolean;
+	muted?: boolean;
+}
+
+const { src, label, width, height, poster, aspectRatio = '16/9', responsiveAspectRatio = {}, autoplay = true, loop = true, controls = true, muted = true } = Astro.props;
+const ratioClass = (ratio: VideoAspectRatio) => ratio.replace('/', 'x');
+const responsiveClasses = rangeOrder.flatMap((range) => responsiveAspectRatio[range] ? [`video--${range}-${ratioClass(responsiveAspectRatio[range])}`] : []);
+---
+
+<video class:list={['video', `video--${ratioClass(aspectRatio)}`, ...responsiveClasses]} src={src} aria-label={label} width={width} height={height} poster={poster} data-viewport-autoplay={autoplay || undefined} controls={controls} muted={autoplay || muted} loop={loop} playsinline preload="none"></video>
+
+<script>
+	import './video';
+</script>
+
+<style lang="scss">
+	@use './video';
+</style>

@@ -1,0 +1,148 @@
+.hero
+{
+	display: grid;
+	min-height: 60vh;
+	padding-block: var(--spacing-32);
+	place-items: center;
+
+	&--cover
+	{
+		--description-line-height: 20px;
+		--eyebrow-white-space: normal;
+		--heading-font-weight: 400;
+		--heading-line-height: 46px;
+		--heading-muted-color: #a0a0a0; // sass-lint:disable-line no-color-literals
+		--text-block-actions-offset: var(--spacing-12);
+		--text-block-description-max-width: 567px;
+		--text-block-eyebrow-max-width: 257px;
+		--text-block-intro-gap: var(--spacing-16);
+		display: block;
+		min-height: 775px;
+		overflow: hidden;
+		padding-block: 44px;
+	}
+
+	&__inner
+	{
+		--global-item-gap: 28px;
+		align-items: stretch;
+
+		.hero--simple &
+		{
+			align-items: center;
+			justify-content: center;
+		}
+	}
+
+	&__text-block
+	{
+		min-width: 0;
+
+		.hero--simple &
+		{
+			--heading-font-size: clamp(2.5rem, 8vw, 6rem);
+			--heading-font-weight: 700;
+			--heading-line-height: 1;
+			flex: initial;
+			margin-top: 0;
+			max-width: none;
+		}
+	}
+
+	&__visual
+	{
+		max-width: 444px;
+		width: 100%;
+	}
+}
+
+@include m
+{
+	.hero
+	{
+		&__visual
+		{
+			align-self: center;
+		}
+	}
+}
+
+@include l
+{
+	.hero
+	{
+		&--cover
+		{
+			min-height: 614px;
+			padding-block: 28px;
+		}
+
+		&__inner
+		{
+			--global-item-gap: var(--spacing-32);
+			align-items: center;
+			flex-direction: row;
+			justify-content: space-between;
+		}
+
+		&__text-block
+		{
+			--heading-font-size: 52px;
+			--heading-line-height: 58px;
+			--text-block-actions-offset: 0;
+			--text-block-eyebrow-max-width: none;
+			--text-block-gap: var(--spacing-24);
+			--text-block-intro-gap: var(--spacing-24);
+			flex: 1;
+			margin-top: 86px;
+			max-width: 587px;
+		}
+
+		&__visual
+		{
+			flex: 1;
+			margin-inline: auto;
+			max-width: 554px;
+		}
+	}
+}
+
+@include xl
+{
+	.hero
+	{
+		&__inner
+		{
+			--global-item-gap: 148px;
+			justify-content: flex-start;
+		}
+
+		&__visual
+		{
+			transform: translateY(46px);
+		}
+
+		&__text-block
+		{
+			--heading-font-size: 60px;
+			--heading-line-height: 64px;
+		}
+	}
+}
+
+@include xxl
+{
+	.hero
+	{
+		&--cover
+		{
+			display: flex;
+			min-height: 900px;
+		}
+
+		&__visual
+		{
+			max-width: 720px;
+		}
+	}
+}

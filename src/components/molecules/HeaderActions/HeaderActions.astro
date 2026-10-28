@@ -1,0 +1,31 @@
+---
+import Button from '../../atoms/Button/Button.astro';
+import { getContactAction } from '../../../data/navigation';
+import { getLocaleFromPath } from '../../../i18n/routes';
+import { getUiText } from '../../../i18n/ui';
+
+export interface Props {
+	variant?: 'full' | 'compact';
+}
+
+const { variant = 'full' } = Astro.props;
+const compact = variant === 'compact';
+const locale = getLocaleFromPath(Astro.url.pathname);
+const text = getUiText(locale);
+const contact = getContactAction(locale);
+---
+
+<div class:list={['header-actions', { 'header-actions--compact': compact }]}>
+	<div class="header-actions__contact">
+		<Button label={contact.label} href={contact.href} disabled={contact.disabled} variant={compact ? 'primary' : 'secondary'} size="small" />
+	</div>
+	{!compact && (
+		<div class="header-actions__login">
+			<Button label={text.login} variant="primary" size="small" icon="chevron-down" />
+		</div>
+	)}
+</div>
+
+<style lang="scss">
+	@use './header-actions';
+</style>

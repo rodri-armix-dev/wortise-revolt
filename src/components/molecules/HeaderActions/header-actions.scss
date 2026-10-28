@@ -1,0 +1,45 @@
+.header-actions
+{
+	align-items: center;
+	display: flex;
+	gap: var(--spacing-16);
+
+	&__contact
+	{
+		display: none;
+
+		.header-actions--compact &
+		{
+			display: block;
+			font-size: 14px;
+			font-weight: 500;
+		}
+	}
+
+	&__login
+	{
+		--button-icon-display: none;
+		--button-padding-inline: 18px;
+		font-size: 14px;
+		font-weight: 500;
+	}
+}
+
+@include xl
+{
+	.header-actions
+	{
+		&__contact
+		{
+			display: block;
+		}
+
+		&__login
+		{
+			--button-icon-display: inline-flex;
+			--button-padding-inline: var(--spacing-16);
+			font-size: 16px;
+			font-weight: 400;
+		}
+	}
+}

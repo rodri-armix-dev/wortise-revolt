@@ -1,0 +1,28 @@
+---
+import AudienceSectionsItem from '../../molecules/AudienceSectionsItem/AudienceSectionsItem.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	items: ComponentProps<typeof AudienceSectionsItem>[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="audience-sections">
+	<div class="audience-sections__scene">
+		{items.map((item, index) =>
+			<div class="audience-sections__panel" data-audience-panel={index}>
+				<AudienceSectionsItem {...item} />
+			</div>
+		)}
+	</div>
+</div>
+
+<script>
+	import './audience-sections';
+</script>
+
+<style lang="scss">
+	@use './audience-sections';
+</style>

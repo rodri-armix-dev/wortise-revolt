@@ -1,0 +1,35 @@
+---
+import Image from '../../atoms/Image/Image.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface Props {
+	image: ComponentProps<typeof Image>['src'];
+	background: string;
+	effect?: 'wortise-3d';
+}
+
+const { image, background, effect } = Astro.props;
+---
+
+<div class="hero-visual" style={{ '--hero-visual-background': `url("${background}")` }} aria-hidden="true">
+	<div class="hero-visual__object">
+		<slot>
+			{effect === 'wortise-3d' && (
+				<wortise-mark-3d class="hero-visual__scene">
+					<canvas class="hero-visual__canvas"></canvas>
+				</wortise-mark-3d>
+			)}
+			<div class="hero-visual__image" data-3d={effect === 'wortise-3d' ? '' : undefined}>
+				<Image src={image} alt="" loading="eager" fetchpriority="high" />
+			</div>
+		</slot>
+	</div>
+</div>
+
+<script>
+	import './hero-visual-3d';
+</script>
+
+<style lang="scss">
+	@use './hero-visual';
+</style>

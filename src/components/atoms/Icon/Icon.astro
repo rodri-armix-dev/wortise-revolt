@@ -1,0 +1,37 @@
+---
+import { iconRegistry, isIconName, type IconName } from '../../../../config/icons';
+
+export interface Props {
+	name: IconName;
+	size?: number | string;
+	strokeWidth?: number | string;
+	label?: string;
+	class?: string;
+}
+
+const {
+	name,
+	size = 24,
+	strokeWidth,
+	label,
+	class: className = '',
+} = Astro.props;
+
+if (!isIconName(name)) throw new Error(`Unknown icon: ${String(name)}`);
+
+const definition = iconRegistry[name];
+const ResolvedIcon = definition.component;
+const cssSize = typeof size === 'number' || /^\d+(?:\.\d+)?$/.test(size) ? `${size}px` : size;
+const intrinsicHeight = typeof size === 'number' ? size : 24;
+const accessibleLabel = label?.trim();
+const attributes = {
+	...definition.attributes,
+	...(definition.supportsStrokeWidth && strokeWidth !== undefined ? { 'stroke-width': strokeWidth } : {}),
+};
+---
+
+<ResolvedIcon {...attributes} class:list={['icon', `icon--${name}`, className]} width={intrinsicHeight * definition.aspectRatio} height={intrinsicHeight} style={`--icon-default-size: ${cssSize}; --icon-aspect-ratio: ${definition.aspectRatio}`} preserveAspectRatio="xMidYMid meet" role={accessibleLabel ? 'img' : undefined} aria-label={accessibleLabel || undefined} aria-hidden={accessibleLabel ? undefined : 'true'} focusable="false" />
+
+<style lang="scss">
+	@use './icon';
+</style>

@@ -1,0 +1,76 @@
+---
+import Eyebrow from '../../atoms/Eyebrow/Eyebrow.astro';
+import Heading from '../../atoms/Heading/Heading.astro';
+import Description from '../../atoms/Description/Description.astro';
+import Button from '../../atoms/Button/Button.astro';
+import type { ComponentProps } from 'astro/types';
+import type { ResponsiveRange, ResponsiveValues } from '../../../../config/breakpoints';
+
+export type TextBlockAlignment = 'left' | 'center';
+export type TextBlockRange = ResponsiveRange;
+
+export interface Props {
+	eyebrow?: ComponentProps<typeof Eyebrow>;
+	heading?: ComponentProps<typeof Heading>;
+	description?: ComponentProps<typeof Description>;
+	actions?: {
+		primary?: Omit<ComponentProps<typeof Button>, 'class'>;
+		secondary?: Omit<ComponentProps<typeof Button>, 'class'>;
+	};
+	alignment?: TextBlockAlignment;
+	responsiveAlignment?: ResponsiveValues<TextBlockAlignment>;
+}
+
+const {
+	eyebrow, heading, description, actions,
+	alignment = 'left', responsiveAlignment = {},
+} = Astro.props;
+
+const hasEyebrow = Boolean(eyebrow?.label?.trim());
+const hasHeading = Boolean(heading?.html?.trim());
+const hasDescription = Boolean(description?.html?.trim());
+const hasPrimary = Boolean(actions?.primary?.label?.trim());
+const hasSecondary = Boolean(actions?.secondary?.label?.trim());
+const hasContent = hasEyebrow || hasHeading || hasDescription || hasPrimary || hasSecondary;
+const responsiveClasses = Object.entries(responsiveAlignment).map(
+	([range, value]) => `text-block--${range}-${value}`,
+);
+---
+
+{hasContent && (
+	<div class:list={['text-block', `text-block--${alignment}`, ...responsiveClasses]}>
+		{(hasEyebrow || hasHeading) && (
+			<div class="text-block__intro">
+				{hasEyebrow && eyebrow && (
+					<div class="text-block__eyebrow">
+						<Eyebrow {...eyebrow} />
+					</div>
+				)}
+				{hasHeading && heading && (
+					<div class="text-block__heading">
+						<Heading {...heading} />
+					</div>
+				)}
+			</div>
+		)}
+		{hasDescription && description && (
+			<div class="text-block__description">
+				<Description {...description} />
+			</div>
+		)}
+		{(hasPrimary || hasSecondary) && (
+			<div class="text-block__actions">
+				{hasPrimary && actions?.primary && (
+					<Button {...actions.primary} variant={actions.primary.variant ?? 'primary'} />
+				)}
+				{hasSecondary && actions?.secondary && (
+					<Button {...actions.secondary} variant={actions.secondary.variant ?? 'secondary'} />
+				)}
+			</div>
+		)}
+	</div>
+)}
+
+<style lang="scss">
+	@use './text-block';
+</style>

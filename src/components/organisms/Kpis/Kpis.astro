@@ -1,0 +1,38 @@
+---
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import type { ComponentProps } from 'astro/types';
+
+export interface KpiItem {
+	id: string;
+	value: string;
+	label: string;
+}
+
+export interface Props {
+	textBlock: ComponentProps<typeof TextBlock>;
+	items: KpiItem[];
+	variant?: 'scale' | 'vision';
+}
+
+const { textBlock, items, variant = 'scale' } = Astro.props;
+---
+
+<section class:list={['kpis', `kpis--${variant}`]}>
+	<div class="kpis__inner global-inner">
+		<div class="kpis__text-block">
+			<TextBlock {...textBlock} />
+		</div>
+		<dl class="kpis__items">
+			{items.map((item) => (
+				<div class="kpis__item" data-kpi={item.id}>
+					<dt class="kpis__label">{item.label}</dt>
+					<dd class="kpis__value">{item.value}</dd>
+				</div>
+			))}
+		</dl>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './kpis';
+</style>

@@ -1,0 +1,124 @@
+.lang-menu
+{
+	line-height: 20px;
+	position: relative;
+	width: max-content;
+
+	&__toggle
+	{
+		align-items: center;
+		color: var(--color-text-primary);
+		cursor: pointer;
+		display: flex;
+		gap: var(--lang-menu-gap, var(--spacing-4));
+		justify-content: center;
+		line-height: 20px;
+
+		&:hover,
+		&[aria-expanded='true']
+		{
+			.lang-menu__code
+			{
+				color: var(--color-text-highlight);
+			}
+		}
+	}
+
+	&__indicator
+	{
+		--icon-size: var(--lang-menu-icon-size, 17px);
+
+		display: flex;
+		flex: 0 0 auto;
+		transition: transform .2s ease-in-out;
+
+		.lang-menu__toggle[aria-expanded='true'] &
+		{
+			transform: rotate(180deg);
+		}
+	}
+
+	&__list
+	{
+		background: var(--color-surface-card);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-menu);
+		box-sizing: content-box;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-4);
+		inset-block-start: calc(100% + var(--spacing-16));
+		inset-inline-start: calc(-1 * var(--spacing-24));
+		list-style: none;
+		margin: 0;
+		padding: var(--spacing-12);
+		position: absolute;
+		width: 164px;
+		z-index: 10;
+
+		&[hidden]
+		{
+			display: none;
+		}
+	}
+
+	&__link,
+	&__unavailable
+	{
+		align-items: center;
+		border-radius: var(--radius-menu-option);
+		color: var(--color-text-primary);
+		display: flex;
+		gap: 10px;
+		height: 44px;
+		padding-inline: var(--spacing-12);
+		text-decoration: none;
+		white-space: nowrap;
+
+		.lang-menu__code
+		{
+			font-size: 14px;
+			font-weight: 500;
+		}
+	}
+
+	&__label
+	{
+		color: var(--color-text-muted);
+	}
+
+	&__link
+	{
+		&:hover
+		{
+			background: #330b19; // sass-lint:disable-line no-color-literals
+			color: var(--color-text-highlight);
+
+			.lang-menu__label
+			{
+				color: inherit;
+			}
+		}
+	}
+
+	&__item--current
+	{
+		.lang-menu__link,
+		.lang-menu__unavailable
+		{
+			background: #330b19; // sass-lint:disable-line no-color-literals
+			color: var(--color-text-highlight);
+
+			.lang-menu__label
+			{
+				color: inherit;
+			}
+		}
+	}
+
+	&__unavailable
+	{
+		cursor: not-allowed;
+		opacity: .5;
+	}
+}

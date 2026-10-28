@@ -1,0 +1,54 @@
+@use '../config/index' as *;
+
+:root
+{
+	@each $name, $value in $breakpoints
+	{
+		#{'--breakpoint-' + $name}: #{$value};
+	}
+}
+
+// Primitive and semantic token sections remain separate.
+:root // sass-lint:disable-line no-mergeable-selectors
+{
+	// Semantic roles consumed by the UI.
+	--layout-content-max-width: 100%;
+	--layout-gutter: var(--spacing-16);
+	--layout-header-height: 72px;
+	--layout-header-overlap: 0px; // sass-lint:disable-line zero-unit
+	--layout-min-width: 360px;
+}
+
+@include m
+{
+	:root
+	{
+		--layout-gutter: var(--spacing-24);
+	}
+}
+
+@include l
+{
+	:root
+	{
+		--layout-content-max-width: 1184px;
+		--layout-gutter: var(--spacing-48);
+	}
+}
+
+@include xl
+{
+	:root
+	{
+		--layout-content-max-width: 1344px;
+		--layout-header-height: 90px;
+	}
+}
+
+@include xxl
+{
+	:root
+	{
+		--layout-content-max-width: 1584px;
+	}
+}

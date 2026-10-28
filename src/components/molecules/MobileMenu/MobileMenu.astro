@@ -1,0 +1,70 @@
+---
+import Button from '../../atoms/Button/Button.astro';
+import Icon from '../../atoms/Icon/Icon.astro';
+import { getContactAction, getMainMenuItems } from '../../../data/navigation';
+import { getLocaleFromPath } from '../../../i18n/routes';
+import { getUiText } from '../../../i18n/ui';
+
+export interface Props {
+	expanded?: boolean;
+}
+
+const { expanded = false } = Astro.props;
+const locale = getLocaleFromPath(Astro.url.pathname);
+const text = getUiText(locale);
+const items = getMainMenuItems(locale);
+const currentPath = Astro.url.pathname;
+const { label: contactLabel, href: contactHref } = getContactAction(locale);
+
+const panelId = `mobile-menu-${crypto.randomUUID()}`;
+const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/';
+const isCurrent = (href: string) => normalizePath(href) === normalizePath(currentPath);
+---
+
+<div class="mobile-menu" data-mobile-menu data-navigation-disclosure>
+	<button class="mobile-menu__toggle" type="button" aria-controls={panelId} aria-expanded={expanded} data-open-label={text.openMenu} data-close-label={text.closeMenu} aria-label={expanded ? text.closeMenu : text.openMenu} >
+		<span class="mobile-menu__icon mobile-menu__icon--open">
+			<Icon name="menu" size={24} />
+		</span>
+		<span class="mobile-menu__icon mobile-menu__icon--close">
+			<Icon name="x" size={24} />
+		</span>
+	</button>
+	<nav class="mobile-menu__panel" id={panelId} aria-label={text.mobileNavigation} hidden={!expanded}>
+		<ul class="mobile-menu__list" role="list">
+			{items.map((item) =>
+				<li>
+					<a class="mobile-menu__link" href={item.href || undefined} aria-disabled={!item.href ? "true" : undefined} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+						{isCurrent(item.href) && (
+							<span class="mobile-menu__indicator" aria-hidden="true" />
+						)}
+						<span class="mobile-menu__label">{item.label}</span>
+					</a>
+					{Boolean(item.children?.length) && (
+						<ul class="mobile-menu__sublist" role="list">
+							{item.children?.map((child) =>
+								<li>
+									<a class="mobile-menu__link" href={child.href || undefined} aria-disabled={!child.href ? "true" : undefined} aria-current={isCurrent(child.href) ? 'page' : undefined} data-nested="true">
+										{isCurrent(child.href) && (
+											<span class="mobile-menu__indicator" aria-hidden="true" />
+										)}
+										<span class="mobile-menu__label">{child.label}</span>
+									</a>
+								</li>
+							)}
+						</ul>
+					)}
+				</li>
+			)}
+		</ul>
+		<div class="mobile-menu__action">
+			<Button label={contactLabel} href={contactHref} disabled={!contactHref} variant="primary" size="medium" />
+		</div>
+	</nav>
+</div>
+
+<script src="./mobile-menu.ts"></script>
+
+<style lang="scss">
+	@use './mobile-menu';
+</style>

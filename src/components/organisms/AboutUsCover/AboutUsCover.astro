@@ -1,0 +1,29 @@
+---
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import type { ComponentProps } from 'astro/types';
+import Image from '../../atoms/Image/Image.astro';
+
+export interface Props {
+	textBlock: ComponentProps<typeof TextBlock>;
+	image?: ComponentProps<typeof Image>;
+}
+
+const { textBlock, image } = Astro.props;
+---
+
+<section class="about-us-cover">
+	<div class="about-us-cover__inner global-inner">
+		<div class="about-us-cover__text-block">
+			<TextBlock {...textBlock} />
+		</div>
+		{image && (
+			<div class="about-us-cover__media">
+				<Image {...image} />
+			</div>
+		)}
+	</div>
+</section>
+
+<style lang="scss">
+	@use './about-us-cover';
+</style>

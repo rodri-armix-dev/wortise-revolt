@@ -1,0 +1,40 @@
+$aspect-ratios: (
+	'16x9': calc(16 / 9),
+	'9x16': calc(9 / 16),
+);
+
+.video
+{
+	aspect-ratio: var(--video-aspect-ratio, var(--video-ratio)); // sass-lint:disable-line no-misspelled-properties
+	border-radius: var(--video-radius, var(--radius-none));
+	display: block;
+	height: var(--video-height, auto);
+	object-fit: var(--video-object-fit, contain);
+	object-position: var(--video-object-position, center);
+	width: var(--video-width, 100%);
+
+	@each $name, $value in $aspect-ratios
+	{
+		&--#{$name}
+		{
+			--video-ratio: #{$value};
+		}
+	}
+}
+
+@each $range in $range-order
+{
+	@include media($range)
+	{ // sass-lint:disable-line indentation
+		.video
+		{
+			@each $name, $value in $aspect-ratios
+			{
+				&--#{$range}-#{$name}
+				{
+					--video-ratio: #{$value};
+				}
+			}
+		}
+	}
+}

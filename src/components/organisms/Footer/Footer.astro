@@ -1,0 +1,62 @@
+---
+import type { ComponentProps } from 'astro/types';
+import type { Locale } from '../../../i18n/config';
+import type FooterBrandType from '../../molecules/FooterBrand/FooterBrand.astro';
+import type FooterMenuType from '../../molecules/FooterMenu/FooterMenu.astro';
+import type LangSwitcherType from '../../molecules/LangSwitcher/LangSwitcher.astro';
+import type SocialLinksType from '../../molecules/SocialLinks/SocialLinks.astro';
+import LegalMenu from '../../molecules/LegalMenu/LegalMenu.astro';
+import Copyright from '../../atoms/Copyright/Copyright.astro';
+export interface Props {
+	locale: Locale;
+	variant?: 'full' | 'compact';
+	brand: ComponentProps<typeof FooterBrandType>;
+	menus: ComponentProps<typeof FooterMenuType>[];
+	languages: ComponentProps<typeof LangSwitcherType>;
+	social: ComponentProps<typeof SocialLinksType>;
+	legal: ComponentProps<typeof LegalMenu>;
+	copyright: ComponentProps<typeof Copyright>;
+}
+const { variant = 'full', locale, brand, menus, languages, social, legal, copyright } = Astro.props;
+const fullComponents = variant === 'full' ? await Promise.all([
+	import('../../molecules/FooterBrand/FooterBrand.astro'),
+	import('../../molecules/FooterMenu/FooterMenu.astro'),
+	import('../../molecules/LangSwitcher/LangSwitcher.astro'),
+	import('../../molecules/SocialLinks/SocialLinks.astro'),
+]) : undefined;
+const FooterBrand = fullComponents?.[0].default;
+const FooterMenu = fullComponents?.[1].default;
+const LangSwitcher = fullComponents?.[2].default;
+const SocialLinks = fullComponents?.[3].default;
+---
+
+<footer class:list={['footer', { 'footer--compact': variant === 'compact' }]} lang={locale}>
+	<div class="footer__inner global-inner">
+		{FooterBrand && FooterMenu && LangSwitcher && SocialLinks && (
+			<>
+				<div class="footer__brand">
+					<FooterBrand {...brand} />
+				</div>
+				<div class="footer__navigation">
+					{menus.map((menu) =>
+						<FooterMenu {...menu} />
+					)}
+				</div>
+				<div class="footer__utilities">
+					<LangSwitcher {...languages} />
+					<SocialLinks {...social} />
+				</div>
+			</>
+		)}
+		<div class="footer__bottom">
+			<Copyright {...copyright} />
+			{legal.items.length > 0 && (
+				<LegalMenu {...legal} />
+			)}
+		</div>
+	</div>
+</footer>
+
+<style lang="scss">
+	@use './footer';
+</style>

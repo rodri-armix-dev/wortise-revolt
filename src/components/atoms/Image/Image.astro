@@ -1,0 +1,59 @@
+---
+import { mediaQueries, rangeOrder } from '../../../../config/breakpoints';
+
+import type { ImageMetadata } from 'astro';
+import type { ResponsiveRange, ResponsiveValues } from '../../../../config/breakpoints';
+
+export type ImageSource = string | ImageMetadata;
+export type ImageRadius = 'none' | 'normal';
+export type ImageRange = ResponsiveRange;
+
+export interface Props {
+	src: ImageSource;
+	alt: string;
+	responsiveImages?: ResponsiveValues<ImageSource>;
+	radius?: ImageRadius;
+	width?: number;
+	height?: number;
+	loading?: 'lazy' | 'eager';
+	fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const {
+	src, alt, responsiveImages = {}, radius = 'none',
+	width, height, loading = 'lazy', fetchpriority = 'auto',
+} = Astro.props;
+
+// Match TextBlock's range precedence: exclusive/combined first, then min-width.
+const rangePriority = [...rangeOrder].reverse();
+const sourceUrl = (source: ImageSource) => typeof source === 'string' ? source : source.src;
+const dimensions = (source: ImageSource) => typeof source === 'string' ? {} : {
+	width: source.width,
+	height: source.height,
+};
+const sources = rangePriority.flatMap((range) => {
+	const source = responsiveImages[range];
+	return source ? [{ media: mediaQueries[range], src: sourceUrl(source), ...dimensions(source) }] : [];
+});
+const imageAttributes = {
+	src: sourceUrl(src), alt,
+	width: width ?? dimensions(src).width,
+	height: height ?? dimensions(src).height,
+	loading, fetchpriority, decoding: 'async' as const,
+};
+---
+
+{sources.length ? (
+	<picture class:list={['image', 'image--picture', `image--${radius}`]}>
+		{sources.map((source) =>
+			<source media={source.media} srcset={source.src} width={source.width} height={source.height} />
+		)}
+		<img class="image__element" {...imageAttributes} />
+	</picture>
+) : (
+	<img class:list={['image', `image--${radius}`]} {...imageAttributes} />
+)}
+
+<style lang="scss">
+	@use './image';
+</style>

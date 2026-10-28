@@ -1,0 +1,116 @@
+.legal-page
+{
+	&__cover
+	{
+		--global-item-gap: var(--spacing-16);
+		--layout-content-max-width: 1324px;
+		padding-block: 72px 64px;
+		text-align: center;
+	}
+
+	&__text-block
+	{
+		--description-line-height: 1.25;
+		--heading-font-size: 40px;
+		--heading-font-weight: 400;
+		--heading-line-height: 1.15;
+		--text-block-description-margin-inline: auto;
+		--text-block-description-max-width: 720px;
+		--text-block-intro-gap: var(--spacing-16);
+		width: 100%;
+	}
+
+	&__dates
+	{
+		color: var(--color-text-secondary);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-16);
+		line-height: 1.25;
+	}
+
+	&__document
+	{
+		--layout-content-max-width: 820px;
+		color: var(--color-text-secondary);
+		display: block;
+		line-height: 1.6875;
+		overflow-wrap: break-word;
+		padding-block: 48px 80px;
+
+		:global(> p),
+		:global(> ul),
+		:global(> ol),
+		:global(> blockquote)
+		{
+			margin-bottom: 18px;
+		}
+
+		:global(h2),
+		:global(h3),
+		:global(h4)
+		{
+			color: var(--color-text-primary);
+			font-weight: 400;
+			margin-block: 0 18px;
+		}
+
+		:global(h2)
+		{
+			font-size: 32px;
+			line-height: 1.25;
+		}
+
+		:global(h3),
+		:global(h4)
+		{
+			font-size: inherit;
+			font-weight: 500;
+			line-height: inherit;
+		}
+
+		:global(hr)
+		{
+			border: 0;
+			border-top: 1px solid var(--color-border-subtle);
+			margin: 44px 0 28px;
+		}
+
+		:global(> hr:first-child)
+		{
+			margin-top: 0;
+		}
+
+		:global(> :last-child)
+		{
+			margin-bottom: 0;
+		}
+	}
+}
+
+@include l
+{
+	.legal-page
+	{
+		&__cover
+		{
+			padding-block: 112px 96px;
+		}
+
+		&__text-block
+		{
+			--heading-font-size: 60px;
+			--heading-line-height: 1.0667;
+		}
+
+		&__document
+		{
+			padding-block: 72px 120px;
+
+			:global(hr)
+			{
+				margin-bottom: 34px;
+			}
+		}
+	}
+}

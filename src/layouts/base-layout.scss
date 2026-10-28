@@ -1,0 +1,15 @@
+.base-layout
+{
+	position: relative;
+
+	&__main
+	{
+		padding-block-start: var(--layout-header-height);
+
+		&--header-overlay
+		{
+			--layout-header-overlap: var(--layout-header-height);
+			padding-block-start: 0;
+		}
+	}
+}
