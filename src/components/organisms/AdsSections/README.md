@@ -5,6 +5,77 @@ El coordinador `ads-sections.ts` activa `ads-sections-sticky.ts` en S/M y
 sus animaciones de contenido. `ads-sections-motion.ts` contiene el movimiento
 compartido de paneles y pantallas, la accesibilidad y las utilidades del DOM.
 
+## Stack y movimiento desktop
+
+En L/XL/XXL, las secciones originales forman una columna flex dentro de la escena
+fijada. Cada sección conserva su único h2, etiqueta, descripción y CTA; no se
+clonan ni se trasladan títulos fuera de su sección. Los textos editoriales siguen
+en el HTML y en el árbol accesible. Solo los controles invisibles quedan fuera
+del tabulado.
+
+El scroll selecciona la etapa, sin controlar el progreso de sus animaciones.
+El primer glow ya está en su posición junto al teléfono desde la entrada de la
+sección, sin una etapa vacía ni una animación de entrada independiente. La primera
+entrada de tarjetas se dispara con `top 25%`, antes del pin `top top`, comenzando
+directamente con la izquierda y conservando los desfases de derecha y anotaciones
+de Figma. Las siguientes se activan dentro del recorrido fijado. Cada
+etapa usa una distancia base de 1.6 alturas de escena, ajustada por
+`scrollDistanceMultiplier = 0.75` (1.2 alturas efectivas). El recorrido total,
+los anchors y el teclado usan esa misma distancia ajustada.
+
+`ads-sections-desktop-data.ts` conserva los segundos, valores y curvas exportados
+de Figma, incluyendo las muestras de trayectorias con rebote. El adaptador
+`ads-sections-desktop-motion.ts` los reproduce con GSAP, excluyendo las pausas de
+presentación y el loop de 90 segundos. Los desplazamientos de tarjetas se
+proporcionan a su ancho de referencia de 367 px, las anotaciones al teléfono de
+329 px y los glows a la altura de 860 px del frame XL. No se sustituyen los assets
+ni se altera el layout estático para aplicar los tracks.
+
+Las salidas comprimen la tarjeta izquierda y animan por separado título,
+contenido, anotaciones y glow. La entrada siguiente se solapa con esa salida:
+1.765202 s para Proyección y 0.88 s para Diseño creativo. La pantalla del teléfono
+forma parte de esa timeline temporal; continúa aunque el scroll se detenga.
+El primer fondo del teléfono permanece detrás de las pantallas entrantes.
+
+CSS resuelve el flujo del stack; JS mide alturas, selecciona la etapa y reproduce
+las timelines. Agregar items extiende el recorrido automáticamente. Las etapas
+posteriores a las tres de Figma reutilizan la última entrada y la salida revisada
+de Proyección. La anotación local adicional de audiencia no tiene un track en
+Figma y aparece con su etapa sin inventar una trayectoria independiente.
+
+La aceleración combina anticipación por velocidad y atraso real. Se mide la
+velocidad en alturas de escena por segundo: hasta 1 se conserva la velocidad
+normal; entre 1 y 4 aumenta progresivamente la anticipación hasta 3x. Solo se
+aplica si el scroll y la animación van en el mismo sentido. Una pausa de 250 ms
+retira esa anticipación con una rampa suave, conservando el atraso pendiente.
+
+Si se solicita otra etapa mientras corre una timeline, esta conserva su progreso
+y acelera suavemente para terminar. Solo se retiene el último destino solicitado; al
+completar, la entrada pendiente también se acelera hasta alcanzarlo. El objetivo
+inicial es medio segundo por secuencia, con un máximo de 8x y una rampa de 120 ms.
+Con scroll lento y sin solicitudes pendientes se mantienen los tiempos originales
+de Figma. Se toma la mayor aceleración entre ambas señales, con límite de 8x;
+no se multiplican entre sí ni se alteran las curvas o el orden de los keyframes.
+La velocidad resultante se ajusta por `animationSpeedMultiplier = 1.25`, tanto
+al avanzar como en reversa: las duraciones efectivas se dividen por 1.25. Este
+multiplicador de animación es independiente del multiplicador de scroll.
+Volver al destino que ya se está animando cancela el avance pendiente. Resize,
+HMR y destrucción cancelan también el ajuste de velocidad. Al subir se recorre
+la misma timeline en reversa: se contrae y desaparece la etapa superior mientras
+la anterior recupera su título, contenido, anotaciones, pantalla y glow. Si la
+timeline ya no está disponible (por ejemplo, después de resize o un anchor), se
+reconstruye entre los mismos estados y se reproduce desde su final hacia atrás.
+Las solicitudes pendientes aceleran también la reversa, conservando su dirección;
+solo se retiene el último destino. Invertir el scroll durante una transición
+continúa desde su progreso actual cuando sus extremos coinciden. Resize, HMR y cambio de breakpoint revierten las timelines y limpian
+estilos y triggers. La medición ignora la altura animada del intro para evitar
+reconstrucciones durante la contracción.
+
+Antes de fijar, se comprueban todas las alturas acumuladas del stack y las
+descripciones. Si alguna no cabe con los márgenes existentes, o se solicita
+movimiento reducido, se conserva la lectura normal sin pin. S/M mantiene su
+controlador sticky y sus animaciones actuales.
+
 ## Entrada y salida del mockup en S/M
 
 En sticky, el contenedor del teléfono conserva su posición en el grid y un

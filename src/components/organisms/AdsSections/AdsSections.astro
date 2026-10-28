@@ -5,7 +5,7 @@ import Image from '../../atoms/Image/Image.astro';
 import type { ComponentProps } from 'astro/types';
 
 export interface Props {
-	items: Omit<ComponentProps<typeof AdsSectionsItem>, 'previousHeadings'>[];
+	items: ComponentProps<typeof AdsSectionsItem>[];
 }
 
 const { items } = Astro.props;
@@ -17,9 +17,9 @@ const { items } = Astro.props;
 		<div class="ads-sections__glow" data-variant={item.variant} aria-hidden="true"></div>
 	))}
 	<div class="ads-sections__scene">
-		{items.map((item, index) => (
+		{items.map((item) => (
 			<div class="ads-sections__panel" data-variant={item.variant}>
-				<AdsSectionsItem {...item} previousHeadings={items.slice(0, index).map(({ heading }) => heading)} />
+				<AdsSectionsItem {...item} />
 			</div>
 		))}
 	</div>

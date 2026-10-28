@@ -27,12 +27,13 @@ function mount(elements: AdsElements) {
 	const signature = () => [
 		root.clientWidth, stackedMedia.matches, reducedMedia.matches, touchMedia.matches,
 		stackedMedia.matches ? viewportMeasure.clientHeight : phoneLayout.clientHeight,
-		...items.flatMap(({ intro, content }) => [intro.offsetHeight, content.offsetHeight]),
+		// The desktop intro contracts while scrolling; measure its text, not its animated height.
+		...items.flatMap(({ intro, content }) => [stackedMedia.matches ? intro.offsetHeight : intro.querySelector<HTMLElement>('.ads-sections-item__heading')?.scrollHeight, content.offsetHeight]),
 	].join(':');
 	function capture() {
 		if (!controller || !within()) return;
 		return {
-			mode: controller.mode, playback: controller.playback, index: controller.active(),
+			mode: controller.mode, playback: controller.playback, index: Math.max(0, controller.active()),
 			progress: controller.trigger.progress, cards: controller.captureCards?.(),
 		};
 	}

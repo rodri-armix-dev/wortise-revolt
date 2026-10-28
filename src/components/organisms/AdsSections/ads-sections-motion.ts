@@ -46,12 +46,15 @@ export interface Controller {
 }
 
 export function resetElements({ root, scene, phoneLayout, items }: AdsElements) {
-	for (const attribute of ['data-enhanced', 'data-pinning', 'data-active']) root.removeAttribute(attribute);
+	for (const attribute of ['data-enhanced', 'data-pinning', 'data-active', 'data-stack']) root.removeAttribute(attribute);
 	root.removeAttribute('style');
-	items.forEach(({ panel, screen, glow, cards }) => {
+	items.forEach(({ panel, section, content, visual, screen, glow, cards }) => {
 		panel.inert = false;
 		panel.removeAttribute('aria-hidden');
-		[panel, screen, glow].forEach((element) => element.removeAttribute('style'));
+		visual.removeAttribute('aria-hidden');
+		content.style.removeProperty('pointer-events');
+		content.querySelectorAll<HTMLElement>('a, button, input, select, textarea').forEach((control) => { control.inert = false; });
+		[panel, section, screen, glow].forEach((element) => element.removeAttribute('style'));
 		cards.forEach((card) => {
 			card.inert = false;
 			card.removeAttribute('aria-hidden');

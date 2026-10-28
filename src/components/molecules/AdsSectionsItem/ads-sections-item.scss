@@ -7,7 +7,6 @@
 	min-height: var(--ads-sections-item-height, 100dvh);
 	padding-block: var(--ads-sections-item-padding-block, var(--spacing-48));
 
-	&__previous,
 	&__title-card,
 	&__content
 	{
@@ -33,23 +32,6 @@
 		flex-direction: column;
 		gap: var(--spacing-20);
 		min-width: 0;
-	}
-
-	&__history
-	{
-		display: none;
-		flex-direction: column;
-		gap: var(--spacing-20);
-	}
-
-	&__previous
-	{
-		border-radius: var(--radius-ads-card);
-		font-size: 21px;
-		font-weight: 500;
-		line-height: 26px;
-		margin: 0;
-		padding: var(--spacing-24);
 	}
 
 	&__title-card
@@ -307,11 +289,6 @@
 			max-width: 367px;
 		}
 
-		&__history
-		{
-			display: flex;
-		}
-
 		&__title-card
 		{
 			gap: 26px;
@@ -340,6 +317,78 @@
 			justify-self: end;
 			max-width: 367px;
 			width: 100%;
+		}
+	}
+}
+
+@include l
+{
+	.ads-sections-item
+	{
+		:global(.ads-sections[data-stack]) &
+		{
+			display: block;
+			min-height: 0;
+			padding-block: 0;
+		}
+
+		&__inner
+		{
+			:global(.ads-sections[data-stack]) &
+			{
+				display: block;
+				min-height: 0;
+			}
+		}
+
+		&__intro
+		{
+			:global(.ads-sections[data-stack]) &
+			{
+				opacity: var(--ads-sections-item-stack-reveal);
+				width: calc((100% - var(--global-item-gap) * 2) / 3);
+			}
+		}
+
+		&__title-card
+		{
+			:global(.ads-sections[data-stack]) &
+			{
+				gap: calc(26px * (1 - var(--ads-sections-item-stack-collapse)));
+			}
+		}
+
+		&__heading
+		{
+			:global(.ads-sections[data-stack]) &
+			{
+				height: calc(var(--ads-sections-item-stack-heading-height) * (1 - var(--ads-sections-item-stack-collapse)));
+				opacity: calc(1 - var(--ads-sections-item-stack-collapse));
+				overflow: hidden;
+			}
+		}
+
+		&__visual
+		{
+			:global(.ads-sections[data-stack]) &
+			{
+				left: var(--ads-sections-item-visual-left);
+				position: absolute;
+				top: var(--ads-sections-item-visual-top);
+				z-index: 2;
+			}
+		}
+
+		&__content
+		{
+			:global(.ads-sections[data-stack]) &
+			{
+				left: var(--ads-sections-item-content-left);
+				position: absolute;
+				top: var(--ads-sections-item-content-top);
+				width: var(--ads-sections-item-content-width);
+				z-index: 2;
+			}
 		}
 	}
 }
