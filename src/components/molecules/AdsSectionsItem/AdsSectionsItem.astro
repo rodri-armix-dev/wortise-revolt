@@ -15,7 +15,6 @@ export interface Props {
 	image: ComponentProps<typeof PhoneMockup>['image'];
 	description: ComponentProps<typeof Description>;
 	action: Omit<ComponentProps<typeof Button>, 'class'>;
-	previousHeadings?: string[];
 	annotations?: {
 		position: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'side-end';
 		icon?: ComponentProps<typeof Icon>['name'];
@@ -24,7 +23,7 @@ export interface Props {
 	}[];
 }
 
-const { id, variant, heading, badge, image, description, action, previousHeadings = [], annotations = [] } = Astro.props;
+const { id, variant, heading, badge, image, description, action, annotations = [] } = Astro.props;
 const headingId = `ads-${id}-heading`;
 const annotationPositions = { 'top-start': 0, 'top-end': 0, 'side-end': 1, 'bottom-start': 2, 'bottom-end': 2 };
 const annotationOrder = annotations.map((annotation, index) => ({ index, position: annotationPositions[annotation.position] })).sort((a, b) => a.position - b.position);
@@ -35,13 +34,6 @@ const cardStyle = (rank: number, annotation = false) => `--ads-sections-item-car
 <section class:list={['ads-sections-item', `ads-sections-item--${variant}`]} id={`ads-${id}`} aria-labelledby={headingId}>
 	<div class="ads-sections-item__inner global-inner">
 		<div class="ads-sections-item__intro">
-			{previousHeadings.length > 0 && (
-				<div class="ads-sections-item__history" aria-hidden="true">
-					{previousHeadings.map((title, index) => (
-						<p class="ads-sections-item__previous" data-ads-reveal={previousHeadings.length - index - 1} style={cardStyle(previousHeadings.length - index - 1)}>{title}</p>
-					))}
-				</div>
-			)}
 			<div class="ads-sections-item__title-card">
 				<div class="ads-sections-item__heading">
 					<Heading html={heading} tag="h2" id={headingId} />
@@ -56,7 +48,7 @@ const cardStyle = (rank: number, annotation = false) => `--ads-sections-item-car
 				<PhoneMockup image={image} />
 			</div>
 			{annotations.map(({ position, icon, value, label }, index) => (
-				<div class:list={['ads-sections-item__annotation', `ads-sections-item__annotation--${position}`]} data-ads-reveal={previousHeadings.length + 1 + annotationOrder.findIndex((annotation) => annotation.index === index)} style={cardStyle(previousHeadings.length + 1 + annotationOrder.findIndex((annotation) => annotation.index === index), true)}>
+				<div class:list={['ads-sections-item__annotation', `ads-sections-item__annotation--${position}`]} data-ads-reveal={1 + annotationOrder.findIndex((annotation) => annotation.index === index)} style={cardStyle(1 + annotationOrder.findIndex((annotation) => annotation.index === index), true)}>
 					{icon && (
 						<div class="ads-sections-item__annotation-icon" data-icon={icon}>
 							<Icon name={icon} />
@@ -71,7 +63,7 @@ const cardStyle = (rank: number, annotation = false) => `--ads-sections-item-car
 				</div>
 			))}
 		</div>
-		<div class="ads-sections-item__content" data-ads-reveal={previousHeadings.length} style={cardStyle(previousHeadings.length)}>
+		<div class="ads-sections-item__content" data-ads-reveal={0} style={cardStyle(0)}>
 			<Description {...description} />
 			<Button {...action} />
 		</div>

@@ -213,6 +213,36 @@ $glow-size: 511px;
 
 	}
 
+	&[data-stack]
+	{
+		.ads-sections__scene
+		{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		.ads-sections__panel
+		{
+			--ads-sections-item-stack-reveal: var(--ads-sections-stack-reveal, 0);
+			flex-shrink: 0;
+			inset: auto; // sass-lint:disable-line no-misspelled-properties
+			margin-top: calc(var(--spacing-20) * var(--ads-sections-stack-reveal, 0));
+			max-height: calc((var(--ads-sections-stack-expanded-height) - (var(--ads-sections-stack-expanded-height) - var(--ads-sections-stack-collapsed-height)) * var(--ads-sections-item-stack-collapse, 0)) * var(--ads-sections-stack-reveal, 0));
+			position: static;
+
+			&:first-child
+			{
+				margin-top: 0;
+			}
+		}
+
+		.ads-sections__glow
+		{
+			z-index: 0;
+		}
+	}
+
 	@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
 	{
 		&[data-pinning='sticky'][data-offscreen]
