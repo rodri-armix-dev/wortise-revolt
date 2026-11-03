@@ -1,0 +1,25 @@
+---
+import type { ComponentProps } from 'astro/types';
+import TextBlock from '../TextBlock/TextBlock.astro';
+import Button from '../../atoms/Button/Button.astro';
+
+export interface Props {
+	eyebrow: string;
+	title: string;
+	action: Pick<ComponentProps<typeof Button>, 'label' | 'href' | 'target' | 'disabled'>;
+}
+const { eyebrow, title, action } = Astro.props;
+---
+
+<aside class="editorial-cta">
+	<div class="editorial-cta__text-block">
+		<TextBlock eyebrow={{ label: eyebrow }} heading={{ html: title, tag: 'h2' }} />
+	</div>
+	<div class="editorial-cta__action">
+		<Button {...action} disabled={action.disabled || !action.href} variant="primary-special" size="large" />
+	</div>
+</aside>
+
+<style lang="scss">
+	@use './editorial-cta';
+</style>

@@ -1,0 +1,67 @@
+.recruiting-section
+{
+	padding-block: 59.5px;
+
+	&__inner
+	{
+		--global-item-gap: 34px;
+	}
+
+	&__text-block
+	{
+		--description-line-height: 20px;
+		--heading-font-size: 36px;
+		--heading-font-weight: 400;
+		--heading-line-height: 40px;
+		--text-block-description-margin-inline: auto;
+		--text-block-description-max-width: calc(100% - 10px);
+		--text-block-gap: var(--spacing-8);
+		max-width: 556px;
+		// Allow the title's natural width with the project's Aeonik Pro font.
+		width: calc(100% + 10px);
+	}
+
+	&__list
+	{
+		display: grid;
+		gap: 14px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+	}
+
+	&__item
+	{
+		min-width: 0;
+	}
+}
+
+@include l
+{
+	.recruiting-section
+	{
+		padding-block: 88px;
+
+		&__inner
+		{
+			--global-item-gap: 42px;
+			--layout-content-max-width: 1318px;
+		}
+
+		&__text-block
+		{
+			--heading-font-size: 52px;
+			--heading-line-height: 58px;
+			--text-block-description-max-width: 499px;
+			--text-block-gap: 18px;
+			--text-block-intro-gap: 18px;
+		}
+
+		&__list
+		{
+			gap: 18px;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+}

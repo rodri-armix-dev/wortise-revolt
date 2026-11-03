@@ -7,6 +7,7 @@ import type { EditorialPageData } from './page.types';
 import { termsPageData } from './legal/terms';
 import { privacyPageData } from './legal/privacy';
 import { sdkTermsPageData } from './legal/sdk-terms';
+import { blogPageData, blogArticlePages } from '../blog';
 
 // Register each page once. A missing locale means its translation is unpublished.
 export const pageData = {
@@ -17,6 +18,8 @@ export const pageData = {
 	terms: termsPageData,
 	privacy: privacyPageData,
 	'sdk-terms': sdkTermsPageData,
+	blog: blogPageData,
+	...blogArticlePages,
 } satisfies Record<string, Partial<Record<Locale, EditorialPageData>>>;
 
 export type Page = keyof typeof pageData;

@@ -2,6 +2,48 @@
 
 Sitio estático en Astro. Usar pnpm.
 
+## Contenido editorial: prueba con Markdown
+
+Se acordó probar `.md` para el contenido de los editores WYSIWYG, comenzando por
+el blog. Queda pendiente extenderlo al resto de los campos de contenido
+enriquecido del sitio tras evaluar la prueba. El backend sigue sin definirse.
+La decisión, el marcador propuesto para CTAs y los pendientes están en
+[Contenido en Markdown](docs/markdown-content.md). La prueba del blog ya está
+implementada; los contratos HTML existentes del resto del sitio siguen vigentes.
+
+## Blog
+
+El listado se publica en `/es/blog/` y los detalles en `/es/blog/{slug}/`, con
+la ruta estática `[locale]/[...slug].astro`. Cada artículo se registra una vez
+mediante `blogArticlePages` en el registro de páginas compartido. El menú, los
+dos selectores de idioma y los enlaces usan ese registro. No hay traducciones
+del blog publicadas ni páginas del blog en el perfil `launch`.
+
+Los ocho cuerpos editoriales están en `src/content/blog/es/*.md`; metadatos,
+orden del listado y registro de rutas viven en `src/data/blog/index.ts`.
+Programmatic Guaranteed conserva el texto de Figma. Los otros siete artículos
+son textos de demostración autorizados, identificados en su detalle y pendientes
+de revisión editorial. Las tarjetas usan el contenido de su traducción publicada,
+sin copiar español para idiomas ausentes.
+
+`ArticleCard`, `BlogMedia`, `BlogTag`, `ArticleMeta` y `EditorialCTA` se reutilizan
+en listado, detalle y lecturas relacionadas. Se muestran tres destacados en
+desktop y un carrusel con indicadores en mobile. «Cargar más» revela los artículos
+adicionales; sin JavaScript se muestran todos. Los contenedores de imagen usan
+los ratios y colores documentados en [Imágenes del blog](docs/blog-images.md).
+
+El artículo interpreta los marcadores `[cta id="tips-app"]` y
+`[media id="programmatic-illustration"]` en el build. La guía descargable todavía
+no tiene archivo: su botón queda deshabilitado. Compartir permite copiar el
+enlace o abrir LinkedIn/Facebook con la URL actual.
+
+La newsletter valida el email, pero aún no tiene un receptor conectado. Al intentar
+suscribirse indica que la suscripción todavía no está disponible y conserva el email
+ingresado; no envía ni guarda datos. Sin JavaScript queda deshabilitada.
+
+Validar con `pnpm test:blog`, `pnpm test:publication`, `pnpm astro check`, Sass Lint
+para los SCSS modificados y builds de ambos perfiles cuando cambie la estructura.
+
 ## Perfiles de publicación
 
 | Comando | Resultado |

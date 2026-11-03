@@ -1,0 +1,25 @@
+---
+import Icon from '../../atoms/Icon/Icon.astro';
+
+export interface Props {
+	title: string;
+	location: string;
+	href?: string;
+}
+
+const { title, location, href } = Astro.props;
+---
+
+<a class="job-card" href={href || undefined} aria-disabled={!href ? 'true' : undefined}>
+	<div class="job-card__content">
+		<h3 class="job-card__title">{title}</h3>
+		<p class="job-card__location">{location}</p>
+	</div>
+	<span class="job-card__icon">
+		<Icon name="arrow-up-right" size={18} />
+	</span>
+</a>
+
+<style lang="scss">
+	@use './job-card';
+</style>

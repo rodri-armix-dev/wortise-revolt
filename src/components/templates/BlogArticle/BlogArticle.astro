@@ -1,0 +1,50 @@
+---
+import type { Locale } from '../../../i18n/config';
+import type { BlogPost } from '../../../data/blog/types';
+import { getBlogCards, featuredPostIds, storyPostIds } from '../../../data/blog';
+import { getArticleContent } from '../../../data/blog/content';
+import { getUiText } from '../../../i18n/ui';
+import ArticleMeta from '../../atoms/ArticleMeta/ArticleMeta.astro';
+import Heading from '../../atoms/Heading/Heading.astro';
+import BlogTag from '../../atoms/BlogTag/BlogTag.astro';
+import BlogMedia from '../../molecules/BlogMedia/BlogMedia.astro';
+import ArticleBody from '../../organisms/ArticleBody/ArticleBody.astro';
+import ArticleEnd from '../../organisms/ArticleEnd/ArticleEnd.astro';
+import BlogFeed from '../../organisms/BlogFeed/BlogFeed.astro';
+
+export interface Props {
+	locale: Locale;
+	post: BlogPost;
+}
+const { locale, post } = Astro.props;
+const ui = getUiText(locale);
+const { blocks, ctas, media } = getArticleContent(post);
+const relatedIds = [...new Set([...featuredPostIds, ...storyPostIds])].filter((id) => id !== post.id).slice(0, 3);
+const related = getBlogCards(locale, relatedIds);
+---
+
+<article class="blog-article">
+	<header class="blog-article__header global-inner">
+		<ArticleMeta author={post.author} date={post.date} locale={locale} />
+		<div class="blog-article__heading">
+			<Heading html={post.title} tag="h1" />
+		</div>
+		<BlogTag label={post.category} />
+		<p class="blog-article__lead">{post.lead}</p>
+		{post.demo && (
+			<p class="blog-article__demo">{ui.blogDemoContent}</p>
+		)}
+		<div class="blog-article__cover">
+			<BlogMedia {...post.media} image={post.media.image && { ...post.media.image, loading: 'eager', fetchpriority: 'high' }} aspectRatio="4/3" responsiveAspectRatio={{ l: '16/9' }} />
+		</div>
+	</header>
+	<div class="blog-article__body global-inner">
+		<ArticleBody blocks={blocks} ctas={ctas} media={media} />
+		<ArticleEnd author={post.author} authorImage={post.authorImage} date={post.date} tags={post.tags} locale={locale} />
+	</div>
+</article>
+<BlogFeed id="next-reading" title={ui.blogReadNext} locale={locale} cards={related} />
+
+<style lang="scss">
+	@use './blog-article';
+</style>

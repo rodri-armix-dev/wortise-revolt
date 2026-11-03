@@ -1,0 +1,16 @@
+.blog-tag
+{
+	background: var(--color-surface-card);
+	border: 1px solid var(--color-border-editorial);
+	border-radius: var(--radius-full);
+	color: var(--color-text-editorial-accent);
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: .26em;
+	line-height: 14px;
+	overflow-wrap: anywhere;
+	padding-block: var(--spacing-8);
+	padding-inline: var(--spacing-16);
+	text-transform: uppercase;
+}

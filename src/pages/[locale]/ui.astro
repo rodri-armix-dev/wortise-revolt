@@ -10,6 +10,7 @@ import Heading from '../../components/atoms/Heading/Heading.astro';
 import Description from '../../components/atoms/Description/Description.astro';
 import TextBlock from '../../components/molecules/TextBlock/TextBlock.astro';
 import Image from '../../components/atoms/Image/Image.astro';
+import BlogMedia from '../../components/molecules/BlogMedia/BlogMedia.astro';
 import aboutUsCoverImage from '../../assets/images/about-us-cover.png';
 import type { ComponentProps } from 'astro/types';
 
@@ -84,6 +85,36 @@ const variants: { name: ButtonVariant; label: string; sizes: ButtonSize[] }[] = 
 				<div class="ui__example">
 					<span class="ui__state">normal · picture</span>
 					<Image src={aboutUsCoverImage} alt="Equipo de Wortise en la oficina." radius="normal" responsiveImages={{ m: aboutUsCoverImage }} />
+				</div>
+			</div>
+		</section>
+		<section class="ui__section" aria-labelledby="blog-media-title">
+			<h2 id="blog-media-title">BlogMedia · fondos y proporciones</h2>
+			<p>Contenedores sin imágenes. El color define el fondo y el borde opcional.</p>
+			<div class="ui__media-demos">
+				<div class="ui__example ui__example--media">
+					<span class="ui__state">Neutral · 4:3 · sin borde</span>
+					<BlogMedia tone="neutral" aspectRatio="4/3" />
+				</div>
+				<div class="ui__example ui__example--media">
+					<span class="ui__state">Rosa · 4:3 · con borde</span>
+					<BlogMedia tone="pink" aspectRatio="4/3" bordered />
+				</div>
+				<div class="ui__example ui__example--media">
+					<span class="ui__state">Azul · 16:9 · con borde</span>
+					<BlogMedia tone="blue" aspectRatio="16/9" bordered />
+				</div>
+				<div class="ui__example ui__example--media">
+					<span class="ui__state">Neutral · 1:1 · con borde</span>
+					<BlogMedia tone="neutral" aspectRatio="1/1" bordered />
+				</div>
+				<div class="ui__example ui__example--media">
+					<span class="ui__state">Tarjeta · 16:9 mobile → 4:3 desktop</span>
+					<BlogMedia tone="pink" aspectRatio="16/9" responsiveAspectRatio={{ l: '4/3' }} bordered />
+				</div>
+				<div class="ui__example ui__example--media">
+					<span class="ui__state">Portada · 4:3 mobile → 16:9 desktop</span>
+					<BlogMedia tone="blue" aspectRatio="4/3" responsiveAspectRatio={{ l: '16/9' }} />
 				</div>
 			</div>
 		</section>
@@ -231,6 +262,12 @@ const variants: { name: ButtonVariant; label: string; sizes: ButtonSize[] }[] = 
 			padding-block: var(--spacing-32);
 		}
 
+		&__media-demos
+		{
+			display: grid;
+			gap: var(--spacing-24);
+		}
+
 		&__video-demos
 		{
 			display: grid;
@@ -255,6 +292,11 @@ const variants: { name: ButtonVariant; label: string; sizes: ButtonSize[] }[] = 
 			justify-content: center;
 			padding-block: var(--spacing-24);
 			padding-inline: var(--spacing-12);
+
+			&--media
+			{
+				align-items: stretch;
+			}
 		}
 
 		&__state
@@ -270,6 +312,7 @@ const variants: { name: ButtonVariant; label: string; sizes: ButtonSize[] }[] = 
 	{
 		.ui
 		{
+			&__media-demos,
 			&__states
 			{
 				grid-template-columns: repeat(2, minmax(0, 1fr));

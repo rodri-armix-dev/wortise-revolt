@@ -1,0 +1,29 @@
+---
+import type { ComponentProps } from 'astro/types';
+import type { ArticleBlock } from '../../../lib/article-markdown';
+import EditorialCTA from '../../molecules/EditorialCTA/EditorialCTA.astro';
+import BlogMedia from '../../molecules/BlogMedia/BlogMedia.astro';
+
+export interface Props {
+	blocks: ArticleBlock[];
+	ctas: Record<string, ComponentProps<typeof EditorialCTA>>;
+	media: Record<string, ComponentProps<typeof BlogMedia>>;
+}
+const { blocks, ctas, media } = Astro.props;
+---
+
+<div class="article-body">
+	{blocks.map((block) => (
+		block.type === 'html' ? (
+			<div class="article-body__text rich-text" set:html={block.html} />
+		) : block.type === 'cta' ? (
+			<EditorialCTA {...ctas[block.id]} />
+		) : (
+			<BlogMedia {...media[block.id]} />
+		)
+	))}
+</div>
+
+<style lang="scss">
+	@use './article-body';
+</style>

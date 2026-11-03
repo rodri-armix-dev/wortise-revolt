@@ -11,10 +11,12 @@
 	--color-primitive-ink-950: #11080b;
 
 	--color-primitive-burgundy-900: #201015;
+	--color-primitive-burgundy-700: #3d1a26;
 
 	--color-primitive-brand-600: #d10e4e;
 
 	--color-primitive-pink-300: #ff8fb4;
+	--color-primitive-pink-400: #ff5994;
 }
 // sass-lint:enable no-color-literals
 
@@ -33,7 +35,9 @@
 
 	--color-text-muted: var(--color-primitive-neutral-400);
 	--color-text-highlight: var(--color-primitive-pink-300);
+	--color-text-editorial-accent: var(--color-primitive-pink-400);
 
 	--color-border-subtle: color-mix(in srgb, var(--color-primitive-neutral-0) 8%, transparent);
 	--color-border-focus: var(--color-primitive-brand-600);
+	--color-border-editorial: var(--color-primitive-burgundy-700);
 }

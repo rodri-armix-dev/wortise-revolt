@@ -1,0 +1,12 @@
+---
+export interface Props {
+	label: string;
+}
+const { label } = Astro.props;
+---
+
+<span class="blog-tag">{label}</span>
+
+<style lang="scss">
+	@use './blog-tag';
+</style>

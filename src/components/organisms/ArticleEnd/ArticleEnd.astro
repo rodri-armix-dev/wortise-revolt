@@ -1,0 +1,67 @@
+---
+import BlogTag from '../../atoms/BlogTag/BlogTag.astro';
+import Icon from '../../atoms/Icon/Icon.astro';
+import Image from '../../atoms/Image/Image.astro';
+import type { ComponentProps } from 'astro/types';
+import type { Locale } from '../../../i18n/config';
+import { getUiText } from '../../../i18n/ui';
+
+export interface Props {
+	author: string;
+	authorImage?: ComponentProps<typeof Image>;
+	date: string;
+	tags: string[];
+	locale: Locale;
+}
+const { author, authorImage, date, tags, locale } = Astro.props;
+const ui = getUiText(locale);
+const formatted = new Intl.DateTimeFormat(locale, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${date}T00:00:00Z`));
+---
+
+<article-sharing class="article-end" data-copied-label={ui.blogCopied} data-failed-label={ui.blogCopyFailed}>
+	<ul class="article-end__tags">
+		{tags.map((tag) => (
+			<li>
+				<BlogTag label={tag} />
+			</li>
+		))}
+	</ul>
+	<div class="article-end__details">
+		<div class="article-end__author">
+			<span class="article-end__avatar" aria-hidden="true">
+				{authorImage ? (
+					<Image {...authorImage} alt="" />
+				) : (
+					author.charAt(0)
+				)}
+			</span>
+			<div>
+				<p class="article-end__name">{author}</p>
+				<time class="article-end__date" datetime={date}>{formatted}</time>
+			</div>
+		</div>
+		<div class="article-end__sharing" hidden data-sharing-controls>
+			<p class="article-end__label">{ui.blogShare}</p>
+			<div class="article-end__actions">
+				<button class="article-end__copy" type="button" aria-label={ui.blogCopyLink} data-copy-link>
+					<Icon name="link" size={24} />
+				</button>
+				<a class="article-end__social" data-share-network="linkedin" aria-label={ui.blogShareLinkedIn} target="_blank" rel="noopener noreferrer">
+					<Icon name="linkedin" size={24} />
+				</a>
+				<a class="article-end__social" data-share-network="facebook" aria-label={ui.blogShareFacebook} target="_blank" rel="noopener noreferrer">
+					<Icon name="facebook" size={24} />
+				</a>
+			</div>
+		</div>
+	</div>
+	<p class="article-end__status" role="status" data-sharing-status></p>
+</article-sharing>
+
+<script>
+	import './article-end';
+</script>
+
+<style lang="scss">
+	@use './article-end';
+</style>

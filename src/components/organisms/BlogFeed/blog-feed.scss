@@ -1,0 +1,139 @@
+.blog-feed
+{
+	display: block;
+	padding-block: var(--spacing-48);
+
+	&__inner
+	{
+		--global-item-gap: var(--spacing-32);
+		align-items: stretch;
+	}
+
+	&__heading
+	{
+		--heading-font-size: 40px;
+		--heading-font-weight: 400;
+		--heading-line-height: 46px;
+	}
+
+	&__list
+	{
+		display: grid;
+		gap: var(--spacing-24);
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		.blog-feed--featured &
+		{
+			display: flex;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory; // sass-lint:disable-line no-misspelled-properties
+			scrollbar-width: none; // sass-lint:disable-line no-misspelled-properties
+		}
+	}
+
+	&__item
+	{
+		min-width: 0;
+
+		.blog-feed--featured &
+		{
+			flex: 0 0 100%;
+			scroll-snap-align: start; // sass-lint:disable-line no-misspelled-properties
+		}
+	}
+
+	&__controls
+	{
+		display: flex;
+		gap: 10px;
+		justify-content: center;
+
+		&[hidden]
+		{
+			display: none;
+		}
+	}
+
+	&__dot
+	{
+		background: transparent;
+		border: 0;
+		cursor: pointer;
+		display: grid;
+		height: 32px;
+		padding: 0;
+		place-items: center; // sass-lint:disable-line no-misspelled-properties
+		width: 24px;
+
+		&::before
+		{
+			background: var(--color-background-control);
+			border-radius: var(--radius-full);
+			content: '';
+			height: 13px;
+			width: 13px;
+		}
+
+		&[aria-pressed='true']::before // sass-lint:disable-line force-pseudo-nesting
+		{
+			background: var(--color-action-primary);
+		}
+	}
+
+	&__more
+	{
+		align-self: center;
+	}
+
+	&__status
+	{
+		color: var(--color-text-muted);
+		margin: 0;
+		text-align: center;
+
+		&:empty
+		{
+			display: none;
+		}
+	}
+}
+
+@include l
+{
+	.blog-feed
+	{
+		padding-block: var(--spacing-64);
+
+		&__inner
+		{
+			--global-item-gap: 36px;
+			--layout-content-max-width: 1320px;
+		}
+
+		&__heading
+		{
+			--heading-font-size: 44px;
+			--heading-line-height: 52px;
+		}
+
+		&__list
+		{
+			gap: 96px;
+
+			.blog-feed--featured &
+			{
+				display: grid;
+				gap: 28px;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				overflow: visible;
+			}
+		}
+
+		&__controls
+		{
+			display: none;
+		}
+	}
+}

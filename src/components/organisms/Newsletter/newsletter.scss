@@ -1,0 +1,145 @@
+.newsletter
+{
+	align-items: center;
+	background: var(--color-background-page) var(--newsletter-background) center / cover no-repeat;
+	display: flex;
+	justify-content: center;
+	min-height: 633px;
+	padding-block: var(--spacing-40);
+
+	&__inner
+	{
+		--global-item-gap: 0px; // sass-lint:disable-line zero-unit
+		--layout-content-max-width: 354px;
+		--layout-gutter: var(--spacing-24);
+	}
+
+	&__logo
+	{
+		--logo-height: 35px;
+		margin-bottom: var(--spacing-12);
+	}
+
+	&__text-block
+	{
+		--description-color: var(--color-text-primary);
+		--description-font-size: 18px;
+		--description-line-height: 26px;
+		--heading-font-size: 40px;
+		--heading-font-weight: 400;
+		--heading-line-height: 46px;
+		--text-block-description-margin-inline: auto;
+		--text-block-description-max-width: 464px;
+		--text-block-gap: var(--spacing-12);
+		margin-bottom: 37px;
+		width: 100%;
+	}
+
+	&__form
+	{
+		width: 100%;
+	}
+
+	&__fields
+	{
+		border: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-20);
+		margin: 0;
+		min-width: 0;
+		padding: 0;
+	}
+
+	&__input
+	{
+		background: var(--color-surface-card);
+		border: 1px solid var(--color-border-editorial);
+		border-radius: var(--radius-full);
+		color: var(--color-text-primary);
+		font: inherit;
+		height: 62px;
+		line-height: 20px;
+		min-width: 0;
+		padding-block: var(--spacing-16);
+		padding-inline: 21px;
+		width: 100%;
+
+		&::placeholder
+		{
+			color: var(--color-text-muted);
+			opacity: 1;
+		}
+	}
+
+	&__action
+	{
+		--button-gap: 6px;
+		align-self: center;
+		flex-shrink: 0;
+	}
+
+	&__status
+	{
+		font-size: 14px;
+		margin: var(--spacing-12) 0 0;
+		text-align: center;
+
+		&:empty
+		{
+			display: none;
+		}
+	}
+}
+
+@include l
+{
+	.newsletter
+	{
+		min-height: 664px;
+
+		&__inner
+		{
+			--layout-content-max-width: 562px;
+			--layout-gutter: var(--spacing-48);
+		}
+
+		&__logo
+		{
+			--logo-height: 35.304px;
+			margin-bottom: 10px;
+		}
+
+		&__text-block
+		{
+			--heading-font-size: 60px;
+			--heading-line-height: 64px;
+			--text-block-gap: var(--spacing-24);
+			margin-bottom: var(--spacing-40);
+		}
+
+		&__form
+		{
+			width: calc(100% - 2px);
+		}
+
+		&__fields
+		{
+			align-items: center;
+			background: var(--color-surface-card);
+			border: 1px solid var(--color-border-editorial);
+			border-radius: var(--radius-full);
+			flex-direction: row;
+			gap: 0;
+			height: 62px;
+			padding: 2px 5px 2px 0;
+		}
+
+		&__input
+		{
+			background: transparent;
+			border: 0;
+			height: 56px;
+		}
+	}
+}

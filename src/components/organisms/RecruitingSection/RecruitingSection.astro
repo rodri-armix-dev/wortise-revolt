@@ -1,0 +1,38 @@
+---
+import type { ComponentProps } from 'astro/types';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import JobCard from '../../molecules/JobCard/JobCard.astro';
+import Button from '../../atoms/Button/Button.astro';
+
+export interface Props {
+	id: string;
+	textBlock: Omit<ComponentProps<typeof TextBlock>, 'actions' | 'alignment' | 'responsiveAlignment'>;
+	items: (ComponentProps<typeof JobCard> & { id: string })[];
+	action: Pick<ComponentProps<typeof Button>, 'label' | 'href' | 'target'>;
+}
+
+const { id, textBlock, items, action } = Astro.props;
+const headingId = `${id}-heading`;
+---
+
+<section class="recruiting-section" id={id} aria-labelledby={textBlock.heading ? headingId : undefined}>
+	<div class="recruiting-section__inner global-inner">
+		<div class="recruiting-section__text-block">
+			<TextBlock {...textBlock} heading={textBlock.heading && { ...textBlock.heading, id: headingId }} alignment="center" />
+		</div>
+		<ul class="recruiting-section__list">
+			{items.map(({ id: itemId, ...item }) => (
+				<li class="recruiting-section__item" data-job-id={itemId}>
+					<JobCard {...item} />
+				</li>
+			))}
+		</ul>
+		<div class="recruiting-section__action">
+			<Button {...action} variant="primary" size="small" disabled={!action.href} />
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './recruiting-section';
+</style>

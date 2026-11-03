@@ -1,0 +1,53 @@
+---
+import type { ComponentProps } from 'astro/types';
+import type { Locale } from '../../../i18n/config';
+import ArticleMeta from '../../atoms/ArticleMeta/ArticleMeta.astro';
+import Heading from '../../atoms/Heading/Heading.astro';
+import BlogTag from '../../atoms/BlogTag/BlogTag.astro';
+import BlogMedia from '../BlogMedia/BlogMedia.astro';
+
+export interface Props {
+	title: string;
+	excerpt: string;
+	author: string;
+	date: string;
+	category: string;
+	href: string;
+	locale: Locale;
+	tone?: ComponentProps<typeof BlogMedia>['tone'];
+	featuredTone?: ComponentProps<typeof BlogMedia>['tone'];
+	bordered?: boolean;
+	image?: ComponentProps<typeof BlogMedia>['image'];
+	variant?: 'featured' | 'story' | 'lead';
+}
+
+const { title, excerpt, author, date, category, href, locale, tone = 'neutral', featuredTone = tone, bordered = false, image, variant = 'featured' } = Astro.props;
+---
+
+<article class:list={['article-card', `article-card--${variant}`]}>
+	<a class="article-card__link" href={href}>
+		{variant !== 'lead' && (
+			<div class="article-card__media">
+				<BlogMedia tone={variant === 'featured' ? featuredTone : tone} bordered={variant !== 'featured' && bordered} image={image && { ...image, alt: '' }} aspectRatio="16/9" responsiveAspectRatio={{ l: '4/3' }} />
+			</div>
+		)}
+		<div class="article-card__copy">
+			<ArticleMeta author={author} date={date} locale={locale} />
+			<div class="article-card__heading">
+				<Heading html={title} tag="h3" />
+			</div>
+			{variant !== 'featured' && (
+				<p class="article-card__excerpt">{excerpt}</p>
+			)}
+			{variant !== 'featured' && (
+				<div class="article-card__category">
+					<BlogTag label={category} />
+				</div>
+			)}
+		</div>
+	</a>
+</article>
+
+<style lang="scss">
+	@use './article-card';
+</style>

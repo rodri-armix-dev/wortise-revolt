@@ -1,0 +1,17 @@
+---
+import type { Locale } from '../../../i18n/config';
+
+export interface Props {
+	author: string;
+	date: string;
+	locale: Locale;
+}
+const { author, date, locale } = Astro.props;
+const formatted = new Intl.DateTimeFormat(locale, { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}T00:00:00Z`));
+---
+
+<p class="article-meta">{author} · <time datetime={date}>{formatted}</time></p>
+
+<style lang="scss">
+	@use './article-meta';
+</style>

@@ -148,6 +148,27 @@ export const homeData = {
 					items: homeGalleryItems,
 				},
 			},
+			{
+				type: 'recruiting-section',
+				props: {
+					id: 'busquedas-activas',
+					textBlock: {
+						eyebrow: { label: 'Búsquedas activas' },
+						heading: { html: '<span data-tone="muted">Forma parte de </span>Wortise', tag: 'h2' },
+						description: {
+							size: 'normal',
+							html: '<p>Los Wortisers se identifican por ser enfocados, curiosos y resolutivos. Si crees que encajas ¡postulate!, te estamos esperando.</p>',
+						},
+					},
+					items: [
+						// Temporary destinations for interaction previews until job URLs are available.
+						{ id: 'technical-lead-1', title: 'Líder Técnico', location: 'Argentina', href: '#busquedas-activas' },
+						{ id: 'technical-lead-2', title: 'Líder Técnico', location: 'Argentina', href: '#busquedas-activas' },
+						{ id: 'technical-lead-3', title: 'Líder Técnico', location: 'Argentina', href: '#busquedas-activas' },
+					],
+					action: { label: 'Ver más búsquedas', href: '#busquedas-activas' },
+				},
+			},
 		],
 	},
 	en: {

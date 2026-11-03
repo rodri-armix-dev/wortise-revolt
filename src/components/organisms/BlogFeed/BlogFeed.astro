@@ -1,0 +1,54 @@
+---
+import type { ComponentProps } from 'astro/types';
+import ArticleCard from '../../molecules/ArticleCard/ArticleCard.astro';
+import Heading from '../../atoms/Heading/Heading.astro';
+import Button from '../../atoms/Button/Button.astro';
+import type { Locale } from '../../../i18n/config';
+import { getUiText } from '../../../i18n/ui';
+
+export interface Props {
+	id: string;
+	title: string;
+	cards: ComponentProps<typeof ArticleCard>[];
+	locale: Locale;
+	mode?: 'featured' | 'stories';
+}
+const { id, title, cards, locale, mode = 'featured' } = Astro.props;
+const ui = getUiText(locale);
+---
+
+<blog-feed class:list={['blog-feed', `blog-feed--${mode}`]} data-mode={mode} data-loaded-label={ui.blogLoaded}>
+	<section class="blog-feed__inner global-inner" aria-labelledby={`${id}-heading`}>
+		<div class="blog-feed__heading">
+			<Heading html={title} id={`${id}-heading`} />
+		</div>
+		<ul class="blog-feed__list" data-feed-list>
+			{cards.map((card) => (
+				<li class="blog-feed__item" data-feed-item>
+					<ArticleCard {...card} variant={mode === 'stories' ? 'story' : 'featured'} />
+				</li>
+			))}
+		</ul>
+		{mode === 'featured' && cards.length > 1 && (
+			<div class="blog-feed__controls" aria-label={ui.blogFeaturedNav} hidden data-feed-controls>
+				{cards.map((card, index) => (
+					<button class="blog-feed__dot" type="button" aria-label={ui.blogSlide.replace('{label}', card.title)} aria-pressed={index === 0 ? 'true' : 'false'} data-feed-slide={index}></button>
+				))}
+			</div>
+		)}
+		{mode === 'stories' && cards.length > 6 && (
+			<div class="blog-feed__more" data-feed-more hidden>
+				<Button label={ui.blogMore} variant="primary" />
+			</div>
+		)}
+		<p class="blog-feed__status" role="status" data-feed-status></p>
+	</section>
+</blog-feed>
+
+<script>
+	import './blog-feed';
+</script>
+
+<style lang="scss">
+	@use './blog-feed';
+</style>

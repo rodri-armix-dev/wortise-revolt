@@ -1,0 +1,39 @@
+---
+import type { Locale } from '../../../i18n/config';
+import { getUiText } from '../../../i18n/ui';
+import { getBlogCard, getBlogCards, featuredPostIds, storyPostIds } from '../../../data/blog';
+import { blogIntro, blogNewsletter } from '../../../data/blog/content';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import ArticleCard from '../../molecules/ArticleCard/ArticleCard.astro';
+import BlogFeed from '../../organisms/BlogFeed/BlogFeed.astro';
+import Newsletter from '../../organisms/Newsletter/Newsletter.astro';
+
+export interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
+const ui = getUiText(locale);
+const lead = getBlogCard(locale, 'programmatic-guaranteed');
+---
+
+<div class="blog-index">
+	<section class="blog-index__cover" aria-labelledby="blog-heading">
+		<div class="blog-index__inner global-inner">
+			<div class="blog-index__text-block">
+				<TextBlock {...blogIntro} />
+			</div>
+			{lead && (
+				<div class="blog-index__lead">
+					<ArticleCard {...lead} variant="lead" />
+				</div>
+			)}
+		</div>
+	</section>
+	<BlogFeed id="featured-posts" title={ui.blogFeatured} locale={locale} cards={getBlogCards(locale, featuredPostIds)} />
+	<BlogFeed id="more-stories" title={ui.blogStories} locale={locale} cards={getBlogCards(locale, storyPostIds)} mode="stories" />
+	<Newsletter locale={locale} {...blogNewsletter} />
+</div>
+
+<style lang="scss">
+	@use './blog-index';
+</style>

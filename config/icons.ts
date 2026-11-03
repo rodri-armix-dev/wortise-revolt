@@ -6,6 +6,8 @@ import ChevronDown from '@lucide/astro/icons/chevron-down';
 import ChevronUp from '@lucide/astro/icons/chevron-up';
 import Menu from '@lucide/astro/icons/menu';
 import X from '@lucide/astro/icons/x';
+import Link from '@lucide/astro/icons/link';
+import Facebook from '../src/assets/icons/facebook.svg';
 import LinkedIn from '../src/assets/icons/linkedin.svg';
 import AdsAssisted from '../src/assets/icons/ads-assisted.svg';
 import AdsManual from '../src/assets/icons/ads-manual.svg';
@@ -25,6 +27,8 @@ export const iconRegistry = {
 	'chevron-up': { label: 'Chevron up', ...lucideIcon(ChevronUp) },
 	menu: { label: 'Menu', ...lucideIcon(Menu) },
 	x: { label: 'Close', ...lucideIcon(X) },
+	link: { label: 'Link', ...lucideIcon(Link) },
+	facebook: { label: 'Facebook', ...svgIcon(Facebook) },
 	linkedin: { label: 'LinkedIn', ...svgIcon(LinkedIn) },
 	'ads-assisted': { label: 'Assisted mode', ...svgIcon(AdsAssisted) },
 	'ads-manual': { label: 'Manual mode', ...svgIcon(AdsManual) },

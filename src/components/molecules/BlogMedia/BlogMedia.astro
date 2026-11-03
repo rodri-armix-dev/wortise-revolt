@@ -1,0 +1,34 @@
+---
+import { rangeOrder, type ResponsiveValues } from '../../../../config/breakpoints';
+import type { ComponentProps } from 'astro/types';
+import Image from '../../atoms/Image/Image.astro';
+
+export type BlogMediaAspectRatio = '4/3' | '3/2' | '16/9' | '1/1';
+export type BlogMediaTone = 'neutral' | 'pink' | 'blue' | 'violet' | 'surface' | 'surface-accent' | 'cover';
+
+export interface Props {
+	tone?: BlogMediaTone;
+	bordered?: boolean;
+	image?: ComponentProps<typeof Image>;
+	aspectRatio?: BlogMediaAspectRatio;
+	responsiveAspectRatio?: ResponsiveValues<BlogMediaAspectRatio>;
+}
+
+const { tone = 'neutral', bordered = false, image, aspectRatio = '4/3', responsiveAspectRatio = {} } = Astro.props;
+const ratioClass = (ratio: BlogMediaAspectRatio) => ratio.replace('/', 'x');
+const responsiveClasses = rangeOrder.flatMap((range) => responsiveAspectRatio[range] ? [`blog-media--${range}-${ratioClass(responsiveAspectRatio[range])}`] : []);
+---
+
+<div class:list={['blog-media', `blog-media--${tone}`, `blog-media--${ratioClass(aspectRatio)}`, { 'blog-media--bordered': bordered }, ...responsiveClasses]}>
+	{image ? (
+		<div class="blog-media__image">
+			<Image {...image} />
+		</div>
+	) : (
+		<slot />
+	)}
+</div>
+
+<style lang="scss">
+	@use './blog-media';
+</style>

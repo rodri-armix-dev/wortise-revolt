@@ -39,6 +39,31 @@ for (const { mode, development } of [
 		assert.equal(routes.getPagePath('es', 'ui', '/preview/'), development && !launch ? '/preview/es/ui/' : undefined);
 		assert.ok(navigation.getLanguageItems('/es/ui/').every((item) => development && !launch ? true : !item.available && !item.href));
 		assert.equal(routes.getPageFromPath('/es/unknown/'), undefined);
+		// Blog routes and both language selectors share the published registry.
+		const blogPath = '/es/blog/programmatic-guaranteed/';
+		assert.equal(routes.getPagePath('es', 'blog'), launch ? undefined : '/es/blog/');
+		assert.equal(routes.getPagePath('en', 'blog'), undefined);
+		assert.equal(routes.getPagePath('pt', 'blog'), undefined);
+		assert.equal(routes.getPagePath('es', 'blog-programmatic-guaranteed'), launch ? undefined : blogPath);
+		assert.equal(routes.getPageFromPath(blogPath), launch ? undefined : 'blog-programmatic-guaranteed');
+		assert.equal(routes.getPagePath('es', 'blog-programmatic-guaranteed', '/preview/'), launch ? undefined : `/preview${blogPath}`);
+		assert.deepEqual(navigation.getLanguageItems(`/preview${blogPath}`, '/preview/').map(({ available }) => available), launch ? [false, false, false] : [true, false, false]);
+		assert.ok(navigation.getLanguageItems('/es/blog/unknown/').every((item) => !item.available && !item.href));
+		const { getBlogCards } = await server.ssrLoadModule('/src/data/blog/index.ts');
+		assert.equal(getBlogCards('es', ['programmatic-guaranteed']).length, launch ? 0 : 1);
+		assert.equal(getBlogCards('en', ['programmatic-guaranteed']).length, 0);
+		if (!launch) {
+			const article = pageData['blog-programmatic-guaranteed'];
+			try {
+				// A synthetic complete translation exercises publication without generating content.
+				article.en = { ...article.es, slug: 'blog/translated-slug', content: { ...article.es.content, title: 'Translated title' } };
+				assert.equal(routes.getPagePath('en', 'blog-programmatic-guaranteed', '/preview/'), '/preview/en/blog/translated-slug/');
+				assert.deepEqual(navigation.getLanguageItems(blogPath).map(({ available }) => available), [true, true, false]);
+				assert.equal(getBlogCards('en', ['programmatic-guaranteed'])[0].title, 'Translated title');
+			} finally {
+				delete article.en;
+			}
+		}
 		assert.ok(navigation.getLanguageItems('/es/unknown/').every((item) => !item.available && !item.href));
 		assert.equal(routes.getPageFromPath(adsPath), 'wortise-ads');
 		assert.equal(routes.getPagePath('es', 'wortise-ads', '/preview/'), `/preview${adsPath}`);

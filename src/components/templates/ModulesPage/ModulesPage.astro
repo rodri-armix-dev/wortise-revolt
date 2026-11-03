@@ -10,6 +10,7 @@ import type WorldSolutions from '../../organisms/WorldSolutions/WorldSolutions.a
 import type Kpis from '../../organisms/Kpis/Kpis.astro';
 import type VideoSection from '../../organisms/VideoSection/VideoSection.astro';
 import type ImageGallery from '../../organisms/ImageGallery/ImageGallery.astro';
+import type RecruitingSection from '../../organisms/RecruitingSection/RecruitingSection.astro';
 import type { ComponentProps } from 'astro/types';
 
 export interface ModulePropsByType {
@@ -24,6 +25,7 @@ export interface ModulePropsByType {
 	kpis: ComponentProps<typeof Kpis>;
 	'video-section': ComponentProps<typeof VideoSection>;
 	'image-gallery': ComponentProps<typeof ImageGallery>;
+	'recruiting-section': ComponentProps<typeof RecruitingSection>;
 }
 
 export type PageModule = {
@@ -90,6 +92,11 @@ const { modules } = Astro.props;
 		if (module.type === 'image-gallery') {
 			const { default: ImageGallery } = await import('../../organisms/ImageGallery/ImageGallery.astro');
 			return <ImageGallery {...module.props} />;
+		}
+
+		if (module.type === 'recruiting-section') {
+			const { default: RecruitingSection } = await import('../../organisms/RecruitingSection/RecruitingSection.astro');
+			return <RecruitingSection {...module.props} />;
 		}
 
 		const { default: AboutUsCover } = await import('../../organisms/AboutUsCover/AboutUsCover.astro');

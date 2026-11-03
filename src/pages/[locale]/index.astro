@@ -19,12 +19,18 @@ export function getStaticPaths() {
 }
 
 const { locale, page } = Astro.props;
+const BlogIndex = page.template === 'blog' ? (await import('../../components/templates/BlogIndex/BlogIndex.astro')).default : undefined;
+const BlogArticle = page.template === 'blog-article' ? (await import('../../components/templates/BlogArticle/BlogArticle.astro')).default : undefined;
 ---
 
-<BaseLayout locale={locale} title={page.meta.title} description={page.meta.description} footerCTA={page.template === 'legal' ? undefined : page.footerCTA} headerOverlay={page.template !== 'legal' && page.modules[0]?.type === 'ads-cover'}>
+<BaseLayout locale={locale} title={page.meta.title} description={page.meta.description} footerCTA={'footerCTA' in page ? page.footerCTA : undefined} headerOverlay={'modules' in page && page.modules[0]?.type === 'ads-cover'}>
 	{page.template === 'legal' ? (
 		<LegalPage locale={locale} {...page.content} />
+	) : page.template === 'blog' && BlogIndex ? (
+		<BlogIndex locale={locale} />
+	) : page.template === 'blog-article' && BlogArticle ? (
+		<BlogArticle locale={locale} post={page.content} />
 	) : (
-		<ModulesPage modules={page.modules} />
+		'modules' in page && <ModulesPage modules={page.modules} />
 	)}
 </BaseLayout>
