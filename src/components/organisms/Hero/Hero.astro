@@ -28,9 +28,9 @@ const resolvedContent = content && {
 	<div class="hero__inner global-inner">
 		<div class="hero__text-block">
 			{resolvedContent ? (
-				<TextBlock {...resolvedContent} />
+				<TextBlock {...resolvedContent} heading={resolvedContent.heading && { ...resolvedContent.heading, size: { s: 'display-sm', l: 'display-lg', xl: 'display-xl' } }} />
 			) : (
-				<Heading tag="h1" html={heading ?? ''} />
+				<Heading tag="h1" html={heading ?? ''} size={{ s: 'display-sm', l: 'display-lg', xl: 'display-xl' }} />
 			)}
 		</div>
 		{visual && (

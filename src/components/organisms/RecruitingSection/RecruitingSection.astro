@@ -18,7 +18,7 @@ const headingId = `${id}-heading`;
 <section class="recruiting-section" id={id} aria-labelledby={textBlock.heading ? headingId : undefined}>
 	<div class="recruiting-section__inner global-inner">
 		<div class="recruiting-section__text-block">
-			<TextBlock {...textBlock} heading={textBlock.heading && { ...textBlock.heading, id: headingId }} alignment="center" />
+			<TextBlock {...textBlock} heading={textBlock.heading && { ...textBlock.heading, id: headingId, size: { s: 'title-lg', l: 'display-lg' } }} alignment="center" />
 		</div>
 		<ul class="recruiting-section__list">
 			{items.map(({ id: itemId, ...item }) => (

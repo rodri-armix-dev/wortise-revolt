@@ -31,7 +31,7 @@ const id = `contact-${crypto.randomUUID()}`;
 <section class="contact-section" aria-labelledby={`${id}-heading`} data-contact-section>
 	<div class="contact-section__inner global-inner">
 		<div class="contact-section__intro">
-			<TextBlock {...intro} heading={intro.heading && { ...intro.heading, id: `${id}-heading` }} alignment="center" />
+			<TextBlock {...intro} heading={intro.heading && { ...intro.heading, id: `${id}-heading`, size: { s: 'display-sm', l: 'display-xl' } }} alignment="center" />
 		</div>
 		<div class="contact-section__panel">
 			<form class="contact-section__form" method="dialog" data-contact-form data-required-message={ui.requiredField} data-email-message={ui.invalidEmail}>
@@ -81,7 +81,7 @@ const id = `contact-${crypto.randomUUID()}`;
 					<Icon name="check" size={16} />
 				</div>
 				<div class="contact-section__success-copy" tabindex="-1" role="status" aria-live="polite" data-contact-confirmation>
-					<TextBlock {...success} alignment="center" />
+					<TextBlock {...success} heading={success.heading && { ...success.heading, size: { s: 'title-sm', l: 'title-xs' } }} alignment="center" />
 				</div>
 				<div class="contact-section__success-actions">
 					<Button label={homeLabel} href={homeHref} variant="primary-special" size="medium" />

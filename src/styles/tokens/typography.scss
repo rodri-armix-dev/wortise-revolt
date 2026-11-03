@@ -3,10 +3,51 @@
 {
 	// Primitive font family used by the design.
 	--font-family-primitive-aeonik-pro: 'Aeonik Pro', sans-serif;
+
+	--font-size-primitive-21: 21px;
+	--font-size-primitive-24: 24px;
+	--font-size-primitive-32: 32px;
+	--font-size-primitive-36: 36px;
+	--font-size-primitive-40: 40px;
+	--font-size-primitive-48: 48px;
+	--font-size-primitive-52: 52px;
+	--font-size-primitive-60: 60px;
+
+	--line-height-primitive-26: 26px;
+	--line-height-primitive-34: 34px;
+	--line-height-primitive-40: 40px;
+	--line-height-primitive-46: 46px;
+	--line-height-primitive-52: 52px;
+	--line-height-primitive-58: 58px;
+	--line-height-primitive-64: 64px;
 }
 
 :root
 {
 	// Semantic family consumed by the UI.
 	--font-family-primary: var(--font-family-primitive-aeonik-pro);
+
+	--font-size-title-xs: var(--font-size-primitive-21);
+	--line-height-title-xs: var(--line-height-primitive-26);
+
+	--font-size-title-sm: var(--font-size-primitive-24);
+	--line-height-title-sm: var(--line-height-primitive-34);
+
+	--font-size-title-md: var(--font-size-primitive-32);
+	--line-height-title-md: var(--line-height-primitive-40);
+
+	--font-size-title-lg: var(--font-size-primitive-36);
+	--line-height-title-lg: var(--line-height-primitive-40);
+
+	--font-size-display-sm: var(--font-size-primitive-40);
+	--line-height-display-sm: var(--line-height-primitive-46);
+
+	--font-size-display-md: var(--font-size-primitive-48);
+	--line-height-display-md: var(--line-height-primitive-52);
+
+	--font-size-display-lg: var(--font-size-primitive-52);
+	--line-height-display-lg: var(--line-height-primitive-58);
+
+	--font-size-display-xl: var(--font-size-primitive-60);
+	--line-height-display-xl: var(--line-height-primitive-64);
 }

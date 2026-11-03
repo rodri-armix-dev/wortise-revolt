@@ -4,22 +4,25 @@ import { sanitizeHeading } from '../../../lib/sanitize-heading';
 
 export type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
 
-export type HeadingSize = 'small' | 'normal' | 'large';
+export type HeadingSize = 'title-xs' | 'title-sm' | 'title-md' | 'title-lg' | 'display-sm' | 'display-md' | 'display-lg' | 'display-xl';
+
+export type HeadingResponsiveSize = { s: HeadingSize } & ResponsiveValues<HeadingSize>;
 
 export interface Props {
 	html: string;
 	tag?: HeadingTag;
-	size?: HeadingSize;
-	responsiveSize?: ResponsiveValues<HeadingSize>;
+	size?: HeadingSize | HeadingResponsiveSize;
 	id?: string;
 }
 
-const { html, tag: Tag = 'h2', size = 'normal', responsiveSize = {}, id } = Astro.props;
+const { html, tag: Tag = 'h2', size = 'display-sm', id } = Astro.props;
+const baseSize = typeof size === 'string' ? size : size.s;
+const responsiveSize: ResponsiveValues<HeadingSize> = typeof size === 'string' ? {} : size;
 const content = sanitizeHeading(html);
 const responsiveClasses = rangeOrder.flatMap((range) => responsiveSize[range] ? [`heading--${range}-${responsiveSize[range]}`] : []);
 ---
 
-<Tag class:list={['heading', `heading--${size}`, ...responsiveClasses]} id={id} set:html={content} />
+<Tag class:list={['heading', `heading--${baseSize}`, ...responsiveClasses]} id={id} set:html={content} />
 
 <style lang="scss">
 	@use './heading';

@@ -19,9 +19,7 @@ const ui = getUiText(locale);
 
 <blog-feed class:list={['blog-feed', `blog-feed--${mode}`]} data-mode={mode} data-loaded-label={ui.blogLoaded}>
 	<section class="blog-feed__inner global-inner" aria-labelledby={`${id}-heading`}>
-		<div class="blog-feed__heading">
-			<Heading html={title} id={`${id}-heading`} />
-		</div>
+		<Heading html={title} id={`${id}-heading`} size={{ s: 'display-sm', l: 'display-md' }} />
 		<ul class="blog-feed__list" data-feed-list>
 			{cards.map((card) => (
 				<li class="blog-feed__item" data-feed-item>

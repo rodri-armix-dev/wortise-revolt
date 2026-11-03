@@ -17,9 +17,6 @@
 
 	&__text-block
 	{
-		--heading-font-size: 36px;
-		--heading-font-weight: 400;
-		--heading-line-height: 40px;
 		--text-block-intro-gap: var(--spacing-12);
 		max-width: 755px;
 	}
@@ -103,14 +100,10 @@
 
 		&__text-block
 		{
-			--heading-font-size: 52px;
-			--heading-line-height: 58px;
 			--text-block-intro-gap: 30px;
 
 			.kpis--vision &
 			{
-				--heading-font-size: 60px;
-				--heading-line-height: 64px;
 				--text-block-intro-gap: var(--spacing-12);
 				max-width: 712px;
 			}

@@ -25,7 +25,7 @@ export const contactPageData = {
 				submitLabel: 'Enviar mensaje',
 				success: {
 					eyebrow: { label: 'Éxito' },
-					heading: { html: 'Tu mensaje fue enviado correctamente.', tag: 'h2', size: 'small' },
+					heading: { html: 'Tu mensaje fue enviado correctamente.', tag: 'h2' },
 					description: { html: '<p>Lo revisamos y te responderemos a la brevedad. Mientras tanto, podés escribirnos por nuestros canales directos o enviar otra consulta.</p>' },
 				},
 				homeLabel: 'Volver al inicio',

@@ -10,9 +10,6 @@
 
 	&__text-block
 	{
-		--heading-font-size: 24px;
-		--heading-font-weight: 400;
-		--heading-line-height: 34px;
 		--text-block-intro-gap: var(--spacing-12);
 		min-width: 0;
 	}
@@ -31,12 +28,7 @@
 		flex-direction: row;
 		gap: var(--spacing-32);
 		justify-content: space-between;
-		padding: 36px;
+		padding: var(--spacing-32);
 
-		&__text-block
-		{
-			--heading-font-size: 32px;
-			--heading-line-height: 40px;
-		}
 	}
 }

@@ -43,7 +43,6 @@ export const aboutPageData = {
 						heading: {
 							html: 'Conectamos grandes marcas con personas',
 							tag: 'h1',
-							size: 'large',
 						},
 						description: {
 							html: '<p>Posicionamos marcas en la rutina diaria de más de 320 millones de usuarios únicos, dentro de la red de aplicaciones en español más grande del mundo.</p>',

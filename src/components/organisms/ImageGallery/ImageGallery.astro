@@ -17,7 +17,7 @@ const { textBlock, items, label, variant = 'team' } = Astro.props;
 	{textBlock && (
 		<div class="image-gallery__inner global-inner">
 			<div class="image-gallery__text-block">
-				<TextBlock {...textBlock} />
+				<TextBlock {...textBlock} heading={textBlock.heading && { ...textBlock.heading, size: { s: 'title-lg', l: 'display-lg' } }} />
 			</div>
 		</div>
 	)}

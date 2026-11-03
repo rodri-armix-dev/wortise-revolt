@@ -20,7 +20,7 @@ const { textBlock, items, variant = 'scale' } = Astro.props;
 <section class:list={['kpis', `kpis--${variant}`]}>
 	<div class="kpis__inner global-inner">
 		<div class="kpis__text-block">
-			<TextBlock {...textBlock} />
+			<TextBlock {...textBlock} heading={textBlock.heading && { ...textBlock.heading, size: { s: 'title-lg', l: variant === 'vision' ? 'display-xl' : 'display-lg' } }} />
 		</div>
 		<dl class="kpis__items">
 			{items.map((item) => (

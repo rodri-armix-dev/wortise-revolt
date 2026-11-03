@@ -9,8 +9,6 @@
 	{
 		--description-line-height: 20px;
 		--eyebrow-white-space: normal;
-		--heading-font-weight: 400;
-		--heading-line-height: 46px;
 		--heading-muted-color: #a0a0a0; // sass-lint:disable-line no-color-literals
 		--text-block-actions-offset: var(--spacing-12);
 		--text-block-description-max-width: 567px;
@@ -40,9 +38,6 @@
 
 		.hero--simple &
 		{
-			--heading-font-size: clamp(2.5rem, 8vw, 6rem);
-			--heading-font-weight: 700;
-			--heading-line-height: 1;
 			flex: initial;
 			margin-top: 0;
 			max-width: none;
@@ -87,8 +82,6 @@
 
 		&__text-block
 		{
-			--heading-font-size: 52px;
-			--heading-line-height: 58px;
 			--text-block-actions-offset: 0;
 			--text-block-eyebrow-max-width: none;
 			--text-block-gap: var(--spacing-24);
@@ -122,11 +115,6 @@
 			transform: translateY(46px);
 		}
 
-		&__text-block
-		{
-			--heading-font-size: 60px;
-			--heading-line-height: 64px;
-		}
 	}
 }
 

@@ -11,9 +11,6 @@
 	&__text-block
 	{
 		--description-line-height: 1.25;
-		--heading-font-size: 40px;
-		--heading-font-weight: 400;
-		--heading-line-height: 1.15;
 		--text-block-description-margin-inline: auto;
 		--text-block-description-max-width: 720px;
 		--text-block-intro-gap: var(--spacing-16);
@@ -95,12 +92,6 @@
 		&__cover
 		{
 			padding-block: 112px 96px;
-		}
-
-		&__text-block
-		{
-			--heading-font-size: 60px;
-			--heading-line-height: 1.0667;
 		}
 
 		&__document

@@ -2,6 +2,9 @@
 
 Sitio estático en Astro. Usar pnpm.
 
+La API de títulos y su escala de Figma están documentadas en
+[Heading: estilos tipográficos](docs/heading-typography.md).
+
 ## Contenido editorial: prueba con Markdown
 
 Se acordó probar `.md` para el contenido de los editores WYSIWYG, comenzando por

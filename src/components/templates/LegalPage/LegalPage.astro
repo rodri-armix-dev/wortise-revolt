@@ -24,7 +24,7 @@ const formatDate = (value: string) => dateFormatter.format(new Date(`${value}T00
 <article class="legal-page">
 	<header class="legal-page__cover global-inner">
 		<div class="legal-page__text-block">
-			<TextBlock alignment="center" eyebrow={{ label: eyebrow }} heading={{ html: title, tag: 'h1' }} description={introduction ? { html: introduction } : undefined} />
+			<TextBlock alignment="center" eyebrow={{ label: eyebrow }} heading={{ html: title, tag: 'h1', size: { s: 'display-sm', l: 'display-xl' } }} description={introduction ? { html: introduction } : undefined} />
 		</div>
 		{(updatedAt || effectiveAt) && (
 			<div class="legal-page__dates">

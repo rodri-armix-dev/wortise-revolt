@@ -43,8 +43,6 @@
 		--button-justify-content: space-between;
 		--description-color: var(--color-text-primary);
 		--description-line-height: 20px;
-		--heading-font-weight: 400;
-		--heading-line-height: 46px;
 		--heading-muted-color: #a0a0a0; // sass-lint:disable-line no-color-literals
 		--text-block-actions-offset: 30px;
 		--text-block-intro-gap: var(--spacing-16);
@@ -83,8 +81,6 @@
 		{
 			--button-height: 50px;
 			--description-color: var(--color-text-secondary);
-			--heading-font-size: 60px;
-			--heading-line-height: 64px;
 			--heading-muted-color: #949499; // sass-lint:disable-line no-color-literals
 			--text-block-actions-offset: 0;
 			--text-block-description-max-width: 567px;

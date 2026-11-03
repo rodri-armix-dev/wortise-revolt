@@ -19,7 +19,7 @@ const instanceId = `world-${crypto.randomUUID()}`;
 <world-solutions class="world-solutions">
 	<div class="world-solutions__inner global-inner">
 		<div class="world-solutions__text-block">
-			<TextBlock {...content} alignment="center" responsiveAlignment={{ l: 'left' }} />
+			<TextBlock {...content} heading={content.heading && { ...content.heading, size: { s: 'title-lg', l: 'display-lg' } }} alignment="center" responsiveAlignment={{ l: 'left' }} />
 		</div>
 	</div>
 	<nav class="world-solutions__navigation global-inner" aria-label={ui.worldNavigation}>

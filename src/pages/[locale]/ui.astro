@@ -14,7 +14,7 @@ import BlogMedia from '../../components/molecules/BlogMedia/BlogMedia.astro';
 import aboutUsCoverImage from '../../assets/images/about-us-cover.png';
 import type { ComponentProps } from 'astro/types';
 
-type HeadingSize = NonNullable<ComponentProps<typeof Heading>['size']>;
+type HeadingSize = Extract<NonNullable<ComponentProps<typeof Heading>['size']>, string>;
 type ButtonProps = ComponentProps<typeof Button>;
 type ButtonSize = NonNullable<ButtonProps['size']>;
 type ButtonState = NonNullable<ButtonProps['state']>;
@@ -42,7 +42,7 @@ const footerCTA = {
 } satisfies ComponentProps<typeof FooterCTA>;
 
 const states: ButtonState[] = ['default', 'hover', 'pressed', 'disabled'];
-const headingSizes: HeadingSize[] = ['small', 'normal', 'large'];
+const headingSizes: HeadingSize[] = ['title-xs', 'title-sm', 'title-md', 'title-lg', 'display-sm', 'display-md', 'display-lg', 'display-xl'];
 const descriptionSizes: NonNullable<ComponentProps<typeof Description>['size']>[] = ['inherit', 'normal', 'large'];
 const variants: { name: ButtonVariant; label: string; sizes: ButtonSize[] }[] = [
 	{ name: 'primary', label: 'Contactar', sizes: ['small', 'medium', 'large'] },
@@ -137,7 +137,7 @@ const variants: { name: ButtonVariant; label: string; sizes: ButtonSize[] }[] = 
 		</section>
 		<section class="ui__section" aria-labelledby="text-block-title">
 			<h2 id="text-block-title">TextBlock</h2>
-			<TextBlock alignment="left" responsiveAlignment={{ m: 'center' }} eyebrow={{ label: 'Wortise' }} heading={{ tag: 'h4', size: 'normal', html: 'Un bloque de texto' }} description={{ html: '<p>Contenido con <strong>formato</strong>. Alineado a la izquierda en S y al centro desde M.</p>' }} actions={{ primary: { label: 'Nosotros', href: `/${locale}/nosotros/`, size: 'medium' }, secondary: { label: 'Wortise Ads', href: `/${locale}/wortise-ads/`, size: 'medium', icon: 'arrow-up-right' }, }} />
+			<TextBlock alignment="left" responsiveAlignment={{ m: 'center' }} eyebrow={{ label: 'Wortise' }} heading={{ tag: 'h4', size: 'display-sm', html: 'Un bloque de texto' }} description={{ html: '<p>Contenido con <strong>formato</strong>. Alineado a la izquierda en S y al centro desde M.</p>' }} actions={{ primary: { label: 'Nosotros', href: `/${locale}/nosotros/`, size: 'medium' }, secondary: { label: 'Wortise Ads', href: `/${locale}/wortise-ads/`, size: 'medium', icon: 'arrow-up-right' }, }} />
 		</section>
 		<section class="ui__section" aria-labelledby="description-title">
 			<h2 id="description-title">Description</h2>
@@ -165,12 +165,16 @@ const variants: { name: ButtonVariant; label: string; sizes: ButtonSize[] }[] = 
 					</div>
 				)}
 				<div class="ui__example">
-					<span class="ui__state">normal · span · HTML con dos tonos</span>
+					<span class="ui__state">display-sm · span · HTML con dos tonos</span>
 					<Heading tag="span" html='<span data-tone="muted">Conectamos marcas</span><br>con personas' />
 				</div>
 				<div class="ui__example">
-					<span class="ui__state">Responsive · small → L normal → XL large</span>
-					<Heading id="heading-responsive-example" tag="h3" html="Wortise" size="small" responsiveSize={{ l: 'normal', xl: 'large' }} />
+					<span class="ui__state">Responsive · title-sm → L display-sm → XL display-xl</span>
+					<Heading id="heading-responsive-example" tag="h3" html="Wortise" size={{ s: 'title-sm', l: 'display-sm', xl: 'display-xl' }} />
+				</div>
+				<div class="ui__example">
+					<span class="ui__state">Responsive · rangos combinados y exclusivos</span>
+					<Heading id="heading-ranges-example" tag="h3" html="Wortise" size={{ xl: 'display-xl', s: 'title-sm', os: 'title-xs', oml: 'title-lg', l: 'display-lg' }} />
 				</div>
 			</div>
 		</section>

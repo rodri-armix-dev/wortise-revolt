@@ -27,7 +27,7 @@ const related = getBlogCards(locale, relatedIds);
 	<header class="blog-article__header global-inner">
 		<ArticleMeta author={post.author} date={post.date} locale={locale} />
 		<div class="blog-article__heading">
-			<Heading html={post.title} tag="h1" />
+			<Heading html={post.title} tag="h1" size={{ s: 'title-lg', l: 'display-xl' }} />
 		</div>
 		<BlogTag label={post.category} />
 		<p class="blog-article__lead">{post.lead}</p>

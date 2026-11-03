@@ -1,15 +1,20 @@
 $sizes: (
-	small: 24px,
-	normal: 40px,
-	large: 64px,
+	title-xs,
+	title-sm,
+	title-md,
+	title-lg,
+	display-sm,
+	display-md,
+	display-lg,
+	display-xl,
 );
 
 .heading
 {
 	color: var(--heading-color, var(--color-text-primary));
 	font-size: var(--heading-font-size, var(--heading-size));
-	font-weight: var(--heading-font-weight, 500);
-	line-height: var(--heading-line-height, 1.1);
+	font-weight: var(--heading-font-weight, 400);
+	line-height: var(--heading-line-height, var(--heading-leading));
 	margin: 0;
 	overflow-wrap: break-word;
 	text-wrap: var(--heading-text-wrap, inherit); // sass-lint:disable-line no-misspelled-properties
@@ -19,11 +24,12 @@ $sizes: (
 		color: var(--heading-muted-color, var(--color-text-muted));
 	}
 
-	@each $name, $value in $sizes
+	@each $name in $sizes
 	{
 		&--#{$name}
 		{
-			--heading-size: #{$value};
+			--heading-leading: var(--line-height-#{$name});
+			--heading-size: var(--font-size-#{$name});
 		}
 	}
 }
@@ -34,11 +40,12 @@ $sizes: (
 	{ // sass-lint:disable-line indentation
 		.heading
 		{
-			@each $name, $value in $sizes
+			@each $name in $sizes
 			{
 				&--#{$range}-#{$name}
 				{
-					--heading-size: #{$value};
+					--heading-leading: var(--line-height-#{$name});
+					--heading-size: var(--font-size-#{$name});
 				}
 			}
 		}

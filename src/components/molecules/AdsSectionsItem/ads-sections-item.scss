@@ -44,13 +44,6 @@
 		padding-inline: var(--spacing-24);
 	}
 
-	&__heading
-	{
-		--heading-font-size: 24px;
-		--heading-font-weight: 500;
-		--heading-line-height: 34px;
-	}
-
 	&__badge
 	{
 		--eyebrow-color: #f858d7;
@@ -293,13 +286,6 @@
 		{
 			gap: 26px;
 			padding: var(--spacing-24);
-		}
-
-		&__heading
-		{
-			--heading-font-size: 32px;
-			--heading-font-weight: 400;
-			--heading-line-height: 40px;
 		}
 
 		&__visual

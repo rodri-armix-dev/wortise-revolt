@@ -13,7 +13,7 @@ const { eyebrow, title, action } = Astro.props;
 
 <aside class="editorial-cta">
 	<div class="editorial-cta__text-block">
-		<TextBlock eyebrow={{ label: eyebrow }} heading={{ html: title, tag: 'h2' }} />
+		<TextBlock eyebrow={{ label: eyebrow }} heading={{ html: title, tag: 'h2', size: { s: 'title-sm', l: 'title-md' } }} />
 	</div>
 	<div class="editorial-cta__action">
 		<Button {...action} disabled={action.disabled || !action.href} variant="primary-special" size="large" />

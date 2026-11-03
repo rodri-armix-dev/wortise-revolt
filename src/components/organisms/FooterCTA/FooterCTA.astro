@@ -18,7 +18,7 @@ const headingId = text.heading?.html.trim() ? text.heading.id ?? 'footer-cta-hea
 			<Logo {...logo} />
 		</div>
 		<div class="footer-cta__text-block">
-			<TextBlock {...resolvedText} heading={text.heading && { ...text.heading, id: headingId }} alignment="center" />
+			<TextBlock {...resolvedText} heading={text.heading && { ...text.heading, id: headingId, size: { s: 'display-sm', xl: 'display-xl' } }} alignment="center" />
 		</div>
 	</div>
 </section>

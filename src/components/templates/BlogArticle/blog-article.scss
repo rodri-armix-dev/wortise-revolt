@@ -5,15 +5,12 @@
 		--global-item-gap: var(--spacing-24);
 		--layout-content-max-width: 1120px;
 		--layout-gutter: var(--spacing-20);
-		padding-block: 56px;
+		padding-block: var(--spacing-48);
 		text-align: center;
 	}
 
 	&__heading
 	{
-		--heading-font-size: 36px;
-		--heading-font-weight: 400;
-		--heading-line-height: 40px;
 		max-width: 982px;
 		width: 100%;
 	}
@@ -56,13 +53,7 @@
 		&__header
 		{
 			--layout-gutter: var(--spacing-48);
-			padding-block: 96px 88px;
-		}
-
-		&__heading
-		{
-			--heading-font-size: 60px;
-			--heading-line-height: 64px;
+			padding-block: var(--spacing-64);
 		}
 
 		&__body

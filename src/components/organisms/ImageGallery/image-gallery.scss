@@ -11,9 +11,6 @@
 	&__text-block
 	{
 		--description-line-height: 20px;
-		--heading-font-size: 36px;
-		--heading-font-weight: 400;
-		--heading-line-height: 40px;
 		--text-block-description-max-width: 477px;
 		--text-block-description-margin-inline: auto;
 		--text-block-gap: var(--spacing-8);
@@ -38,12 +35,6 @@
 		&__inner
 		{
 			margin-bottom: 104px;
-		}
-
-		&__text-block
-		{
-			--heading-font-size: 52px;
-			--heading-line-height: 58px;
 		}
 
 		&__carousel

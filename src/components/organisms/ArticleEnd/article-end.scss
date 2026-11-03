@@ -4,13 +4,13 @@
 	display: flex;
 	flex-direction: column;
 	gap: var(--spacing-24);
-	padding-block: 36px;
+	padding-block: var(--spacing-32);
 
 	&__tags
 	{
 		display: flex;
 		flex-wrap: wrap;
-		gap: 10px;
+		gap: var(--spacing-8);
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -28,7 +28,7 @@
 		align-items: center;
 		display: flex;
 		flex: 0 0 auto;
-		gap: 14px;
+		gap: var(--spacing-12);
 	}
 
 	&__avatar

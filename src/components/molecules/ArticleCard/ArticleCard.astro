@@ -33,9 +33,7 @@ const { title, excerpt, author, date, category, href, locale, tone = 'neutral', 
 		)}
 		<div class="article-card__copy">
 			<ArticleMeta author={author} date={date} locale={locale} />
-			<div class="article-card__heading">
-				<Heading html={title} tag="h3" />
-			</div>
+			<Heading html={title} tag="h3" size={variant === 'featured' ? 'title-sm' : { s: 'title-sm', l: 'title-md' }} />
 			{variant !== 'featured' && (
 				<p class="article-card__excerpt">{excerpt}</p>
 			)}

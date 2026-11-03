@@ -12,7 +12,7 @@ const { textBlock } = Astro.props;
 <section class="ads-cover">
 	<div class="ads-cover__inner global-inner">
 		<div class="ads-cover__text-block">
-			<TextBlock {...textBlock} />
+			<TextBlock {...textBlock} heading={textBlock.heading && { ...textBlock.heading, size: { s: 'display-sm', l: 'display-xl' } }} />
 		</div>
 	</div>
 </section>

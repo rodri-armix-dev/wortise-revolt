@@ -14,7 +14,7 @@ const { textBlock, image } = Astro.props;
 <section class="about-us-cover">
 	<div class="about-us-cover__inner global-inner">
 		<div class="about-us-cover__text-block">
-			<TextBlock {...textBlock} />
+			<TextBlock {...textBlock} heading={textBlock.heading && { ...textBlock.heading, size: { s: 'title-lg', xl: 'display-xl' } }} />
 		</div>
 		{image && (
 			<div class="about-us-cover__media">

@@ -18,9 +18,6 @@
 	&__intro
 	{
 		--eyebrow-white-space: normal;
-		--heading-font-size: 36px;
-		--heading-font-weight: 400;
-		--heading-line-height: 40px;
 		--heading-text-wrap: balance;
 		display: flex;
 		flex-direction: column;
@@ -122,8 +119,6 @@
 
 		&__intro
 		{
-			--heading-font-size: 52px;
-			--heading-line-height: 58px;
 			gap: var(--spacing-16);
 			margin-top: -81px;
 			text-align: left;

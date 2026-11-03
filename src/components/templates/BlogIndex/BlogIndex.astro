@@ -20,7 +20,7 @@ const lead = getBlogCard(locale, 'programmatic-guaranteed');
 	<section class="blog-index__cover" aria-labelledby="blog-heading">
 		<div class="blog-index__inner global-inner">
 			<div class="blog-index__text-block">
-				<TextBlock {...blogIntro} />
+				<TextBlock {...blogIntro} heading={{ ...blogIntro.heading, size: { s: 'display-sm', l: 'display-xl' } }} />
 			</div>
 			{lead && (
 				<div class="blog-index__lead">

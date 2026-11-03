@@ -2,12 +2,12 @@
 {
 	&__cover
 	{
-		padding-block: 44px;
+		padding-block: var(--spacing-40);
 	}
 
 	&__inner
 	{
-		--global-item-gap: 28px;
+		--global-item-gap: var(--spacing-24);
 		align-items: stretch;
 	}
 
@@ -16,9 +16,6 @@
 		--description-font-size: 16px;
 		--description-line-height: 20px;
 		--eyebrow-white-space: normal;
-		--heading-font-size: 40px;
-		--heading-font-weight: 400;
-		--heading-line-height: 46px;
 		--text-block-gap: var(--spacing-16);
 		--text-block-intro-gap: var(--spacing-16);
 		min-width: 0;
@@ -37,7 +34,7 @@
 		&__cover
 		{
 			background: radial-gradient(ellipse at 79% 60%, rgba(209, 14, 78, .12), transparent 35%); // sass-lint:disable-line no-color-literals
-			padding-block: 140px;
+			padding-block: var(--spacing-64);
 		}
 
 		&__inner
@@ -51,8 +48,6 @@
 
 		&__text-block
 		{
-			--heading-font-size: 60px;
-			--heading-line-height: 64px;
 			--text-block-gap: var(--spacing-24);
 			--text-block-intro-gap: var(--spacing-24);
 			flex: 1;
