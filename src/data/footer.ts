@@ -18,8 +18,8 @@ export const footerData = {
 		menus: [
 			{ title: 'Soluciones', items: ['Para anunciantes', 'Para desarrolladores', 'Wortise Ads'].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
 			{ title: 'Explorar', items: ['Nosotros', 'Blog', 'Glosario', 'Documentación del SDK'].map((label, index) => ({ label, href: '', page: index === 0 ? 'about' as const : undefined })) },
-			{ title: 'Plataforma', items: [
-				{ label: 'Ingresar', href: '', button: { variant: 'primary-special', size: 'large' } },
+			{ title: 'Plataforma', variant: 'actions', items: [
+				{ label: 'Ingresar', href: '#ingresar', button: { variant: 'primary-special', size: 'large' } },
 				{ label: 'Solicitar una demo', href: '', button: { variant: 'tertiary', icon: 'arrow-up-right' } },
 			] },
 		],
@@ -41,8 +41,8 @@ export const footerData = {
 		menus: [
 			{ title: 'Solutions', items: ['For advertisers', 'For developers', 'Wortise Ads'].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
 			{ title: 'Explore', items: ['About us', 'Blog', 'Glossary', 'SDK documentation'].map((label, index) => ({ label, href: '', page: index === 0 ? 'about' as const : undefined })) },
-			{ title: 'Platform', items: [
-				{ label: 'Log in', href: '', button: { variant: 'primary-special', size: 'large' } },
+			{ title: 'Platform', variant: 'actions', items: [
+				{ label: 'Log in', href: '#ingresar', button: { variant: 'primary-special', size: 'large' } },
 				{ label: 'Request a demo', href: '', button: { variant: 'tertiary', icon: 'arrow-up-right' } },
 			] },
 		],
@@ -64,8 +64,8 @@ export const footerData = {
 		menus: [
 			{ title: 'Soluções', items: ['Para anunciantes', 'Para desenvolvedores', 'Wortise Ads'].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
 			{ title: 'Explorar', items: ['Sobre nós', 'Blog', 'Glossário', 'Documentação do SDK'].map((label, index) => ({ label, href: '', page: index === 0 ? 'about' as const : undefined })) },
-			{ title: 'Plataforma', items: [
-				{ label: 'Entrar', href: '', button: { variant: 'primary-special', size: 'large' } },
+			{ title: 'Plataforma', variant: 'actions', items: [
+				{ label: 'Entrar', href: '#ingresar', button: { variant: 'primary-special', size: 'large' } },
 				{ label: 'Solicitar uma demonstração', href: '', button: { variant: 'tertiary', icon: 'arrow-up-right' } },
 			] },
 		],

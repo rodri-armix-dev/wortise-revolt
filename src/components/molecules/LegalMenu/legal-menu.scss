@@ -23,6 +23,19 @@
 	}
 }
 
+@include oml
+{
+	.legal-menu
+	{
+		&__list
+		{
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: var(--spacing-24);
+		}
+	}
+}
+
 @include xl
 {
 	.legal-menu

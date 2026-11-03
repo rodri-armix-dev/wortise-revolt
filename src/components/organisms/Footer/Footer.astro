@@ -39,7 +39,9 @@ const SocialLinks = fullComponents?.[3].default;
 				</div>
 				<div class="footer__navigation">
 					{menus.map((menu) =>
-						<FooterMenu {...menu} />
+						<div class:list={['footer__menu', { 'footer__menu--actions': menu.variant === 'actions' }]}>
+							<FooterMenu {...menu} />
+						</div>
 					)}
 				</div>
 				<div class="footer__utilities">
