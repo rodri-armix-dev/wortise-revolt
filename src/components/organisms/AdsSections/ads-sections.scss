@@ -208,7 +208,7 @@ $glow-size: 511px;
 
 		.ads-sections__phone-zoom
 		{
-			transform: translateY(var(--ads-sections-phone-center-offset)) scale(1.5);
+			transform: translateY(var(--ads-sections-phone-center-offset)) scale(var(--ads-sections-phone-initial-scale, 1.5));
 		}
 
 	}

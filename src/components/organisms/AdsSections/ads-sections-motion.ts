@@ -133,7 +133,7 @@ export function createPanelMotion({ root, items }: AdsElements, options: MotionO
 		else if (immediate) {
 			timeline.time(readingPositionFor(index));
 			update();
-		} else transition = timeline.tweenTo(readingPositionFor(index), { duration: 0.5, ease: 'power2.out', onComplete: update });
+		} else transition = timeline.tweenTo(readingPositionFor(index), { duration: 0.3, ease: 'power2.out', onComplete: update });
 	};
 	if (!reduced) {
 		timeline = gsap.timeline({ paused: true, onUpdate: update });

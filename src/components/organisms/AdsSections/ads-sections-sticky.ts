@@ -3,6 +3,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cardFadeDuration, cardFadeEase, createPanelMotion, isRefreshing } from './ads-sections-motion';
 import type { AdsElements, Controller } from './ads-sections-motion';
 
+const phoneZoomOutDuration = 0.48;
+
 export function createStickyController(elements: AdsElements, options: { touch: boolean; reduced: boolean; rebuilding: () => boolean }): Controller | undefined {
 	const { root, phoneLayout, viewportMeasure, items } = elements;
 	const phone = phoneLayout.querySelector<HTMLElement>('.ads-sections__phone-zoom');
@@ -16,12 +18,16 @@ export function createStickyController(elements: AdsElements, options: { touch: 
 	// Short viewports keep every panel in normal flow.
 	if (available < 120) return;
 	const phoneWidth = Math.min(available * 410 / 788, items[0].inner.clientWidth, 320);
+	// Cap the transformed phone too; max-width alone does not constrain scale().
+	const initialPhoneMaxWidth = Math.min(items[0].inner.clientWidth, 384);
+	const initialPhoneScale = Math.min(1.5, initialPhoneMaxWidth / phoneWidth);
 	root.style.setProperty('--ads-sections-item-display', 'grid');
 	root.style.setProperty('--ads-sections-item-rows', `${introHeight}px ${available}px minmax(${contentHeight}px, 1fr)`);
 	root.style.setProperty('--ads-sections-item-inner-height', 'calc(var(--ads-sections-item-height) - var(--ads-sections-item-padding-block, var(--spacing-48)) * 2)');
 	root.style.setProperty('--ads-sections-item-phone-max-width', '100%');
 	root.style.setProperty('--ads-sections-item-phone-width', `${phoneWidth}px`);
 	root.style.setProperty('--ads-sections-phone-width', `${phoneWidth}px`);
+	root.style.setProperty('--ads-sections-phone-initial-scale', String(initialPhoneScale));
 	root.style.setProperty('--ads-sections-phone-gap', `${gap}px`);
 	// The zoom starts at the scene center, then settles between the cards.
 	root.style.setProperty('--ads-sections-phone-center-offset', `${(contentHeight - introHeight) / 2}px`);
@@ -39,10 +45,12 @@ export function createStickyController(elements: AdsElements, options: { touch: 
 	let trigger!: ScrollTrigger;
 	let reveals: gsap.core.Timeline[] = [];
 	let phoneEntrance: gsap.core.Timeline | undefined;
+	let phoneTransition: gsap.core.Tween | undefined;
 	let phoneDelay: gsap.core.Tween | undefined;
 	let phoneShown = -1;
-	const phoneEntranceDuration = cardFadeDuration;
-	const phoneEntranceDelay = 0.2;
+	const phoneEntranceDelay = 0.1;
+	const cardRevealDelay = 0.08;
+	const cardRevealStagger = 0.2;
 	const shown = items.map(() => false);
 	const updateAccess = () => items.forEach(({ panel, content }) => {
 		const hidden = panel.inert || Number(panel.style.getPropertyValue('--ads-sections-item-bottom-opacity')) < 0.999;
@@ -51,14 +59,10 @@ export function createStickyController(elements: AdsElements, options: { touch: 
 	});
 	const context = gsap.context(() => {
 		if (!options.reduced) {
-			// CSS owns the initial 1.5 scale. One reversible timeline keeps the
+			// CSS owns the capped initial scale. One reversible timeline keeps the
 			// shared frame continuous when scrolling changes direction mid-zoom.
-			phoneEntrance = gsap.timeline({
-				paused: true,
-				onComplete: () => {
-					if (phoneShown >= 0) reveals[phoneShown]?.restart();
-				},
-			}).to(phone, { scale: 1, y: 0, duration: phoneEntranceDuration, ease: cardFadeEase });
+			phoneEntrance = gsap.timeline({ paused: true })
+				.to(phone, { scale: 1, y: 0, duration: phoneZoomOutDuration, ease: cardFadeEase });
 		}
 		motion = createPanelMotion(elements, {
 			hold, step, readingOffset: 0, finalHold: options.touch ? 1.1 : hold,
@@ -77,6 +81,8 @@ export function createStickyController(elements: AdsElements, options: { touch: 
 					if (!arrived) animation.reverse();
 				});
 				if (phoneShown !== arrivedIndex) {
+					phoneTransition?.kill();
+					phoneTransition = undefined;
 					phoneDelay?.kill();
 					phoneDelay = undefined;
 					phoneShown = arrivedIndex;
@@ -88,9 +94,10 @@ export function createStickyController(elements: AdsElements, options: { touch: 
 						phoneDelay = gsap.delayedCall(phoneEntranceDelay, () => {
 							phoneDelay = undefined;
 							if (phoneShown !== arrivedIndex || !trigger.isActive) return;
-							const completed = entrance.progress() === 1;
-							entrance.play();
-							if (completed) reveals[arrivedIndex]?.restart();
+							// Resuming play() uses only the remaining timeline duration.
+							// Keep every zoom out equally long, even after an interrupted reverse.
+							phoneTransition = entrance.tweenTo(entrance.duration(), { duration: phoneZoomOutDuration, ease: 'none' });
+							reveals[arrivedIndex]?.restart();
 						});
 					} else reveals[arrivedIndex]?.restart();
 				}
@@ -100,8 +107,8 @@ export function createStickyController(elements: AdsElements, options: { touch: 
 		if (!options.reduced) reveals = items.map(({ panel }) => {
 			gsap.set(panel, { '--ads-sections-item-top-opacity': 0, '--ads-sections-item-bottom-opacity': 0 });
 			return gsap.timeline({ paused: true, onUpdate: updateAccess })
-				.to(panel, { '--ads-sections-item-top-opacity': 1, duration: cardFadeDuration, ease: cardFadeEase }, 0.12)
-				.to(panel, { '--ads-sections-item-bottom-opacity': 1, duration: cardFadeDuration, ease: cardFadeEase }, 0.12 + cardFadeDuration + 0.08);
+				.to(panel, { '--ads-sections-item-top-opacity': 1, duration: cardFadeDuration, ease: cardFadeEase }, cardRevealDelay)
+				.to(panel, { '--ads-sections-item-bottom-opacity': 1, duration: cardFadeDuration, ease: cardFadeEase }, cardRevealDelay + cardRevealStagger);
 		});
 		motion.update();
 		trigger = ScrollTrigger.create({
@@ -121,6 +128,6 @@ export function createStickyController(elements: AdsElements, options: { touch: 
 		active: motion.active,
 		panelScroll: (index) => trigger.start + motion.readingPositionFor(index) * height,
 		sync: (progress = trigger.progress) => motion.sync(progress, duration),
-		destroy: () => { phoneDelay?.kill(); motion.destroy(); context.revert(); },
+		destroy: () => { phoneDelay?.kill(); phoneTransition?.kill(); motion.destroy(); context.revert(); },
 	};
 }
