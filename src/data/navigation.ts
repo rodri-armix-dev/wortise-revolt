@@ -17,9 +17,9 @@ export interface LanguageItem {
 }
 
 export const contactActionData = {
-	es: { label: 'Contactar', href: '' },
-	en: { label: 'Contact us', href: '' },
-	pt: { label: 'Fale conosco', href: '' },
+	es: { label: 'Crear Usuario', href: 'https://ads.wortise.com' },
+	en: { label: 'Create Account', href: 'https://ads.wortise.com' },
+	pt: { label: 'Criar Usuário', href: 'https://ads.wortise.com' },
 } satisfies Record<Locale, { label: string; href: string }>;
 
 // Availability belongs to a page, never to the language itself.
@@ -115,6 +115,5 @@ export function getMainMenuItems(locale: Locale): NavigationLink[] {
 }
 
 export function getContactAction(locale: Locale) {
-	const href = getDestinationHref(locale, 'contact');
-	return { ...contactActionData[locale], href: href ?? '', disabled: !href };
+	return { ...contactActionData[locale], disabled: false };
 }

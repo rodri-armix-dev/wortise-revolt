@@ -78,6 +78,8 @@ for (const { mode, development } of [
 				['es', 'wortise-ads', ''],
 				['en', 'wortise-ads', ''],
 				['pt', 'wortise-ads', ''],
+				...['terms', 'privacy', 'sdk-terms'].flatMap((key) =>
+					['es', 'en', 'pt'].map((locale) => [locale, key, pageData[key][locale].slug])),
 
 			]);
 			assert.equal(routes.getPageFromPath('/es/wortise-ads/'), undefined);
@@ -86,7 +88,7 @@ for (const { mode, development } of [
 
 		const { getSiteData: getLegalSiteData } = await server.ssrLoadModule('/src/data/site.ts');
 		if (launch) {
-			for (const key of ['contact', 'terms', 'privacy', 'sdk-terms']) {
+			for (const key of ['contact']) {
 				for (const locale of ['es', 'en', 'pt']) {
 					assert.equal(routes.getPagePath(locale, key), undefined);
 					assert.equal(routes.getPagePath(locale, key, '/preview/'), undefined);
@@ -114,42 +116,41 @@ for (const { mode, development } of [
 			assert.equal(navigation.getLanguageItems('/es/contacto/')[1].available, true);
 			delete pageData.contact.en;
 
-
-			// Legal translations resolve localized slugs, shell links and both language selectors.
-			const { sanitizeLegalDocument } = await server.ssrLoadModule('/src/lib/sanitize-legal-document.ts');
-			const { sanitizeRichText } = await server.ssrLoadModule('/src/lib/sanitize-rich-text.ts');
-			const html = '<h2 onclick="bad()">Título</h2><hr><h3>Subtítulo</h3><p style="color:red">Texto <a href="https://example.com" target="_blank">enlace</a></p><script>bad()</script><iframe src="https://example.com"></iframe>';
-			const safe = sanitizeLegalDocument(html);
-			assert.ok(safe.includes('<h2>Título</h2><hr /><h3>Subtítulo</h3>'));
-			assert.ok(safe.includes('rel="noopener noreferrer"'));
-			assert.ok(!/onclick|style=|<script|<iframe/.test(safe));
-			assert.ok(!sanitizeLegalDocument('<a href="javascript:bad()">x</a>').includes('href='));
-			assert.ok(!/<h2|<hr|<h3/.test(sanitizeRichText(html)));
-			for (const key of ['terms', 'privacy', 'sdk-terms']) {
-				const sourceHtml = pageData[key].es.content.html;
-				for (const locale of ['es', 'en', 'pt']) {
-					const data = pageData[key][locale];
-					const path = `/${locale}/${data.slug}/`;
-					assert.equal(routes.getPagePath(locale, key), path);
-					assert.equal(routes.getPageFromPath(path), key);
-					assert.equal(routes.getPagePath(locale, key, '/preview/'), `/preview${path}`);
-					assert.equal(routes.getPageFromPath(`/preview${path}`, '/preview/'), key);
-					assert.equal(data.template, 'legal');
-					assert.ok(!('modules' in data));
-					assert.ok(getLegalSiteData(locale, path).footer.legal.items.some(({ href }) => href === `https://wortise.com/${locale}/${key === 'privacy' ? 'privacy-policy' : key}/`));
-					assert.deepEqual(navigation.getLanguageItems(path).map(({ available }) => available), [true, true, true]);
-					// Preserve every paragraph, heading, separator, legal link and numbered clause.
-					assert.deepEqual(data.content.html.match(/<\/?[a-z][^>]*>/g), sourceHtml.match(/<\/?[a-z][^>]*>/g));
-					assert.deepEqual(data.content.html.match(/<(?:p|h[234])>\d+(?:\.\d+)*\./g), sourceHtml.match(/<(?:p|h[234])>\d+(?:\.\d+)*\./g));
-					assert.equal(data.content.updatedAt, pageData[key].es.content.updatedAt);
-					assert.equal(data.content.effectiveAt, pageData[key].es.content.effectiveAt);
-					if (locale !== 'es') assert.notEqual(data.content.html, sourceHtml);
-				}
-			}
-
 		}
 
-		// External links stay available in launch without publishing local routes.
+		// Legal translations resolve localized slugs, shell links and both language selectors.
+		const { sanitizeLegalDocument } = await server.ssrLoadModule('/src/lib/sanitize-legal-document.ts');
+		const { sanitizeRichText } = await server.ssrLoadModule('/src/lib/sanitize-rich-text.ts');
+		const html = '<h2 onclick="bad()">Título</h2><hr><h3>Subtítulo</h3><p style="color:red">Texto <a href="https://example.com" target="_blank">enlace</a></p><script>bad()</script><iframe src="https://example.com"></iframe>';
+		const safe = sanitizeLegalDocument(html);
+		assert.ok(safe.includes('<h2>Título</h2><hr /><h3>Subtítulo</h3>'));
+		assert.ok(safe.includes('rel="noopener noreferrer"'));
+		assert.ok(!/onclick|style=|<script|<iframe/.test(safe));
+		assert.ok(!sanitizeLegalDocument('<a href="javascript:bad()">x</a>').includes('href='));
+		assert.ok(!/<h2|<hr|<h3/.test(sanitizeRichText(html)));
+		for (const key of ['terms', 'privacy', 'sdk-terms']) {
+			const sourceHtml = pageData[key].es.content.html;
+			for (const locale of ['es', 'en', 'pt']) {
+				const data = pageData[key][locale];
+				const path = `/${locale}/${data.slug}/`;
+				assert.equal(routes.getPagePath(locale, key), path);
+				assert.equal(routes.getPageFromPath(path), key);
+				assert.equal(routes.getPagePath(locale, key, '/preview/'), `/preview${path}`);
+				assert.equal(routes.getPageFromPath(`/preview${path}`, '/preview/'), key);
+				assert.equal(data.template, 'legal');
+				assert.ok(!('modules' in data));
+				assert.ok(getLegalSiteData(locale, path).footer.legal.items.some(({ href }) => href === path));
+				assert.deepEqual(navigation.getLanguageItems(path).map(({ available }) => available), [true, true, true]);
+				// Preserve every paragraph, heading, separator, legal link and numbered clause.
+				assert.deepEqual(data.content.html.match(/<\/?[a-z][^>]*>/g), sourceHtml.match(/<\/?[a-z][^>]*>/g));
+				assert.deepEqual(data.content.html.match(/<(?:p|h[234])>\d+(?:\.\d+)*\./g), sourceHtml.match(/<(?:p|h[234])>\d+(?:\.\d+)*\./g));
+				assert.equal(data.content.updatedAt, pageData[key].es.content.updatedAt);
+				assert.equal(data.content.effectiveAt, pageData[key].es.content.effectiveAt);
+				if (locale !== 'es') assert.notEqual(data.content.html, sourceHtml);
+			}
+		}
+
+		// Contact stays external; legal destinations use published internal routes in both profiles.
 		const { getContactAction: getExternalContactAction } = await server.ssrLoadModule('/src/data/navigation.ts');
 		const { getDestinationHref } = await server.ssrLoadModule('/src/data/destinations.ts');
 		for (const locale of ['es', 'en', 'pt']) {
@@ -157,9 +158,10 @@ for (const { mode, development } of [
 			assert.equal(getExternalContactAction(locale).disabled, false);
 			const footer = getLegalSiteData(locale, adsPath).footer;
 			assert.equal(footer.brand.contact.href, `https://wortise.com/${locale}/contact/`);
-			for (const [key, slug] of [['sdk-terms', 'sdk-terms'], ['terms', 'terms'], ['privacy', 'privacy-policy']]) {
-				assert.equal(getDestinationHref(locale, key), `https://wortise.com/${locale}/${slug}/`);
-				assert.ok(footer.legal.items.some(({ href }) => href === `https://wortise.com/${locale}/${slug}/`));
+			for (const key of ['sdk-terms', 'terms', 'privacy']) {
+				const path = routes.getPagePath(locale, key);
+				assert.equal(getDestinationHref(locale, key), path);
+				assert.ok(footer.legal.items.some(({ href }) => href === path));
 			}
 		}
 

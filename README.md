@@ -5,6 +5,10 @@ Sitio estático en Astro. Usar pnpm.
 La API de títulos y su escala de Figma están documentadas en
 [Heading: estilos tipográficos](docs/heading-typography.md).
 
+Los cuerpos de artículos y documentos legales usan `global-inner global-inner--reading`.
+Esta variante conserva los gutters globales y limita el ancho mediante el token
+`--layout-reading-max-width`, definido en `src/styles/tokens/layout.scss`.
+
 ## Contenido editorial: prueba con Markdown
 
 Se acordó probar `.md` para el contenido de los editores WYSIWYG, comenzando por
@@ -71,9 +75,10 @@ El registro de contenido sigue siendo `src/data/pages/index.ts`. Las funciones d
 selectores de idioma. La clave `wortise-ads` conserva sus datos originales:
 ocupa `/es/` en lanzamiento y `/es/wortise-ads/` en el perfil completo. `/` redirige
 a la portada del idioma predeterminado fuera de Vercel; en Vercel aplica la detección
-descrita en «Idioma automático en Vercel». En lanzamiento solo se publica Wortise Ads en español, inglés y portugués.
-Contacto y legales enlazan al sitio original mediante `src/data/destinations.ts`;
-las páginas locales se conservan en el perfil completo.
+descrita en «Idioma automático en Vercel». En lanzamiento se publican Wortise Ads y las tres páginas legales en español, inglés y portugués.
+Los legales usan sus rutas internas en ambos perfiles, resueltas desde el registro.
+Contacto sigue enlazando al sitio original mediante `src/data/destinations.ts`;
+su página local se conserva en el perfil completo.
 No se generan traducciones inexistentes ni una segunda copia de Ads bajo su slug interno en lanzamiento.
 
 ## Header y covers

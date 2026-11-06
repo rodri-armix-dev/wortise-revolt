@@ -1,5 +1,6 @@
 ---
 import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import adsLogo from '../../../assets/ads/wortise-ads-logo-transparent.png';
 import type { ComponentProps } from 'astro/types';
 
 export interface Props {
@@ -12,6 +13,7 @@ const { textBlock } = Astro.props;
 <section class="ads-cover">
 	<div class="ads-cover__inner global-inner">
 		<div class="ads-cover__text-block">
+			<div class="ads-cover__logo" role="img" aria-label="Wortise Ads" style={{ backgroundImage: `url(${adsLogo.src})` }}></div>
 			<TextBlock {...textBlock} heading={textBlock.heading && { ...textBlock.heading, size: { s: 'display-sm', l: 'display-xl' } }} />
 		</div>
 	</div>

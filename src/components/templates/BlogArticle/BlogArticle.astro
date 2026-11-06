@@ -35,10 +35,10 @@ const related = getBlogCards(locale, relatedIds);
 			<p class="blog-article__demo">{ui.blogDemoContent}</p>
 		)}
 		<div class="blog-article__cover">
-			<BlogMedia {...post.media} image={post.media.image && { ...post.media.image, loading: 'eager', fetchpriority: 'high' }} aspectRatio="4/3" responsiveAspectRatio={{ l: '16/9' }} />
+			<BlogMedia {...post.media} image={post.media.image && { ...post.media.image, loading: 'eager', fetchpriority: 'high' }} aspectRatio="4/3" responsiveAspectRatio={{ l: '21/9' }} />
 		</div>
 	</header>
-	<div class="blog-article__body global-inner">
+	<div class="blog-article__body global-inner global-inner--reading">
 		<ArticleBody blocks={blocks} ctas={ctas} media={media} />
 		<ArticleEnd author={post.author} authorImage={post.authorImage} date={post.date} tags={post.tags} locale={locale} />
 	</div>

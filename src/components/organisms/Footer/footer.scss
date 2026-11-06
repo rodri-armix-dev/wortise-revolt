@@ -6,7 +6,6 @@
 	&__inner
 	{
 		--global-item-gap: var(--spacing-32);
-		--layout-gutter: 20px;
 		align-items: stretch;
 		display: grid;
 		justify-content: stretch;
@@ -50,11 +49,6 @@
 {
 	.footer
 	{
-		&__inner
-		{
-			--layout-gutter: var(--spacing-24);
-		}
-
 		&__navigation
 		{
 			gap: var(--spacing-32);
@@ -99,7 +93,6 @@
 	{
 		&__inner
 		{
-			--layout-gutter: var(--spacing-48);
 			grid-template-columns: repeat(3, minmax(0, 1fr));
 			row-gap: var(--spacing-48); // sass-lint:disable-line no-misspelled-properties
 		}

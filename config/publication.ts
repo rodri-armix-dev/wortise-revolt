@@ -29,7 +29,7 @@ export const publicationProfiles = {
 	},
 	launch: {
 		homePage: 'wortise-ads',
-		pages: ['wortise-ads'],
+		pages: ['wortise-ads', ...legalPages.map(({ page }) => page)],
 		shell: 'compact',
 		includeUi: false,
 		includeFooterCTA: true,

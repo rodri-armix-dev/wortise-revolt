@@ -10,8 +10,6 @@
 	&__inner
 	{
 		--global-item-gap: 0px; // sass-lint:disable-line zero-unit
-		--layout-content-max-width: 354px;
-		--layout-gutter: var(--spacing-24);
 	}
 
 	&__logo
@@ -26,14 +24,16 @@
 		--description-font-size: 18px;
 		--description-line-height: 26px;
 		--text-block-description-margin-inline: auto;
-		--text-block-description-max-width: 464px;
+		--text-block-description-max-width: var(--layout-cta-description-max-width);
 		--text-block-gap: var(--spacing-12);
 		margin-bottom: var(--spacing-40);
+		max-width: var(--layout-cta-content-max-width);
 		width: 100%;
 	}
 
 	&__form
 	{
+		max-width: var(--layout-cta-content-max-width);
 		width: 100%;
 	}
 
@@ -95,12 +95,6 @@
 	{
 		min-height: 664px;
 
-		&__inner
-		{
-			--layout-content-max-width: 562px;
-			--layout-gutter: var(--spacing-48);
-		}
-
 		&__logo
 		{
 			--logo-height: 35.304px;
@@ -111,11 +105,6 @@
 		{
 			--text-block-gap: var(--spacing-24);
 			margin-bottom: var(--spacing-40);
-		}
-
-		&__form
-		{
-			width: calc(100% - 2px);
 		}
 
 		&__fields

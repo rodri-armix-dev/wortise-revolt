@@ -57,14 +57,32 @@
 
 	&__toggle
 	{
+		align-items: center;
+		background: transparent;
+		border: 0;
 		color: var(--color-text-primary);
 		cursor: pointer;
 		display: flex;
-		transition: transform .2s ease-in-out;
+		font: inherit;
+		gap: var(--spacing-4);
+		line-height: 20px;
+		padding: 0;
 
-		&[aria-expanded='true']
+		&[aria-expanded='true'],
+		&:hover,
+		.main-menu__item--current > &
 		{
 			color: var(--color-text-highlight);
+		}
+	}
+
+	&__chevron
+	{
+		display: flex;
+		transition: transform .2s ease-in-out;
+
+		.main-menu__toggle[aria-expanded='true'] &
+		{
 			transform: rotate(180deg);
 		}
 	}

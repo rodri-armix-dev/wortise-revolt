@@ -13,10 +13,13 @@
 {
 	// Semantic roles consumed by the UI.
 	--layout-content-max-width: 100%;
+	--layout-cta-content-max-width: 354px;
+	--layout-cta-description-max-width: 464px;
 	--layout-gutter: var(--spacing-16);
 	--layout-header-height: 72px;
 	--layout-header-overlap: 0px; // sass-lint:disable-line zero-unit
 	--layout-min-width: 360px;
+	--layout-reading-max-width: 820px;
 }
 
 @include m
@@ -32,6 +35,7 @@
 	:root
 	{
 		--layout-content-max-width: 1184px;
+		--layout-cta-content-max-width: 640px;
 		--layout-gutter: var(--spacing-48);
 	}
 }

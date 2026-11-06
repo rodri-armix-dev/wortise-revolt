@@ -70,11 +70,13 @@
 		gap: 3px;
 	}
 
-	&__link
+	&__link,
+	&__disclosure
 	{
 		align-items: center;
 		color: var(--color-text-primary);
 		display: flex;
+		font: inherit;
 		gap: var(--spacing-12);
 		line-height: 20px;
 		min-height: 48px;
@@ -86,9 +88,40 @@
 		}
 
 		&[aria-current='page'],
+		&[aria-expanded='true'],
 		&:hover
 		{
 			color: var(--color-text-highlight);
+		}
+	}
+
+	&__disclosure
+	{
+		background: transparent;
+		border: 0;
+		cursor: pointer;
+		padding: 0;
+		text-align: left;
+		width: 100%;
+	}
+
+	&__chevron
+	{
+		display: flex;
+		margin-inline-start: auto;
+		transition: transform .2s ease-in-out;
+
+		.mobile-menu__disclosure[aria-expanded='true'] &
+		{
+			transform: rotate(180deg);
+		}
+	}
+
+	&__sublist
+	{
+		&[hidden]
+		{
+			display: none;
 		}
 	}
 

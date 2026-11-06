@@ -9,4 +9,9 @@
 	margin-inline: auto;
 	max-width: var(--layout-content-max-width);
 	width: calc(100% - var(--layout-gutter) * 2);
+
+	&--reading
+	{
+		--layout-content-max-width: var(--layout-reading-max-width);
+	}
 }

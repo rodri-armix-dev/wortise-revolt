@@ -10,10 +10,32 @@ function initializeMobileMenus() {
 		const panel = menu.querySelector<HTMLElement>('.mobile-menu__panel');
 		if (!toggle || !panel) continue;
 
+		const closeSubmenus: (() => void)[] = [];
+		for (const submenuToggle of panel.querySelectorAll<HTMLButtonElement>('[data-submenu-toggle]')) {
+			const item = submenuToggle.closest('li');
+			const sublist = item?.querySelector<HTMLElement>('.mobile-menu__sublist');
+			if (!item || !sublist) continue;
+			const setSubmenuExpanded = (expanded: boolean) => {
+				submenuToggle.setAttribute('aria-expanded', String(expanded));
+				submenuToggle.setAttribute('aria-label', (expanded ? submenuToggle.dataset.closeLabel : submenuToggle.dataset.openLabel) ?? '');
+				sublist.hidden = !expanded;
+			};
+			closeSubmenus.push(() => setSubmenuExpanded(false));
+			submenuToggle.addEventListener('click', () => setSubmenuExpanded(sublist.hidden));
+			item.addEventListener('keydown', (event) => {
+				if (event.key === 'Escape' && !sublist.hidden) {
+					event.stopPropagation();
+					setSubmenuExpanded(false);
+					submenuToggle.focus();
+				}
+			});
+		}
+
 		const setExpanded = (expanded: boolean) => {
 			toggle.setAttribute('aria-expanded', String(expanded));
 			toggle.setAttribute('aria-label', (expanded ? toggle.dataset.closeLabel : toggle.dataset.openLabel) ?? '');
 			panel.hidden = !expanded;
+			if (!expanded) closeSubmenus.forEach((close) => close());
 			if (expanded) menu.dispatchEvent(new CustomEvent('wortise:navigation-open', { bubbles: true }));
 		};
 		controllers.set(menu, setExpanded);

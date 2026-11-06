@@ -44,10 +44,22 @@
 		--description-color: var(--color-text-primary);
 		--description-line-height: 20px;
 		--heading-muted-color: #a0a0a0; // sass-lint:disable-line no-color-literals
-		--text-block-actions-offset: 30px;
+		--text-block-actions-offset: var(--spacing-32);
 		--text-block-intro-gap: var(--spacing-16);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-16);
 		max-width: 587px;
 		width: 100%;
+	}
+
+	&__logo
+	{
+		aspect-ratio: 283 / 44; // sass-lint:disable-line no-misspelled-properties
+		background-position: 52.812% 52%;
+		background-repeat: no-repeat;
+		background-size: 116.36% 251.52%;
+		width: 220px;
 	}
 }
 
@@ -86,6 +98,12 @@
 			--text-block-description-max-width: 567px;
 			--text-block-gap: var(--spacing-24);
 			--text-block-intro-gap: var(--spacing-24);
+			gap: var(--spacing-24);
+		}
+
+		&__logo
+		{
+			width: 283px;
 		}
 	}
 }

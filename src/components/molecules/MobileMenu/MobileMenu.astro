@@ -3,7 +3,7 @@ import Button from '../../atoms/Button/Button.astro';
 import Icon from '../../atoms/Icon/Icon.astro';
 import { getContactAction, getMainMenuItems } from '../../../data/navigation';
 import { getLocaleFromPath } from '../../../i18n/routes';
-import { getUiText } from '../../../i18n/ui';
+import { getUiText, formatLabel } from '../../../i18n/ui';
 
 export interface Props {
 	expanded?: boolean;
@@ -32,30 +32,48 @@ const isCurrent = (href: string) => normalizePath(href) === normalizePath(curren
 	</button>
 	<nav class="mobile-menu__panel" id={panelId} aria-label={text.mobileNavigation} hidden={!expanded}>
 		<ul class="mobile-menu__list" role="list">
-			{items.map((item) =>
-				<li>
-					<a class="mobile-menu__link" href={item.href || undefined} aria-disabled={!item.href ? "true" : undefined} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-						{isCurrent(item.href) && (
-							<span class="mobile-menu__indicator" aria-hidden="true" />
+			{items.map((item) => {
+				const hasChildren = Boolean(item.children?.length);
+				const submenuId = `${panelId}-${item.id}`;
+				const isChildCurrent = item.children?.some((child) => isCurrent(child.href)) ?? false;
+
+				return (
+					<li>
+						{hasChildren ? (
+							<button class="mobile-menu__disclosure" type="button" aria-expanded="false" aria-controls={submenuId} data-submenu-toggle data-open-label={formatLabel(text.openSubmenu, item.label)} data-close-label={formatLabel(text.closeSubmenu, item.label)} aria-label={formatLabel(text.openSubmenu, item.label)}>
+								{isChildCurrent && (
+									<span class="mobile-menu__indicator" aria-hidden="true" />
+								)}
+								<span class="mobile-menu__label">{item.label}</span>
+								<span class="mobile-menu__chevron">
+									<Icon name="chevron-down" size={14} />
+								</span>
+							</button>
+						) : (
+							<a class="mobile-menu__link" href={item.href || undefined} aria-disabled={!item.href ? "true" : undefined} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+								{isCurrent(item.href) && (
+									<span class="mobile-menu__indicator" aria-hidden="true" />
+								)}
+								<span class="mobile-menu__label">{item.label}</span>
+							</a>
 						)}
-						<span class="mobile-menu__label">{item.label}</span>
-					</a>
-					{Boolean(item.children?.length) && (
-						<ul class="mobile-menu__sublist" role="list">
-							{item.children?.map((child) =>
-								<li>
-									<a class="mobile-menu__link" href={child.href || undefined} aria-disabled={!child.href ? "true" : undefined} aria-current={isCurrent(child.href) ? 'page' : undefined} data-nested="true">
-										{isCurrent(child.href) && (
-											<span class="mobile-menu__indicator" aria-hidden="true" />
-										)}
-										<span class="mobile-menu__label">{child.label}</span>
-									</a>
-								</li>
-							)}
-						</ul>
-					)}
-				</li>
-			)}
+						{hasChildren && (
+							<ul class="mobile-menu__sublist" id={submenuId} role="list" hidden>
+								{item.children?.map((child) =>
+									<li>
+										<a class="mobile-menu__link" href={child.href || undefined} aria-disabled={!child.href ? "true" : undefined} aria-current={isCurrent(child.href) ? 'page' : undefined} data-nested="true">
+											{isCurrent(child.href) && (
+												<span class="mobile-menu__indicator" aria-hidden="true" />
+											)}
+											<span class="mobile-menu__label">{child.label}</span>
+										</a>
+									</li>
+								)}
+							</ul>
+						)}
+					</li>
+				);
+			})}
 		</ul>
 		<div class="mobile-menu__action">
 			<Button label={contactLabel} href={contactHref} disabled={!contactHref} variant="primary" size="medium" />
