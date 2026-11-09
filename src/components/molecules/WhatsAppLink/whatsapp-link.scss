@@ -1,0 +1,34 @@
+.whatsapp-link
+{
+	--whatsapp-link-offset: var(--spacing-16);
+
+	bottom: calc(var(--whatsapp-link-offset) + env(safe-area-inset-bottom));
+	display: block;
+	position: fixed;
+	right: calc(100% - max(100%, var(--layout-min-width)) + var(--whatsapp-link-offset) + env(safe-area-inset-right));
+	width: 56px;
+	z-index: 20;
+
+	& img
+	{
+		height: auto;
+		width: 100%;
+	}
+}
+
+@include l
+{
+	.whatsapp-link
+	{
+		--whatsapp-link-offset: var(--spacing-24);
+		width: 64px;
+	}
+}
+
+@include xl
+{
+	.whatsapp-link
+	{
+		--whatsapp-link-offset: var(--spacing-32);
+	}
+}

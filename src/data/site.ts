@@ -4,6 +4,7 @@ import type { ComponentProps } from 'astro/types';
 import type Footer from '../components/organisms/Footer/Footer.astro';
 import type { Locale } from '../i18n/config';
 import { getLanguageItems } from '../i18n/navigation';
+import { getUiText } from '../i18n/ui';
 import { footerData } from './footer';
 
 // Keep the localized site shell independent of its future content source.
@@ -19,6 +20,9 @@ export function getSiteData(locale: Locale, pathname: string) {
 	return {
 		header: { variant: profile.shell },
 		includeFooterCTA: profile.includeFooterCTA,
+		whatsapp: profile.whatsappHref
+			? { href: profile.whatsappHref, label: getUiText(locale).contactWhatsApp }
+			: undefined,
 		footer: {
 			...footer,
 			variant: profile.shell,

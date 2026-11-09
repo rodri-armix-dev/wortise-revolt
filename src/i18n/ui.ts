@@ -31,6 +31,7 @@ export const uiText = {
 		closeCity: 'Cerrar información de la ciudad',
 		openCity: 'Ver equipo de {label}',
 		contactTeam: 'Contactar al equipo',
+		contactWhatsApp: 'Contactar por WhatsApp',
 		contactUnavailable: 'Contacto próximamente',
 
 		mainNavigation: 'Navegación principal',
@@ -78,6 +79,7 @@ export const uiText = {
 		closeCity: 'Close city information',
 		openCity: 'View the team in {label}',
 		contactTeam: 'Contact our team',
+		contactWhatsApp: 'Contact us on WhatsApp',
 		contactUnavailable: 'Contact coming soon',
 
 		mainNavigation: 'Main navigation',
@@ -125,6 +127,7 @@ export const uiText = {
 		closeCity: 'Fechar informações da cidade',
 		openCity: 'Ver equipe de {label}',
 		contactTeam: 'Fale com nossa equipe',
+		contactWhatsApp: 'Fale com a gente pelo WhatsApp',
 		contactUnavailable: 'Contato em breve',
 
 		mainNavigation: 'Navegação principal',

@@ -16,6 +16,7 @@ interface PublicationProfile {
 	includeUi: boolean;
 	includeFooterCTA: boolean;
 	pruneUnusedAssets: boolean;
+	whatsappHref?: string;
 }
 
 export const publicationProfiles = {
@@ -34,6 +35,7 @@ export const publicationProfiles = {
 		includeUi: false,
 		includeFooterCTA: true,
 		pruneUnusedAssets: true,
+		whatsappHref: 'https://wa.link/81h5wa',
 	},
 } satisfies Record<string, PublicationProfile>;
 

@@ -1,5 +1,6 @@
 ---
 import type { ComponentProps } from 'astro/types';
+import WhatsAppLink from '../components/molecules/WhatsAppLink/WhatsAppLink.astro';
 import type FooterCTA from '../components/organisms/FooterCTA/FooterCTA.astro';
 import { getSiteData } from '../data/site';
 import Footer from '../components/organisms/Footer/Footer.astro';
@@ -48,6 +49,9 @@ const FooterCTAComponent = site.includeFooterCTA && footerCTA ? (await import('.
 			<FooterCTAComponent {...footerCTA} />
 		)}
 		<Footer locale={locale} {...site.footer} />
+		{site.whatsapp && (
+			<WhatsAppLink {...site.whatsapp} />
+		)}
 	</body>
 </html>
 
