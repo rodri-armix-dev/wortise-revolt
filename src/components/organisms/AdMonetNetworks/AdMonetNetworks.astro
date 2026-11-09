@@ -1,0 +1,56 @@
+---
+import type { ComponentProps } from 'astro/types';
+import GlassSurface from '../../atoms/GlassSurface/GlassSurface.astro';
+import OrbitParticles from '../../molecules/OrbitParticles/OrbitParticles.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import { particleFrames, texturedParticles } from './particle-layout';
+
+export interface Props {
+	id: string;
+	textBlock: Pick<ComponentProps<typeof TextBlock>, 'eyebrow' | 'description'> & {
+		heading: NonNullable<ComponentProps<typeof TextBlock>['heading']>;
+	};
+	hub: {
+		label: string;
+		tagline: string;
+	};
+}
+
+const { id, textBlock, hub } = Astro.props;
+const headingId = `${id}-heading`;
+// Phase boundaries within the first 5.132% of Figma's 90s timeline.
+const particleDurations = { enter: 1500, idle: 2235, exit: 884 };
+const hubOptics = {
+	lightAngle: -45,
+	lightIntensity: 23,
+	refraction: 100,
+	depth: 1,
+	dispersion: 44,
+	frost: 19,
+	splay: 0,
+} satisfies ComponentProps<typeof GlassSurface>['optics'];
+const glassParticles = import.meta.env.DEV ? (await import('./particle-preview')).glassParticles : undefined;
+---
+
+<section class="admonet-networks" id={id} aria-labelledby={headingId}>
+	<div class="admonet-networks__inner global-inner">
+		<div class="admonet-networks__text-block">
+			<TextBlock {...textBlock} heading={{ ...textBlock.heading, id: headingId, tag: 'h2', size: { s: 'title-lg', l: 'display-md' } }} alignment="center" />
+		</div>
+	</div>
+	<div class="admonet-networks__scene" data-glass-scene>
+		<div class="admonet-networks__art" data-glass-source aria-hidden="true"></div>
+		<GlassSurface optics={hubOptics}>
+			<div class="admonet-networks__art" slot="backdrop"></div>
+			<div class="admonet-networks__hub" data-orbit-motion-target data-orbit-motion-accent={455}>
+				<p class="admonet-networks__hub-label">{hub.label}</p>
+				<p class="admonet-networks__hub-tagline">{hub.tagline}</p>
+			</div>
+		</GlassSurface>
+		<OrbitParticles frames={particleFrames} durations={particleDurations} glass={glassParticles} textured={texturedParticles} />
+	</div>
+</section>
+
+<style lang="scss">
+	@use './admonet-networks';
+</style>

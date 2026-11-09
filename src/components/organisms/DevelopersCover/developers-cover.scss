@@ -1,0 +1,57 @@
+.developers-cover
+{
+	min-height: 588px;
+	padding-block: 132px var(--spacing-40);
+
+	&__text-block
+	{
+		--button-secondary-height: 52px;
+		--description-line-height: 20px;
+		--eyebrow-white-space: normal;
+		--heading-muted-color: #a0a0a0; // sass-lint:disable-line no-color-literals
+		--text-block-actions-display: grid;
+		--text-block-actions-offset: var(--spacing-32);
+		--text-block-intro-gap: var(--spacing-16);
+		width: 100%;
+	}
+}
+
+@include l
+{
+	.developers-cover
+	{
+		isolation: isolate;
+		min-height: 612px;
+		overflow: hidden;
+		padding-block-start: 123px;
+		position: relative;
+		z-index: 1;
+
+		&::before
+		{
+			background: url('../../../assets/decorations/cover-glow-secondary.svg') center / contain no-repeat;
+			content: '';
+			height: 981.019px;
+			left: calc(62.5% + 355px);
+			pointer-events: none;
+			position: absolute;
+			top: calc(14px - var(--layout-header-height));
+			transform: translate(-50%, -50%) rotate(20.6deg);
+			width: 538.205px;
+			z-index: -1;
+		}
+
+		&__text-block
+		{
+			--button-height: 44px;
+			--button-primary-special-icon-display: none;
+			--button-primary-special-padding-inline: var(--spacing-16);
+			--text-block-actions-display: flex;
+			--text-block-actions-offset: 0;
+			--text-block-description-margin-inline: auto;
+			--text-block-description-max-width: 567px;
+			--text-block-gap: var(--spacing-24);
+			max-width: 587px;
+		}
+	}
+}

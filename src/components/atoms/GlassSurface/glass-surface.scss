@@ -1,0 +1,67 @@
+.glass-surface
+{
+	border: 1px solid var(--glass-surface-border-color, var(--color-border-subtle));
+	border-radius: var(--radius-full);
+	display: block;
+	position: relative;
+
+	&__filter
+	{
+		position: absolute;
+	}
+
+	&__lens
+	{
+		border-radius: inherit;
+		isolation: isolate;
+		position: relative;
+
+		.glass-surface:not([data-aligned]) & // sass-lint:disable-line force-pseudo-nesting
+		{
+			backdrop-filter: blur(var(--glass-surface-frost)); // sass-lint:disable-line no-misspelled-properties
+		}
+
+		&::after
+		{
+			// sass-lint:disable-block no-color-literals
+			background: var(--glass-surface-tint, rgba(79, 79, 79, .24));
+			border-radius: inherit;
+			box-shadow: inset var(--glass-surface-light-x) var(--glass-surface-light-y) var(--glass-surface-light-blur) rgba(255, 255, 255, var(--glass-surface-light-intensity));
+			content: '';
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+			pointer-events: none;
+			position: absolute;
+			z-index: -1;
+		}
+	}
+
+	&__optics
+	{
+		border-radius: inherit;
+		inset: 1px; // sass-lint:disable-line no-misspelled-properties
+		overflow: hidden;
+		pointer-events: none;
+		position: absolute;
+		visibility: hidden;
+		z-index: -2;
+
+		.glass-surface[data-aligned] &
+		{
+			visibility: visible;
+		}
+	}
+
+	&__refraction
+	{
+		filter: var(--glass-surface-filter);
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		overflow: hidden;
+		position: absolute;
+	}
+
+	&__backdrop
+	{
+		inset: 0 auto auto 0; // sass-lint:disable-line no-misspelled-properties
+		position: absolute;
+	}
+}

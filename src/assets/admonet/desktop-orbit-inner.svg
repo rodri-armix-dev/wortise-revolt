@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="780" height="336" viewBox="0 0 780 336" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="stroke0_0_18" fill="white">
+<path d="M780 168C780 260.784 605.391 336 390 336C174.609 336 0 260.784 0 168C0 75.2162 174.609 0 390 0C605.391 0 780 75.2162 780 168Z"/>
+</mask>
+<ellipse id="Orbit path / scroll convergence" opacity="0.14" cx="390" cy="168" rx="390" ry="168" stroke-width="2" stroke="#DC6999" vector-effect="non-scaling-stroke" mask="url(#stroke0_0_18)"/>
+</svg>

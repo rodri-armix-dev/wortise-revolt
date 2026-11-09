@@ -3,6 +3,9 @@ import type ContactSection from '../../organisms/ContactSection/ContactSection.a
 import type LogoMarquee from '../../molecules/LogoMarquee/LogoMarquee.astro';
 import type Hero from '../../organisms/Hero/Hero.astro';
 import type AdsCover from '../../organisms/AdsCover/AdsCover.astro';
+import type DevelopersCover from '../../organisms/DevelopersCover/DevelopersCover.astro';
+import type Certifications from '../../organisms/Certifications/Certifications.astro';
+import type AdMonetNetworks from '../../organisms/AdMonetNetworks/AdMonetNetworks.astro';
 import type AdsSections from '../../organisms/AdsSections/AdsSections.astro';
 import type AboutUsCover from '../../organisms/AboutUsCover/AboutUsCover.astro';
 import type AudienceSections from '../../organisms/AudienceSections/AudienceSections.astro';
@@ -17,6 +20,9 @@ export interface ModulePropsByType {
 	'contact-section': ComponentProps<typeof ContactSection>;
 	hero: ComponentProps<typeof Hero>;
 	'ads-cover': ComponentProps<typeof AdsCover>;
+	'developers-cover': ComponentProps<typeof DevelopersCover>;
+	certifications: ComponentProps<typeof Certifications>;
+	'admonet-networks': ComponentProps<typeof AdMonetNetworks>;
 	'ads-sections': ComponentProps<typeof AdsSections>;
 	'logo-marquee': ComponentProps<typeof LogoMarquee>;
 	'about-us-cover': ComponentProps<typeof AboutUsCover>;
@@ -62,6 +68,21 @@ const { modules } = Astro.props;
 		if (module.type === 'ads-sections') {
 			const { default: AdsSections } = await import('../../organisms/AdsSections/AdsSections.astro');
 			return <AdsSections {...module.props} />;
+		}
+
+		if (module.type === 'developers-cover') {
+			const { default: DevelopersCover } = await import('../../organisms/DevelopersCover/DevelopersCover.astro');
+			return <DevelopersCover {...module.props} />;
+		}
+
+		if (module.type === 'certifications') {
+			const { default: Certifications } = await import('../../organisms/Certifications/Certifications.astro');
+			return <Certifications {...module.props} />;
+		}
+
+		if (module.type === 'admonet-networks') {
+			const { default: AdMonetNetworks } = await import('../../organisms/AdMonetNetworks/AdMonetNetworks.astro');
+			return <AdMonetNetworks {...module.props} />;
 		}
 
 		if (module.type === 'logo-marquee') {

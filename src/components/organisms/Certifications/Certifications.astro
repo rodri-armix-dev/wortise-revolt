@@ -1,0 +1,48 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Image from '../../atoms/Image/Image.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+
+interface Certification {
+	title: string;
+	description: string;
+	badge: ComponentProps<typeof Image>['src'];
+	enlargeBadge?: boolean;
+}
+
+export interface Props {
+	id: string;
+	textBlock: Pick<ComponentProps<typeof TextBlock>, 'eyebrow'> & {
+		heading: NonNullable<ComponentProps<typeof TextBlock>['heading']>;
+	};
+	items: Certification[];
+}
+
+const { id, textBlock, items } = Astro.props;
+const headingId = `${id}-heading`;
+---
+
+<section class="certifications" id={id} aria-labelledby={headingId}>
+	<div class="certifications__inner global-inner">
+		<div class="certifications__text-block">
+			<TextBlock {...textBlock} heading={{ ...textBlock.heading, id: headingId, tag: 'h2', size: { s: 'title-lg', l: 'display-sm' } }} alignment="center" />
+		</div>
+		<ul class="certifications__list">
+			{items.map(({ title, description, badge, enlargeBadge }) => (
+				<li class="certifications__card">
+					<div class:list={['certifications__badge', { 'certifications__badge--enlarged': enlargeBadge }]}>
+						<Image src={badge} alt="" />
+					</div>
+					<div class="certifications__copy">
+						<h3 class="certifications__title">{title}</h3>
+						<p class="certifications__description">{description}</p>
+					</div>
+				</li>
+			))}
+		</ul>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './certifications';
+</style>

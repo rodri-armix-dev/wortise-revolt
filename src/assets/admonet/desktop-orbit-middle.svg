@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="980" height="474" viewBox="0 0 980 474" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="stroke0_0_22" fill="white">
+<path d="M980 237C980 367.891 760.62 474 490 474C219.38 474 0 367.891 0 237C0 106.109 219.38 0 490 0C760.62 0 980 106.109 980 237Z"/>
+</mask>
+<ellipse id="Orbit path / start" opacity="0.08" cx="490" cy="237" rx="490" ry="237" stroke-width="2" stroke="#DC6999" vector-effect="non-scaling-stroke" mask="url(#stroke0_0_22)"/>
+</svg>

@@ -1,0 +1,192 @@
+.orbit-particles
+{
+	container-type: size; // sass-lint:disable-line no-misspelled-properties
+	inset: 0; // sass-lint:disable-line no-misspelled-properties
+	pointer-events: none;
+	position: absolute;
+	z-index: 1;
+
+	&__layer
+	{
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		position: absolute;
+
+		.orbit-particles[data-motion-phase='outside'] &
+		{
+			transform: translateY(-110%);
+			visibility: hidden;
+		}
+
+		&--glass
+		{
+			display: none;
+		}
+
+		// Native radios keep the development preview independent of client scripts.
+		.orbit-particles:has([value='glass']:checked) &--textured // sass-lint:disable-line force-pseudo-nesting
+		{
+			display: none;
+		}
+
+		.orbit-particles:has([value='glass']:checked) &--glass // sass-lint:disable-line force-pseudo-nesting
+		{
+			display: block;
+		}
+	}
+
+	&__item
+	{
+		aspect-ratio: var(--orbit-particles-mobile-ratio); // sass-lint:disable-line no-misspelled-properties
+		display: grid;
+		left: var(--orbit-particles-mobile-center-x);
+		place-items: center;
+		position: absolute;
+		top: var(--orbit-particles-mobile-top);
+		transform: translateX(-50%);
+		translate: var(--orbit-particles-translate-x, 0) var(--orbit-particles-translate-y, 0); // sass-lint:disable-line no-misspelled-properties
+		width: min(var(--orbit-particles-mobile-width), var(--orbit-particles-mobile-max-width));
+
+		.orbit-particles__layer--glass &
+		{
+			background: rgba(79, 79, 79, .32); // sass-lint:disable-line no-color-literals
+			border-radius: var(--radius-full);
+			box-shadow: inset 0 1px 2px var(--color-border-subtle);
+		}
+	}
+
+	&__mark
+	{
+		width: var(--orbit-particles-mark-width, 64%);
+
+		.orbit-particles__layer--textured &
+		{
+			--image-height: 100%;
+			height: 100%;
+			width: 100%;
+		}
+
+		&--monochrome
+		{
+			filter: brightness(0) invert(1);
+		}
+	}
+
+	&__editor
+	{
+		pointer-events: auto;
+		position: absolute;
+		right: var(--spacing-16);
+		top: calc(-1 * var(--spacing-64));
+		z-index: 1;
+	}
+
+	&__toggle
+	{
+		background: var(--color-surface-card);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-full);
+		color: var(--color-text-primary);
+		cursor: pointer;
+		display: grid;
+		font-size: 20px;
+		height: 48px;
+		list-style: none;
+		place-items: center;
+		width: 48px;
+
+		&::-webkit-details-marker // sass-lint:disable-line no-vendor-prefixes
+		{
+			display: none;
+		}
+	}
+
+	&__options
+	{
+		background: var(--color-surface-card);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-md);
+		display: grid;
+		gap: var(--spacing-8);
+		margin-top: var(--spacing-8);
+		min-width: 184px;
+		padding: var(--spacing-12);
+		position: absolute;
+		right: 0;
+	}
+
+	&__fieldset
+	{
+		border: 0;
+		display: grid;
+		gap: var(--spacing-4);
+		margin: 0;
+		min-width: 0;
+		padding: 0;
+	}
+
+	&__option
+	{
+		align-items: center;
+		cursor: pointer;
+		display: flex;
+		gap: var(--spacing-8);
+		white-space: nowrap;
+	}
+
+	&__input
+	{
+		appearance: auto; // sass-lint:disable-line no-misspelled-properties
+	}
+
+	&__action
+	{
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-md);
+		cursor: pointer;
+		padding-block: var(--spacing-4);
+		padding-inline: var(--spacing-8);
+		text-align: start;
+
+		&[aria-pressed='true']
+		{
+			background: var(--color-background-control);
+			color: var(--color-text-editorial-accent);
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+	.orbit-particles
+	{
+		&__layer
+		{
+			.orbit-particles[data-motion-phase='exit'] &
+			{
+				visibility: hidden;
+			}
+		}
+	}
+}
+
+@include l
+{
+	.orbit-particles
+	{
+		&__item
+		{
+			--orbit-particles-desktop-size-width: min(100cqw, var(--orbit-particles-desktop-size-cap, 100cqw));
+			aspect-ratio: var(--orbit-particles-desktop-ratio); // sass-lint:disable-line no-misspelled-properties
+			left: var(--orbit-particles-desktop-center-x);
+			top: var(--orbit-particles-desktop-top);
+			// Keep the center on its orbit when the particle stops growing.
+			transform: translate(-50%, calc(50% * (100cqw / var(--orbit-particles-desktop-size-width) - 1)));
+			width: calc(var(--orbit-particles-desktop-size-width) * var(--orbit-particles-desktop-width-ratio));
+		}
+
+		&__editor
+		{
+			top: 0;
+		}
+	}
+}

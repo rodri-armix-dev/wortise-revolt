@@ -1,0 +1,103 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Image from '../../atoms/Image/Image.astro';
+import { getLocaleFromPath } from '../../../i18n/routes';
+import { getUiText } from '../../../i18n/ui';
+
+type Bounds = [x: number, y: number, width: number, height?: number];
+type Frame = { width: number; height: number };
+type MotionPhase = 'enter' | 'idle' | 'exit';
+type MotionPoint = [x: number, y: number];
+
+interface Particle {
+	image: ComponentProps<typeof Image>['src'];
+	mobile: Bounds;
+	desktop: Bounds;
+	markWidth?: number;
+	monochrome?: boolean;
+	motion: Record<MotionPhase, MotionPoint[]>;
+}
+
+export interface Props {
+	frames: { mobile: Frame; desktop: Frame };
+	durations: Record<MotionPhase, number>;
+	textured: Particle[];
+	glass?: Particle[];
+}
+
+const { frames, durations, glass, textured } = Astro.props;
+const ui = getUiText(getLocaleFromPath(Astro.url.pathname));
+const groupName = `orbit-particles-${crypto.randomUUID()}`;
+const variants = [
+	{ name: 'textured', items: textured },
+	...(glass ? [{ name: 'glass', items: glass }] : []),
+];
+const motionOptions = {
+	auto: ui.orbitParticleAuto,
+	outside: ui.orbitParticleOutside,
+	enter: ui.orbitParticleEnter,
+	idle: ui.orbitParticleIdle,
+	exit: ui.orbitParticleExit,
+};
+
+function position([x, y, width, height = width]: Bounds, frame: Frame, range: 'mobile' | 'desktop') {
+	return {
+		[`--orbit-particles-${range}-center-x`]: `${(x + width / 2) / frame.width * 100}%`,
+		[`--orbit-particles-${range}-top`]: `${y / frame.height * 100}%`,
+		...(range === 'desktop'
+			? { '--orbit-particles-desktop-width-ratio': width / frame.width }
+			: { '--orbit-particles-mobile-width': `${width / frame.width * 100}%` }),
+		[`--orbit-particles-${range}-ratio`]: `${width} / ${height}`,
+	};
+}
+---
+
+<orbit-particles class="orbit-particles" data-motion-phase="outside" data-motion-frame={JSON.stringify(frames.desktop)} data-motion-durations={JSON.stringify(durations)}>
+	{glass && (
+		<details class="orbit-particles__editor">
+			<summary class="orbit-particles__toggle" aria-label={ui.editOrbitParticles} title={ui.editOrbitParticles}>
+				<span aria-hidden="true">✎</span>
+			</summary>
+			<div class="orbit-particles__options">
+				<fieldset class="orbit-particles__fieldset">
+					<legend>{ui.orbitParticleStyle}</legend>
+					<label class="orbit-particles__option">
+						<input class="orbit-particles__input" type="radio" name={groupName} value="glass" />
+						{ui.orbitParticleGlass}
+					</label>
+					<label class="orbit-particles__option">
+						<input class="orbit-particles__input" type="radio" name={groupName} value="textured" checked />
+						{ui.orbitParticleTextured}
+					</label>
+				</fieldset>
+				<fieldset class="orbit-particles__fieldset">
+					<legend>{ui.orbitParticleMotion}</legend>
+					{Object.entries(motionOptions).map(([mode, label]) => (
+						<button class="orbit-particles__action" type="button" data-motion-preview={mode} aria-pressed={mode === 'auto'}>
+							{label}
+						</button>
+					))}
+				</fieldset>
+			</div>
+		</details>
+	)}
+	{variants.map(({ name, items }) => (
+		<div class:list={['orbit-particles__layer', `orbit-particles__layer--${name}`]} aria-hidden="true">
+			{items.map(({ image, mobile, desktop, markWidth, monochrome, motion }) => (
+				<div class="orbit-particles__item" data-particle-motion={JSON.stringify(motion)} style={{ ...position(mobile, frames.mobile, 'mobile'), ...position(desktop, frames.desktop, 'desktop'), '--orbit-particles-mobile-max-width': `${mobile[2]}px`, '--orbit-particles-mark-width': markWidth ? `${markWidth}%` : undefined }}>
+					<div class:list={['orbit-particles__mark', { 'orbit-particles__mark--monochrome': monochrome }]}>
+						<Image src={image} alt="" />
+					</div>
+				</div>
+			))}
+		</div>
+	))}
+</orbit-particles>
+
+<script>
+	import './orbit-particles';
+</script>
+
+<style lang="scss">
+	@use './orbit-particles';
+</style>

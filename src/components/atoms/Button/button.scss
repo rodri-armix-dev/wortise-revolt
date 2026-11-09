@@ -47,6 +47,7 @@
 		{
 			background: #b0003a; // sass-lint:disable-line no-color-literals
 			border-radius: var(--radius-full);
+			display: var(--button-primary-special-icon-display, var(--button-icon-display, inline-flex));
 			height: 34px;
 			width: 34px;
 		}
@@ -118,6 +119,7 @@
 	&--secondary
 	{
 		background: var(--color-background-control);
+		height: var(--button-height, var(--button-secondary-height, var(--button-size-height)));
 
 		&:hover:not(:disabled, [aria-disabled='true']),
 		&.button--hover
@@ -180,8 +182,8 @@
 		&.button--large
 		{
 			gap: var(--button-gap, var(--spacing-8));
-			padding-left: var(--spacing-24);
-			padding-right: var(--spacing-8);
+			padding-left: var(--button-primary-special-padding-inline, var(--spacing-24));
+			padding-right: var(--button-primary-special-padding-inline, var(--spacing-8));
 		}
 	}
 }

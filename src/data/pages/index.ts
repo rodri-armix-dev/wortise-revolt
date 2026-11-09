@@ -1,6 +1,7 @@
 import { contactPageData } from './contact';
 import { homeData } from '../home';
 import { aboutPageData } from './about';
+import { developersPageData } from './developers';
 import { wortiseAdsPageData } from './wortise-ads';
 import type { Locale } from '../../i18n/config';
 import type { EditorialPageData } from './page.types';
@@ -13,6 +14,7 @@ import { blogPageData, blogArticlePages } from '../blog';
 export const pageData = {
 	home: homeData,
 	about: aboutPageData,
+	developers: developersPageData,
 	'wortise-ads': wortiseAdsPageData,
 	contact: contactPageData,
 	terms: termsPageData,

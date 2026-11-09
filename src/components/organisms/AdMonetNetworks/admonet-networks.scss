@@ -1,0 +1,165 @@
+.admonet-networks
+{
+	display: grid;
+	gap: var(--spacing-64);
+	justify-items: center;
+	overflow: hidden;
+	padding-block-end: var(--spacing-40);
+	padding-block-start: var(--spacing-48);
+
+	&__text-block
+	{
+		--description-line-height: 20px;
+		--text-block-gap: var(--spacing-8);
+		max-width: 665px;
+		width: 100%;
+	}
+
+	&__scene
+	{
+		--admonet-networks-hub-label-color: var(--color-text-primary);
+		--admonet-networks-hub-tagline-color: var(--color-text-muted);
+		--admonet-networks-hub-tint: rgba(79, 79, 79, .32); // sass-lint:disable-line no-color-literals
+		--glass-surface-tint: var(--admonet-networks-hub-tint);
+		display: grid;
+		isolation: isolate;
+		min-height: 520px;
+		padding-block-end: var(--spacing-48);
+		place-items: center;
+		position: relative;
+		width: 100%;
+
+		&:has(> [data-motion-phase='exit'])
+		{
+			--admonet-networks-accent-progress: var(--orbit-particles-exit-progress, 100%);
+			--admonet-networks-hub-label-color: color-mix(in srgb, var(--color-text-primary), var(--color-text-editorial-accent) var(--admonet-networks-accent-progress));
+			--admonet-networks-hub-tagline-color: color-mix(in srgb, var(--color-text-muted), var(--color-text-primary) var(--admonet-networks-accent-progress));
+			--glass-surface-border-color: color-mix(in srgb, var(--color-border-subtle), #ff73a5 var(--admonet-networks-accent-progress)); // sass-lint:disable-line no-color-literals
+			--glass-surface-tint: color-mix(in srgb, var(--admonet-networks-hub-tint), color-mix(in srgb, var(--color-action-primary) 7%, transparent) var(--admonet-networks-accent-progress));
+		}
+	}
+
+	&__art
+	{
+		background-color: var(--color-background-page);
+		background-image: url('../../../assets/admonet/desktop-orbit-inner.svg'), url('../../../assets/admonet/desktop-orbit-outer.svg');
+		background-position: center calc(50% + 5px), center;
+		background-repeat: no-repeat;
+		// Scale the horizontal geometry from the 402px artboard and keep the vertical paths aligned with the particles.
+		background-size: calc(693 / 402 * 100%) 303px, calc(980 / 402 * 100%) 455px;
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		isolation: isolate;
+		pointer-events: none;
+		position: absolute;
+
+		&::before
+		{
+			background: url('../../../assets/admonet/mobile-glow.svg') center no-repeat;
+			content: '';
+			height: 483.347px;
+			left: 50%;
+			pointer-events: none;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%) rotate(20.6deg);
+			width: 447.005px;
+			z-index: -1;
+		}
+	}
+
+	&__hub
+	{
+		display: grid;
+		gap: var(--spacing-4);
+		padding-block: var(--spacing-12);
+		padding-inline: var(--spacing-32);
+		text-align: center;
+	}
+
+	&__hub-label
+	{
+		color: var(--admonet-networks-hub-label-color);
+		font-size: var(--font-size-title-sm);
+		font-weight: 500;
+		line-height: var(--line-height-title-sm);
+	}
+
+	&__hub-tagline
+	{
+		color: var(--admonet-networks-hub-tagline-color);
+		line-height: 20px;
+	}
+}
+
+@include l
+{
+	.admonet-networks
+	{
+		gap: 0;
+		// Together with the preceding section's 32px inset, this gives the 176px gap in Figma.
+		padding-block-start: calc(var(--spacing-64) + var(--spacing-48) + var(--spacing-32));
+
+		&__text-block
+		{
+			--description-color: var(--color-text-muted);
+			--description-line-height: 23px;
+			--text-block-gap: var(--spacing-12);
+			--text-block-intro-gap: var(--spacing-12);
+		}
+
+		&__scene
+		{
+			--admonet-networks-element-scale: min(var(--admonet-networks-scene-scale), 1);
+			--admonet-networks-reference-width: 1312px;
+			--admonet-networks-scene-scale: calc(100cqw / var(--admonet-networks-reference-width));
+			--orbit-particles-desktop-size-cap: var(--admonet-networks-reference-width);
+
+			aspect-ratio: 1312 / 634; // sass-lint:disable-line no-misspelled-properties
+			container-type: inline-size; // sass-lint:disable-line no-misspelled-properties
+			// The XL layout cap of 1344px gives the 1312px scene from Figma.
+			max-width: calc(var(--layout-content-max-width) * 1312 / 1344);
+			min-height: 0;
+			padding-block-end: 0;
+		}
+
+		&__art
+		{
+			background-image: url('../../../assets/admonet/desktop-orbit-core.svg'),
+			url('../../../assets/admonet/desktop-orbit-inner.svg'),
+			url('../../../assets/admonet/desktop-orbit-middle.svg'),
+			url('../../../assets/admonet/desktop-orbit-outer.svg');
+			background-position: center;
+			background-size: calc(432 / 1312 * 100%) auto, calc(780 / 1312 * 100%) auto, calc(980 / 1312 * 100%) auto, 100% auto;
+
+			&::before
+			{
+				background-image: url('../../../assets/admonet/desktop-glow.svg');
+				background-size: contain;
+				height: calc(483.347px * var(--admonet-networks-element-scale));
+				top: calc(50% - 36px * var(--admonet-networks-scene-scale));
+				width: calc(447.005px * var(--admonet-networks-element-scale));
+			}
+		}
+
+		&__hub
+		{
+			gap: calc(var(--spacing-12) * var(--admonet-networks-element-scale));
+			// Keep the surface's 1px border outside the scaled content.
+			min-width: calc(246px * var(--admonet-networks-element-scale) - 2px);
+			padding-block: calc(var(--spacing-24) * var(--admonet-networks-element-scale) - 1px);
+			padding-inline: calc(var(--spacing-24) * var(--admonet-networks-element-scale));
+		}
+
+		&__hub-label
+		{
+			font-size: calc(var(--font-size-title-md) * var(--admonet-networks-element-scale));
+			line-height: calc(38px * var(--admonet-networks-element-scale));
+		}
+
+		&__hub-tagline
+		{
+			font-size: calc(1em * var(--admonet-networks-element-scale));
+			line-height: calc(20px * var(--admonet-networks-element-scale));
+		}
+	}
+}

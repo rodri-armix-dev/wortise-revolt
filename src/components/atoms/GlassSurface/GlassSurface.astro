@@ -1,0 +1,73 @@
+---
+import { createCapsuleMap } from './glass-surface-map';
+
+export interface Props {
+	optics: {
+		lightAngle: number;
+		lightIntensity: number;
+		refraction: number;
+		depth: number;
+		dispersion: number;
+		frost: number;
+		splay: number;
+	};
+}
+
+const { optics } = Astro.props;
+const hasBackdrop = Astro.slots.has('backdrop');
+const filterId = `glass-surface-${crypto.randomUUID()}`;
+const refractionMap = hasBackdrop ? createCapsuleMap(Math.max(1, optics.depth)) : undefined;
+const refraction = optics.refraction * .24;
+const dispersion = optics.dispersion * .01;
+const frost = optics.frost * .08;
+const angle = optics.lightAngle * Math.PI / 180;
+const style = {
+	'--glass-surface-filter': `url("#${filterId}")`,
+	'--glass-surface-frost': `${frost}px`,
+	'--glass-surface-light-blur': `${1 + optics.splay * .03}px`,
+	'--glass-surface-light-intensity': optics.lightIntensity / 100,
+	'--glass-surface-light-x': `${-Math.sin(angle)}px`,
+	'--glass-surface-light-y': `${Math.cos(angle)}px`,
+};
+---
+
+<glass-surface class="glass-surface" style={style}>
+	{hasBackdrop && (
+		<svg class="glass-surface__filter" width="0" height="0" aria-hidden="true" focusable="false">
+			<defs>
+				<filter id={filterId} x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+					<feImage href={refractionMap} preserveAspectRatio="none" result="lens" />
+					<feGaussianBlur in="SourceGraphic" stdDeviation={frost} edgeMode="duplicate" result="frosted" />
+					<feDisplacementMap in="frosted" in2="lens" scale={refraction * (1 + dispersion)} xChannelSelector="R" yChannelSelector="G" />
+					<feColorMatrix values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red" />
+					<feDisplacementMap in="frosted" in2="lens" scale={refraction} xChannelSelector="R" yChannelSelector="G" />
+					<feColorMatrix values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green" />
+					<feDisplacementMap in="frosted" in2="lens" scale={refraction * (1 - dispersion)} xChannelSelector="R" yChannelSelector="G" />
+					<feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue" />
+					<feBlend in="red" in2="green" mode="screen" result="red-green" />
+					<feBlend in="red-green" in2="blue" mode="screen" />
+				</filter>
+			</defs>
+		</svg>
+	)}
+	<div class="glass-surface__lens">
+		{hasBackdrop && (
+			<div class="glass-surface__optics" aria-hidden="true">
+				<div class="glass-surface__refraction">
+					<div class="glass-surface__backdrop">
+						<slot name="backdrop" />
+					</div>
+				</div>
+			</div>
+		)}
+		<slot />
+	</div>
+</glass-surface>
+
+<script>
+	import './glass-surface';
+</script>
+
+<style lang="scss">
+	@use './glass-surface';
+</style>

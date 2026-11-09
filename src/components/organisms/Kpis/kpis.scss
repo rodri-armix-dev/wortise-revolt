@@ -4,6 +4,12 @@
 	overflow: hidden;
 	padding-block: var(--spacing-48);
 
+	&--cover
+	{
+		border-block: 1px solid var(--color-border-subtle);
+		padding-block: var(--spacing-32);
+	}
+
 	&__inner
 	{
 		--global-item-gap: 50px;
@@ -56,18 +62,33 @@
 	&__label
 	{
 		color: #888; // sass-lint:disable-line no-color-literals
-		font-size: 21px;
+		font-size: var(--font-size-title-xs);
 		font-weight: 500;
-		line-height: 26px;
+		line-height: var(--line-height-title-xs);
 	}
 
 	&__value
 	{
 		color: var(--color-text-primary);
-		font-size: 60px;
-		line-height: 64px;
+		font-size: var(--font-size-display-xl);
+		line-height: var(--line-height-display-xl);
 		margin: 0;
 		order: -1;
+	}
+}
+
+@include osm
+{
+	.kpis
+	{
+		&__items
+		{
+			.kpis--cover &
+			{
+				gap: var(--spacing-40);
+				min-height: 558px;
+			}
+		}
 	}
 }
 
@@ -78,14 +99,26 @@
 		padding-block: 120px;
 		position: relative;
 
-		&::after
+		&--cover
 		{
-			background: linear-gradient(to bottom, var(--color-background-page), transparent 160px, transparent calc(100% - 160px), var(--color-background-page));
-			content: '';
-			inset: 0; // sass-lint:disable-line no-misspelled-properties
-			pointer-events: none;
-			position: absolute;
-			z-index: -1;
+			border: 0;
+			// The desktop design reserves 242px between the start of the metrics and the next section.
+			min-height: 242px;
+			overflow: visible;
+			padding-block: 0 var(--spacing-64);
+		}
+
+		&:not(.kpis--cover)
+		{
+			&::after
+			{
+				background: linear-gradient(to bottom, var(--color-background-page), transparent 160px, transparent calc(100% - 160px), var(--color-background-page));
+				content: '';
+				inset: 0; // sass-lint:disable-line no-misspelled-properties
+				pointer-events: none;
+				position: absolute;
+				z-index: -1;
+			}
 		}
 
 		&__inner
@@ -95,6 +128,11 @@
 			.kpis--vision &
 			{
 				--global-item-gap: 264px;
+			}
+
+			.kpis--cover &
+			{
+				--layout-content-max-width: 1189px;
 			}
 		}
 
@@ -126,13 +164,27 @@
 				left: calc(-1 * var(--layout-gutter));
 				top: auto;
 				width: calc(100% + var(--layout-gutter) * 2);
+
+				.kpis--cover &
+				{
+					bottom: auto;
+					left: 50%;
+					top: -52px;
+					transform: translate(-50%, -58%);
+					width: min(1322px, calc(100% + var(--layout-gutter) * 2));
+				}
 			}
 		}
 
 		&__item
 		{
-			gap: 9px;
+			gap: var(--spacing-8);
 			min-width: 169px;
+
+			.kpis--cover &
+			{
+				flex: 0 0 169px;
+			}
 		}
 	}
 }

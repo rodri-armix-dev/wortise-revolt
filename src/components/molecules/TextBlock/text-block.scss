@@ -51,10 +51,11 @@
 
 	&__actions
 	{
-		display: flex;
+		display: var(--text-block-actions-display, flex);
 		flex-wrap: wrap;
 		gap: var(--spacing-16);
 		justify-content: var(--text-block-actions-alignment);
+		justify-items: start;
 		margin-top: var(--text-block-actions-offset, var(--spacing-16));
 	}
 
