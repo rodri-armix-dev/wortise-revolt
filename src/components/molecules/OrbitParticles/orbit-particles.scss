@@ -169,7 +169,7 @@
 	}
 }
 
-@include l
+@include m
 {
 	.orbit-particles
 	{
@@ -177,11 +177,21 @@
 		{
 			--orbit-particles-desktop-size-width: min(100cqw, var(--orbit-particles-desktop-size-cap, 100cqw));
 			aspect-ratio: var(--orbit-particles-desktop-ratio); // sass-lint:disable-line no-misspelled-properties
+			width: calc(var(--orbit-particles-desktop-size-width) * var(--orbit-particles-desktop-width-ratio));
+		}
+	}
+}
+
+@include l
+{
+	.orbit-particles
+	{
+		&__item
+		{
 			left: var(--orbit-particles-desktop-center-x);
 			top: var(--orbit-particles-desktop-top);
 			// Keep the center on its orbit when the particle stops growing.
 			transform: translate(-50%, calc(50% * (100cqw / var(--orbit-particles-desktop-size-width) - 1)));
-			width: calc(var(--orbit-particles-desktop-size-width) * var(--orbit-particles-desktop-width-ratio));
 		}
 
 		&__editor

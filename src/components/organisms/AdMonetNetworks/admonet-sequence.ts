@@ -4,6 +4,11 @@ import { mediaQueries } from '../../../../config/breakpoints';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Scroll distance per panel, as a multiple of the visible panel height.
+const scrollDistancePerPanel = .6;
+const catchUpSeconds = .5;
+const maximumPlaybackSpeed = 8;
+const overviewMaximumPlaybackSpeed = 1.25;
 const convergeEnd = .42;
 const formatLighting = [
 	{ ambient: 'rgba(210, 14, 78, .35)', halo: 'rgba(210, 14, 66, .65)' },
@@ -52,6 +57,8 @@ function mount(root: HTMLElement) {
 	const { signal } = events;
 	let context: gsap.Context | undefined;
 	let transition: gsap.core.Tween | undefined;
+	let speedTween: gsap.core.Tween | undefined;
+	let velocityDecay: gsap.core.Tween | undefined;
 	let trigger: ScrollTrigger | undefined;
 	let frame = 0;
 	let geometry = '';
@@ -76,6 +83,8 @@ function mount(root: HTMLElement) {
 	};
 
 	const reset = () => {
+		speedTween?.kill();
+		velocityDecay?.kill();
 		transition?.kill();
 		transition = undefined;
 		context?.revert();
@@ -110,7 +119,7 @@ function mount(root: HTMLElement) {
 		const textHeight = Math.max(introHeight, contentHeight);
 		const gap = parseFloat(getComputedStyle(firstPanel.firstElementChild!).rowGap);
 		const overviewGap = parseFloat(getComputedStyle(overview).rowGap);
-		const compactPadding = parseFloat(getComputedStyle(root).getPropertyValue('--admonet-compact-panel-padding'));
+		const compactPadding = parseFloat(getComputedStyle(overview).paddingBlockStart);
 		const overviewOrbitHeight = height - overviewIntro.offsetHeight - overviewGap - compactPadding * 2;
 		const padding = mobile
 			? compactPadding
@@ -122,7 +131,7 @@ function mount(root: HTMLElement) {
 			return;
 		}
 
-		const distancePerStage = height * 1.2;
+		const distancePerStage = height * scrollDistancePerPanel;
 		const distance = distancePerStage * (panels.length + 1);
 		let requested = -1;
 		let selected = -1;
@@ -168,19 +177,27 @@ function mount(root: HTMLElement) {
 			};
 			timeline.eventCallback('onUpdate', render);
 
-			// Figma closes the outer paths first, then introduces the device and its copy.
+			// The copy exits while the orbit and its hub move to the panel center.
 			const rings = ['outer', 'middle', 'inner', 'core'];
 			rings.forEach((ring, index) => {
 				const property = `--admonet-orbit-${ring}`;
 				timeline.fromTo(orbit, { [property]: 1 }, { [property]: .13, duration: .18, ease: 'power2.inOut' }, .09 + index * .025);
 			});
-			timeline.to([overviewIntro, orbit], { autoAlpha: 0, duration: .16 }, .42)
+			timeline.to(overviewIntro, {
+				y: -(overviewIntro.offsetTop + overviewIntro.offsetHeight),
+				duration: .24,
+				ease: 'sine.inOut',
+			}, .16)
+				.to(orbit, { y: overview.clientHeight / 2 - orbitCenter, duration: .24, ease: 'sine.inOut' }, .16)
+				.to(glow, { '--admonet-glow-offset': '0px', duration: .24, ease: 'sine.inOut' }, .16)
+				.to(overviewIntro, { autoAlpha: 0, duration: .01 }, .40)
+				.to(orbit, { autoAlpha: 0, duration: .16 }, .60)
 				.addLabel('phone-visible', '>')
-				.to(stage, { '--ad-formats-phone-y': '0%', duration: .45, ease: 'sine.inOut' }, .48)
-				.to(glow, { ...lightingFor(0), duration: .45, ease: 'sine.inOut' }, .48)
+				.to(stage, { '--ad-formats-phone-y': '0%', duration: .27, ease: 'sine.inOut' }, .66)
+				.to(glow, { ...lightingFor(0), duration: .27, ease: 'sine.inOut' }, .66)
 				.to(phone, { autoAlpha: 1, duration: .16, ease: 'sine.inOut' }, 'phone-visible')
 				.to(glow, { '--admonet-halo-opacity': 1, duration: .16, ease: 'sine.inOut' }, 'phone-visible')
-				.fromTo(panels[0], { autoAlpha: 0, y: 48 }, { autoAlpha: 1, y: 0, duration: .34, ease: 'sine.inOut' }, .50);
+				.fromTo(panels[0], { autoAlpha: 0, y: 48 }, { autoAlpha: 1, y: 0, duration: .24, ease: 'sine.inOut' }, .70);
 
 			panels.slice(1).forEach((panel, index) => {
 				const start = index + 1;
@@ -192,17 +209,71 @@ function mount(root: HTMLElement) {
 					.to({}, { duration: .02 }, start + .98);
 			});
 
+			let transitionTarget = 0;
+			let velocityBoost = 1;
+			const setPlaybackSpeed = () => {
+				if (!transition) return;
+				const backlog = Math.abs(requested - transitionTarget);
+				const remaining = transition.duration() - transition.time();
+				const overviewTransition = Math.min(timeline.time(), transitionTarget) < 1;
+				const maximum = overviewTransition ? overviewMaximumPlaybackSpeed : maximumPlaybackSpeed;
+				const speed = Math.min(maximum, Math.max(velocityBoost, backlog ? remaining * (backlog + 1) / catchUpSeconds : 1));
+				speedTween?.kill();
+				speedTween = gsap.to(transition, { timeScale: speed, duration: .12, ease: 'power2.out', overwrite: true });
+			};
+			const playRequested = () => {
+				const time = timeline.time();
+				const direction = Math.sign(requested - time);
+				if (!direction) return;
+				// Finish one panel transition before serving the latest scroll destination.
+				transitionTarget = direction > 0 ? Math.min(requested, Math.floor(time + .0001) + 1) : Math.max(requested, Math.ceil(time - .0001) - 1);
+				transition = timeline.tweenTo(transitionTarget, {
+					duration: Math.max(.05, Math.abs(transitionTarget - time) * 1.15),
+					ease: 'none',
+					onComplete: () => {
+						speedTween?.kill();
+						transition = undefined;
+						playRequested();
+					},
+				});
+				setPlaybackSpeed();
+			};
 			const update = (self: ScrollTrigger, immediate = false) => {
 				if (rebuilding && !immediate) return;
 				const index = Math.min(panels.length, Math.floor(self.progress * (panels.length + 1)));
-				if (index === requested && !immediate) return;
-				requested = index;
-				transition?.kill();
-				if (immediate || !self.isActive) {
+				const bounds = stage.getBoundingClientRect();
+				const outsideViewport = bounds.bottom <= 0 || bounds.top >= window.innerHeight;
+				// Releasing the pin must not cut a transition while the scene is still visible.
+				if (immediate || (!self.isActive && (mobile || outsideViewport))) {
+					requested = index;
+					speedTween?.kill();
+					velocityDecay?.kill();
+					transition?.kill();
+					transition = undefined;
+					velocityBoost = 1;
 					timeline.time(index);
 					render();
 					return;
 				}
+				if (!mobile) {
+					requested = index;
+					const direction = Math.sign(requested - timeline.time());
+					const velocity = self.getVelocity() / height;
+					velocityBoost = Math.sign(velocity) === direction ? 1 + gsap.utils.clamp(0, 1, (Math.abs(velocity) - 1) / 3) * 2 : 1;
+					velocityDecay?.kill();
+					velocityDecay = gsap.delayedCall(.25, () => { velocityBoost = 1; setPlaybackSpeed(); });
+					if (transition && direction !== Math.sign(transitionTarget - timeline.time())) {
+						speedTween?.kill();
+						transition.kill();
+						transition = undefined;
+					}
+					if (transition) setPlaybackSpeed();
+					else playRequested();
+					return;
+				}
+				if (index === requested) return;
+				requested = index;
+				transition?.kill();
 				// A reversal continues from the current frame, including the screen inside the device.
 				transition = timeline.tweenTo(index, {
 					duration: gsap.utils.clamp(.18, 1.8, Math.abs(index - timeline.time()) * 1.15),
@@ -211,6 +282,7 @@ function mount(root: HTMLElement) {
 			};
 
 			trigger = ScrollTrigger.create({
+				anticipatePin: 1,
 				trigger: track,
 				start: 'top top',
 				end: `+=${distance}`,

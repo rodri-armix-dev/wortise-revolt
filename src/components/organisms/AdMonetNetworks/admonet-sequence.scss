@@ -33,6 +33,7 @@
 		align-content: center;
 		display: grid;
 		gap: var(--spacing-64);
+		grid-template-columns: minmax(0, 1fr);
 		isolation: isolate;
 		overflow: clip;
 		padding-block: var(--admonet-overview-padding, 0);
@@ -172,9 +173,6 @@
 	.admonet-networks
 	{
 		--ad-formats-panel-margin: 0;
-		--ad-formats-panel-padding: var(--admonet-compact-panel-padding);
-		--admonet-compact-panel-padding: var(--spacing-48);
-		--admonet-overview-padding: var(--admonet-compact-panel-padding);
 
 		&__overview
 		{
@@ -188,6 +186,9 @@
 	.admonet-networks
 	{
 		--ad-formats-inset: var(--spacing-8);
+		--ad-formats-panel-padding: var(--admonet-compact-panel-padding);
+		--admonet-compact-panel-padding: calc(var(--spacing-48) * 2);
+		--admonet-overview-padding: var(--admonet-compact-panel-padding);
 	}
 }
 
@@ -196,8 +197,11 @@
 	.admonet-networks
 	{
 		--ad-formats-panel-height: calc(100dvh - var(--ad-formats-inset) * 2);
+		--ad-formats-panel-padding: var(--admonet-compact-panel-padding);
 		--ad-formats-phone-width: min(230px, calc((var(--ad-formats-panel-height) - var(--spacing-64) * 2) * 410 / 788));
+		--admonet-compact-panel-padding: calc(var(--spacing-48) * 2);
 		--admonet-orbit-height: calc(min(100vw, var(--layout-content-max-width) * 1312 / 1344) * 634 / 1312);
+		--admonet-overview-padding: var(--admonet-compact-panel-padding);
 
 		&__overview
 		{

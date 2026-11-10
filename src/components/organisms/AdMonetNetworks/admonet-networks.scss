@@ -4,8 +4,15 @@
 {
 	display: grid;
 	justify-items: center;
+	// Match the preceding metrics-to-certifications gap, retaining the panel inset.
+	margin-block-start: calc(81px - var(--spacing-48) - var(--admonet-compact-panel-padding) - var(--ad-formats-inset));
 	padding-block-end: var(--spacing-40);
-	padding-block-start: var(--spacing-48);
+
+	&__scroll-space
+	{
+		background-color: var(--color-surface-card);
+		min-height: 100svh;
+	}
 
 	&__text-block
 	{
@@ -42,12 +49,17 @@
 	&__art
 	{
 		background-color: var(--admonet-orbit-backdrop, transparent);
-		background-image: url('../../../assets/pages/developers/desktop-orbit-inner.svg'), url('../../../assets/pages/developers/desktop-orbit-outer.svg');
+		background-image: url('../../../assets/pages/developers/desktop-orbit-core.svg'),
+		url('../../../assets/pages/developers/desktop-orbit-inner.svg'),
+		url('../../../assets/pages/developers/desktop-orbit-middle.svg'),
+		url('../../../assets/pages/developers/desktop-orbit-outer.svg');
 		background-position: center;
 		background-repeat: no-repeat;
 		// Scale both axes from the mobile artboard.
-		background-size: calc(693 / 402 * 100% * var(--admonet-orbit-inner, 1)) calc(303 / 520 * 100% * var(--admonet-orbit-inner, 1)),
-		calc(980 / 402 * 100% * var(--admonet-orbit-middle, 1)) calc(455 / 520 * 100% * var(--admonet-orbit-middle, 1));
+		background-size: calc(432 / 402 * 100% * var(--admonet-orbit-core, 1)) calc(186 / 520 * 100% * var(--admonet-orbit-core, 1)),
+		calc(693 / 402 * 100% * var(--admonet-orbit-inner, 1)) calc(303 / 520 * 100% * var(--admonet-orbit-inner, 1)),
+		calc(840 / 402 * 100% * var(--admonet-orbit-middle, 1)) calc(380 / 520 * 100% * var(--admonet-orbit-middle, 1)),
+		calc(980 / 402 * 100% * var(--admonet-orbit-outer, 1)) calc(455 / 520 * 100% * var(--admonet-orbit-outer, 1));
 		inset: 0; // sass-lint:disable-line no-misspelled-properties
 		isolation: isolate;
 		pointer-events: none;
@@ -87,8 +99,7 @@
 {
 	.admonet-networks
 	{
-		// Together with the preceding section's 32px inset, this gives the 176px gap in Figma.
-		padding-block-start: calc(var(--spacing-64) + var(--spacing-48) + var(--spacing-32));
+		margin-block-start: calc(150px - var(--spacing-32) - var(--admonet-compact-panel-padding) - var(--ad-formats-inset));
 
 		&__text-block
 		{
@@ -108,8 +119,9 @@
 			aspect-ratio: 1312 / 634; // sass-lint:disable-line no-misspelled-properties
 			container-type: inline-size; // sass-lint:disable-line no-misspelled-properties
 			// The XL layout cap of 1344px gives the 1312px scene from Figma.
-			max-width: min(calc(var(--layout-content-max-width) * 1312 / 1344), calc(var(--admonet-orbit-available-height, 100vw) * 1312 / 634));
+			max-width: min(100%, calc(var(--layout-content-max-width) * 1312 / 1344), calc(var(--admonet-orbit-available-height, 100vw) * 1312 / 634));
 			min-height: var(--admonet-orbit-available-height, 0);
+			min-width: 0;
 		}
 
 		&__art
