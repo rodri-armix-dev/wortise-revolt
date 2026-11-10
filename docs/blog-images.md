@@ -5,8 +5,7 @@
 `BlogMedia` es el contenedor visual de las imágenes del blog. En esta instancia
 se prepararon fondos, bordes opcionales y proporciones. Las páginas del blog
 utilizan siete ilustraciones WebP transparentes de 1680 × 1260px (4:3), exportadas
-desde la página de recursos de Figma. Los PNG y la revisión de originales están
-en [Exportaciones del blog](../exports/blog/README.md).
+desde la página de recursos de Figma. Las ilustraciones publicadas están en `src/assets/blog/articles/`. Los originales se conservan fuera del contenido publicado.
 
 `tone` selecciona una superficie mantenida en el componente. Cada superficie
 define conjuntamente fondo y color de borde. `bordered`

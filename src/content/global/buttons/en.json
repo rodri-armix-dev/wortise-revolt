@@ -1,0 +1,40 @@
+{
+  "demoUrl": "https://calendar.app.google/nPPiSdVqnJfVH9rf6",
+  "createAccountUrl": "https://ads.wortise.com",
+  "contactUrl": "https://wortise.com/en/contact/",
+  "careersUrl": "#busquedas-activas",
+  "loginUrl": "#ingresar",
+  "whatsappUrl": "https://wa.link/81h5wa",
+  "instagramUrl": "",
+  "linkedinUrl": "",
+  "facebookUrl": "",
+  "telegramUrl": "",
+  "emailUrl": "mailto:hello@wortise.com",
+  "developersStartUrl": "",
+  "sdkDocumentationUrl": "",
+  "glossaryUrl": "",
+  "helpUrl": "",
+  "downloadTipsUrl": "",
+  "careersJobs": {
+    "technical-lead-1": {
+      "url": "#busquedas-activas"
+    },
+    "technical-lead-2": {
+      "url": "#busquedas-activas"
+    },
+    "technical-lead-3": {
+      "url": "#busquedas-activas"
+    }
+  },
+  "worldContacts": {
+    "buenos-aires": {
+      "url": ""
+    },
+    "madrid": {
+      "url": ""
+    },
+    "california": {
+      "url": ""
+    }
+  }
+}

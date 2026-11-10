@@ -1,3 +1,4 @@
+import { externalButtons } from './external-buttons';
 import { getDestinationHref } from './destinations';
 import { getPublicationProfile, legalPages } from '../../config/publication';
 import type { ComponentProps } from 'astro/types';
@@ -17,11 +18,13 @@ export function getSiteData(locale: Locale, pathname: string) {
 		const label = labels[locale];
 		return href && label ? [{ label, href }] : [];
 	});
+	const help = footer.legal.items.at(-1);
+	if (externalButtons[locale].helpUrl && help) legalItems.push(help);
 	return {
 		header: { variant: profile.shell },
 		includeFooterCTA: profile.includeFooterCTA,
-		whatsapp: profile.whatsappHref
-			? { href: profile.whatsappHref, label: getUiText(locale).contactWhatsApp }
+		whatsapp: profile.includeWhatsApp && externalButtons[locale].whatsappUrl
+			? { href: externalButtons[locale].whatsappUrl, label: getUiText(locale).contactWhatsApp }
 			: undefined,
 		footer: {
 			...footer,

@@ -1,12 +1,20 @@
+import { readContent } from '../src/data/content/validate';
+import rawPT from '../src/content/global/navigation/pt.json';
+import rawEN from '../src/content/global/navigation/en.json';
+import rawES from '../src/content/global/navigation/es.json';
 import type { Page } from '../src/data/pages';
 import type { Locale } from '../src/i18n/config';
+
+const navigationPT = readContent(rawPT, 'global/navigation/pt');
+const navigationEN = readContent(rawEN, 'global/navigation/en');
+const navigationES = readContent(rawES, 'global/navigation/es');
 
 // Register legal pages in src/data/pages first, then add their keys here.
 // Missing translations remain unpublished, just like other editorial pages.
 export const legalPages: { page: Page; labels: Partial<Record<Locale, string>> }[] = [
-	{ page: 'sdk-terms', labels: { es: 'Términos del SDK', en: 'SDK Terms', pt: 'Termos do SDK' } },
-	{ page: 'terms', labels: { es: 'Términos y condiciones', en: 'Terms and Conditions', pt: 'Termos e condições' } },
-	{ page: 'privacy', labels: { es: 'Privacidad', en: 'Privacy', pt: 'Privacidade' } },
+	{ page: 'sdk-terms', labels: { es: navigationES.legal['sdk-terms'], en: navigationEN.legal['sdk-terms'], pt: navigationPT.legal['sdk-terms'] } },
+	{ page: 'terms', labels: { es: navigationES.legal.terms, en: navigationEN.legal.terms, pt: navigationPT.legal.terms } },
+	{ page: 'privacy', labels: { es: navigationES.legal.privacy, en: navigationEN.legal.privacy, pt: navigationPT.legal.privacy } },
 ];
 
 interface PublicationProfile {
@@ -16,7 +24,7 @@ interface PublicationProfile {
 	includeUi: boolean;
 	includeFooterCTA: boolean;
 	pruneUnusedAssets: boolean;
-	whatsappHref?: string;
+	includeWhatsApp?: boolean;
 }
 
 export const publicationProfiles = {
@@ -35,7 +43,7 @@ export const publicationProfiles = {
 		includeUi: false,
 		includeFooterCTA: true,
 		pruneUnusedAssets: true,
-		whatsappHref: 'https://wa.link/81h5wa',
+		includeWhatsApp: true,
 	},
 } satisfies Record<string, PublicationProfile>;
 

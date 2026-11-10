@@ -1,0 +1,69 @@
+{
+  "brand": {
+    "tagline": {
+      "primary": "Born in LATAM,",
+      "secondary": "made for the world"
+    },
+    "contact": {
+      "label": "Fale com nossa equipe"
+    }
+  },
+  "menus": {
+    "solutions": {
+      "title": "Soluções",
+      "items": {
+        "advertisers": "Para anunciantes",
+        "developers": "Para desenvolvedores",
+        "wortise-ads": "Wortise Ads"
+      }
+    },
+    "explore": {
+      "title": "Explorar",
+      "items": {
+        "about": "Sobre nós",
+        "blog": "Blog",
+        "glossary": "Glossário",
+        "sdk-documentation": "Documentação do SDK"
+      }
+    },
+    "platform": {
+      "title": "Plataforma",
+      "items": {
+        "login": {
+          "label": "Entrar"
+        },
+        "demo": {
+          "label": "Solicitar uma demonstração"
+        }
+      }
+    }
+  },
+  "languages": {
+    "title": "Idioma"
+  },
+  "social": {
+    "title": "Siga-nos",
+    "items": {
+      "instagram": {
+        "label": "Instagram"
+      },
+      "linkedin": {
+        "label": "LinkedIn"
+      },
+      "facebook": {
+        "label": "Facebook"
+      }
+    }
+  },
+  "legal": {
+    "items": {
+      "sdk-terms": "Termos do SDK",
+      "terms": "Termos e condições",
+      "privacy": "Privacidade",
+      "help": "Ajuda"
+    }
+  },
+  "copyright": {
+    "text": "© 2026 Wortise.inc"
+  }
+}

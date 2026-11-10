@@ -1,3 +1,9 @@
+import { externalButtons } from '../external-buttons';
+import type { Locale } from '../../i18n/config';
+import { headingHtml, descriptionHtml } from '../content/format';
+import { readContent } from '../content/validate';
+import rawES from '../../content/pages/blog/es.json';
+
 import type { ComponentProps } from 'astro/types';
 import type TextBlock from '../../components/molecules/TextBlock/TextBlock.astro';
 import type EditorialCTA from '../../components/molecules/EditorialCTA/EditorialCTA.astro';
@@ -5,20 +11,22 @@ import type BlogMedia from '../../components/molecules/BlogMedia/BlogMedia.astro
 import { parseArticleMarkdown } from '../../lib/article-markdown';
 import type { BlogPost } from './types';
 
+const contentES = readContent(rawES, 'pages/blog/es');
+
 export const blogIntro = {
-	eyebrow: { label: 'Wortise Blog · Ideas para crecer' },
-	heading: { html: 'Tecnología, publicidad y producto. <span data-tone="muted">Sin ruido.</span>', tag: 'h1', id: 'blog-heading' },
-	description: { html: '<p>Conectamos publishers, aplicaciones, marcas y agencias para crear campañas más inteligentes y maximizar la monetización de cada impresión.</p>' },
+	eyebrow: { label: contentES.hero.eyebrow },
+	heading: { html: headingHtml(contentES.hero.title), tag: 'h1', id: 'blog-heading' },
+	description: { html: descriptionHtml(contentES.hero.description) },
 } satisfies ComponentProps<typeof TextBlock>;
 
 export const blogNewsletter = {
-	title: 'No te pierdas nada importante.',
-	description: '<p>Suscribite y recibí nuestras novedades y artículos más recientes en tu email.</p>',
+	title: contentES.newsletter.title,
+	description: descriptionHtml(contentES.newsletter.description),
 };
 
-export function getArticleContent(post: BlogPost) {
+export function getArticleContent(post: BlogPost, locale: Locale) {
 	const ctas: Record<string, ComponentProps<typeof EditorialCTA>> = {
-		'tips-app': { eyebrow: 'Guía gratuita', title: 'Descarga nuestros Tips para mejorar tu app', action: { label: 'Descargar tips', disabled: true } },
+		'tips-app': { eyebrow: contentES.downloads['tips-app'].eyebrow, title: contentES.downloads['tips-app'].title, action: { label: contentES.downloads['tips-app'].button, href: externalButtons[locale].downloadTipsUrl || undefined, disabled: !externalButtons[locale].downloadTipsUrl } },
 	};
 	const media: Record<string, ComponentProps<typeof BlogMedia>> = {
 		'programmatic-illustration': { ...post.media, aspectRatio: '16/9' },

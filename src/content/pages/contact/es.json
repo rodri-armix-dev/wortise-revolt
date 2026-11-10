@@ -1,0 +1,55 @@
+{
+  "slug": "contacto",
+  "meta": {
+    "title": "Contacto | Wortise",
+    "description": "Contanos qué querés hacer crecer. Contactá al equipo de Wortise."
+  },
+  "hero": {
+    "eyebrow": "Contacta al equipo",
+    "title": "Abramos una nueva\noportunidad.",
+    "description": "Contanos qué querés hacer crecer. La tecnología conecta el resto."
+  },
+  "form": {
+    "reasonLabel": "¿Qué te trae por acá?",
+    "reasons": {
+      "advertise": {
+        "label": "Quiero anunciar"
+      },
+      "monetize": {
+        "label": "Quiero monetizar"
+      },
+      "other": {
+        "label": "Otro"
+      }
+    },
+    "fields": {
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Tu nombre"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "nombre@empresa.com"
+      },
+      "phone": {
+        "label": "Teléfono",
+        "placeholder": "+54 11 0000 0000"
+      },
+      "message": {
+        "label": "Mensaje",
+        "placeholder": "Contanos sobre tu proyecto, campaña o producto..."
+      }
+    },
+    "submitLabel": "Enviar mensaje",
+    "homeLabel": "Volver al inicio",
+    "resetLabel": "Enviar otro mensaje",
+    "directLabel": "O escribinos directamente",
+    "email": "hello@wortise.com",
+    "telegramLabel": "Canal de Telegram"
+  },
+  "success": {
+    "eyebrow": "Éxito",
+    "title": "Tu mensaje fue enviado correctamente.",
+    "description": "Lo revisamos y te responderemos a la brevedad. Mientras tanto, podés escribirnos por nuestros canales directos o enviar otra consulta."
+  }
+}

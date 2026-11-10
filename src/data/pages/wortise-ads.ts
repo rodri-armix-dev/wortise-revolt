@@ -1,13 +1,23 @@
+import { externalButtons } from '../external-buttons';
+import { headingHtml, descriptionHtml } from '../content/format';
+import { readContent } from '../content/validate';
+import rawES from '../../content/pages/wortise-ads/es.json';
+import rawEN from '../../content/pages/wortise-ads/en.json';
+import rawPT from '../../content/pages/wortise-ads/pt.json';
+
 import { wortiseVideos } from '../videos';
 import { footerCTAVisuals } from '../footer-cta';
-import efficiencyImage from '../../assets/ads/sections/efficiency-screen.webp';
-import projectionImage from '../../assets/ads/sections/projection-screen.webp';
-import creativeImage from '../../assets/ads/sections/creative-screen.webp';
-import reportingImage from '../../assets/ads/sections/reporting-screen.webp';
+import efficiencyImage from '../../assets/pages/wortise-ads/efficiency-dashboard.webp';
+import projectionImage from '../../assets/pages/wortise-ads/projection-dashboard.webp';
+import creativeImage from '../../assets/pages/wortise-ads/creative-dashboard.webp';
+import reportingImage from '../../assets/pages/wortise-ads/reporting-dashboard.webp';
 import type { Locale } from '../../i18n/config';
 import type { ModulesPageData } from './page.types';
 
-const demoBookingUrl = 'https://calendar.app.google/nPPiSdVqnJfVH9rf6';
+const contentES = readContent(rawES, 'pages/wortise-ads/es');
+const contentEN = readContent(rawEN, 'pages/wortise-ads/en');
+const contentPT = readContent(rawPT, 'pages/wortise-ads/pt');
+
 
 export const wortiseAdsPageKey = 'wortise-ads' as const;
 
@@ -16,17 +26,17 @@ export type WortiseAdsPageData = ModulesPageData<typeof wortiseAdsPageKey>;
 export const wortiseAdsPageData = {
 	es: {
 		key: wortiseAdsPageKey,
-		slug: 'wortise-ads',
+		slug: contentES.slug,
 		meta: {
-			title: 'Wortise Ads | Wortise',
-			description: 'Conocé Wortise Ads.',
+			title: contentES.meta.title,
+			description: contentES.meta.description,
 		},
 		footerCTA: {
 			...footerCTAVisuals,
 			text: {
-				heading: { html: 'Monetiza<br>tus cuentas', tag: 'h2' },
-				description: { html: '<p>Transformamos cada centavo de inversión total, en un beneficio para tu agencia.</p>' },
-				actions: { primary: { label: 'Agenda una Demo', href: demoBookingUrl, target: '_blank', variant: 'primary-special', size: 'large' } },
+				heading: { html: headingHtml(contentES.callToAction.title), tag: 'h2' },
+				description: { html: descriptionHtml(contentES.callToAction.description) },
+				actions: { primary: { label: contentES.callToAction.button, href: externalButtons.es.demoUrl, target: '_blank', variant: 'primary-special', size: 'large' } },
 			},
 		},
 		modules: [
@@ -36,13 +46,13 @@ export const wortiseAdsPageData = {
 					textBlock: {
 						heading: {
 							tag: 'h1',
-							html: '<span data-tone="muted">Wortise Ads:</span><br>De la idea al resultado en un clic',
+							html: headingHtml(contentES.hero.title),
 						},
 						description: {
-							html: '<p>Es la primer IA de publicidad digital mobile, que diseña creativos, gestiona audiencias, lanza campañas y genera reportes de manera simple para escalar tu negocio.</p>',
+							html: descriptionHtml(contentES.hero.description),
 						},
 						actions: {
-							primary: { label: 'Agenda una Demo', href: demoBookingUrl, target: '_blank', variant: 'primary-special', size: 'large' },
+							primary: { label: contentES.hero.button, href: externalButtons.es.demoUrl, target: '_blank', variant: 'primary-special', size: 'large' },
 						},
 					},
 				},
@@ -54,54 +64,54 @@ export const wortiseAdsPageData = {
 						{
 							id: 'campaigns',
 							variant: 'efficiency',
-							heading: 'Crea tus campañas en minutos',
+							heading: headingHtml(contentES.features.items.campaigns.title),
 							badge: 'Más eficiencia',
-							image: { src: efficiencyImage, alt: 'Anuncio de Vanish dentro de un teléfono.' },
-							description: { html: '<p><strong>Modo Asistido:</strong> 100% automatizado donde la IA lidera la estrategia y ejecución sin fricción.<br><strong>Modo Manual:</strong> Vos definís objetivos y nuestra tecnología calibra la configuración para alcanzarlos.</p>' },
-							action: { label: 'Agenda una Demo', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: efficiencyImage, alt: contentES.features.items.campaigns.imageAlt },
+							description: { html: descriptionHtml(contentES.features.items.campaigns.description) },
+							action: { label: contentES.features.items.campaigns.button, href: externalButtons.es.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-end', icon: 'ads-assisted', label: 'Modo Asistido' },
-								{ position: 'bottom-start', icon: 'ads-manual', label: 'Modo Manual' },
+								{ position: 'top-end', icon: 'ads-assisted', label: contentES.features.items.campaigns.annotations['1'].label },
+								{ position: 'bottom-start', icon: 'ads-manual', label: contentES.features.items.campaigns.annotations['2'].label },
 							],
 						},
 						{
 							id: 'projection',
 							variant: 'projection',
-							heading: 'Proyección y data pre-inversión',
+							heading: headingHtml(contentES.features.items.projection.title),
 							badge: 'Más proyección',
-							image: { src: projectionImage, alt: 'Anuncio de la fragancia Angel Elixir de Mugler dentro de un teléfono.' },
-							description: { html: '<p>Garantiza la eficiencia de tu presupuesto con estimaciones precisas de alcance e impresiones antes de activar la pauta.<br>Inversión basada en datos, no en supuestos.</p>' },
-							action: { label: 'Agenda una Demo', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: projectionImage, alt: contentES.features.items.projection.imageAlt },
+							description: { html: descriptionHtml(contentES.features.items.projection.description) },
+							action: { label: contentES.features.items.projection.button, href: externalButtons.es.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-end', value: '+100k', label: 'alcance estimado' },
-								{ position: 'bottom-start', value: '+500k', label: 'impresiones estimadas' },
+								{ position: 'top-end', value: contentES.features.items.projection.annotations['1'].value, label: contentES.features.items.projection.annotations['1'].label },
+								{ position: 'bottom-start', value: contentES.features.items.projection.annotations['2'].value, label: contentES.features.items.projection.annotations['2'].label },
 								{ position: 'side-end', icon: 'ads-audience' },
 							],
 						},
 						{
 							id: 'creative',
 							variant: 'creative',
-							heading: 'Diseño creativo autónomo',
+							heading: headingHtml(contentES.features.items.creative.title),
 							badge: 'Más impacto',
-							image: { src: creativeImage, alt: 'Anuncio interactivo de Giorgio Armani con una tarjeta para raspar dentro de un teléfono.' },
-							description: { html: '<p>Nuestra IA no solo diseña, sino que adapta dinámicamente cada pieza creativa para maximizar el impacto en cada formato y audiencia.</p>' },
-							action: { label: 'Agenda una Demo', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: creativeImage, alt: contentES.features.items.creative.imageAlt },
+							description: { html: descriptionHtml(contentES.features.items.creative.description) },
+							action: { label: contentES.features.items.creative.button, href: externalButtons.es.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-end', icon: 'ads-design', label: 'Diseño creativo' },
-								{ position: 'bottom-start', icon: 'ads-impact', label: 'Más impacto' },
+								{ position: 'top-end', icon: 'ads-design', label: contentES.features.items.creative.annotations['1'].label },
+								{ position: 'bottom-start', icon: 'ads-impact', label: contentES.features.items.creative.annotations['2'].label },
 							],
 						},
 						{
 							id: 'reporting',
 							variant: 'reporting',
-							heading: 'Reporting estratégico 24/7',
+							heading: headingHtml(contentES.features.items.reporting.title),
 							badge: 'Más control',
-							image: { src: reportingImage, alt: 'Anuncios de un video de Olivia Rodrigo y del iPhone 15 dentro de un teléfono.' },
-							description: { html: '<p>Transparencia total mediante dashboards en tiempo real. Cada cliente gestiona sus propias métricas y resultados.</p>' },
-							action: { label: 'Agenda una Demo', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: reportingImage, alt: contentES.features.items.reporting.imageAlt },
+							description: { html: descriptionHtml(contentES.features.items.reporting.description) },
+							action: { label: contentES.features.items.reporting.button, href: externalButtons.es.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-start', icon: 'ads-views', label: '10.450 vistas' },
-								{ position: 'bottom-end', value: '18 s', label: 'Permanencia promedio' },
+								{ position: 'top-start', icon: 'ads-views', label: contentES.features.items.reporting.annotations['1'].label },
+								{ position: 'bottom-end', value: contentES.features.items.reporting.annotations['2'].value, label: contentES.features.items.reporting.annotations['2'].label },
 							],
 						},
 					],
@@ -112,17 +122,17 @@ export const wortiseAdsPageData = {
 	},
 	en: {
 		key: wortiseAdsPageKey,
-		slug: 'wortise-ads',
+		slug: contentEN.slug,
 		meta: {
-			title: 'Wortise Ads | Wortise',
-			description: 'Discover Wortise Ads.',
+			title: contentEN.meta.title,
+			description: contentEN.meta.description,
 		},
 		footerCTA: {
 			...footerCTAVisuals,
 			text: {
-				heading: { html: 'Monetize<br>your accounts', tag: 'h2' },
-				description: { html: '<p>We turn every cent of your total investment into a benefit for your agency.</p>' },
-				actions: { primary: { label: 'Book a Demo', href: demoBookingUrl, target: '_blank', variant: 'primary-special', size: 'large' } },
+				heading: { html: headingHtml(contentEN.callToAction.title), tag: 'h2' },
+				description: { html: descriptionHtml(contentEN.callToAction.description) },
+				actions: { primary: { label: contentEN.callToAction.button, href: externalButtons.en.demoUrl, target: '_blank', variant: 'primary-special', size: 'large' } },
 			},
 		},
 		modules: [
@@ -132,13 +142,13 @@ export const wortiseAdsPageData = {
 					textBlock: {
 						heading: {
 							tag: 'h1',
-							html: '<span data-tone="muted">Wortise Ads:</span><br>From idea to results in one click',
+							html: headingHtml(contentEN.hero.title),
 						},
 						description: {
-							html: '<p>The first AI for mobile digital advertising that designs creatives, manages audiences, launches campaigns and generates reports with ease to scale your business.</p>',
+							html: descriptionHtml(contentEN.hero.description),
 						},
 						actions: {
-							primary: { label: 'Book a Demo', href: demoBookingUrl, target: '_blank', variant: 'primary-special', size: 'large' },
+							primary: { label: contentEN.hero.button, href: externalButtons.en.demoUrl, target: '_blank', variant: 'primary-special', size: 'large' },
 						},
 					},
 				},
@@ -150,54 +160,54 @@ export const wortiseAdsPageData = {
 						{
 							id: 'campaigns',
 							variant: 'efficiency',
-							heading: 'Create your campaigns in minutes',
+							heading: headingHtml(contentEN.features.items.campaigns.title),
 							badge: 'Greater efficiency',
-							image: { src: efficiencyImage, alt: 'Vanish ad displayed on a phone.' },
-							description: { html: '<p><strong>Assisted Mode:</strong> Fully automated, with AI leading seamless strategy and execution.<br><strong>Manual Mode:</strong> You set the goals, and our technology fine-tunes the settings to achieve them.</p>' },
-							action: { label: 'Book a Demo', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: efficiencyImage, alt: contentEN.features.items.campaigns.imageAlt },
+							description: { html: descriptionHtml(contentEN.features.items.campaigns.description) },
+							action: { label: contentEN.features.items.campaigns.button, href: externalButtons.en.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-end', icon: 'ads-assisted', label: 'Assisted Mode' },
-								{ position: 'bottom-start', icon: 'ads-manual', label: 'Manual Mode' },
+								{ position: 'top-end', icon: 'ads-assisted', label: contentEN.features.items.campaigns.annotations['1'].label },
+								{ position: 'bottom-start', icon: 'ads-manual', label: contentEN.features.items.campaigns.annotations['2'].label },
 							],
 						},
 						{
 							id: 'projection',
 							variant: 'projection',
-							heading: 'Forecasts and data before you invest',
+							heading: headingHtml(contentEN.features.items.projection.title),
 							badge: 'Better forecasting',
-							image: { src: projectionImage, alt: 'Ad for Mugler’s Angel Elixir fragrance displayed on a phone.' },
-							description: { html: '<p>Make your budget work efficiently with accurate reach and impression estimates before launching your ads.<br>Investment based on data, not assumptions.</p>' },
-							action: { label: 'Book a Demo', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: projectionImage, alt: contentEN.features.items.projection.imageAlt },
+							description: { html: descriptionHtml(contentEN.features.items.projection.description) },
+							action: { label: contentEN.features.items.projection.button, href: externalButtons.en.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-end', value: '+100k', label: 'estimated reach' },
-								{ position: 'bottom-start', value: '+500k', label: 'estimated impressions' },
+								{ position: 'top-end', value: contentEN.features.items.projection.annotations['1'].value, label: contentEN.features.items.projection.annotations['1'].label },
+								{ position: 'bottom-start', value: contentEN.features.items.projection.annotations['2'].value, label: contentEN.features.items.projection.annotations['2'].label },
 								{ position: 'side-end', icon: 'ads-audience' },
 							],
 						},
 						{
 							id: 'creative',
 							variant: 'creative',
-							heading: 'Autonomous creative design',
+							heading: headingHtml(contentEN.features.items.creative.title),
 							badge: 'Greater impact',
-							image: { src: creativeImage, alt: 'Interactive Giorgio Armani ad with a scratch card displayed on a phone.' },
-							description: { html: '<p>Our AI goes beyond design, dynamically adapting each creative to maximize its impact across every format and audience.</p>' },
-							action: { label: 'Book a Demo', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: creativeImage, alt: contentEN.features.items.creative.imageAlt },
+							description: { html: descriptionHtml(contentEN.features.items.creative.description) },
+							action: { label: contentEN.features.items.creative.button, href: externalButtons.en.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-end', icon: 'ads-design', label: 'Creative design' },
-								{ position: 'bottom-start', icon: 'ads-impact', label: 'Greater impact' },
+								{ position: 'top-end', icon: 'ads-design', label: contentEN.features.items.creative.annotations['1'].label },
+								{ position: 'bottom-start', icon: 'ads-impact', label: contentEN.features.items.creative.annotations['2'].label },
 							],
 						},
 						{
 							id: 'reporting',
 							variant: 'reporting',
-							heading: 'Strategic reporting 24/7',
+							heading: headingHtml(contentEN.features.items.reporting.title),
 							badge: 'Greater control',
-							image: { src: reportingImage, alt: 'Ads for an Olivia Rodrigo video and the iPhone 15 displayed on a phone.' },
-							description: { html: '<p>Complete transparency through real-time dashboards. Each client manages their own metrics and results.</p>' },
-							action: { label: 'Book a Demo', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: reportingImage, alt: contentEN.features.items.reporting.imageAlt },
+							description: { html: descriptionHtml(contentEN.features.items.reporting.description) },
+							action: { label: contentEN.features.items.reporting.button, href: externalButtons.en.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-start', icon: 'ads-views', label: '10,450 views' },
-								{ position: 'bottom-end', value: '18 s', label: 'Average time spent' },
+								{ position: 'top-start', icon: 'ads-views', label: contentEN.features.items.reporting.annotations['1'].label },
+								{ position: 'bottom-end', value: contentEN.features.items.reporting.annotations['2'].value, label: contentEN.features.items.reporting.annotations['2'].label },
 							],
 						},
 					],
@@ -213,17 +223,17 @@ export const wortiseAdsPageData = {
 	},
 	pt: {
 		key: wortiseAdsPageKey,
-		slug: 'wortise-ads',
+		slug: contentPT.slug,
 		meta: {
-			title: 'Wortise Ads | Wortise',
-			description: 'Conheça o Wortise Ads.',
+			title: contentPT.meta.title,
+			description: contentPT.meta.description,
 		},
 		footerCTA: {
 			...footerCTAVisuals,
 			text: {
-				heading: { html: 'Monetize<br>suas contas', tag: 'h2' },
-				description: { html: '<p>Transformamos cada centavo do investimento total em um benefício para sua agência.</p>' },
-				actions: { primary: { label: 'Agende uma demonstração', href: demoBookingUrl, target: '_blank', variant: 'primary-special', size: 'large' } },
+				heading: { html: headingHtml(contentPT.callToAction.title), tag: 'h2' },
+				description: { html: descriptionHtml(contentPT.callToAction.description) },
+				actions: { primary: { label: contentPT.callToAction.button, href: externalButtons.pt.demoUrl, target: '_blank', variant: 'primary-special', size: 'large' } },
 			},
 		},
 		modules: [
@@ -233,13 +243,13 @@ export const wortiseAdsPageData = {
 					textBlock: {
 						heading: {
 							tag: 'h1',
-							html: '<span data-tone="muted">Wortise Ads:</span><br>Da ideia ao resultado em um clique',
+							html: headingHtml(contentPT.hero.title),
 						},
 						description: {
-							html: '<p>A primeira IA de publicidade digital mobile que cria peças, gerencia públicos, lança campanhas e gera relatórios de forma simples para escalar seu negócio.</p>',
+							html: descriptionHtml(contentPT.hero.description),
 						},
 						actions: {
-							primary: { label: 'Agende uma demonstração', href: demoBookingUrl, target: '_blank', variant: 'primary-special', size: 'large' },
+							primary: { label: contentPT.hero.button, href: externalButtons.pt.demoUrl, target: '_blank', variant: 'primary-special', size: 'large' },
 						},
 					},
 				},
@@ -251,54 +261,54 @@ export const wortiseAdsPageData = {
 						{
 							id: 'campaigns',
 							variant: 'efficiency',
-							heading: 'Crie suas campanhas em minutos',
+							heading: headingHtml(contentPT.features.items.campaigns.title),
 							badge: 'Mais eficiência',
-							image: { src: efficiencyImage, alt: 'Anúncio da Vanish exibido em um celular.' },
-							description: { html: '<p><strong>Modo Assistido:</strong> 100% automatizado, com a IA conduzindo a estratégia e a execução sem complicações.<br><strong>Modo Manual:</strong> Você define os objetivos e nossa tecnologia ajusta as configurações para alcançá-los.</p>' },
-							action: { label: 'Agende uma demonstração', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: efficiencyImage, alt: contentPT.features.items.campaigns.imageAlt },
+							description: { html: descriptionHtml(contentPT.features.items.campaigns.description) },
+							action: { label: contentPT.features.items.campaigns.button, href: externalButtons.pt.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-end', icon: 'ads-assisted', label: 'Modo Assistido' },
-								{ position: 'bottom-start', icon: 'ads-manual', label: 'Modo Manual' },
+								{ position: 'top-end', icon: 'ads-assisted', label: contentPT.features.items.campaigns.annotations['1'].label },
+								{ position: 'bottom-start', icon: 'ads-manual', label: contentPT.features.items.campaigns.annotations['2'].label },
 							],
 						},
 						{
 							id: 'projection',
 							variant: 'projection',
-							heading: 'Projeções e dados antes de investir',
+							heading: headingHtml(contentPT.features.items.projection.title),
 							badge: 'Mais previsibilidade',
-							image: { src: projectionImage, alt: 'Anúncio da fragrância Angel Elixir da Mugler exibido em um celular.' },
-							description: { html: '<p>Garanta a eficiência do seu orçamento com estimativas precisas de alcance e impressões antes de ativar os anúncios.<br>Investimento baseado em dados, não em suposições.</p>' },
-							action: { label: 'Agende uma demonstração', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: projectionImage, alt: contentPT.features.items.projection.imageAlt },
+							description: { html: descriptionHtml(contentPT.features.items.projection.description) },
+							action: { label: contentPT.features.items.projection.button, href: externalButtons.pt.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-end', value: '+100k', label: 'alcance estimado' },
-								{ position: 'bottom-start', value: '+500k', label: 'impressões estimadas' },
+								{ position: 'top-end', value: contentPT.features.items.projection.annotations['1'].value, label: contentPT.features.items.projection.annotations['1'].label },
+								{ position: 'bottom-start', value: contentPT.features.items.projection.annotations['2'].value, label: contentPT.features.items.projection.annotations['2'].label },
 								{ position: 'side-end', icon: 'ads-audience' },
 							],
 						},
 						{
 							id: 'creative',
 							variant: 'creative',
-							heading: 'Design criativo autônomo',
+							heading: headingHtml(contentPT.features.items.creative.title),
 							badge: 'Mais impacto',
-							image: { src: creativeImage, alt: 'Anúncio interativo da Giorgio Armani com uma raspadinha exibido em um celular.' },
-							description: { html: '<p>Nossa IA vai além do design: adapta dinamicamente cada peça criativa para maximizar o impacto em cada formato e público.</p>' },
-							action: { label: 'Agende uma demonstração', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: creativeImage, alt: contentPT.features.items.creative.imageAlt },
+							description: { html: descriptionHtml(contentPT.features.items.creative.description) },
+							action: { label: contentPT.features.items.creative.button, href: externalButtons.pt.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-end', icon: 'ads-design', label: 'Design criativo' },
-								{ position: 'bottom-start', icon: 'ads-impact', label: 'Mais impacto' },
+								{ position: 'top-end', icon: 'ads-design', label: contentPT.features.items.creative.annotations['1'].label },
+								{ position: 'bottom-start', icon: 'ads-impact', label: contentPT.features.items.creative.annotations['2'].label },
 							],
 						},
 						{
 							id: 'reporting',
 							variant: 'reporting',
-							heading: 'Relatórios estratégicos 24/7',
+							heading: headingHtml(contentPT.features.items.reporting.title),
 							badge: 'Mais controle',
-							image: { src: reportingImage, alt: 'Anúncios de um vídeo da Olivia Rodrigo e do iPhone 15 exibidos em um celular.' },
-							description: { html: '<p>Transparência total por meio de dashboards em tempo real. Cada cliente gerencia suas próprias métricas e resultados.</p>' },
-							action: { label: 'Agende uma demonstração', href: demoBookingUrl, target: '_blank', variant: 'primary' },
+							image: { src: reportingImage, alt: contentPT.features.items.reporting.imageAlt },
+							description: { html: descriptionHtml(contentPT.features.items.reporting.description) },
+							action: { label: contentPT.features.items.reporting.button, href: externalButtons.pt.demoUrl, target: '_blank', variant: 'primary' },
 							annotations: [
-								{ position: 'top-start', icon: 'ads-views', label: '10.450 visualizações' },
-								{ position: 'bottom-end', value: '18 s', label: 'Tempo médio de permanência' },
+								{ position: 'top-start', icon: 'ads-views', label: contentPT.features.items.reporting.annotations['1'].label },
+								{ position: 'bottom-end', value: contentPT.features.items.reporting.annotations['2'].value, label: contentPT.features.items.reporting.annotations['2'].label },
 							],
 						},
 					],

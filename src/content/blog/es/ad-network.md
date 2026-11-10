@@ -1,3 +1,20 @@
+---
+{
+  "id": "ad-network",
+  "slug": "ad-network",
+  "title": "Cómo elegir una Ad Network que no te decepcione",
+  "excerpt": "Conoce qué evaluar al elegir una red publicitaria: demanda, integración, transparencia y acompañamiento.",
+  "lead": "Conoce qué evaluar al elegir una red publicitaria: demanda, integración, transparencia y acompañamiento.",
+  "author": "Sergio",
+  "date": "2024-08-19",
+  "category": "Technical optimization",
+  "tags": [
+    "Apps",
+    "Publishers"
+  ],
+  "demo": true
+}
+---
 ## Una decisión que empieza por tu aplicación
 
 Elegir una Ad Network requiere mirar más allá de una cifra de ingresos. La mejor opción para tu proyecto debe encajar con tu audiencia, los países donde operas y los formatos que puedes integrar sin interrumpir la experiencia de uso.

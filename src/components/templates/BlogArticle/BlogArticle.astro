@@ -18,7 +18,7 @@ export interface Props {
 }
 const { locale, post } = Astro.props;
 const ui = getUiText(locale);
-const { blocks, ctas, media } = getArticleContent(post);
+const { blocks, ctas, media } = getArticleContent(post, locale);
 const relatedIds = [...new Set([...featuredPostIds, ...storyPostIds])].filter((id) => id !== post.id).slice(0, 3);
 const related = getBlogCards(locale, relatedIds);
 ---

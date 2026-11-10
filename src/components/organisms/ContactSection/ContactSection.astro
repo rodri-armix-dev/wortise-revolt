@@ -18,10 +18,12 @@ export interface Props {
 	resetLabel: string;
 	directLabel: string;
 	email: string;
+	emailHref?: string;
+	telegramHref?: string;
 	telegramLabel: string;
 }
 
-const { intro, reasonLabel, reasons, fields, submitLabel, success, homeLabel, resetLabel, directLabel, email, telegramLabel } = Astro.props;
+const { intro, reasonLabel, reasons, fields, submitLabel, success, homeLabel, resetLabel, directLabel, email, emailHref = `mailto:${email}`, telegramHref, telegramLabel } = Astro.props;
 const locale = getLocaleFromPath(Astro.url.pathname);
 const ui = getUiText(locale);
 const homeHref = getPagePath(locale, getHomePage());
@@ -93,8 +95,8 @@ const id = `contact-${crypto.randomUUID()}`;
 			<div class="contact-section__direct">
 				<Eyebrow label={directLabel} />
 				<div class="contact-section__channels">
-					<Button label={email} href={`mailto:${email}`} variant="secondary" size="medium" />
-					<Button label={telegramLabel} variant="secondary" size="medium" icon="arrow-up-right" disabled />
+					<Button label={email} href={emailHref} disabled={!emailHref} variant="secondary" size="medium" />
+					<Button label={telegramLabel} href={telegramHref || undefined} variant="secondary" size="medium" icon="arrow-up-right" disabled={!telegramHref} />
 				</div>
 			</div>
 		</div>

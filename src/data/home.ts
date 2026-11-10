@@ -1,38 +1,48 @@
+import { externalButtons } from './external-buttons';
+import { headingHtml, descriptionHtml } from './content/format';
+import { contactCTA } from './contact-cta';
+import { readContent } from './content/validate';
+import rawES from '../content/pages/home/es.json';
+import rawEN from '../content/pages/home/en.json';
+
 import { footerCTAVisuals } from './footer-cta';
 import { worldLocations } from './world';
 import { kpiItems } from './kpis';
 import { homeGalleryItems } from './gallery';
-import wortiseW from '../assets/home/wortise-w.png';
-import glow from '../assets/home/glow.svg?url';
-import hbo from '../assets/brands/hbo.png';
-import apple from '../assets/brands/apple.png';
-import spotify from '../assets/brands/spotify.png';
-import toyota from '../assets/brands/toyota.png';
-import mcdonalds from '../assets/brands/mcdonalds.png';
-import visa from '../assets/brands/visa.png';
-import developersPreview from '../assets/audience/developers-screen.webp';
-import advertisersPreview from '../assets/audience/advertisers-screen.webp';
-import wortiseAdsPreview from '../assets/audience/wortise-ads-screen.webp';
+import wortiseW from '../assets/global/branding/wortise-symbol.png';
+import glow from '../assets/pages/home/glow.svg?url';
+import hbo from '../assets/pages/home/hbo.webp';
+import apple from '../assets/pages/home/apple.webp';
+import spotify from '../assets/pages/home/spotify.webp';
+import toyota from '../assets/pages/home/toyota.webp';
+import mcdonalds from '../assets/pages/home/mcdonalds.webp';
+import visa from '../assets/pages/home/visa.webp';
+import developersPreview from '../assets/pages/home/developers-screen.webp';
+import advertisersPreview from '../assets/pages/home/advertisers-screen.webp';
+import wortiseAdsPreview from '../assets/pages/home/wortise-ads-screen.webp';
 import type { Locale } from '../i18n/config';
 import type { ModulesPageData } from './pages/page.types';
+
+const contentES = readContent(rawES, 'pages/home/es');
+const contentEN = readContent(rawEN, 'pages/home/en');
 
 export type HomeData = ModulesPageData<'home'>;
 
 export const homeData = {
 	es: {
 		key: 'home',
-		slug: '',
+		slug: contentES.slug,
 		meta: {
-			title: 'Wortise',
-			description: 'Wortise',
+			title: contentES.meta.title,
+			description: contentES.meta.description,
 		},
 		footerCTA: {
 			actionPage: 'contact',
 			...footerCTAVisuals,
 			text: {
-				heading: { html: 'Conectemos tu próxima oportunidad', tag: 'h2' },
-				description: { html: '<p>Cuéntanos qué quieres lograr. El equipo de Wortise te ayuda a encontrar el mejor punto de partida.</p>' },
-				actions: { primary: { label: 'Contactar al equipo', href: '', variant: 'primary-special', size: 'large' } },
+				heading: { html: headingHtml(contactCTA.es.title), tag: 'h2' },
+				description: { html: descriptionHtml(contactCTA.es.description) },
+				actions: { primary: { label: contactCTA.es.button, href: externalButtons.es.contactUrl, variant: 'primary-special', size: 'large' } },
 			},
 		},
 		modules: [
@@ -40,16 +50,16 @@ export const homeData = {
 				type: 'hero',
 				props: {
 					content: {
-						eyebrow: { label: 'Tecnología publicitaria, hecha en LATAM' },
+						eyebrow: { label: contentES.hero.eyebrow },
 						heading: {
 							tag: 'h1',
-							html: '<span data-tone="muted">Nos ocupamos de convertir tu producto </span><br>en un gran negocio',
+							html: headingHtml(contentES.hero.title),
 						},
 						description: {
 							size: 'normal',
-							html: '<p>Conectamos publishers, aplicaciones, marcas y agencias para crear campañas más inteligentes y maximizar la monetización de cada impresión.</p>',
+							html: descriptionHtml(contentES.hero.description),
 						},
-						actions: { primary: { label: 'Explorar Wortise Ads', variant: 'primary-special' } },
+						actions: { primary: { label: contentES.hero.button, variant: 'primary-special' } },
 					},
 					visual: { image: wortiseW, background: glow, effect: 'wortise-3d' },
 					actionPage: 'wortise-ads',
@@ -58,14 +68,14 @@ export const homeData = {
 			{
 				type: 'logo-marquee',
 				props: {
-					label: 'Marcas que confían en Wortise',
+					label: contentES.clients.label,
 					logos: [
-						{ id: 'hbo', src: hbo, name: 'HBO', width: 76.313, height: 31.449 },
-						{ id: 'apple', src: apple, name: 'Apple', width: 32.886, height: 40.476 },
-						{ id: 'spotify', src: spotify, name: 'Spotify', width: 42.641, height: 42.686 },
-						{ id: 'toyota', src: toyota, name: 'Toyota', width: 59.879, height: 60.627 },
-						{ id: 'mcdonalds', src: mcdonalds, name: 'McDonald’s', width: 61.412, height: 61.466, mirrored: true },
-						{ id: 'visa', src: visa, name: 'Visa', width: 91.867, height: 29.765 },
+						{ id: 'hbo', src: hbo, name: contentES.clients.logos.hbo.name, width: 76.313, height: 31.449 },
+						{ id: 'apple', src: apple, name: contentES.clients.logos.apple.name, width: 32.886, height: 40.476 },
+						{ id: 'spotify', src: spotify, name: contentES.clients.logos.spotify.name, width: 42.641, height: 42.686 },
+						{ id: 'toyota', src: toyota, name: contentES.clients.logos.toyota.name, width: 59.879, height: 60.627 },
+						{ id: 'mcdonalds', src: mcdonalds, name: contentES.clients.logos.mcdonalds.name, width: 61.412, height: 61.466, mirrored: true },
+						{ id: 'visa', src: visa, name: contentES.clients.logos.visa.name, width: 91.867, height: 29.765 },
 					],
 				},
 			},
@@ -75,27 +85,27 @@ export const homeData = {
 					items: [
 						{
 							variant: 'developers',
-							eyebrow: 'Para desarrolladores',
-							heading: 'Monetización sin fricción',
-							description: '<p>Integra el SDK, automatiza la operación y maximiza los ingresos de aplicaciones, juegos y sitios web.</p>',
-							image: { src: developersPreview, alt: 'Ejemplo de anuncio recompensado en una aplicación.' },
-							action: { label: 'Explorar para desarrolladores' },
+							eyebrow: contentES.solutions.items['1'].eyebrow,
+							heading: headingHtml(contentES.solutions.items['1'].title),
+							description: descriptionHtml(contentES.solutions.items['1'].description),
+							image: { src: developersPreview, alt: contentES.solutions.items['1'].imageAlt },
+							action: { label: contentES.solutions.items['1'].button },
 						},
 						{
 							variant: 'advertisers',
-							eyebrow: 'Para anunciantes',
-							heading: 'Campañas que llegan mejor',
-							description: '<p>Planifica, activa y optimiza campañas con datos de primera mano y formatos no intrusivos.</p>',
-							image: { src: advertisersPreview, alt: 'Pantalla azul de prueba para anunciantes.' },
-							action: { label: 'Explorar para anunciantes' },
+							eyebrow: contentES.solutions.items['2'].eyebrow,
+							heading: headingHtml(contentES.solutions.items['2'].title),
+							description: descriptionHtml(contentES.solutions.items['2'].description),
+							image: { src: advertisersPreview, alt: contentES.solutions.items['2'].imageAlt },
+							action: { label: contentES.solutions.items['2'].button },
 						},
 						{
 							variant: 'wortise-ads',
-							eyebrow: 'Wortise Ads',
-							heading: 'De la idea al resultado en un clic',
-							description: '<p>Es la primer IA de publicidad digital mobile, que diseña creativos, gestiona audiencias, lanza campañas y genera reportes de manera simple para escalar tu negocio.</p>',
-							image: { src: wortiseAdsPreview, alt: 'Vista previa de optimización de campañas en Wortise Ads.' },
-							action: { label: 'Explorar Wortise Ads', page: 'wortise-ads' },
+							eyebrow: contentES.solutions.items['3'].eyebrow,
+							heading: headingHtml(contentES.solutions.items['3'].title),
+							description: descriptionHtml(contentES.solutions.items['3'].description),
+							image: { src: wortiseAdsPreview, alt: contentES.solutions.items['3'].imageAlt },
+							action: { label: contentES.solutions.items['3'].button, page: 'wortise-ads' },
 						},
 					],
 				},
@@ -105,14 +115,14 @@ export const homeData = {
 				props: {
 					locations: worldLocations,
 					content: {
-						eyebrow: { label: 'Nuestras soluciones' },
+						eyebrow: { label: contentES.world.eyebrow },
 						heading: {
 							tag: 'h2',
-							html: '<span data-tone="muted">Born in LATAM,</span><br>made for the world',
+							html: headingHtml(contentES.world.title),
 						},
 						description: {
 							size: 'normal',
-							html: '<p>Equipos locales y tecnología propia para conectar oportunidades en mercados de toda la región y el mundo.</p>',
+							html: descriptionHtml(contentES.world.description),
 						},
 					},
 				},
@@ -121,10 +131,10 @@ export const homeData = {
 				type: 'kpis',
 				props: {
 					textBlock: {
-						eyebrow: { label: 'Escala comprobada' },
+						eyebrow: { label: contentES.statistics.eyebrow },
 						heading: {
 							tag: 'h2',
-							html: '<span data-tone="muted">Cuando todo está conectado,</span> los resultados llegan solos.',
+							html: headingHtml(contentES.statistics.title),
 						},
 					},
 					items: kpiItems,
@@ -133,16 +143,16 @@ export const homeData = {
 			{
 				type: 'image-gallery',
 				props: {
-					label: 'El equipo y los espacios de Wortise',
+					label: contentES.team.label,
 					textBlock: {
 						alignment: 'center',
-						eyebrow: { label: 'Nuestro equipo' },
+						eyebrow: { label: contentES.team.eyebrow },
 						heading: {
 							tag: 'h2',
-							html: '<span data-tone="muted">Las personas detrás</span><br>de Wortise',
+							html: headingHtml(contentES.team.title),
 						},
 						description: {
-							html: '<p>Un equipo diverso y global que combina tecnología, datos, producto y negocio para transformar la publicidad digital.</p>',
+							html: descriptionHtml(contentES.team.description),
 						},
 					},
 					items: homeGalleryItems,
@@ -153,44 +163,44 @@ export const homeData = {
 				props: {
 					id: 'busquedas-activas',
 					textBlock: {
-						eyebrow: { label: 'Búsquedas activas' },
-						heading: { html: '<span data-tone="muted">Forma parte de </span>Wortise', tag: 'h2' },
+						eyebrow: { label: contentES.careers.eyebrow },
+						heading: { html: headingHtml(contentES.careers.title), tag: 'h2' },
 						description: {
 							size: 'normal',
-							html: '<p>Los Wortisers se identifican por ser enfocados, curiosos y resolutivos. Si crees que encajas ¡postulate!, te estamos esperando.</p>',
+							html: descriptionHtml(contentES.careers.description),
 						},
 					},
 					items: [
 						// Temporary destinations for interaction previews until job URLs are available.
-						{ id: 'technical-lead-1', title: 'Líder Técnico', location: 'Argentina', href: '#busquedas-activas' },
-						{ id: 'technical-lead-2', title: 'Líder Técnico', location: 'Argentina', href: '#busquedas-activas' },
-						{ id: 'technical-lead-3', title: 'Líder Técnico', location: 'Argentina', href: '#busquedas-activas' },
+						{ id: 'technical-lead-1', title: contentES.careers.items['technical-lead-1'].title, location: contentES.careers.items['technical-lead-1'].location, href: externalButtons.es.careersJobs['technical-lead-1'].url },
+						{ id: 'technical-lead-2', title: contentES.careers.items['technical-lead-2'].title, location: contentES.careers.items['technical-lead-2'].location, href: externalButtons.es.careersJobs['technical-lead-2'].url },
+						{ id: 'technical-lead-3', title: contentES.careers.items['technical-lead-3'].title, location: contentES.careers.items['technical-lead-3'].location, href: externalButtons.es.careersJobs['technical-lead-3'].url },
 					],
-					action: { label: 'Ver más búsquedas', href: '#busquedas-activas' },
+					action: { label: contentES.careers.button, href: externalButtons.es.careersUrl },
 				},
 			},
 		],
 	},
 	en: {
 		key: 'home',
-		slug: '',
+		slug: contentEN.slug,
 		meta: {
-			title: 'Wortise | Advertising and monetization',
-			description: 'Connect brands with people and unlock new opportunities with Wortise.',
+			title: contentEN.meta.title,
+			description: contentEN.meta.description,
 		},
 		footerCTA: {
 			actionPage: 'contact',
 			...footerCTAVisuals,
 			text: {
-				heading: { html: 'Let’s connect your next opportunity', tag: 'h2' },
-				description: { html: '<p>Tell us what you want to achieve. The Wortise team will help you find the best place to start.</p>' },
-				actions: { primary: { label: 'Contact our team', href: '', variant: 'primary-special', size: 'large' } },
+				heading: { html: headingHtml(contactCTA.en.title), tag: 'h2' },
+				description: { html: descriptionHtml(contactCTA.en.description) },
+				actions: { primary: { label: contactCTA.en.button, href: externalButtons.en.contactUrl, variant: 'primary-special', size: 'large' } },
 			},
 		},
 		modules: [
 			{
 				type: 'hero',
-				props: { heading: 'Wortise' },
+				props: { heading: headingHtml(contentEN.hero.title) },
 			},
 		],
 	},

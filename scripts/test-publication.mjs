@@ -105,7 +105,7 @@ for (const { mode, development } of [
 			assert.deepEqual(navigation.getLanguageItems('/preview/es/contacto/', '/preview/').map(({ available }) => available), [true, false, false]);
 			assert.ok(!pageData.contact.es.footerCTA);
 			const { getContactAction } = await server.ssrLoadModule('/src/data/navigation.ts');
-			assert.equal(getContactAction('es').href, 'https://wortise.com/es/contact/');
+			assert.equal(getContactAction('es').href, 'https://ads.wortise.com');
 			assert.equal(getContactAction('en').disabled, false);
 			const { getSiteData: getContactSiteData } = await server.ssrLoadModule('/src/data/site.ts');
 			assert.equal(getContactSiteData('es', '/es/contacto/').footer.brand.contact.href, 'https://wortise.com/es/contact/');
@@ -150,11 +150,11 @@ for (const { mode, development } of [
 			}
 		}
 
-		// Contact stays external; legal destinations use published internal routes in both profiles.
+		// Account creation and contact stay external; legal destinations use published internal routes in both profiles.
 		const { getContactAction: getExternalContactAction } = await server.ssrLoadModule('/src/data/navigation.ts');
 		const { getDestinationHref } = await server.ssrLoadModule('/src/data/destinations.ts');
 		for (const locale of ['es', 'en', 'pt']) {
-			assert.equal(getExternalContactAction(locale).href, `https://wortise.com/${locale}/contact/`);
+			assert.equal(getExternalContactAction(locale).href, 'https://ads.wortise.com');
 			assert.equal(getExternalContactAction(locale).disabled, false);
 			const footer = getLegalSiteData(locale, adsPath).footer;
 			assert.equal(footer.brand.contact.href, `https://wortise.com/${locale}/contact/`);

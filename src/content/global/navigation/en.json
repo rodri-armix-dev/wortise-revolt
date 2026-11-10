@@ -1,0 +1,38 @@
+{
+  "account": {
+    "label": "Create Account"
+  },
+  "menu": {
+    "advertisers": {
+      "label": "Advertisers"
+    },
+    "developers": {
+      "label": "Developers"
+    },
+    "wortise-ads": {
+      "label": "Wortise Ads"
+    },
+    "about": {
+      "label": "About us"
+    },
+    "resources": {
+      "label": "Resources",
+      "children": {
+        "blog": {
+          "label": "Blog"
+        },
+        "glossary": {
+          "label": "Glossary"
+        },
+        "sdk-documentation": {
+          "label": "SDK documentation"
+        }
+      }
+    }
+  },
+  "legal": {
+    "sdk-terms": "SDK Terms",
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy"
+  }
+}

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import view from './world-3d-view.json';
 import { freshWorldConfig, validateWorldConfig, type WorldConfig } from './world-3d-config';
-import blackmarbleUrl from '../../../assets/world/blackmarble.jpg?url';
+import blackmarbleUrl from '../../../assets/pages/home/earth-night-texture.jpg?url';
 import { createWorldMotion } from './world-3d-motion';
 import { applyMarbleUniforms, createAtmosphereMaterial, createMarbleUniforms, marbleShader } from './world-3d-marble';
 

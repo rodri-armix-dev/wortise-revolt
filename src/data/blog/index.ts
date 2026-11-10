@@ -1,5 +1,10 @@
+import { headingHtml, descriptionHtml } from '../content/format';
+import { contactCTA } from '../contact-cta';
+import { readContent } from '../content/validate';
+import rawES from '../../content/pages/blog/es.json';
+import { readBlogDocument } from '../content/documents';
 import { blogImages } from './images';
-import sergioAvatar from '../../assets/blog/authors/sergio.png';
+import sergioAvatar from '../../assets/blog/authors/sergio.webp';
 import type { Locale } from '../../i18n/config';
 import type { BlogPost } from './types';
 import type { BlogArticlePageData, BlogIndexPageData } from '../pages/page.types';
@@ -16,68 +21,42 @@ import body4 from '../../content/blog/es/app-ads-txt.md?raw';
 import body5 from '../../content/blog/es/self-serve.md?raw';
 import body6 from '../../content/blog/es/cookies.md?raw';
 
+const contentES = readContent(rawES, 'pages/blog/es');
 export const blogPosts = {
 	'programmatic-guaranteed': {
-		id: 'programmatic-guaranteed', slug: 'programmatic-guaranteed',
-		title: 'Programmatic Guaranteed: Beneficios y Prácticas Clave',
-		excerpt: '¿Qué es la Programmatic Guaranteed y cómo puede ayudarte a maximizar tus ingresos? Conoce sus beneficios y prácticas clave.',
-		lead: '«¿Qué es la Programmatic Guaranteed y cómo puede ayudarte a maximizar tus ingresos? Aprende las diferencias con Preferred Deals, sus beneficios clave y las mejores prácticas para monetizar tu ad inventory de forma eficiente.»',
-		author: 'Sergio', date: '2024-09-13', category: 'Technical optimization',
-		tags: ['Apps', 'Publishers', 'Technical'], media: { tone: 'cover', bordered: false, image: blogImages['self-serve'] }, featuredTone: 'blue', markdown: guaranteed, demo: false,
+		...readBlogDocument(guaranteed, 'programmatic-guaranteed'),
+		media: { tone: 'cover', bordered: false, image: blogImages['self-serve'] }, featuredTone: 'blue',
 	},
 	'ad-network': {
-		id: 'ad-network', slug: 'ad-network',
-		title: 'Cómo elegir una Ad Network que no te decepcione',
-		excerpt: 'Conoce qué evaluar al elegir una red publicitaria: demanda, integración, transparencia y acompañamiento.', lead: 'Conoce qué evaluar al elegir una red publicitaria: demanda, integración, transparencia y acompañamiento.',
-		author: 'Sergio', date: '2024-08-19', category: 'Technical optimization',
-		tags: ['Apps', 'Publishers'], media: { tone: 'pink', bordered: true, image: blogImages['ad-network'] }, markdown: body0, demo: true,
+		...readBlogDocument(body0, 'ad-network'),
+		media: { tone: 'pink', bordered: true, image: blogImages['ad-network'] },
 	},
 	'ad-platforms': {
-		id: 'ad-platforms', slug: 'ad-platforms',
-		title: 'Ad Network vs Ad Server vs Ad Exchange: ¿Cuál elegir para monetizar tu app?',
-		excerpt: 'Entiende el papel de cada herramienta y cómo pueden complementarse en tu estrategia de monetización.', lead: 'Entiende el papel de cada herramienta y cómo pueden complementarse en tu estrategia de monetización.',
-		author: 'Sergio', date: '2024-08-19', category: 'Technical optimization',
-		tags: ['Apps', 'Publishers'], media: { tone: 'violet', bordered: true, image: blogImages['ad-platforms'] }, markdown: body1, demo: true,
+		...readBlogDocument(body1, 'ad-platforms'),
+		media: { tone: 'violet', bordered: true, image: blogImages['ad-platforms'] },
 	},
 	'programmatic-trends': {
-		id: 'programmatic-trends', slug: 'programmatic-trends',
-		title: 'Programmatic Advertising: 5 Tendencias Esenciales',
-		excerpt: 'Datos propios, automatización y nuevos formatos: cinco líneas de trabajo para explorar con tu equipo.', lead: 'Datos propios, automatización y nuevos formatos: cinco líneas de trabajo para explorar con tu equipo.',
-		author: 'Sergio', date: '2024-08-19', category: 'Tendencias',
-		tags: ['Apps', 'Publishers'], media: { tone: 'surface-accent', bordered: true, image: blogImages['programmatic-trends'] }, markdown: body2, demo: true,
+		...readBlogDocument(body2, 'programmatic-trends'),
+		media: { tone: 'surface-accent', bordered: true, image: blogImages['programmatic-trends'] },
 	},
 	'ad-blocking': {
-		id: 'ad-blocking', slug: 'ad-blocking',
-		title: '¿Ad Blocking Afecta tus Ingresos? 5 Formas de Superarlo',
-		excerpt: 'Cinco formas de revisar tu experiencia publicitaria y construir una relación más clara con tu audiencia.', lead: 'Cinco formas de revisar tu experiencia publicitaria y construir una relación más clara con tu audiencia.',
-		author: 'Sergio', date: '2024-08-19', category: 'Tendencias',
-		tags: ['Apps', 'Publishers'], media: { tone: 'neutral', bordered: true, image: blogImages['ad-blocking'] }, markdown: body3, demo: true,
+		...readBlogDocument(body3, 'ad-blocking'),
+		media: { tone: 'neutral', bordered: true, image: blogImages['ad-blocking'] },
 	},
 	'app-ads-txt': {
-		id: 'app-ads-txt', slug: 'app-ads-txt',
-		title: 'App-ads.txt: Guía para publishers con pánico al ad fraud',
-		excerpt: 'Una introducción a la autorización de vendedores y a las tareas de mantenimiento de tu inventario.', lead: 'Una introducción a la autorización de vendedores y a las tareas de mantenimiento de tu inventario.',
-		author: 'Sergio', date: '2024-08-19', category: 'Publishers',
-		tags: ['Apps', 'Publishers'], media: { tone: 'surface', bordered: true, image: blogImages['app-ads-txt'] }, markdown: body4, demo: true,
+		...readBlogDocument(body4, 'app-ads-txt'),
+		media: { tone: 'surface', bordered: true, image: blogImages['app-ads-txt'] },
 	},
 	'self-serve': {
-		id: 'self-serve', slug: 'self-serve',
-		title: 'Self Serve Advertising Platforms: Guía para publishers y advertisers',
-		excerpt: 'Qué tener en cuenta al diseñar una operación publicitaria más autónoma y fácil de administrar.', lead: 'Qué tener en cuenta al diseñar una operación publicitaria más autónoma y fácil de administrar.',
-		author: 'Sergio', date: '2024-08-19', category: 'Publishers + advertisers',
-		tags: ['Apps', 'Publishers'], media: { tone: 'violet', bordered: true, image: blogImages['self-serve'] }, markdown: body5, demo: true,
+		...readBlogDocument(body5, 'self-serve'),
+		media: { tone: 'violet', bordered: true, image: blogImages['self-serve'] },
 	},
 	'cookies': {
-		id: 'cookies', slug: 'cookies',
-		title: '¿Adiós a las Cookies?',
-		excerpt: 'Una oportunidad para revisar cómo conocemos a la audiencia y construimos experiencias relevantes.', lead: 'Una oportunidad para revisar cómo conocemos a la audiencia y construimos experiencias relevantes.',
-		author: 'Sergio', date: '2024-08-19', category: 'Tendencias',
-		tags: ['Apps', 'Publishers'], media: { tone: 'surface', bordered: true, image: blogImages['cookies'] }, markdown: body6, demo: true,
+		...readBlogDocument(body6, 'cookies'),
+		media: { tone: 'surface', bordered: true, image: blogImages['cookies'] },
 	},
 } satisfies Record<string, BlogPost>;
-
 export type BlogPostId = keyof typeof blogPosts;
-
 function articlePage<Key extends string>(key: Key, post: BlogPost): Partial<Record<Locale, BlogArticlePageData<Key>>> {
 	return { es: {
 		key, slug: `blog/${post.slug}`, template: 'blog-article',
@@ -86,14 +65,13 @@ function articlePage<Key extends string>(key: Key, post: BlogPost): Partial<Reco
 		footerCTA: {
 			...footerCTAVisuals, actionPage: 'contact',
 			text: {
-				heading: { html: 'Conectemos tu próxima oportunidad', tag: 'h2' },
-				description: { html: '<p>Cuéntanos qué quieres lograr. El equipo de Wortise te ayuda a encontrar el mejor punto de partida.</p>' },
-				actions: { primary: { label: 'Contactar al equipo', variant: 'primary-special', size: 'large' } },
+				heading: { html: headingHtml(contactCTA.es.title), tag: 'h2' },
+				description: { html: descriptionHtml(contactCTA.es.description) },
+				actions: { primary: { label: contactCTA.es.button, variant: 'primary-special', size: 'large' } },
 			},
 		},
 	} };
 }
-
 export const blogArticlePages = {
 	'blog-programmatic-guaranteed': articlePage('blog-programmatic-guaranteed', blogPosts['programmatic-guaranteed']),
 	'blog-ad-network': articlePage('blog-ad-network', blogPosts['ad-network']),
@@ -104,11 +82,9 @@ export const blogArticlePages = {
 	'blog-self-serve': articlePage('blog-self-serve', blogPosts['self-serve']),
 	'blog-cookies': articlePage('blog-cookies', blogPosts['cookies']),
 };
-
 export const blogPageData = {
-	es: { key: 'blog', slug: 'blog', template: 'blog', meta: { title: 'Blog | Wortise', description: 'Tecnología, publicidad y producto. Ideas para crecer con Wortise.' } },
+	es: { key: 'blog', slug: contentES.page.slug, template: 'blog', meta: { title: contentES.page.meta.title, description: contentES.page.meta.description } },
 } satisfies Partial<Record<Locale, BlogIndexPageData<'blog'>>>;
-
 export function getBlogCard(locale: Locale, id: BlogPostId): ComponentProps<typeof ArticleCard> | undefined {
 	const key = `blog-${id}` as keyof typeof blogArticlePages;
 	const page = getPageData(locale, key);
@@ -117,10 +93,8 @@ export function getBlogCard(locale: Locale, id: BlogPostId): ComponentProps<type
 	const href = getPagePath(locale, key);
 	return href ? { title: post.title, excerpt: post.excerpt, author: post.author, date: post.date, category: post.category, ...post.media, featuredTone: post.featuredTone, href, locale } : undefined;
 }
-
 export function getBlogCards(locale: Locale, ids: readonly BlogPostId[]) {
 	return ids.flatMap((id) => { const card = getBlogCard(locale, id); return card ? [card] : []; });
 }
-
 export const featuredPostIds: BlogPostId[] = ['ad-blocking', 'cookies', 'programmatic-guaranteed'];
 export const storyPostIds: BlogPostId[] = ['ad-network', 'ad-platforms', 'programmatic-trends', 'ad-blocking', 'app-ads-txt', 'self-serve', 'cookies', 'programmatic-guaranteed'];

@@ -1,3 +1,20 @@
+---
+{
+  "id": "programmatic-trends",
+  "slug": "programmatic-trends",
+  "title": "Programmatic Advertising: 5 Tendencias Esenciales",
+  "excerpt": "Datos propios, automatización y nuevos formatos: cinco líneas de trabajo para explorar con tu equipo.",
+  "lead": "Datos propios, automatización y nuevos formatos: cinco líneas de trabajo para explorar con tu equipo.",
+  "author": "Sergio",
+  "date": "2024-08-19",
+  "category": "Tendencias",
+  "tags": [
+    "Apps",
+    "Publishers"
+  ],
+  "demo": true
+}
+---
 ## Una mirada a la evolución de la publicidad
 
 Las estrategias programáticas cambian junto con los productos y los hábitos de sus audiencias. Para explorar nuevas oportunidades, conviene combinar curiosidad con un proceso de medición claro.

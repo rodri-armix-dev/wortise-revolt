@@ -20,7 +20,7 @@
 
 	&::before
 	{
-		background-image: url('../../../assets/ads/cover-glow-mobile.svg');
+		background-image: url('../../../assets/pages/wortise-ads/cover-glow-mobile.svg');
 		height: 756.586px;
 		left: calc(100% - 77.32px);
 		top: calc(65.19px + var(--layout-header-overlap));
@@ -72,7 +72,7 @@
 
 		&::before
 		{
-			background-image: url('../../../assets/ads/cover-glow.svg');
+			background-image: url('../../../assets/pages/wortise-ads/cover-glow.svg');
 			height: 1308.78px;
 			left: calc(50% + 473.75px);
 			top: calc(189.31px + var(--layout-header-overlap));
@@ -81,7 +81,7 @@
 
 		&::after
 		{
-			background-image: url('../../../assets/decorations/cover-glow-secondary.svg');
+			background-image: url('../../../assets/global/decorations/cover-glow-secondary.svg');
 			display: block;
 			height: 981.019px;
 			left: calc(62.5% + 355px);

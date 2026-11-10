@@ -47,8 +47,8 @@ for (let i = 0; i < count; i++) {
 	].map((value) => Math.round(value * 100000) / 100000));
 }
 
-mkdirSync(new URL('../src/assets/world/', import.meta.url), { recursive: true });
-writeFileSync(new URL('../src/assets/world/land-points.json', import.meta.url), JSON.stringify(points));
+mkdirSync(new URL('../src/assets/pages/home/', import.meta.url), { recursive: true });
+writeFileSync(new URL('../src/assets/pages/home/land-points.json', import.meta.url), JSON.stringify(points));
 
 // The same geography supplies a lightweight static fallback, without WebGL.
 const width = 1440;
@@ -72,5 +72,5 @@ const markers = locations.flatMap(({ latitude, longitude }) => {
 	const y = (view.top - point.y) * pixelsPerUnit;
 	return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(0.006 * pixelsPerUnit).toFixed(1)}" fill="#9addff"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(0.016 * pixelsPerUnit).toFixed(1)}" fill="none" stroke="#80e9ff" opacity="0.6"/>`;
 }).join('');
-writeFileSync(new URL('../src/assets/world/globe-fallback.svg', import.meta.url), `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><radialGradient id="o"><stop stop-color="#263a70"/><stop offset="1" stop-color="#102147"/></radialGradient></defs><circle cx="${width / 2}" cy="${view.top * pixelsPerUnit}" r="${pixelsPerUnit}" fill="url(#o)"/><g fill="none" stroke="#a7b9f5" stroke-width="2.4" stroke-linecap="round">${dots}</g>${markers}</svg>`);
+writeFileSync(new URL('../src/assets/pages/home/globe-fallback.svg', import.meta.url), `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs><radialGradient id="o"><stop stop-color="#263a70"/><stop offset="1" stop-color="#102147"/></radialGradient></defs><circle cx="${width / 2}" cy="${view.top * pixelsPerUnit}" r="${pixelsPerUnit}" fill="url(#o)"/><g fill="none" stroke="#a7b9f5" stroke-width="2.4" stroke-linecap="round">${dots}</g>${markers}</svg>`);
 console.log(`Generated ${points.length} land points and static fallback.`);

@@ -1,27 +1,26 @@
-import { readdir, mkdir, stat } from 'node:fs/promises';
+import { readdir, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { fileURLToPath } from 'node:url';
+import { resolve, join } from 'node:path';
 
 const loadDependency = createRequire(import.meta.resolve('astro/package.json'));
 const sharp = loadDependency('sharp');
-const source = new URL('../exports/blog/png/', import.meta.url);
-const destination = new URL('../src/assets/blog/', import.meta.url);
+const [inputDirectory, outputDirectory = 'src/assets/blog/articles'] = process.argv.slice(2);
+if (!inputDirectory) throw new Error('Uso: node scripts/convert-blog-images.mjs <carpeta-originales> [carpeta-destino]');
+const source = resolve(inputDirectory);
+const destination = resolve(outputDirectory);
+if (source === destination) throw new Error('Usar carpetas distintas para originales y resultados.');
 await mkdir(destination, { recursive: true });
 
-for (const name of (await readdir(source)).filter((name) => name.endsWith('.png')).sort()) {
-	const input = fileURLToPath(new URL(name, source));
-	const output = fileURLToPath(new URL(name.replace(/\.png$/, '.webp'), destination));
-	const metadata = await sharp(input).metadata();
-	const before = await sharp(input).stats();
-	if (metadata.width !== 1680 || metadata.height !== 1260 || !metadata.hasAlpha || before.channels[3].min !== 0) {
-		throw new Error(`${name}: expected a transparent 1680 × 1260 PNG`);
+for (const name of (await readdir(source)).filter((name) => /\.(png|jpe?g)$/i.test(name)).sort()) {
+	const original = await readFile(join(source, name));
+	const result = await sharp(original).webp({ lossless: true, effort: 6 }).toBuffer();
+	const before = await sharp(original).ensureAlpha().raw().toBuffer();
+	const after = await sharp(result).ensureAlpha().raw().toBuffer();
+	if (!before.equals(after)) throw new Error(`${name}: la conversión alteró los píxeles.`);
+	if (result.length >= original.length) {
+		console.log(`${name}: conservar original; WebP no reduce el peso.`);
+		continue;
 	}
-	await sharp(input).webp({ lossless: true, effort: 6 }).toFile(output);
-	const after = await sharp(output).metadata();
-	const originalAlpha = await sharp(input).extractChannel('alpha').raw().toBuffer();
-	const convertedAlpha = await sharp(output).extractChannel('alpha').raw().toBuffer();
-	if (!after.hasAlpha || after.width !== 1680 || after.height !== 1260 || !originalAlpha.equals(convertedAlpha)) {
-		throw new Error(`${name}: WebP transparency or dimensions changed`);
-	}
-	console.log(`${name}: ${Math.round((await stat(input)).size / 1024)} KiB PNG → ${Math.round((await stat(output)).size / 1024)} KiB WebP; alpha preserved`);
+	await writeFile(join(destination, name.replace(/\.(png|jpe?g)$/i, '.webp')), result);
+	console.log(`${name}: ${original.length} → ${result.length} bytes; píxeles conservados.`);
 }

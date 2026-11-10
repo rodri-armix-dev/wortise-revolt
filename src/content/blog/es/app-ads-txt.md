@@ -1,3 +1,20 @@
+---
+{
+  "id": "app-ads-txt",
+  "slug": "app-ads-txt",
+  "title": "App-ads.txt: Guía para publishers con pánico al ad fraud",
+  "excerpt": "Una introducción a la autorización de vendedores y a las tareas de mantenimiento de tu inventario.",
+  "lead": "Una introducción a la autorización de vendedores y a las tareas de mantenimiento de tu inventario.",
+  "author": "Sergio",
+  "date": "2024-08-19",
+  "category": "Publishers",
+  "tags": [
+    "Apps",
+    "Publishers"
+  ],
+  "demo": true
+}
+---
 ## Una pieza de una estrategia más amplia
 
 La transparencia en la venta de inventario comienza por saber quién está autorizado a comercializarlo. App-ads.txt permite a los publishers declarar vendedores autorizados para sus aplicaciones.

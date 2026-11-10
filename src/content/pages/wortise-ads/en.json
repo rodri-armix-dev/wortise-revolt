@@ -1,0 +1,83 @@
+{
+  "slug": "wortise-ads",
+  "meta": {
+    "title": "Wortise Ads | Wortise",
+    "description": "Discover Wortise Ads."
+  },
+  "callToAction": {
+    "title": "Monetize\nyour accounts",
+    "description": "We turn every cent of your total investment into a benefit for your agency.",
+    "button": "Book a Demo"
+  },
+  "hero": {
+    "title": "*Wortise Ads:*\nFrom idea to results in one click",
+    "description": "The first AI for mobile digital advertising that designs creatives, manages audiences, launches campaigns and generates reports with ease to scale your business.",
+    "button": "Book a Demo"
+  },
+  "features": {
+    "items": {
+      "campaigns": {
+        "title": "Create your campaigns in minutes",
+        "imageAlt": "Vanish ad displayed on a phone.",
+        "description": "**Assisted Mode:** Fully automated, with AI leading seamless strategy and execution.\n**Manual Mode:** You set the goals, and our technology fine-tunes the settings to achieve them.",
+        "button": "Book a Demo",
+        "annotations": {
+          "1": {
+            "label": "Assisted Mode"
+          },
+          "2": {
+            "label": "Manual Mode"
+          }
+        }
+      },
+      "projection": {
+        "title": "Forecasts and data before you invest",
+        "imageAlt": "Ad for Mugler’s Angel Elixir fragrance displayed on a phone.",
+        "description": "Make your budget work efficiently with accurate reach and impression estimates before launching your ads.\nInvestment based on data, not assumptions.",
+        "button": "Book a Demo",
+        "annotations": {
+          "1": {
+            "value": "+100k",
+            "label": "estimated reach"
+          },
+          "2": {
+            "value": "+500k",
+            "label": "estimated impressions"
+          }
+        }
+      },
+      "creative": {
+        "title": "Autonomous creative design",
+        "imageAlt": "Interactive Giorgio Armani ad with a scratch card displayed on a phone.",
+        "description": "Our AI goes beyond design, dynamically adapting each creative to maximize its impact across every format and audience.",
+        "button": "Book a Demo",
+        "annotations": {
+          "1": {
+            "label": "Creative design"
+          },
+          "2": {
+            "label": "Greater impact"
+          }
+        }
+      },
+      "reporting": {
+        "title": "Strategic reporting 24/7",
+        "imageAlt": "Ads for an Olivia Rodrigo video and the iPhone 15 displayed on a phone.",
+        "description": "Complete transparency through real-time dashboards. Each client manages their own metrics and results.",
+        "button": "Book a Demo",
+        "annotations": {
+          "1": {
+            "label": "10,450 views"
+          },
+          "2": {
+            "value": "18 s",
+            "label": "Average time spent"
+          }
+        }
+      }
+    }
+  },
+  "video": {
+    "label": "Introducing Wortise."
+  }
+}

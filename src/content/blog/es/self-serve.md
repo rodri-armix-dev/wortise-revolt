@@ -1,3 +1,20 @@
+---
+{
+  "id": "self-serve",
+  "slug": "self-serve",
+  "title": "Self Serve Advertising Platforms: Guía para publishers y advertisers",
+  "excerpt": "Qué tener en cuenta al diseñar una operación publicitaria más autónoma y fácil de administrar.",
+  "lead": "Qué tener en cuenta al diseñar una operación publicitaria más autónoma y fácil de administrar.",
+  "author": "Sergio",
+  "date": "2024-08-19",
+  "category": "Publishers + advertisers",
+  "tags": [
+    "Apps",
+    "Publishers"
+  ],
+  "demo": true
+}
+---
 ## Más autonomía para operar campañas
 
 Una plataforma self serve permite a los anunciantes configurar y administrar campañas mediante una interfaz. Para los publishers, puede ofrecer una forma de organizar la demanda y reducir tareas repetitivas.

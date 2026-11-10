@@ -1,0 +1,13 @@
+{
+  "branding": {
+    "logo": {
+      "href": "",
+      "alt": "Wortise"
+    }
+  },
+  "contact": {
+    "title": "Conectemos tu próxima oportunidad",
+    "description": "Cuéntanos qué quieres lograr. El equipo de Wortise te ayuda a encontrar el mejor punto de partida.",
+    "button": "Contactar al equipo"
+  }
+}

@@ -9,7 +9,7 @@
 
 	&::before
 	{
-		background: url('../../../assets/decorations/cover-glow-secondary.svg') center / contain no-repeat;
+		background: url('../../../assets/global/decorations/cover-glow-secondary.svg') center / contain no-repeat;
 		content: '';
 		display: none;
 		height: 981.019px;
@@ -61,7 +61,7 @@
 
 		&::before
 		{
-			background-image: url('../../../assets/contact/glow-mobile.svg');
+			background-image: url('../../../assets/pages/contact/glow-mobile.svg');
 			height: 436px;
 			top: -160px;
 			width: 272px;
@@ -69,7 +69,7 @@
 
 		&::after
 		{
-			background-image: url('../../../assets/contact/orbit.svg');
+			background-image: url('../../../assets/pages/contact/orbit.svg');
 			display: none;
 			height: 868px;
 			top: 94px;
@@ -365,7 +365,7 @@
 
 			&::before
 			{
-				background-image: url('../../../assets/contact/glow-desktop.svg');
+				background-image: url('../../../assets/pages/contact/glow-desktop.svg');
 				height: 1232px;
 				top: -198px;
 				width: 626px;

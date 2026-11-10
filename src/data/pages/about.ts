@@ -1,9 +1,17 @@
+import { externalButtons } from '../external-buttons';
+import { headingHtml, descriptionHtml } from '../content/format';
+import { contactCTA } from '../contact-cta';
+import { readContent } from '../content/validate';
+import rawES from '../../content/pages/about/es.json';
+
 import { footerCTAVisuals } from '../footer-cta';
 import type { Locale } from '../../i18n/config';
 import type { ModulesPageData } from './page.types';
-import aboutUsCoverImage from '../../assets/images/about-us-cover.png';
+import aboutUsCoverImage from '../../assets/pages/about/team-cover.webp';
 import { kpiItems } from '../kpis';
 import { aboutGalleryItems } from '../gallery';
+
+const contentES = readContent(rawES, 'pages/about/es');
 
 export const aboutPageKey = 'about' as const;
 
@@ -12,18 +20,18 @@ export type AboutPageData = ModulesPageData<typeof aboutPageKey>;
 export const aboutPageData = {
 	es: {
 		key: aboutPageKey,
-		slug: 'nosotros',
+		slug: contentES.slug,
 		meta: {
-			title: 'Nosotros | Wortise',
-			description: 'Conocé más sobre Wortise.',
+			title: contentES.meta.title,
+			description: contentES.meta.description,
 		},
 		footerCTA: {
 			actionPage: 'contact',
 			...footerCTAVisuals,
 			text: {
-				heading: { html: 'Conectemos tu próxima oportunidad', tag: 'h2' },
-				description: { html: '<p>Cuéntanos qué quieres lograr. El equipo de Wortise te ayuda a encontrar el mejor punto de partida.</p>' },
-				actions: { primary: { label: 'Contactar al equipo', href: '', variant: 'primary-special', size: 'large' } },
+				heading: { html: headingHtml(contactCTA.es.title), tag: 'h2' },
+				description: { html: descriptionHtml(contactCTA.es.description) },
+				actions: { primary: { label: contactCTA.es.button, href: externalButtons.es.contactUrl, variant: 'primary-special', size: 'large' } },
 			},
 		},
 		modules: [
@@ -32,20 +40,20 @@ export const aboutPageData = {
 				props: {
 					image: {
 						src: aboutUsCoverImage,
-						alt: 'Equipo de Wortise trabajando en la oficina.',
+						alt: contentES.hero.imageAlt,
 						radius: 'normal',
 						loading: 'eager',
 					},
 					textBlock: {
 						alignment: 'left',
 						responsiveAlignment: { m: 'center' },
-						eyebrow: { label: 'Wortise' },
+						eyebrow: { label: contentES.hero.eyebrow },
 						heading: {
-							html: 'Conectamos grandes marcas con personas',
+							html: headingHtml(contentES.hero.title),
 							tag: 'h1',
 						},
 						description: {
-							html: '<p>Posicionamos marcas en la rutina diaria de más de 320 millones de usuarios únicos, dentro de la red de aplicaciones en español más grande del mundo.</p>',
+							html: descriptionHtml(contentES.hero.description),
 						},
 					},
 				},
@@ -55,10 +63,10 @@ export const aboutPageData = {
 				props: {
 					variant: 'vision',
 					textBlock: {
-						eyebrow: { label: 'Nosotros' },
+						eyebrow: { label: contentES.statistics.eyebrow },
 						heading: {
 							tag: 'h2',
-							html: '<span data-tone="muted">Nuestra visión se basa en un mundo en el que la publicidad se </span>construya desde el contexto y vaya más allá del seguimiento',
+							html: headingHtml(contentES.statistics.title),
 						},
 					},
 					items: kpiItems,
@@ -68,7 +76,7 @@ export const aboutPageData = {
 				type: 'image-gallery',
 				props: {
 					variant: 'office',
-					label: 'La vida en las oficinas de Wortise',
+					label: contentES.team.label,
 					items: aboutGalleryItems,
 				},
 			},

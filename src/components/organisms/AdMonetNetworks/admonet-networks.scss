@@ -1,9 +1,9 @@
+@use './admonet-sequence';
+
 .admonet-networks
 {
 	display: grid;
-	gap: var(--spacing-64);
 	justify-items: center;
-	overflow: hidden;
 	padding-block-end: var(--spacing-40);
 	padding-block-start: var(--spacing-48);
 
@@ -17,14 +17,14 @@
 
 	&__scene
 	{
+		--admonet-networks-mobile-orbit-height: var(--admonet-orbit-available-height, 520px);
 		--admonet-networks-hub-label-color: var(--color-text-primary);
 		--admonet-networks-hub-tagline-color: var(--color-text-muted);
 		--admonet-networks-hub-tint: rgba(79, 79, 79, .32); // sass-lint:disable-line no-color-literals
 		--glass-surface-tint: var(--admonet-networks-hub-tint);
 		display: grid;
 		isolation: isolate;
-		min-height: 520px;
-		padding-block-end: var(--spacing-48);
+		min-height: var(--admonet-networks-mobile-orbit-height);
 		place-items: center;
 		position: relative;
 		width: 100%;
@@ -41,29 +41,21 @@
 
 	&__art
 	{
-		background-color: var(--color-background-page);
-		background-image: url('../../../assets/admonet/desktop-orbit-inner.svg'), url('../../../assets/admonet/desktop-orbit-outer.svg');
-		background-position: center calc(50% + 5px), center;
+		background-color: var(--admonet-orbit-backdrop, transparent);
+		background-image: url('../../../assets/pages/developers/desktop-orbit-inner.svg'), url('../../../assets/pages/developers/desktop-orbit-outer.svg');
+		background-position: center;
 		background-repeat: no-repeat;
-		// Scale the horizontal geometry from the 402px artboard and keep the vertical paths aligned with the particles.
-		background-size: calc(693 / 402 * 100%) 303px, calc(980 / 402 * 100%) 455px;
+		// Scale both axes from the mobile artboard.
+		background-size: calc(693 / 402 * 100% * var(--admonet-orbit-inner, 1)) calc(303 / 520 * 100% * var(--admonet-orbit-inner, 1)),
+		calc(980 / 402 * 100% * var(--admonet-orbit-middle, 1)) calc(455 / 520 * 100% * var(--admonet-orbit-middle, 1));
 		inset: 0; // sass-lint:disable-line no-misspelled-properties
 		isolation: isolate;
 		pointer-events: none;
 		position: absolute;
 
-		&::before
+		&--backdrop
 		{
-			background: url('../../../assets/admonet/mobile-glow.svg') center no-repeat;
-			content: '';
-			height: 483.347px;
-			left: 50%;
-			pointer-events: none;
-			position: absolute;
-			top: 50%;
-			transform: translate(-50%, -50%) rotate(20.6deg);
-			width: 447.005px;
-			z-index: -1;
+			--admonet-orbit-backdrop: var(--color-background-page);
 		}
 	}
 
@@ -95,7 +87,6 @@
 {
 	.admonet-networks
 	{
-		gap: 0;
 		// Together with the preceding section's 32px inset, this gives the 176px gap in Figma.
 		padding-block-start: calc(var(--spacing-64) + var(--spacing-48) + var(--spacing-32));
 
@@ -117,28 +108,21 @@
 			aspect-ratio: 1312 / 634; // sass-lint:disable-line no-misspelled-properties
 			container-type: inline-size; // sass-lint:disable-line no-misspelled-properties
 			// The XL layout cap of 1344px gives the 1312px scene from Figma.
-			max-width: calc(var(--layout-content-max-width) * 1312 / 1344);
-			min-height: 0;
-			padding-block-end: 0;
+			max-width: min(calc(var(--layout-content-max-width) * 1312 / 1344), calc(var(--admonet-orbit-available-height, 100vw) * 1312 / 634));
+			min-height: var(--admonet-orbit-available-height, 0);
 		}
 
 		&__art
 		{
-			background-image: url('../../../assets/admonet/desktop-orbit-core.svg'),
-			url('../../../assets/admonet/desktop-orbit-inner.svg'),
-			url('../../../assets/admonet/desktop-orbit-middle.svg'),
-			url('../../../assets/admonet/desktop-orbit-outer.svg');
+			background-image: url('../../../assets/pages/developers/desktop-orbit-core.svg'),
+			url('../../../assets/pages/developers/desktop-orbit-inner.svg'),
+			url('../../../assets/pages/developers/desktop-orbit-middle.svg'),
+			url('../../../assets/pages/developers/desktop-orbit-outer.svg');
 			background-position: center;
-			background-size: calc(432 / 1312 * 100%) auto, calc(780 / 1312 * 100%) auto, calc(980 / 1312 * 100%) auto, 100% auto;
-
-			&::before
-			{
-				background-image: url('../../../assets/admonet/desktop-glow.svg');
-				background-size: contain;
-				height: calc(483.347px * var(--admonet-networks-element-scale));
-				top: calc(50% - 36px * var(--admonet-networks-scene-scale));
-				width: calc(447.005px * var(--admonet-networks-element-scale));
-			}
+			background-size: calc(432 / 1312 * 100% * var(--admonet-orbit-core, 1)) calc(186 / 634 * 100% * var(--admonet-orbit-core, 1)),
+			calc(780 / 1312 * 100% * var(--admonet-orbit-inner, 1)) calc(336 / 634 * 100% * var(--admonet-orbit-inner, 1)),
+			calc(980 / 1312 * 100% * var(--admonet-orbit-middle, 1)) calc(474 / 634 * 100% * var(--admonet-orbit-middle, 1)),
+			calc(100% * var(--admonet-orbit-outer, 1)) calc(100% * var(--admonet-orbit-outer, 1));
 		}
 
 		&__hub

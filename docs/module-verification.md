@@ -2,7 +2,6 @@
 
 Usá esta checklist al empezar un módulo y antes de darlo por terminado. Marcá
 los puntos que aplican y registrá las excepciones y los pendientes en la entrega.
-Las reglas de implementación y validación del proyecto están en [AGENTS.md](../AGENTS.md).
 
 ## Diseño y composición
 

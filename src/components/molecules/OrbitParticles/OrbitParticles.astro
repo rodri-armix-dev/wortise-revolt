@@ -43,10 +43,16 @@ const motionOptions = {
 function position([x, y, width, height = width]: Bounds, frame: Frame, range: 'mobile' | 'desktop') {
 	return {
 		[`--orbit-particles-${range}-center-x`]: `${(x + width / 2) / frame.width * 100}%`,
-		[`--orbit-particles-${range}-top`]: `${y / frame.height * 100}%`,
 		...(range === 'desktop'
-			? { '--orbit-particles-desktop-width-ratio': width / frame.width }
-			: { '--orbit-particles-mobile-width': `${width / frame.width * 100}%` }),
+			? {
+				'--orbit-particles-desktop-top': `${y / frame.height * 100}%`,
+				'--orbit-particles-desktop-width-ratio': width / frame.width,
+			}
+			: {
+				'--orbit-particles-mobile-center-y': `${(y + height / 2) / frame.height * 100}%`,
+				'--orbit-particles-mobile-width': `${width / frame.width * 100}%`,
+				'--orbit-particles-mobile-height-limit': `${width / frame.height * 100}cqh`,
+			}),
 		[`--orbit-particles-${range}-ratio`]: `${width} / ${height}`,
 	};
 }

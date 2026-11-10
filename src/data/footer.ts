@@ -1,81 +1,91 @@
+import { externalButtons } from './external-buttons';
+import { readContent } from './content/validate';
+import rawES from '../content/global/footer/es.json';
+import rawEN from '../content/global/footer/en.json';
+import rawPT from '../content/global/footer/pt.json';
+
 import type { ComponentProps } from 'astro/types';
 import Footer from '../components/organisms/Footer/Footer.astro';
-import brand from '../assets/footer/brand.png';
-import instagram from '../assets/footer/instagram.svg';
-import linkedin from '../assets/footer/linkedin.svg';
-import facebook from '../assets/footer/facebook.svg';
+import brand from '../assets/global/branding/wortise-symbol.png';
+import instagram from '../assets/global/footer/instagram.svg';
+import linkedin from '../assets/global/footer/linkedin.svg';
+import facebook from '../assets/global/footer/facebook.svg';
 import { langMenuData } from './navigation';
 import type { Locale } from '../i18n/config';
 import { uiText } from '../i18n/ui';
+
+const contentES = readContent(rawES, 'global/footer/es');
+const contentEN = readContent(rawEN, 'global/footer/en');
+const contentPT = readContent(rawPT, 'global/footer/pt');
 
 export const footerData = {
 	es: {
 		brand: {
 			image: brand,
-			tagline: { primary: 'Born in LATAM,', secondary: 'made for the world' },
-			contact: { label: 'Contactar al equipo', href: '', variant: 'tertiary', icon: 'arrow-up-right' },
+			tagline: { primary: contentES.brand.tagline.primary, secondary: contentES.brand.tagline.secondary },
+			contact: { label: contentES.brand.contact.label, href: externalButtons.es.contactUrl, variant: 'tertiary', icon: 'arrow-up-right' },
 		},
 		menus: [
-			{ title: 'Soluciones', items: ['Para anunciantes', 'Para desarrolladores', 'Wortise Ads'].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
-			{ title: 'Explorar', items: ['Nosotros', 'Blog', 'Glosario', 'Documentación del SDK'].map((label, index) => ({ label, href: '', page: index === 0 ? 'about' as const : undefined })) },
-			{ title: 'Plataforma', variant: 'actions', items: [
-				{ label: 'Ingresar', href: '#ingresar', button: { variant: 'primary-special', size: 'large' } },
-				{ label: 'Solicitar una demo', href: '', button: { variant: 'tertiary', icon: 'arrow-up-right' } },
+			{ title: contentES.menus.solutions.title, items: [contentES.menus.solutions.items.advertisers, contentES.menus.solutions.items.developers, contentES.menus.solutions.items['wortise-ads']].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
+			{ title: contentES.menus.explore.title, items: [contentES.menus.explore.items.about, contentES.menus.explore.items.blog, contentES.menus.explore.items.glossary, contentES.menus.explore.items['sdk-documentation']].map((label, index) => ({ label, href: [undefined, undefined, externalButtons.es.glossaryUrl, externalButtons.es.sdkDocumentationUrl][index] ?? '', page: index === 0 ? 'about' as const : undefined })) },
+			{ title: contentES.menus.platform.title, variant: 'actions', items: [
+				{ label: contentES.menus.platform.items.login.label, href: externalButtons.es.loginUrl, button: { variant: 'primary-special', size: 'large' } },
+				{ label: contentES.menus.platform.items.demo.label, href: externalButtons.es.demoUrl, button: { variant: 'tertiary', icon: 'arrow-up-right' } },
 			] },
 		],
-		languages: { title: 'Idioma', unavailableLabel: uiText.es.unavailableLanguage, currentCode: 'es', items: langMenuData },
-		social: { title: 'Seguinos', items: [
-			{ label: 'Instagram', href: '', icon: instagram },
-			{ label: 'LinkedIn', href: '', icon: linkedin },
-			{ label: 'Facebook', href: '', icon: facebook },
+		languages: { title: contentES.languages.title, unavailableLabel: uiText.es.unavailableLanguage, currentCode: 'es', items: langMenuData },
+		social: { title: contentES.social.title, items: [
+			{ label: contentES.social.items.instagram.label, href: externalButtons.es.instagramUrl, icon: instagram },
+			{ label: contentES.social.items.linkedin.label, href: externalButtons.es.linkedinUrl, icon: linkedin },
+			{ label: contentES.social.items.facebook.label, href: externalButtons.es.facebookUrl, icon: facebook },
 		] },
-		legal: { label: uiText.es.legalNavigation, items: ['Términos del SDK', 'Términos y condiciones', 'Privacidad', 'Ayuda'].map((label) => ({ label, href: '' })) },
-		copyright: { text: '© 2026 Wortise.inc' },
+		legal: { label: uiText.es.legalNavigation, items: [contentES.legal.items['sdk-terms'], contentES.legal.items.terms, contentES.legal.items.privacy, contentES.legal.items.help].map((label, index) => ({ label, href: index === 3 ? externalButtons.es.helpUrl : '' })) },
+		copyright: { text: contentES.copyright.text },
 	},
 	en: {
 		brand: {
 			image: brand,
-			tagline: { primary: 'Born in LATAM,', secondary: 'made for the world' },
-			contact: { label: 'Contact our team', href: '', variant: 'tertiary', icon: 'arrow-up-right' },
+			tagline: { primary: contentEN.brand.tagline.primary, secondary: contentEN.brand.tagline.secondary },
+			contact: { label: contentEN.brand.contact.label, href: externalButtons.en.contactUrl, variant: 'tertiary', icon: 'arrow-up-right' },
 		},
 		menus: [
-			{ title: 'Solutions', items: ['For advertisers', 'For developers', 'Wortise Ads'].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
-			{ title: 'Explore', items: ['About us', 'Blog', 'Glossary', 'SDK documentation'].map((label, index) => ({ label, href: '', page: index === 0 ? 'about' as const : undefined })) },
-			{ title: 'Platform', variant: 'actions', items: [
-				{ label: 'Log in', href: '#ingresar', button: { variant: 'primary-special', size: 'large' } },
-				{ label: 'Request a demo', href: '', button: { variant: 'tertiary', icon: 'arrow-up-right' } },
+			{ title: contentEN.menus.solutions.title, items: [contentEN.menus.solutions.items.advertisers, contentEN.menus.solutions.items.developers, contentEN.menus.solutions.items['wortise-ads']].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
+			{ title: contentEN.menus.explore.title, items: [contentEN.menus.explore.items.about, contentEN.menus.explore.items.blog, contentEN.menus.explore.items.glossary, contentEN.menus.explore.items['sdk-documentation']].map((label, index) => ({ label, href: [undefined, undefined, externalButtons.en.glossaryUrl, externalButtons.en.sdkDocumentationUrl][index] ?? '', page: index === 0 ? 'about' as const : undefined })) },
+			{ title: contentEN.menus.platform.title, variant: 'actions', items: [
+				{ label: contentEN.menus.platform.items.login.label, href: externalButtons.en.loginUrl, button: { variant: 'primary-special', size: 'large' } },
+				{ label: contentEN.menus.platform.items.demo.label, href: externalButtons.en.demoUrl, button: { variant: 'tertiary', icon: 'arrow-up-right' } },
 			] },
 		],
-		languages: { title: 'Language', unavailableLabel: uiText.en.unavailableLanguage, currentCode: 'en', items: langMenuData },
-		social: { title: 'Follow us', items: [
-			{ label: 'Instagram', href: '', icon: instagram },
-			{ label: 'LinkedIn', href: '', icon: linkedin },
-			{ label: 'Facebook', href: '', icon: facebook },
+		languages: { title: contentEN.languages.title, unavailableLabel: uiText.en.unavailableLanguage, currentCode: 'en', items: langMenuData },
+		social: { title: contentEN.social.title, items: [
+			{ label: contentEN.social.items.instagram.label, href: externalButtons.en.instagramUrl, icon: instagram },
+			{ label: contentEN.social.items.linkedin.label, href: externalButtons.en.linkedinUrl, icon: linkedin },
+			{ label: contentEN.social.items.facebook.label, href: externalButtons.en.facebookUrl, icon: facebook },
 		] },
-		legal: { label: uiText.en.legalNavigation, items: ['SDK terms', 'Terms and conditions', 'Privacy', 'Help'].map((label) => ({ label, href: '' })) },
-		copyright: { text: '© 2026 Wortise.inc' },
+		legal: { label: uiText.en.legalNavigation, items: [contentEN.legal.items['sdk-terms'], contentEN.legal.items.terms, contentEN.legal.items.privacy, contentEN.legal.items.help].map((label, index) => ({ label, href: index === 3 ? externalButtons.en.helpUrl : '' })) },
+		copyright: { text: contentEN.copyright.text },
 	},
 	pt: {
 		brand: {
 			image: brand,
-			tagline: { primary: 'Born in LATAM,', secondary: 'made for the world' },
-			contact: { label: 'Fale com nossa equipe', href: '', variant: 'tertiary', icon: 'arrow-up-right' },
+			tagline: { primary: contentPT.brand.tagline.primary, secondary: contentPT.brand.tagline.secondary },
+			contact: { label: contentPT.brand.contact.label, href: externalButtons.pt.contactUrl, variant: 'tertiary', icon: 'arrow-up-right' },
 		},
 		menus: [
-			{ title: 'Soluções', items: ['Para anunciantes', 'Para desenvolvedores', 'Wortise Ads'].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
-			{ title: 'Explorar', items: ['Sobre nós', 'Blog', 'Glossário', 'Documentação do SDK'].map((label, index) => ({ label, href: '', page: index === 0 ? 'about' as const : undefined })) },
-			{ title: 'Plataforma', variant: 'actions', items: [
-				{ label: 'Entrar', href: '#ingresar', button: { variant: 'primary-special', size: 'large' } },
-				{ label: 'Solicitar uma demonstração', href: '', button: { variant: 'tertiary', icon: 'arrow-up-right' } },
+			{ title: contentPT.menus.solutions.title, items: [contentPT.menus.solutions.items.advertisers, contentPT.menus.solutions.items.developers, contentPT.menus.solutions.items['wortise-ads']].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
+			{ title: contentPT.menus.explore.title, items: [contentPT.menus.explore.items.about, contentPT.menus.explore.items.blog, contentPT.menus.explore.items.glossary, contentPT.menus.explore.items['sdk-documentation']].map((label, index) => ({ label, href: [undefined, undefined, externalButtons.pt.glossaryUrl, externalButtons.pt.sdkDocumentationUrl][index] ?? '', page: index === 0 ? 'about' as const : undefined })) },
+			{ title: contentPT.menus.platform.title, variant: 'actions', items: [
+				{ label: contentPT.menus.platform.items.login.label, href: externalButtons.pt.loginUrl, button: { variant: 'primary-special', size: 'large' } },
+				{ label: contentPT.menus.platform.items.demo.label, href: externalButtons.pt.demoUrl, button: { variant: 'tertiary', icon: 'arrow-up-right' } },
 			] },
 		],
-		languages: { title: 'Idioma', unavailableLabel: uiText.pt.unavailableLanguage, currentCode: 'pt', items: langMenuData },
-		social: { title: 'Siga-nos', items: [
-			{ label: 'Instagram', href: '', icon: instagram },
-			{ label: 'LinkedIn', href: '', icon: linkedin },
-			{ label: 'Facebook', href: '', icon: facebook },
+		languages: { title: contentPT.languages.title, unavailableLabel: uiText.pt.unavailableLanguage, currentCode: 'pt', items: langMenuData },
+		social: { title: contentPT.social.title, items: [
+			{ label: contentPT.social.items.instagram.label, href: externalButtons.pt.instagramUrl, icon: instagram },
+			{ label: contentPT.social.items.linkedin.label, href: externalButtons.pt.linkedinUrl, icon: linkedin },
+			{ label: contentPT.social.items.facebook.label, href: externalButtons.pt.facebookUrl, icon: facebook },
 		] },
-		legal: { label: uiText.pt.legalNavigation, items: ['Termos do SDK', 'Termos e condições', 'Privacidade', 'Ajuda'].map((label) => ({ label, href: '' })) },
-		copyright: { text: '© 2026 Wortise.inc' },
+		legal: { label: uiText.pt.legalNavigation, items: [contentPT.legal.items['sdk-terms'], contentPT.legal.items.terms, contentPT.legal.items.privacy, contentPT.legal.items.help].map((label, index) => ({ label, href: index === 3 ? externalButtons.pt.helpUrl : '' })) },
+		copyright: { text: contentPT.copyright.text },
 	},
 } satisfies Record<Locale, Omit<ComponentProps<typeof Footer>, 'locale'>>;

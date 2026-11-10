@@ -1,0 +1,20 @@
+{
+  "statistics": {
+    "users": {
+      "value": "320M",
+      "label": "usuarios"
+    },
+    "applications": {
+      "value": "20.000",
+      "label": "aplicaciones"
+    },
+    "campaigns": {
+      "value": "1.000",
+      "label": "campañas"
+    },
+    "countries": {
+      "value": "10",
+      "label": "países"
+    }
+  }
+}

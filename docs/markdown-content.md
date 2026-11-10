@@ -24,8 +24,7 @@ Para empezar, evalúa tus potencialidades como publisher.
 ```
 
 El marcador no es sintaxis nativa de Markdown o Astro. El parser del blog está
-implementado en `src/lib/article-markdown.ts`. El CTA conserva sus datos fuera
-del texto, asociados al ID estable en `src/data/blog/content.ts`.
+implementado en `src/lib/article-markdown.ts`. Los textos del CTA se editan en `src/content/pages/blog/es.json`; su configuración visual y el ID estable se resuelven en `src/data/blog/content.ts`.
 Un futuro editor puede ofrecer «Insertar CTA» y generar el marcador visualmente.
 
 El procesamiento debe reconocer únicamente los marcadores permitidos y resolver
@@ -46,15 +45,14 @@ del proveedor. No compilar contenido editorial como código ejecutable.
   introducciones y documentos legales, y migrarlos preservando contenido,
   semántica, enlaces, traducciones y apariencia.
 
-El blog usa `.md`; los demás consumidores no se han migrado. Los contratos HTML
+El blog y los documentos legales usan `.md`. Los textos de las demás páginas se editan en JSON por página e idioma. Los contratos HTML
 y sanitizadores actuales siguen vigentes hasta que se migre explícitamente cada consumidor. Heading
 conserva su contrato de HTML inline; su revisión, si se necesita, debe ser una
 decisión explícita y separada de los campos de texto enriquecido.
 
 ## Uso actual
 
-Los archivos viven en `src/content/blog/es/`. Sus metadatos y publicación están
-en `src/data/blog/index.ts`; los campos de texto del contenido usan Markdown.
+Los archivos viven en `src/content/blog/es/`. Sus metadatos están en el bloque JSON inicial de cada artículo, junto al cuerpo Markdown. La publicación y la configuración visual se resuelven en `src/data/blog/index.ts`.
 Los bloques especiales deben escribirse solos en su párrafo, separados por
 líneas en blanco: `[cta id="tips-app"]` y
 `[media id="programmatic-illustration"]`. Las referencias dentro de código o
@@ -69,3 +67,5 @@ referencias Markdown, marcadores, IDs desconocidos y sanitización.
 Las ilustraciones intercaladas usan los WebP transparentes del blog sobre sus
 contenedores de color. La sintaxis Markdown de imágenes también se procesa,
 con texto alternativo y carga diferida.
+
+La [guía de edición](editing-content.md) documenta JSON, metadatos Markdown y recursos por página. Los documentos legales conservan su HTML original dentro de Markdown; los adaptadores convierten los textos JSON al HTML de los componentes y mantienen sus sanitizadores.

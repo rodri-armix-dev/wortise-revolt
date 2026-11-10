@@ -18,7 +18,8 @@
     "preview:launch": "astro preview --mode launch",
     "test:publication": "node --test integrations/publication-assets/prune.test.mjs && node scripts/test-publication.mjs",
     "test:vercel-language": "node scripts/test-vercel-language.mjs",
-    "test:blog": "node --test src/lib/article-markdown.test.ts"
+    "test:blog": "node --test src/lib/article-markdown.test.ts",
+    "test:content": "node scripts/test-content.mjs && node scripts/test-buttons.mjs"
   },
   "dependencies": {
     "@lucide/astro": "^1.48.0",

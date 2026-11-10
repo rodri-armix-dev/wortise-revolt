@@ -1,3 +1,20 @@
+---
+{
+  "id": "cookies",
+  "slug": "cookies",
+  "title": "¿Adiós a las Cookies?",
+  "excerpt": "Una oportunidad para revisar cómo conocemos a la audiencia y construimos experiencias relevantes.",
+  "lead": "Una oportunidad para revisar cómo conocemos a la audiencia y construimos experiencias relevantes.",
+  "author": "Sergio",
+  "date": "2024-08-19",
+  "category": "Tendencias",
+  "tags": [
+    "Apps",
+    "Publishers"
+  ],
+  "demo": true
+}
+---
 ## Replantear la relación con la audiencia
 
 La conversación sobre cookies invita a revisar cómo se obtiene y utiliza la información de los usuarios. Para un publisher, el punto de partida es comprender qué datos necesita realmente para ofrecer una buena experiencia.

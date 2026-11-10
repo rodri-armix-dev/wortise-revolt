@@ -1,5 +1,6 @@
 ---
 import Button from '../../atoms/Button/Button.astro';
+import { externalButtons } from '../../../data/external-buttons';
 import { getContactAction } from '../../../data/navigation';
 import { getLocaleFromPath } from '../../../i18n/routes';
 import { getUiText } from '../../../i18n/ui';
@@ -21,7 +22,7 @@ const contact = getContactAction(locale);
 	</div>
 	{!compact && (
 		<div class="header-actions__login">
-			<Button label={text.login} variant="primary" size="small" icon="chevron-down" />
+			<Button label={text.login} href={externalButtons[locale].loginUrl || undefined} variant="primary" size="small" icon="chevron-down" />
 		</div>
 	)}
 </div>

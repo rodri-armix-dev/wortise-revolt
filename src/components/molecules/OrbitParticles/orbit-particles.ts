@@ -33,6 +33,7 @@ class OrbitParticles extends HTMLElement {
 		const events = new AbortController();
 		const { signal } = events;
 		let context: gsap.Context | undefined;
+		let timeline: gsap.core.Timeline | undefined;
 		let mode: Mode = 'auto';
 		let phase: Phase = 'outside';
 		let visible = false;
@@ -41,9 +42,10 @@ class OrbitParticles extends HTMLElement {
 		const cancel = () => {
 			context?.revert();
 			context = undefined;
+			timeline = undefined;
 		};
 
-		const play = (next: Phase, continueFromCurrent = false) => {
+		const play = (next: Phase, continueFromCurrent = false, paused = false) => {
 			const activeLayer = layers.find((layer) => layer.offsetWidth > 0);
 			const active = particles.filter(({ item }) => item.parentElement === activeLayer);
 			const current = continueFromCurrent
@@ -60,7 +62,8 @@ class OrbitParticles extends HTMLElement {
 			const focus = next === 'exit' ? target?.getBoundingClientRect() : undefined;
 			const duration = durations[next] / 1000;
 			context = gsap.context(() => {
-				const timeline = gsap.timeline({ repeat: next === 'idle' ? -1 : 0 });
+				const animation = gsap.timeline({ paused, repeat: next === 'idle' ? -1 : 0 });
+				timeline = animation;
 				active.forEach(({ item, motion }, index) => {
 					const points = motion[next];
 					const box = bounds[index];
@@ -104,12 +107,12 @@ class OrbitParticles extends HTMLElement {
 						// Close the loop from the last Figma sample to the first.
 						keyframes.push({ ...first, duration: .3, ease: 'sine.inOut' });
 					}
-					timeline.to(item, { keyframes, ease: 'none' }, 0);
+					animation.to(item, { keyframes, ease: 'none' }, 0);
 				});
 
 				if (next === 'exit' && scene && accentDuration > 0) {
 					gsap.set(scene, { [exitProgress]: '0%' });
-					timeline.to(scene, {
+					animation.to(scene, {
 						[exitProgress]: '100%',
 						duration: accentDuration,
 						ease: accentEase,
@@ -117,8 +120,8 @@ class OrbitParticles extends HTMLElement {
 				}
 
 				if (next === 'enter') {
-					timeline.eventCallback('onComplete', () => {
-						if (mode === 'auto' && afterScene) play('exit', true);
+					animation.eventCallback('onComplete', () => {
+						if (mode === 'auto' && afterScene && this.dataset.orbitSequenceProgress === undefined) play('exit', true);
 						else play('idle');
 					});
 				}
@@ -127,6 +130,17 @@ class OrbitParticles extends HTMLElement {
 
 		const sync = () => {
 			if (mode !== 'auto') return;
+			const sequenceProgress = this.dataset.orbitSequenceProgress;
+			if (sequenceProgress !== undefined) {
+				const progress = Number(sequenceProgress);
+				if (progress > 0) {
+					if (phase !== 'exit') play('exit', false, true);
+					timeline?.progress(progress);
+				} else if (phase === 'exit') play(visible ? 'idle' : 'outside');
+				else if (visible && phase === 'outside') play('enter');
+				else if (!visible && phase !== 'outside') play('outside');
+				return;
+			}
 			if (afterScene && phase === 'idle') play('exit', true);
 			else if (visible && (phase === 'outside' || phase === 'exit')) play('enter');
 			else if (!afterScene && !visible && phase !== 'outside') play('outside');
@@ -138,6 +152,8 @@ class OrbitParticles extends HTMLElement {
 			sync();
 		}, { threshold: [0, .25, .65] });
 		observer.observe(this);
+		this.addEventListener('orbit-sequence', sync, { signal });
+		sync();
 
 		const buttons = [...this.querySelectorAll<HTMLButtonElement>('[data-motion-preview]')];
 		for (const button of buttons) {
@@ -152,8 +168,14 @@ class OrbitParticles extends HTMLElement {
 				}
 			}, { signal });
 		}
-		this.addEventListener('change', () => play(mode === 'auto' ? phase : mode), { signal });
-		reduced.addEventListener('change', () => play(phase), { signal });
+		const refresh = () => {
+			if (mode === 'auto' && Number(this.dataset.orbitSequenceProgress) > 0) {
+				play('exit', false, true);
+				sync();
+			} else play(mode === 'auto' ? phase : mode);
+		};
+		this.addEventListener('change', refresh, { signal });
+		reduced.addEventListener('change', refresh, { signal });
 
 		this.cleanup = () => {
 			events.abort();

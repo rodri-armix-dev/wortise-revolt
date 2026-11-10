@@ -1,0 +1,83 @@
+{
+  "slug": "wortise-ads",
+  "meta": {
+    "title": "Wortise Ads | Wortise",
+    "description": "Conocé Wortise Ads."
+  },
+  "callToAction": {
+    "title": "Monetiza\ntus cuentas",
+    "description": "Transformamos cada centavo de inversión total, en un beneficio para tu agencia.",
+    "button": "Agenda una Demo"
+  },
+  "hero": {
+    "title": "*Wortise Ads:*\nDe la idea al resultado en un clic",
+    "description": "Es la primer IA de publicidad digital mobile, que diseña creativos, gestiona audiencias, lanza campañas y genera reportes de manera simple para escalar tu negocio.",
+    "button": "Agenda una Demo"
+  },
+  "features": {
+    "items": {
+      "campaigns": {
+        "title": "Crea tus campañas en minutos",
+        "imageAlt": "Anuncio de Vanish dentro de un teléfono.",
+        "description": "**Modo Asistido:** 100% automatizado donde la IA lidera la estrategia y ejecución sin fricción.\n**Modo Manual:** Vos definís objetivos y nuestra tecnología calibra la configuración para alcanzarlos.",
+        "button": "Agenda una Demo",
+        "annotations": {
+          "1": {
+            "label": "Modo Asistido"
+          },
+          "2": {
+            "label": "Modo Manual"
+          }
+        }
+      },
+      "projection": {
+        "title": "Proyección y data pre-inversión",
+        "imageAlt": "Anuncio de la fragancia Angel Elixir de Mugler dentro de un teléfono.",
+        "description": "Garantiza la eficiencia de tu presupuesto con estimaciones precisas de alcance e impresiones antes de activar la pauta.\nInversión basada en datos, no en supuestos.",
+        "button": "Agenda una Demo",
+        "annotations": {
+          "1": {
+            "value": "+100k",
+            "label": "alcance estimado"
+          },
+          "2": {
+            "value": "+500k",
+            "label": "impresiones estimadas"
+          }
+        }
+      },
+      "creative": {
+        "title": "Diseño creativo autónomo",
+        "imageAlt": "Anuncio interactivo de Giorgio Armani con una tarjeta para raspar dentro de un teléfono.",
+        "description": "Nuestra IA no solo diseña, sino que adapta dinámicamente cada pieza creativa para maximizar el impacto en cada formato y audiencia.",
+        "button": "Agenda una Demo",
+        "annotations": {
+          "1": {
+            "label": "Diseño creativo"
+          },
+          "2": {
+            "label": "Más impacto"
+          }
+        }
+      },
+      "reporting": {
+        "title": "Reporting estratégico 24/7",
+        "imageAlt": "Anuncios de un video de Olivia Rodrigo y del iPhone 15 dentro de un teléfono.",
+        "description": "Transparencia total mediante dashboards en tiempo real. Cada cliente gestiona sus propias métricas y resultados.",
+        "button": "Agenda una Demo",
+        "annotations": {
+          "1": {
+            "label": "10.450 vistas"
+          },
+          "2": {
+            "value": "18 s",
+            "label": "Permanencia promedio"
+          }
+        }
+      }
+    }
+  },
+  "video": {
+    "label": "Presentación de Wortise."
+  }
+}

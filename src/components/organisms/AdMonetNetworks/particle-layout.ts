@@ -1,13 +1,13 @@
 import type { ComponentProps } from 'astro/types';
 import type OrbitParticles from '../../molecules/OrbitParticles/OrbitParticles.astro';
-import adMob from '../../../assets/admonet/particles/admob-texture.png';
-import mintegral from '../../../assets/admonet/particles/mintegral-texture.png';
-import pangle from '../../../assets/admonet/particles/pangle-texture.png';
-import liftoff from '../../../assets/admonet/particles/liftoff-texture.png';
-import ironSource from '../../../assets/admonet/particles/ironsource-texture.png';
-import adManager from '../../../assets/admonet/particles/google-ad-manager-texture.png';
-import gradientRing from '../../../assets/admonet/particles/gradient-ring-texture.png';
-import unity from '../../../assets/admonet/particles/unity-texture.png';
+import adMob from '../../../assets/pages/developers/admob-texture.png';
+import mintegral from '../../../assets/pages/developers/mintegral-texture.png';
+import pangle from '../../../assets/pages/developers/pangle-texture.png';
+import liftoff from '../../../assets/pages/developers/liftoff-texture.png';
+import ironSource from '../../../assets/pages/developers/ironsource-texture.png';
+import adManager from '../../../assets/pages/developers/google-ad-manager-texture.png';
+import gradientRing from '../../../assets/pages/developers/gradient-ring-texture.png';
+import unity from '../../../assets/pages/developers/unity-texture.png';
 
 import { particleMotion } from './particle-motion';
 

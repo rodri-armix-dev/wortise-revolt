@@ -18,7 +18,7 @@ export default function publicationAssets(): AstroIntegration {
 				}] } });
 			},
 			'astro:build:done': async ({ dir, logger }) => {
-				await rm(new URL('videos/demo/', dir), { recursive: true, force: true });
+				await rm(new URL('development/videos/', dir), { recursive: true, force: true });
 				if (!prune) return;
 				const removed = await pruneUnusedAssets(fileURLToPath(dir));
 				logger.info(`Removed ${removed.length} unused launch assets.`);

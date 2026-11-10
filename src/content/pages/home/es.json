@@ -1,0 +1,151 @@
+{
+  "slug": "",
+  "meta": {
+    "title": "Wortise",
+    "description": "Wortise"
+  },
+  "hero": {
+    "eyebrow": "Tecnología publicitaria, hecha en LATAM",
+    "title": "*Nos ocupamos de convertir tu producto *\nen un gran negocio",
+    "description": "Conectamos publishers, aplicaciones, marcas y agencias para crear campañas más inteligentes y maximizar la monetización de cada impresión.",
+    "button": "Explorar Wortise Ads"
+  },
+  "clients": {
+    "label": "Marcas que confían en Wortise",
+    "logos": {
+      "hbo": {
+        "name": "HBO"
+      },
+      "apple": {
+        "name": "Apple"
+      },
+      "spotify": {
+        "name": "Spotify"
+      },
+      "toyota": {
+        "name": "Toyota"
+      },
+      "mcdonalds": {
+        "name": "McDonald’s"
+      },
+      "visa": {
+        "name": "Visa"
+      }
+    }
+  },
+  "solutions": {
+    "items": {
+      "1": {
+        "eyebrow": "Para desarrolladores",
+        "title": "Monetización sin fricción",
+        "description": "Integra el SDK, automatiza la operación y maximiza los ingresos de aplicaciones, juegos y sitios web.",
+        "imageAlt": "Ejemplo de anuncio recompensado en una aplicación.",
+        "button": "Explorar para desarrolladores"
+      },
+      "2": {
+        "eyebrow": "Para anunciantes",
+        "title": "Campañas que llegan mejor",
+        "description": "Planifica, activa y optimiza campañas con datos de primera mano y formatos no intrusivos.",
+        "imageAlt": "Pantalla azul de prueba para anunciantes.",
+        "button": "Explorar para anunciantes"
+      },
+      "3": {
+        "eyebrow": "Wortise Ads",
+        "title": "De la idea al resultado en un clic",
+        "description": "Es la primer IA de publicidad digital mobile, que diseña creativos, gestiona audiencias, lanza campañas y genera reportes de manera simple para escalar tu negocio.",
+        "imageAlt": "Vista previa de optimización de campañas en Wortise Ads.",
+        "button": "Explorar Wortise Ads"
+      }
+    }
+  },
+  "world": {
+    "eyebrow": "Nuestras soluciones",
+    "title": "*Born in LATAM,*\nmade for the world",
+    "description": "Equipos locales y tecnología propia para conectar oportunidades en mercados de toda la región y el mundo.",
+    "locations": {
+      "buenos-aires": {
+        "city": "Buenos Aires",
+        "country": "Argentina",
+        "countryCode": "AR",
+        "team": "Equipo comercial · LATAM",
+        "languages": "Español",
+        "response": "Respuesta habitual: 1 día hábil"
+      },
+      "madrid": {
+        "city": "Madrid",
+        "country": "España",
+        "countryCode": "ES",
+        "team": "Equipo comercial · Europa",
+        "languages": "Español · Inglés",
+        "response": "Respuesta habitual: 1 día hábil"
+      },
+      "california": {
+        "city": "California",
+        "country": "Estados Unidos",
+        "countryCode": "US",
+        "team": "Alianzas estratégicas · Norteamérica",
+        "languages": "Inglés · Español",
+        "response": "Respuesta habitual: 2 días hábiles"
+      }
+    }
+  },
+  "statistics": {
+    "eyebrow": "Escala comprobada",
+    "title": "*Cuando todo está conectado,* los resultados llegan solos."
+  },
+  "team": {
+    "label": "El equipo y los espacios de Wortise",
+    "eyebrow": "Nuestro equipo",
+    "title": "*Las personas detrás*\nde Wortise",
+    "description": "Un equipo diverso y global que combina tecnología, datos, producto y negocio para transformar la publicidad digital."
+  },
+  "careers": {
+    "eyebrow": "Búsquedas activas",
+    "title": "*Forma parte de *Wortise",
+    "description": "Los Wortisers se identifican por ser enfocados, curiosos y resolutivos. Si crees que encajas ¡postulate!, te estamos esperando.",
+    "items": {
+      "technical-lead-1": {
+        "title": "Líder Técnico",
+        "location": "Argentina"
+      },
+      "technical-lead-2": {
+        "title": "Líder Técnico",
+        "location": "Argentina"
+      },
+      "technical-lead-3": {
+        "title": "Líder Técnico",
+        "location": "Argentina"
+      }
+    },
+    "button": "Ver más búsquedas"
+  },
+  "gallery": {
+    "conversation": {
+      "imageAlt": "Dos integrantes del equipo conversando en la oficina."
+    },
+    "lounge": {
+      "imageAlt": "Espacio de descanso de Wortise junto a los ventanales."
+    },
+    "planning": {
+      "imageAlt": "Una integrante del equipo junto a una pared de planificación."
+    },
+    "table-football": {
+      "imageAlt": "Integrantes del equipo jugando al metegol."
+    },
+    "collaboration": {
+      "imageAlt": "El equipo colaborando en la oficina."
+    },
+    "workspace": {
+      "imageAlt": "Integrantes del equipo trabajando junto a los ventanales."
+    },
+    "laptop": {
+      "imageAlt": "Dos integrantes del equipo trabajando con una computadora."
+    },
+    "desk": {
+      "imageAlt": "Dos integrantes del equipo colaborando en un escritorio."
+    },
+    "meeting": {
+      "imageAlt": "Una conversación de trabajo entre integrantes del equipo."
+    }
+  }
+}

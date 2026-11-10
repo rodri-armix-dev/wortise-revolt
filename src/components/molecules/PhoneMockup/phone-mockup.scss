@@ -8,8 +8,8 @@
 
 	&::before
 	{
-		// Reuse AdsGPT's original device crop at the 410 × 788 composition size.
-		background-image: image-set(url('/phone-mockup/device-384.webp') 1x, url('/phone-mockup/device-768.webp') 2x);
+		// Preserve the device crop at the 410 × 788 composition size.
+		background-image: var(--phone-mockup-device);
 		background-size: 100% 100%;
 		content: '';
 		height: 112.77%;

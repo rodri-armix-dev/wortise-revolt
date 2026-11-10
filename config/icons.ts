@@ -7,14 +7,14 @@ import ChevronUp from '@lucide/astro/icons/chevron-up';
 import Menu from '@lucide/astro/icons/menu';
 import X from '@lucide/astro/icons/x';
 import Link from '@lucide/astro/icons/link';
-import Facebook from '../src/assets/icons/facebook.svg';
-import LinkedIn from '../src/assets/icons/linkedin.svg';
-import AdsAssisted from '../src/assets/icons/ads-assisted.svg';
-import AdsManual from '../src/assets/icons/ads-manual.svg';
-import AdsAudience from '../src/assets/icons/ads-audience.svg';
-import AdsDesign from '../src/assets/icons/ads-design.svg';
-import AdsImpact from '../src/assets/icons/ads-impact.svg';
-import AdsViews from '../src/assets/icons/ads-views.svg';
+import Facebook from '../src/assets/global/icons/facebook.svg';
+import LinkedIn from '../src/assets/global/icons/linkedin.svg';
+import AdsAssisted from '../src/assets/global/icons/ads-assisted.svg';
+import AdsManual from '../src/assets/global/icons/ads-manual.svg';
+import AdsAudience from '../src/assets/global/icons/ads-audience.svg';
+import AdsDesign from '../src/assets/global/icons/ads-design.svg';
+import AdsImpact from '../src/assets/global/icons/ads-impact.svg';
+import AdsViews from '../src/assets/global/icons/ads-views.svg';
 import { lucideIcon, svgIcon } from '../src/lib/icons/providers';
 
 // Stable content names belong to this project, not to a particular library.

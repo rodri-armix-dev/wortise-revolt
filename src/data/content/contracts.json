@@ -1,0 +1,1123 @@
+{
+  "global/statistics/es": {
+    "statistics": {
+      "users": {
+        "value": "string",
+        "label": "string"
+      },
+      "applications": {
+        "value": "string",
+        "label": "string"
+      },
+      "campaigns": {
+        "value": "string",
+        "label": "string"
+      },
+      "countries": {
+        "value": "string",
+        "label": "string"
+      }
+    }
+  },
+  "global/footer/pt": {
+    "brand": {
+      "tagline": {
+        "primary": "string",
+        "secondary": "string"
+      },
+      "contact": {
+        "label": "string"
+      }
+    },
+    "menus": {
+      "solutions": {
+        "title": "string",
+        "items": {
+          "advertisers": "string",
+          "developers": "string",
+          "wortise-ads": "string"
+        }
+      },
+      "explore": {
+        "title": "string",
+        "items": {
+          "about": "string",
+          "blog": "string",
+          "glossary": "string",
+          "sdk-documentation": "string"
+        }
+      },
+      "platform": {
+        "title": "string",
+        "items": {
+          "login": {
+            "label": "string"
+          },
+          "demo": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "languages": {
+      "title": "string"
+    },
+    "social": {
+      "title": "string",
+      "items": {
+        "instagram": {
+          "label": "string"
+        },
+        "linkedin": {
+          "label": "string"
+        },
+        "facebook": {
+          "label": "string"
+        }
+      }
+    },
+    "legal": {
+      "items": {
+        "sdk-terms": "string",
+        "terms": "string",
+        "privacy": "string",
+        "help": "string"
+      }
+    },
+    "copyright": {
+      "text": "string"
+    }
+  },
+  "global/footer/en": {
+    "brand": {
+      "tagline": {
+        "primary": "string",
+        "secondary": "string"
+      },
+      "contact": {
+        "label": "string"
+      }
+    },
+    "menus": {
+      "solutions": {
+        "title": "string",
+        "items": {
+          "advertisers": "string",
+          "developers": "string",
+          "wortise-ads": "string"
+        }
+      },
+      "explore": {
+        "title": "string",
+        "items": {
+          "about": "string",
+          "blog": "string",
+          "glossary": "string",
+          "sdk-documentation": "string"
+        }
+      },
+      "platform": {
+        "title": "string",
+        "items": {
+          "login": {
+            "label": "string"
+          },
+          "demo": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "languages": {
+      "title": "string"
+    },
+    "social": {
+      "title": "string",
+      "items": {
+        "instagram": {
+          "label": "string"
+        },
+        "linkedin": {
+          "label": "string"
+        },
+        "facebook": {
+          "label": "string"
+        }
+      }
+    },
+    "legal": {
+      "items": {
+        "sdk-terms": "string",
+        "terms": "string",
+        "privacy": "string",
+        "help": "string"
+      }
+    },
+    "copyright": {
+      "text": "string"
+    }
+  },
+  "global/footer/es": {
+    "brand": {
+      "tagline": {
+        "primary": "string",
+        "secondary": "string"
+      },
+      "contact": {
+        "label": "string"
+      }
+    },
+    "menus": {
+      "solutions": {
+        "title": "string",
+        "items": {
+          "advertisers": "string",
+          "developers": "string",
+          "wortise-ads": "string"
+        }
+      },
+      "explore": {
+        "title": "string",
+        "items": {
+          "about": "string",
+          "blog": "string",
+          "glossary": "string",
+          "sdk-documentation": "string"
+        }
+      },
+      "platform": {
+        "title": "string",
+        "items": {
+          "login": {
+            "label": "string"
+          },
+          "demo": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "languages": {
+      "title": "string"
+    },
+    "social": {
+      "title": "string",
+      "items": {
+        "instagram": {
+          "label": "string"
+        },
+        "linkedin": {
+          "label": "string"
+        },
+        "facebook": {
+          "label": "string"
+        }
+      }
+    },
+    "legal": {
+      "items": {
+        "sdk-terms": "string",
+        "terms": "string",
+        "privacy": "string",
+        "help": "string"
+      }
+    },
+    "copyright": {
+      "text": "string"
+    }
+  },
+  "global/buttons/pt": {
+    "demoUrl": "string",
+    "createAccountUrl": "string",
+    "contactUrl": "string",
+    "careersUrl": "string",
+    "loginUrl": "string",
+    "whatsappUrl": "string",
+    "instagramUrl": "string",
+    "linkedinUrl": "string",
+    "facebookUrl": "string",
+    "telegramUrl": "string",
+    "emailUrl": "string",
+    "developersStartUrl": "string",
+    "sdkDocumentationUrl": "string",
+    "glossaryUrl": "string",
+    "helpUrl": "string",
+    "downloadTipsUrl": "string",
+    "careersJobs": {
+      "technical-lead-1": {
+        "url": "string"
+      },
+      "technical-lead-2": {
+        "url": "string"
+      },
+      "technical-lead-3": {
+        "url": "string"
+      }
+    },
+    "worldContacts": {
+      "buenos-aires": {
+        "url": "string"
+      },
+      "madrid": {
+        "url": "string"
+      },
+      "california": {
+        "url": "string"
+      }
+    }
+  },
+  "global/buttons/en": {
+    "demoUrl": "string",
+    "createAccountUrl": "string",
+    "contactUrl": "string",
+    "careersUrl": "string",
+    "loginUrl": "string",
+    "whatsappUrl": "string",
+    "instagramUrl": "string",
+    "linkedinUrl": "string",
+    "facebookUrl": "string",
+    "telegramUrl": "string",
+    "emailUrl": "string",
+    "developersStartUrl": "string",
+    "sdkDocumentationUrl": "string",
+    "glossaryUrl": "string",
+    "helpUrl": "string",
+    "downloadTipsUrl": "string",
+    "careersJobs": {
+      "technical-lead-1": {
+        "url": "string"
+      },
+      "technical-lead-2": {
+        "url": "string"
+      },
+      "technical-lead-3": {
+        "url": "string"
+      }
+    },
+    "worldContacts": {
+      "buenos-aires": {
+        "url": "string"
+      },
+      "madrid": {
+        "url": "string"
+      },
+      "california": {
+        "url": "string"
+      }
+    }
+  },
+  "global/buttons/es": {
+    "demoUrl": "string",
+    "createAccountUrl": "string",
+    "contactUrl": "string",
+    "careersUrl": "string",
+    "loginUrl": "string",
+    "whatsappUrl": "string",
+    "instagramUrl": "string",
+    "linkedinUrl": "string",
+    "facebookUrl": "string",
+    "telegramUrl": "string",
+    "emailUrl": "string",
+    "developersStartUrl": "string",
+    "sdkDocumentationUrl": "string",
+    "glossaryUrl": "string",
+    "helpUrl": "string",
+    "downloadTipsUrl": "string",
+    "careersJobs": {
+      "technical-lead-1": {
+        "url": "string"
+      },
+      "technical-lead-2": {
+        "url": "string"
+      },
+      "technical-lead-3": {
+        "url": "string"
+      }
+    },
+    "worldContacts": {
+      "buenos-aires": {
+        "url": "string"
+      },
+      "madrid": {
+        "url": "string"
+      },
+      "california": {
+        "url": "string"
+      }
+    }
+  },
+  "global/calls-to-action/en": {
+    "contact": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    }
+  },
+  "global/calls-to-action/es": {
+    "branding": {
+      "logo": {
+        "href": "string",
+        "alt": "string"
+      }
+    },
+    "contact": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    }
+  },
+  "global/navigation/pt": {
+    "account": {
+      "label": "string"
+    },
+    "menu": {
+      "advertisers": {
+        "label": "string"
+      },
+      "developers": {
+        "label": "string"
+      },
+      "wortise-ads": {
+        "label": "string"
+      },
+      "about": {
+        "label": "string"
+      },
+      "resources": {
+        "label": "string",
+        "children": {
+          "blog": {
+            "label": "string"
+          },
+          "glossary": {
+            "label": "string"
+          },
+          "sdk-documentation": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "legal": {
+      "sdk-terms": "string",
+      "terms": "string",
+      "privacy": "string"
+    }
+  },
+  "global/navigation/en": {
+    "account": {
+      "label": "string"
+    },
+    "menu": {
+      "advertisers": {
+        "label": "string"
+      },
+      "developers": {
+        "label": "string"
+      },
+      "wortise-ads": {
+        "label": "string"
+      },
+      "about": {
+        "label": "string"
+      },
+      "resources": {
+        "label": "string",
+        "children": {
+          "blog": {
+            "label": "string"
+          },
+          "glossary": {
+            "label": "string"
+          },
+          "sdk-documentation": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "legal": {
+      "sdk-terms": "string",
+      "terms": "string",
+      "privacy": "string"
+    }
+  },
+  "global/navigation/es": {
+    "account": {
+      "label": "string"
+    },
+    "menu": {
+      "advertisers": {
+        "label": "string"
+      },
+      "developers": {
+        "label": "string"
+      },
+      "wortise-ads": {
+        "label": "string"
+      },
+      "about": {
+        "label": "string"
+      },
+      "resources": {
+        "label": "string",
+        "children": {
+          "blog": {
+            "label": "string"
+          },
+          "glossary": {
+            "label": "string"
+          },
+          "sdk-documentation": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "legal": {
+      "sdk-terms": "string",
+      "terms": "string",
+      "privacy": "string"
+    }
+  },
+  "pages/home/en": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "hero": {
+      "title": "string"
+    }
+  },
+  "pages/home/es": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "hero": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    },
+    "clients": {
+      "label": "string",
+      "logos": {
+        "hbo": {
+          "name": "string"
+        },
+        "apple": {
+          "name": "string"
+        },
+        "spotify": {
+          "name": "string"
+        },
+        "toyota": {
+          "name": "string"
+        },
+        "mcdonalds": {
+          "name": "string"
+        },
+        "visa": {
+          "name": "string"
+        }
+      }
+    },
+    "solutions": {
+      "items": {
+        "1": {
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "imageAlt": "string",
+          "button": "string"
+        },
+        "2": {
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "imageAlt": "string",
+          "button": "string"
+        },
+        "3": {
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "imageAlt": "string",
+          "button": "string"
+        }
+      }
+    },
+    "world": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string",
+      "locations": {
+        "buenos-aires": {
+          "city": "string",
+          "country": "string",
+          "countryCode": "string",
+          "team": "string",
+          "languages": "string",
+          "response": "string"
+        },
+        "madrid": {
+          "city": "string",
+          "country": "string",
+          "countryCode": "string",
+          "team": "string",
+          "languages": "string",
+          "response": "string"
+        },
+        "california": {
+          "city": "string",
+          "country": "string",
+          "countryCode": "string",
+          "team": "string",
+          "languages": "string",
+          "response": "string"
+        }
+      }
+    },
+    "statistics": {
+      "eyebrow": "string",
+      "title": "string"
+    },
+    "team": {
+      "label": "string",
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string"
+    },
+    "careers": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string",
+      "items": {
+        "technical-lead-1": {
+          "title": "string",
+          "location": "string"
+        },
+        "technical-lead-2": {
+          "title": "string",
+          "location": "string"
+        },
+        "technical-lead-3": {
+          "title": "string",
+          "location": "string"
+        }
+      },
+      "button": "string"
+    },
+    "gallery": {
+      "conversation": {
+        "imageAlt": "string"
+      },
+      "lounge": {
+        "imageAlt": "string"
+      },
+      "planning": {
+        "imageAlt": "string"
+      },
+      "table-football": {
+        "imageAlt": "string"
+      },
+      "collaboration": {
+        "imageAlt": "string"
+      },
+      "workspace": {
+        "imageAlt": "string"
+      },
+      "laptop": {
+        "imageAlt": "string"
+      },
+      "desk": {
+        "imageAlt": "string"
+      },
+      "meeting": {
+        "imageAlt": "string"
+      }
+    }
+  },
+  "pages/contact/es": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "hero": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string"
+    },
+    "form": {
+      "reasonLabel": "string",
+      "reasons": {
+        "advertise": {
+          "label": "string"
+        },
+        "monetize": {
+          "label": "string"
+        },
+        "other": {
+          "label": "string"
+        }
+      },
+      "fields": {
+        "name": {
+          "label": "string",
+          "placeholder": "string"
+        },
+        "email": {
+          "label": "string",
+          "placeholder": "string"
+        },
+        "phone": {
+          "label": "string",
+          "placeholder": "string"
+        },
+        "message": {
+          "label": "string",
+          "placeholder": "string"
+        }
+      },
+      "submitLabel": "string",
+      "homeLabel": "string",
+      "resetLabel": "string",
+      "directLabel": "string",
+      "email": "string",
+      "telegramLabel": "string"
+    },
+    "success": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string"
+    }
+  },
+  "pages/about/es": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "hero": {
+      "imageAlt": "string",
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string"
+    },
+    "statistics": {
+      "eyebrow": "string",
+      "title": "string"
+    },
+    "team": {
+      "label": "string"
+    },
+    "gallery": {
+      "desk": {
+        "imageAlt": "string"
+      },
+      "lounge": {
+        "imageAlt": "string"
+      },
+      "conversation": {
+        "imageAlt": "string"
+      },
+      "table-football": {
+        "imageAlt": "string"
+      },
+      "workspace": {
+        "imageAlt": "string"
+      },
+      "laptop": {
+        "imageAlt": "string"
+      }
+    }
+  },
+  "pages/blog/es": {
+    "hero": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string"
+    },
+    "newsletter": {
+      "title": "string",
+      "description": "string"
+    },
+    "downloads": {
+      "tips-app": {
+        "eyebrow": "string",
+        "title": "string",
+        "button": "string"
+      }
+    },
+    "page": {
+      "slug": "string",
+      "meta": {
+        "title": "string",
+        "description": "string"
+      }
+    },
+    "images": {
+      "ad-network": {
+        "alt": "string"
+      },
+      "ad-platforms": {
+        "alt": "string"
+      },
+      "programmatic-trends": {
+        "alt": "string"
+      },
+      "ad-blocking": {
+        "alt": "string"
+      },
+      "app-ads-txt": {
+        "alt": "string"
+      },
+      "self-serve": {
+        "alt": "string"
+      },
+      "cookies": {
+        "alt": "string"
+      }
+    }
+  },
+  "pages/wortise-ads/pt": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "callToAction": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    },
+    "hero": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    },
+    "features": {
+      "items": {
+        "campaigns": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "label": "string"
+            },
+            "2": {
+              "label": "string"
+            }
+          }
+        },
+        "projection": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "value": "string",
+              "label": "string"
+            },
+            "2": {
+              "value": "string",
+              "label": "string"
+            }
+          }
+        },
+        "creative": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "label": "string"
+            },
+            "2": {
+              "label": "string"
+            }
+          }
+        },
+        "reporting": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "label": "string"
+            },
+            "2": {
+              "value": "string",
+              "label": "string"
+            }
+          }
+        }
+      }
+    },
+    "video": {
+      "label": "string"
+    }
+  },
+  "pages/wortise-ads/en": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "callToAction": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    },
+    "hero": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    },
+    "features": {
+      "items": {
+        "campaigns": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "label": "string"
+            },
+            "2": {
+              "label": "string"
+            }
+          }
+        },
+        "projection": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "value": "string",
+              "label": "string"
+            },
+            "2": {
+              "value": "string",
+              "label": "string"
+            }
+          }
+        },
+        "creative": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "label": "string"
+            },
+            "2": {
+              "label": "string"
+            }
+          }
+        },
+        "reporting": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "label": "string"
+            },
+            "2": {
+              "value": "string",
+              "label": "string"
+            }
+          }
+        }
+      }
+    },
+    "video": {
+      "label": "string"
+    }
+  },
+  "pages/wortise-ads/es": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "callToAction": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    },
+    "hero": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    },
+    "features": {
+      "items": {
+        "campaigns": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "label": "string"
+            },
+            "2": {
+              "label": "string"
+            }
+          }
+        },
+        "projection": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "value": "string",
+              "label": "string"
+            },
+            "2": {
+              "value": "string",
+              "label": "string"
+            }
+          }
+        },
+        "creative": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "label": "string"
+            },
+            "2": {
+              "label": "string"
+            }
+          }
+        },
+        "reporting": {
+          "title": "string",
+          "imageAlt": "string",
+          "description": "string",
+          "button": "string",
+          "annotations": {
+            "1": {
+              "label": "string"
+            },
+            "2": {
+              "value": "string",
+              "label": "string"
+            }
+          }
+        }
+      }
+    },
+    "video": {
+      "label": "string"
+    }
+  },
+  "pages/developers/es": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "hero": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string",
+      "button": "string",
+      "secondaryButton": "string"
+    },
+    "statistics": {
+      "items": {
+        "apps": {
+          "value": "string",
+          "label": "string"
+        },
+        "countries": {
+          "value": "string",
+          "label": "string"
+        },
+        "requests": {
+          "value": "string",
+          "label": "string"
+        },
+        "uptime": {
+          "value": "string",
+          "label": "string"
+        }
+      }
+    },
+    "certifications": {
+      "eyebrow": "string",
+      "title": "string",
+      "items": {
+        "1": {
+          "title": "string",
+          "description": "string"
+        },
+        "2": {
+          "title": "string",
+          "description": "string"
+        }
+      }
+    },
+    "adNetworks": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string",
+      "hub": {
+        "label": "string",
+        "tagline": "string"
+      },
+      "items": {
+        "rewarded": {
+          "imageAlt": "string",
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "button": "string"
+        },
+        "interstitial": {
+          "imageAlt": "string",
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "button": "string"
+        },
+        "native": {
+          "imageAlt": "string",
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "button": "string"
+        },
+        "offerwall": {
+          "imageAlt": "string",
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "button": "string"
+        }
+      }
+    }
+  }
+}

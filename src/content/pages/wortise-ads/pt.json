@@ -1,0 +1,83 @@
+{
+  "slug": "wortise-ads",
+  "meta": {
+    "title": "Wortise Ads | Wortise",
+    "description": "Conheça o Wortise Ads."
+  },
+  "callToAction": {
+    "title": "Monetize\nsuas contas",
+    "description": "Transformamos cada centavo do investimento total em um benefício para sua agência.",
+    "button": "Agende uma demonstração"
+  },
+  "hero": {
+    "title": "*Wortise Ads:*\nDa ideia ao resultado em um clique",
+    "description": "A primeira IA de publicidade digital mobile que cria peças, gerencia públicos, lança campanhas e gera relatórios de forma simples para escalar seu negócio.",
+    "button": "Agende uma demonstração"
+  },
+  "features": {
+    "items": {
+      "campaigns": {
+        "title": "Crie suas campanhas em minutos",
+        "imageAlt": "Anúncio da Vanish exibido em um celular.",
+        "description": "**Modo Assistido:** 100% automatizado, com a IA conduzindo a estratégia e a execução sem complicações.\n**Modo Manual:** Você define os objetivos e nossa tecnologia ajusta as configurações para alcançá-los.",
+        "button": "Agende uma demonstração",
+        "annotations": {
+          "1": {
+            "label": "Modo Assistido"
+          },
+          "2": {
+            "label": "Modo Manual"
+          }
+        }
+      },
+      "projection": {
+        "title": "Projeções e dados antes de investir",
+        "imageAlt": "Anúncio da fragrância Angel Elixir da Mugler exibido em um celular.",
+        "description": "Garanta a eficiência do seu orçamento com estimativas precisas de alcance e impressões antes de ativar os anúncios.\nInvestimento baseado em dados, não em suposições.",
+        "button": "Agende uma demonstração",
+        "annotations": {
+          "1": {
+            "value": "+100k",
+            "label": "alcance estimado"
+          },
+          "2": {
+            "value": "+500k",
+            "label": "impressões estimadas"
+          }
+        }
+      },
+      "creative": {
+        "title": "Design criativo autônomo",
+        "imageAlt": "Anúncio interativo da Giorgio Armani com uma raspadinha exibido em um celular.",
+        "description": "Nossa IA vai além do design: adapta dinamicamente cada peça criativa para maximizar o impacto em cada formato e público.",
+        "button": "Agende uma demonstração",
+        "annotations": {
+          "1": {
+            "label": "Design criativo"
+          },
+          "2": {
+            "label": "Mais impacto"
+          }
+        }
+      },
+      "reporting": {
+        "title": "Relatórios estratégicos 24/7",
+        "imageAlt": "Anúncios de um vídeo da Olivia Rodrigo e do iPhone 15 exibidos em um celular.",
+        "description": "Transparência total por meio de dashboards em tempo real. Cada cliente gerencia suas próprias métricas e resultados.",
+        "button": "Agende uma demonstração",
+        "annotations": {
+          "1": {
+            "label": "10.450 visualizações"
+          },
+          "2": {
+            "value": "18 s",
+            "label": "Tempo médio de permanência"
+          }
+        }
+      }
+    }
+  },
+  "video": {
+    "label": "Apresentação da Wortise."
+  }
+}

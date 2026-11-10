@@ -1,5 +1,9 @@
 # Wortise
 
+## Edición de contenido
+
+Consultá la [guía de textos e imágenes](docs/editing-content.md), el [inventario de recursos públicos](docs/assets/public.md) y el [mapa de reorganización](docs/content-migration.md).
+
 Sitio estático en Astro. Usar pnpm.
 
 La API de títulos y su escala de Figma están documentadas en
@@ -155,13 +159,13 @@ envío de mensajes. Antes de publicar públicamente debe conectarse un receptor
 real y revisarse la confirmación. Telegram permanece deshabilitado hasta disponer
 de su URL. Sin JavaScript se ofrece el canal de email y no se envían formularios.
 
-Los SVG centrales están en `src/assets/contact/`; brillo y órbita se mantienen
-separados y el móvil usa su propia exportación. `src/assets/decorations/cover-glow-secondary.svg` es
+Los SVG centrales están en `src/assets/pages/contact/`; brillo y órbita se mantienen
+separados y el móvil usa su propia exportación. `src/assets/global/decorations/cover-glow-secondary.svg` es
 el efecto superior compartido con AdsCover. No se agregaron animaciones.
 
 ## Herramientas de desarrollo
 
-El catálogo `/es/ui/` y los editores visuales se habilitan únicamente durante el desarrollo. Los builds de ambos perfiles excluyen el catálogo, los paneles y los videos de prueba de `public/videos/demo/`.
+El catálogo `/es/ui/` y los editores visuales se habilitan únicamente durante el desarrollo. Los builds de ambos perfiles excluyen el catálogo, los paneles y los videos de prueba de `public/development/videos/`.
 
 Para hosting estático convencional, publicar el contenido de `dist/`.
 

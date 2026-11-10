@@ -1,0 +1,87 @@
+{
+  "slug": "desarrolladores",
+  "meta": {
+    "title": "Desarrolladores | Wortise",
+    "description": "Monetizá tus apps y juegos móviles con AdMonet, la plataforma de monetización de Wortise para Android e iOS."
+  },
+  "hero": {
+    "eyebrow": "Monetización para Android e iOS",
+    "title": "*Convierte cada*\n sesión en ingresos",
+    "description": "AdMonet es la plataforma de monetización de Wortise. Mediación con pujas en tiempo real, formatos que no arruinan la experiencia y datos para exprimir cada impresión de tus apps y juegos móviles.",
+    "button": "Empezar gratis",
+    "secondaryButton": "Ver documentación"
+  },
+  "statistics": {
+    "items": {
+      "apps": {
+        "value": "+20.000",
+        "label": "Apps que usan nuestro SDK"
+      },
+      "countries": {
+        "value": "+190",
+        "label": "Países con demanda activa"
+      },
+      "requests": {
+        "value": "+8M",
+        "label": "Solicitudes de anuncios al mes"
+      },
+      "uptime": {
+        "value": "99,9%",
+        "label": "Uptime del SDK"
+      }
+    }
+  },
+  "certifications": {
+    "eyebrow": "Respaldados por Google",
+    "title": "Certificaciones oficiales",
+    "items": {
+      "1": {
+        "title": "Google Partner Certified Channel",
+        "description": "Canal certificado por Google para la venta y gestión de inventario publicitario."
+      },
+      "2": {
+        "title": "Google Authorized Buyer Partner",
+        "description": "Acceso directo a la demanda programática de Google con estándares de calidad verificados."
+      }
+    }
+  },
+  "adNetworks": {
+    "eyebrow": "Más demanda · Más valor",
+    "title": "*Todas tus redes*\n en un solo lugar",
+    "description": "Integra AdMob, AppLovin, Unity Ads y decenas de redes más desde un único SDK y un único panel. AdMonet las hace competir impresión a impresión y se queda siempre con la puja más alta, sin waterfalls manuales ni integraciones duplicadas.",
+    "hub": {
+      "label": "AdMonet",
+      "tagline": "1 SDK · mejor puja"
+    },
+    "items": {
+      "rewarded": {
+        "imageAlt": "Vista previa de un anuncio de video recompensado.",
+        "eyebrow": "Pensado para jugadores",
+        "title": "Video recompensado",
+        "description": "El formato con mayor eCPM. Recompensa al jugador sin romper la sesión ni la economía del juego.",
+        "button": "Empezar gratis"
+      },
+      "interstitial": {
+        "imageAlt": "Vista previa de un anuncio intersticial.",
+        "eyebrow": "Pensado para jugadores",
+        "title": "Interstitiales & App Open",
+        "description": "Pantallas completas con control de frecuencia y capping automático para cuidar la retención.",
+        "button": "Empezar gratis"
+      },
+      "native": {
+        "imageAlt": "Vista previa de un anuncio nativo integrado en una aplicación.",
+        "eyebrow": "Pensado para jugadores",
+        "title": "Nativos y banners",
+        "description": "Se integran con tu diseño: tú controlas la plantilla, nosotros la demanda que la llena.",
+        "button": "Empezar gratis"
+      },
+      "offerwall": {
+        "imageAlt": "Vista previa de una oferta de recompensa en un juego.",
+        "eyebrow": "Pensado para jugadores",
+        "title": "Ofertas y muros de oferta",
+        "description": "Ingresos extra por engagement real, ideales para juegos con moneda virtual.",
+        "button": "Empezar gratis"
+      }
+    }
+  }
+}

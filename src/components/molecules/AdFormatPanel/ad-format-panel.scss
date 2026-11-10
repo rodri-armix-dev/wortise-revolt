@@ -1,0 +1,104 @@
+.ad-format-panel
+{
+	align-items: center;
+	display: flex;
+	margin-block: var(--ad-formats-panel-margin, 0);
+	min-height: var(--ad-formats-panel-height);
+	padding-block: var(--ad-formats-panel-padding, var(--spacing-64));
+
+	&__inner
+	{
+		--global-item-gap: var(--spacing-32);
+		align-items: flex-start;
+	}
+
+	&__intro
+	{
+		--eyebrow-white-space: normal;
+		--heading-text-wrap: balance;
+		--text-block-intro-gap: var(--spacing-16);
+		max-width: 414px;
+		min-height: var(--ad-formats-text-height, 0);
+		width: 100%;
+	}
+
+	&__content
+	{
+		--description-line-height: var(--line-height-title-xs);
+		--text-block-actions-offset: 0;
+		--text-block-gap: var(--spacing-32);
+		max-width: 346px;
+		min-height: var(--ad-formats-text-height, 0);
+		width: 100%;
+	}
+
+	&__visual
+	{
+		align-self: center;
+		aspect-ratio: 410 / 788; // sass-lint:disable-line no-misspelled-properties
+		display: grid;
+		max-width: 100%;
+		overflow: hidden;
+		width: var(--ad-formats-phone-width);
+
+		&-image
+		{
+			--image-height: 100%;
+			display: var(--ad-formats-preview-display, block);
+		}
+	}
+}
+
+@include os
+{
+	.ad-format-panel
+	{
+		&__intro,
+		&__content
+		{
+			align-self: center;
+		}
+	}
+}
+
+@include l
+{
+	.ad-format-panel
+	{
+		&__inner
+		{
+			--global-item-gap: var(--spacing-40);
+			align-items: center;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) var(--ad-formats-phone-width) minmax(0, 1fr);
+		}
+
+		&__intro
+		{
+			grid-column: 1;
+		}
+
+		&__visual
+		{
+			grid-column: 2;
+			justify-self: center;
+		}
+
+		&__content
+		{
+			grid-column: 3;
+			justify-self: end;
+		}
+	}
+}
+
+@include xl
+{
+	.ad-format-panel
+	{
+		&__content
+		{
+			--description-font-size: var(--font-size-title-xs);
+		}
+	}
+}

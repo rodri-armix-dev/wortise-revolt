@@ -1,3 +1,20 @@
+---
+{
+  "id": "ad-platforms",
+  "slug": "ad-platforms",
+  "title": "Ad Network vs Ad Server vs Ad Exchange: ¿Cuál elegir para monetizar tu app?",
+  "excerpt": "Entiende el papel de cada herramienta y cómo pueden complementarse en tu estrategia de monetización.",
+  "lead": "Entiende el papel de cada herramienta y cómo pueden complementarse en tu estrategia de monetización.",
+  "author": "Sergio",
+  "date": "2024-08-19",
+  "category": "Technical optimization",
+  "tags": [
+    "Apps",
+    "Publishers"
+  ],
+  "demo": true
+}
+---
 ## Tres herramientas, funciones diferentes
 
 Una Ad Network conecta inventario publicitario con demanda. Un Ad Server organiza la entrega de anuncios y sus reglas. Un Ad Exchange facilita el intercambio de inventario entre compradores y vendedores.

@@ -1,38 +1,47 @@
+import { externalButtons } from '../external-buttons';
+import { headingHtml, descriptionHtml } from '../content/format';
+import { readContent } from '../content/validate';
+import rawES from '../../content/pages/contact/es.json';
+
 import type { Locale } from '../../i18n/config';
 import type { ModulesPageData } from './page.types';
+
+const contentES = readContent(rawES, 'pages/contact/es');
 
 export const contactPageData = {
 	es: {
 		key: 'contact',
-		slug: 'contacto',
-		meta: { title: 'Contacto | Wortise', description: 'Contanos qué querés hacer crecer. Contactá al equipo de Wortise.' },
+		slug: contentES.slug,
+		meta: { title: contentES.meta.title, description: contentES.meta.description },
 		modules: [{
 			type: 'contact-section',
 			props: {
 				intro: {
-					eyebrow: { label: 'Contacta al equipo' },
-					heading: { html: 'Abramos una nueva<br>oportunidad.', tag: 'h1' },
-					description: { html: '<p>Contanos qué querés hacer crecer. La tecnología conecta el resto.</p>' },
+					eyebrow: { label: contentES.hero.eyebrow },
+					heading: { html: headingHtml(contentES.hero.title), tag: 'h1' },
+					description: { html: descriptionHtml(contentES.hero.description) },
 				},
-				reasonLabel: '¿Qué te trae por acá?',
-				reasons: [{ id: 'advertise', label: 'Quiero anunciar' }, { id: 'monetize', label: 'Quiero monetizar' }, { id: 'other', label: 'Otro' }],
+				reasonLabel: contentES.form.reasonLabel,
+				reasons: [{ id: 'advertise', label: contentES.form.reasons.advertise.label }, { id: 'monetize', label: contentES.form.reasons.monetize.label }, { id: 'other', label: contentES.form.reasons.other.label }],
 				fields: [
-					{ name: 'name', label: 'Nombre', placeholder: 'Tu nombre', required: true },
-					{ name: 'email', label: 'Email', placeholder: 'nombre@empresa.com', required: true },
-					{ name: 'phone', label: 'Teléfono', placeholder: '+54 11 0000 0000' },
-					{ name: 'message', label: 'Mensaje', placeholder: 'Contanos sobre tu proyecto, campaña o producto...', required: true },
+					{ name: 'name', label: contentES.form.fields.name.label, placeholder: contentES.form.fields.name.placeholder, required: true },
+					{ name: 'email', label: contentES.form.fields.email.label, placeholder: contentES.form.fields.email.placeholder, required: true },
+					{ name: 'phone', label: contentES.form.fields.phone.label, placeholder: contentES.form.fields.phone.placeholder },
+					{ name: 'message', label: contentES.form.fields.message.label, placeholder: contentES.form.fields.message.placeholder, required: true },
 				],
-				submitLabel: 'Enviar mensaje',
+				submitLabel: contentES.form.submitLabel,
 				success: {
-					eyebrow: { label: 'Éxito' },
-					heading: { html: 'Tu mensaje fue enviado correctamente.', tag: 'h2' },
-					description: { html: '<p>Lo revisamos y te responderemos a la brevedad. Mientras tanto, podés escribirnos por nuestros canales directos o enviar otra consulta.</p>' },
+					eyebrow: { label: contentES.success.eyebrow },
+					heading: { html: headingHtml(contentES.success.title), tag: 'h2' },
+					description: { html: descriptionHtml(contentES.success.description) },
 				},
-				homeLabel: 'Volver al inicio',
-				resetLabel: 'Enviar otro mensaje',
-				directLabel: 'O escribinos directamente',
-				email: 'hello@wortise.com',
-				telegramLabel: 'Canal de Telegram',
+				homeLabel: contentES.form.homeLabel,
+				resetLabel: contentES.form.resetLabel,
+				directLabel: contentES.form.directLabel,
+				email: contentES.form.email,
+				emailHref: externalButtons.es.emailUrl,
+				telegramHref: externalButtons.es.telegramUrl,
+				telegramLabel: contentES.form.telegramLabel,
 			},
 		}],
 	},

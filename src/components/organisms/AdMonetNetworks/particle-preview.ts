@@ -1,15 +1,15 @@
 import type { ComponentProps } from 'astro/types';
 import type OrbitParticles from '../../molecules/OrbitParticles/OrbitParticles.astro';
-import adManager from '../../../assets/admonet/particles/google-ad-manager-mark.png';
-import appNetwork from '../../../assets/admonet/particles/app-network-mark.png';
-import redMark from '../../../assets/admonet/particles/red-mark.png';
-import ironSource from '../../../assets/admonet/particles/ironsource-mark.png';
-import gradientRing from '../../../assets/admonet/particles/gradient-ring-mark.png';
-import adMob from '../../../assets/admonet/particles/admob-mark.png';
-import unity from '../../../assets/admonet/particles/unity-mark.png';
-import liftoff from '../../../assets/admonet/particles/liftoff-mark.png';
-import tealMark from '../../../assets/admonet/particles/teal-mark.png';
-import meta from '../../../assets/admonet/particles/meta-mark.png';
+import adManager from '../../../assets/pages/developers/google-ad-manager-mark.webp';
+import appNetwork from '../../../assets/pages/developers/app-network-mark.webp';
+import redMark from '../../../assets/pages/developers/red-mark.webp';
+import ironSource from '../../../assets/pages/developers/ironsource-mark.webp';
+import gradientRing from '../../../assets/pages/developers/gradient-ring-mark.png';
+import adMob from '../../../assets/pages/developers/admob-mark.webp';
+import unity from '../../../assets/pages/developers/unity-mark.webp';
+import liftoff from '../../../assets/pages/developers/liftoff-mark.webp';
+import tealMark from '../../../assets/pages/developers/teal-mark.webp';
+import meta from '../../../assets/pages/developers/meta-mark.webp';
 
 import { particleMotion } from './particle-motion';
 

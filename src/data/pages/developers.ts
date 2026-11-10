@@ -1,15 +1,26 @@
+import { externalButtons } from '../external-buttons';
+import { headingHtml, descriptionHtml } from '../content/format';
+import { readContent } from '../content/validate';
+import rawES from '../../content/pages/developers/es.json';
+
+import rewardedScreen from '../../assets/pages/developers/rewarded-ad-screen.webp';
+import interstitialScreen from '../../assets/pages/developers/interstitial-ad-screen.webp';
+import nativeScreen from '../../assets/pages/developers/native-ad-screen.webp';
+import offerwallScreen from '../../assets/pages/developers/offerwall-ad-screen.webp';
 import type { Locale } from '../../i18n/config';
 import type { ModulesPageData } from './page.types';
 import googlePartnerBadge from '../../assets/certifications/google-partner-certified-channel.png';
 import googleBuyerBadge from '../../assets/certifications/google-authorized-buyer-partner.png';
 
+const contentES = readContent(rawES, 'pages/developers/es');
+
 export const developersPageData = {
 	es: {
 		key: 'developers',
-		slug: 'desarrolladores',
+		slug: contentES.slug,
 		meta: {
-			title: 'Desarrolladores | Wortise',
-			description: 'Monetizá tus apps y juegos móviles con AdMonet, la plataforma de monetización de Wortise para Android e iOS.',
+			title: contentES.meta.title,
+			description: contentES.meta.description,
 		},
 		modules: [
 			{
@@ -17,18 +28,18 @@ export const developersPageData = {
 				props: {
 					textBlock: {
 						responsiveAlignment: { l: 'center' },
-						eyebrow: { label: 'Monetización para Android e iOS' },
+						eyebrow: { label: contentES.hero.eyebrow },
 						heading: {
-							html: '<span data-tone="muted">Convierte cada</span><br> sesión en ingresos',
+							html: headingHtml(contentES.hero.title),
 							tag: 'h1',
 							size: { s: 'display-sm', l: 'display-xl' },
 						},
 						description: {
-							html: '<p>AdMonet es la plataforma de monetización de Wortise. Mediación con pujas en tiempo real, formatos que no arruinan la experiencia y datos para exprimir cada impresión de tus apps y juegos móviles.</p>',
+							html: descriptionHtml(contentES.hero.description),
 						},
 						actions: {
-							primary: { label: 'Empezar gratis', variant: 'primary-special', size: 'large', disabled: true },
-							secondary: { label: 'Ver documentación', size: 'medium', icon: 'arrow-up-right', disabled: true },
+							primary: { label: contentES.hero.button, variant: 'primary-special', size: 'large', href: externalButtons.es.developersStartUrl || undefined, disabled: !externalButtons.es.developersStartUrl },
+							secondary: { label: contentES.hero.secondaryButton, size: 'medium', icon: 'arrow-up-right', href: externalButtons.es.sdkDocumentationUrl || undefined, disabled: !externalButtons.es.sdkDocumentationUrl },
 						},
 					},
 				},
@@ -38,10 +49,10 @@ export const developersPageData = {
 				props: {
 					variant: 'cover',
 					items: [
-						{ id: 'apps', value: '+20.000', label: 'Apps que usan nuestro SDK' },
-						{ id: 'countries', value: '+190', label: 'Países con demanda activa' },
-						{ id: 'requests', value: '+8M', label: 'Solicitudes de anuncios al mes' },
-						{ id: 'uptime', value: '99,9%', label: 'Uptime del SDK' },
+						{ id: 'apps', value: contentES.statistics.items.apps.value, label: contentES.statistics.items.apps.label },
+						{ id: 'countries', value: contentES.statistics.items.countries.value, label: contentES.statistics.items.countries.label },
+						{ id: 'requests', value: contentES.statistics.items.requests.value, label: contentES.statistics.items.requests.label },
+						{ id: 'uptime', value: contentES.statistics.items.uptime.value, label: contentES.statistics.items.uptime.label },
 					],
 				},
 			},
@@ -50,19 +61,19 @@ export const developersPageData = {
 				props: {
 					id: 'certificaciones',
 					textBlock: {
-						eyebrow: { label: 'Respaldados por Google' },
-						heading: { html: 'Certificaciones oficiales' },
+						eyebrow: { label: contentES.certifications.eyebrow },
+						heading: { html: headingHtml(contentES.certifications.title) },
 					},
 					items: [
 						{
-							title: 'Google Partner Certified Channel',
-							description: 'Canal certificado por Google para la venta y gestión de inventario publicitario.',
+							title: contentES.certifications.items['1'].title,
+							description: contentES.certifications.items['1'].description,
 							badge: googlePartnerBadge,
 							enlargeBadge: true,
 						},
 						{
-							title: 'Google Authorized Buyer Partner',
-							description: 'Acceso directo a la demanda programática de Google con estándares de calidad verificados.',
+							title: contentES.certifications.items['2'].title,
+							description: contentES.certifications.items['2'].description,
 							badge: googleBuyerBadge,
 						},
 					],
@@ -73,13 +84,47 @@ export const developersPageData = {
 				props: {
 					id: 'redes',
 					textBlock: {
-						eyebrow: { label: 'Más demanda · Más valor' },
-						heading: { html: '<span data-tone="muted">Todas tus redes</span><br> en un solo lugar' },
+						eyebrow: { label: contentES.adNetworks.eyebrow },
+						heading: { html: headingHtml(contentES.adNetworks.title) },
 						description: {
-							html: '<p>Integra AdMob, AppLovin, Unity Ads y decenas de redes más desde un único SDK y un único panel. AdMonet las hace competir impresión a impresión y se queda siempre con la puja más alta, sin waterfalls manuales ni integraciones duplicadas.</p>',
+							html: descriptionHtml(contentES.adNetworks.description),
 						},
 					},
-					hub: { label: 'AdMonet', tagline: '1 SDK · mejor puja' },
+					hub: { label: contentES.adNetworks.hub.label, tagline: contentES.adNetworks.hub.tagline },
+					items: [
+						{
+							id: 'video-recompensado',
+							image: { src: rewardedScreen, alt: contentES.adNetworks.items.rewarded.imageAlt },
+							eyebrow: { label: contentES.adNetworks.items.rewarded.eyebrow },
+							heading: { html: headingHtml(contentES.adNetworks.items.rewarded.title) },
+							description: { html: descriptionHtml(contentES.adNetworks.items.rewarded.description) },
+							action: { label: contentES.adNetworks.items.rewarded.button, variant: 'primary-special', size: 'medium', href: externalButtons.es.developersStartUrl || undefined, disabled: !externalButtons.es.developersStartUrl },
+						},
+						{
+							id: 'interstitiales-app-open',
+							image: { src: interstitialScreen, alt: contentES.adNetworks.items.interstitial.imageAlt },
+							eyebrow: { label: contentES.adNetworks.items.interstitial.eyebrow },
+							heading: { html: headingHtml(contentES.adNetworks.items.interstitial.title) },
+							description: { html: descriptionHtml(contentES.adNetworks.items.interstitial.description) },
+							action: { label: contentES.adNetworks.items.interstitial.button, variant: 'primary-special', size: 'medium', href: externalButtons.es.developersStartUrl || undefined, disabled: !externalButtons.es.developersStartUrl },
+						},
+						{
+							id: 'nativos-banners',
+							image: { src: nativeScreen, alt: contentES.adNetworks.items.native.imageAlt },
+							eyebrow: { label: contentES.adNetworks.items.native.eyebrow },
+							heading: { html: headingHtml(contentES.adNetworks.items.native.title) },
+							description: { html: descriptionHtml(contentES.adNetworks.items.native.description) },
+							action: { label: contentES.adNetworks.items.native.button, variant: 'primary-special', size: 'medium', href: externalButtons.es.developersStartUrl || undefined, disabled: !externalButtons.es.developersStartUrl },
+						},
+						{
+							id: 'ofertas-muros',
+							image: { src: offerwallScreen, alt: contentES.adNetworks.items.offerwall.imageAlt },
+							eyebrow: { label: contentES.adNetworks.items.offerwall.eyebrow },
+							heading: { html: headingHtml(contentES.adNetworks.items.offerwall.title) },
+							description: { html: descriptionHtml(contentES.adNetworks.items.offerwall.description) },
+							action: { label: contentES.adNetworks.items.offerwall.button, variant: 'primary-special', size: 'medium', href: externalButtons.es.developersStartUrl || undefined, disabled: !externalButtons.es.developersStartUrl },
+						},
+					],
 				},
 			},
 		],

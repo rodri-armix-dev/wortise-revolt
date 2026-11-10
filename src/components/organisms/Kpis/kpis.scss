@@ -39,7 +39,7 @@
 
 		&::before
 		{
-			background: url('../../../assets/kpis/kpi-s.jpg') center / 100% 100% no-repeat;
+			background: url('../../../assets/global/statistics/statistics-mobile.jpg') center / 100% 100% no-repeat;
 			content: '';
 			height: 600px;
 			left: -108px;
@@ -158,7 +158,7 @@
 			&::before
 			{
 				aspect-ratio: 2880 / 1242; // sass-lint:disable-line no-misspelled-properties
-				background-image: url('../../../assets/kpis/kpi-l.jpg');
+				background-image: url('../../../assets/global/statistics/statistics-desktop.jpg');
 				bottom: -120px;
 				height: auto;
 				left: calc(-1 * var(--layout-gutter));

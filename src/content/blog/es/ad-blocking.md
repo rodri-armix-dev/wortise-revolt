@@ -1,3 +1,20 @@
+---
+{
+  "id": "ad-blocking",
+  "slug": "ad-blocking",
+  "title": "¿Ad Blocking Afecta tus Ingresos? 5 Formas de Superarlo",
+  "excerpt": "Cinco formas de revisar tu experiencia publicitaria y construir una relación más clara con tu audiencia.",
+  "lead": "Cinco formas de revisar tu experiencia publicitaria y construir una relación más clara con tu audiencia.",
+  "author": "Sergio",
+  "date": "2024-08-19",
+  "category": "Tendencias",
+  "tags": [
+    "Apps",
+    "Publishers"
+  ],
+  "demo": true
+}
+---
 ## Escucha la señal de tus usuarios
 
 Cuando una persona evita la publicidad, puede estar expresando una preferencia sobre su experiencia de navegación. Antes de buscar una respuesta técnica, revisa qué anuncios muestras, dónde aparecen y cuánto interrumpen el contenido.

@@ -41,10 +41,10 @@
 		left: var(--orbit-particles-mobile-center-x);
 		place-items: center;
 		position: absolute;
-		top: var(--orbit-particles-mobile-top);
-		transform: translateX(-50%);
+		top: var(--orbit-particles-mobile-center-y);
+		transform: translate(-50%, -50%);
 		translate: var(--orbit-particles-translate-x, 0) var(--orbit-particles-translate-y, 0); // sass-lint:disable-line no-misspelled-properties
-		width: min(var(--orbit-particles-mobile-width), var(--orbit-particles-mobile-max-width));
+		width: min(var(--orbit-particles-mobile-width), var(--orbit-particles-mobile-max-width), var(--orbit-particles-mobile-height-limit));
 
 		.orbit-particles__layer--glass &
 		{
@@ -76,7 +76,7 @@
 		pointer-events: auto;
 		position: absolute;
 		right: var(--spacing-16);
-		top: calc(-1 * var(--spacing-64));
+		top: var(--orbit-particles-editor-top, calc(-1 * var(--spacing-64)));
 		z-index: 1;
 	}
 

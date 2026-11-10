@@ -1,0 +1,36 @@
+---
+import type { ComponentProps } from 'astro/types';
+import TextBlock from '../TextBlock/TextBlock.astro';
+import Image from '../../atoms/Image/Image.astro';
+
+export interface Props {
+	id: string;
+	eyebrow: NonNullable<ComponentProps<typeof TextBlock>['eyebrow']>;
+	heading: NonNullable<ComponentProps<typeof TextBlock>['heading']>;
+	description: NonNullable<ComponentProps<typeof TextBlock>['description']>;
+	action: NonNullable<ComponentProps<typeof TextBlock>['actions']>['primary'];
+	image: ComponentProps<typeof Image>;
+}
+
+const { id, eyebrow, heading, description, action, image } = Astro.props;
+---
+
+<section class="ad-format-panel" id={id} data-format-panel aria-labelledby={`${id}-heading`}>
+	<div class="ad-format-panel__inner global-inner">
+		<div class="ad-format-panel__intro" data-format-intro>
+			<TextBlock eyebrow={eyebrow} heading={{ ...heading, id: `${id}-heading`, tag: 'h2', size: { s: 'title-lg', l: 'display-md' } }} responsiveAlignment={{ os: 'center' }} />
+		</div>
+		<div class="ad-format-panel__visual">
+			<div class="ad-format-panel__visual-image">
+				<Image {...image} />
+			</div>
+		</div>
+		<div class="ad-format-panel__content" data-format-content>
+			<TextBlock description={description} actions={{ primary: action }} responsiveAlignment={{ os: 'center' }} />
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './ad-format-panel';
+</style>

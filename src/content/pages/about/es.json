@@ -1,0 +1,40 @@
+{
+  "slug": "nosotros",
+  "meta": {
+    "title": "Nosotros | Wortise",
+    "description": "Conocé más sobre Wortise."
+  },
+  "hero": {
+    "imageAlt": "Equipo de Wortise trabajando en la oficina.",
+    "eyebrow": "Wortise",
+    "title": "Conectamos grandes marcas con personas",
+    "description": "Posicionamos marcas en la rutina diaria de más de 320 millones de usuarios únicos, dentro de la red de aplicaciones en español más grande del mundo."
+  },
+  "statistics": {
+    "eyebrow": "Nosotros",
+    "title": "*Nuestra visión se basa en un mundo en el que la publicidad se *construya desde el contexto y vaya más allá del seguimiento"
+  },
+  "team": {
+    "label": "La vida en las oficinas de Wortise"
+  },
+  "gallery": {
+    "desk": {
+      "imageAlt": "Dos integrantes del equipo colaborando en un escritorio."
+    },
+    "lounge": {
+      "imageAlt": "Espacio de descanso de Wortise con el letrero de la marca."
+    },
+    "conversation": {
+      "imageAlt": "Dos integrantes del equipo conversando en la oficina."
+    },
+    "table-football": {
+      "imageAlt": "Integrantes del equipo jugando al metegol."
+    },
+    "workspace": {
+      "imageAlt": "Vista del equipo trabajando en la oficina."
+    },
+    "laptop": {
+      "imageAlt": "Dos integrantes del equipo trabajando con una computadora."
+    }
+  }
+}

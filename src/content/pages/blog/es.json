@@ -1,0 +1,48 @@
+{
+  "hero": {
+    "eyebrow": "Wortise Blog · Ideas para crecer",
+    "title": "Tecnología, publicidad y producto. *Sin ruido.*",
+    "description": "Conectamos publishers, aplicaciones, marcas y agencias para crear campañas más inteligentes y maximizar la monetización de cada impresión."
+  },
+  "newsletter": {
+    "title": "No te pierdas nada importante.",
+    "description": "Suscribite y recibí nuestras novedades y artículos más recientes en tu email."
+  },
+  "downloads": {
+    "tips-app": {
+      "eyebrow": "Guía gratuita",
+      "title": "Descarga nuestros Tips para mejorar tu app",
+      "button": "Descargar tips"
+    }
+  },
+  "page": {
+    "slug": "blog",
+    "meta": {
+      "title": "Blog | Wortise",
+      "description": "Tecnología, publicidad y producto. Ideas para crecer con Wortise."
+    }
+  },
+  "images": {
+    "ad-network": {
+      "alt": "Órbitas y una trayectoria publicitaria en rosa."
+    },
+    "ad-platforms": {
+      "alt": "Escudo azul con un símbolo de protección."
+    },
+    "programmatic-trends": {
+      "alt": "Curva de crecimiento rosa con una marca de verificación."
+    },
+    "ad-blocking": {
+      "alt": "Tres bloques grises conectados por una línea discontinua."
+    },
+    "app-ads-txt": {
+      "alt": "Panel rosa con una lista y un botón de añadir."
+    },
+    "self-serve": {
+      "alt": "Dos controles azules conectados."
+    },
+    "cookies": {
+      "alt": "Símbolo rosa de bloqueo dentro de un círculo."
+    }
+  }
+}

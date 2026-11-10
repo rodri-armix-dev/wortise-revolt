@@ -32,7 +32,7 @@ class World3D extends HTMLElement {
 	private async mount(generation: number) {
 		const [{ createGlobe }, { default: points }, { freshWorldConfig, parseWorldConfig, worldStorageKey }] = await Promise.all([
 			import('./world-3d-scene'),
-			import('../../../assets/world/land-points.json'),
+			import('../../../assets/pages/home/land-points.json'),
 			import('./world-3d-config'),
 		]);
 		if (!this.isConnected || generation !== this.generation) return;
