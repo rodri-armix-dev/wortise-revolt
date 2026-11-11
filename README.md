@@ -9,6 +9,9 @@ Sitio estático en Astro. Usar pnpm.
 La API de títulos y su escala de Figma están documentadas en
 [Heading: estilos tipográficos](docs/heading-typography.md).
 
+Los criterios reutilizables de movimiento, scroll, Observer, interrupciones y
+compatibilidad están en [Criterios compartidos de animación](docs/animation-guidelines.md).
+
 Los cuerpos de artículos y documentos legales usan `global-inner global-inner--reading`.
 Esta variante conserva los gutters globales y limita el ancho mediante el token
 `--layout-reading-max-width`, definido en `src/styles/tokens/layout.scss`.

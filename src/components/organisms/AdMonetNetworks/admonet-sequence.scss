@@ -206,7 +206,7 @@
 		&__overview
 		{
 			// Distance from the text block to the orbit frame in the desktop layout.
-			gap: 122px;
+			gap: var(--admonet-overview-gap, 122px);
 		}
 
 		&[data-networks-playback='pin']

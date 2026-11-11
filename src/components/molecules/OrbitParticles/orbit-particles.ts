@@ -64,6 +64,9 @@ class OrbitParticles extends HTMLElement {
 			context = gsap.context(() => {
 				const animation = gsap.timeline({ paused, repeat: next === 'idle' ? -1 : 0 });
 				timeline = animation;
+				if (next === 'enter') {
+					animation.fromTo(activeLayer, { opacity: 0 }, { opacity: 1, duration: Math.min(.15, duration), ease: 'power1.out' }, 0);
+				}
 				active.forEach(({ item, motion }, index) => {
 					const points = motion[next];
 					const box = bounds[index];
