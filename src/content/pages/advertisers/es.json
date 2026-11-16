@@ -1,0 +1,74 @@
+{
+  "slug": "anunciantes",
+  "meta": {
+    "title": "Anunciantes | Wortise",
+    "description": "Hacé crecer tu negocio y llegá a nuevos clientes con anuncios en apps y juegos."
+  },
+  "hero": {
+    "eyebrow": "Para anunciantes",
+    "title": "*Tu marca en las*\napps que tú decidas",
+    "description": "Haz crecer tu negocio alcanzando a clientes, nuevos y fieles, en sus espacios favoritos: juegos, aplicaciones de herramientas, entre 42 categorías más.",
+    "button": "Contactar al equipo"
+  },
+  "cases": {
+    "contact": "Contactar al equipo",
+    "demo": "Agendá una demo",
+    "desktop": {
+      "vanish": {
+        "title": "Inventario iOS\nilimitado",
+        "badge": "Maximizamos tu alcance",
+        "description": "Se podrá acceder al inventario iOS ilimitado, el más amplio de dispositivos móviles en toda Latinoamérica, ofreciendo mayor alcance y cobertura para tus campañas.",
+        "imageAlt": "Creatividad de Vanish"
+      },
+      "armani": {
+        "title": "Selección\npersonalizada",
+        "badge": "Tu audiencia, tus reglas",
+        "description": "Ahora es posible definir la audiencia con un valor añadido clave: seleccionar exactamente las aplicaciones donde la marca será visible, logrando mayor relevancia y eficiencia en la campaña.",
+        "imageAlt": "Creatividad de Giorgio Armani",
+        "visits": {
+          "value": "500k",
+          "label": "visitas en tu sitio"
+        },
+        "purchases": {
+          "value": "10k",
+          "label": "compras en tu tienda"
+        }
+      },
+      "mugler": {
+        "title": "Segmento\nUnder 18 / Kids",
+        "badge": "Contenido adaptado",
+        "description": "Por primera vez, es posible contactar a la audiencia Under 18 de forma ágil y eficiente, seleccionando tanto el público objetivo como las aplicaciones más adecuadas para interactuar de manera segura y efectiva.",
+        "imageAlt": "Creatividad de Mugler"
+      }
+    },
+    "mobile": {
+      "vanish": {
+        "title": "Creá tus campañas en minutos",
+        "badge": "Más eficiencia",
+        "description": "**Modo Asistido:** 100% automatizado donde la IA lidera la estrategia y ejecución sin fricción.\n**Modo Manual:** Vos definís objetivos y nuestra tecnología calibra la configuración para alcanzarlos.",
+        "imageAlt": "Creatividad de Vanish"
+      },
+      "mugler": {
+        "title": "Proyección y data\npreinversión",
+        "badge": "Más proyección",
+        "description": "Garantizá la eficiencia de tu presupuesto con estimaciones precisas de alcance e impresiones antes de activar la pauta. Inversión basada en datos, no en supuestos.",
+        "imageAlt": "Creatividad de Mugler"
+      },
+      "armani": {
+        "title": "Diseño creativo autónomo",
+        "badge": "Más impacto",
+        "description": "Transparencia total mediante dashboards en tiempo real. Cada cliente gestiona sus propias métricas y resultados.",
+        "imageAlt": "Creatividad de Giorgio Armani"
+      }
+    }
+  },
+  "clients": {
+    "eyebrow": "Anunciantes",
+    "title": "*Empresas globales que* ya confían en nosotros"
+  },
+  "callToAction": {
+    "title": "¿Listo para descubrir clientes gracias a los anuncios de Wortise?",
+    "description": "Comienza a crear tu campaña hoy",
+    "button": "Contactar al equipo"
+  }
+}

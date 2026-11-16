@@ -212,7 +212,6 @@
 
 	&__content
 	{
-		--button-padding-inline: var(--spacing-20);
 		--description-line-height: 20px;
 		--rich-text-strong-color: var(--color-text-primary);
 		--rich-text-strong-font-weight: 400;
@@ -223,6 +222,11 @@
 		gap: var(--spacing-16);
 		min-width: 0;
 		padding: var(--spacing-24);
+
+		&--padded-action
+		{
+			--button-padding-inline: var(--spacing-20);
+		}
 	}
 }
 

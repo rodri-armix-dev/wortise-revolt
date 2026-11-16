@@ -3,8 +3,8 @@
 	--logo-marquee-gap: 60px;
 	--logo-marquee-scale: .75;
 	overflow: hidden;
-	padding-block: 30px;
-	padding-inline: 19px;
+	padding-block: var(--logo-marquee-padding-block, 30px);
+	padding-inline: var(--logo-marquee-padding-inline, 19px);
 
 	&__track
 	{
@@ -49,8 +49,8 @@
 	{
 		--logo-marquee-gap: 80px;
 		--logo-marquee-scale: 1;
-		padding-bottom: 100px;
-		padding-inline: 1px;
+		padding-bottom: var(--logo-marquee-padding-block, 100px);
+		padding-inline: var(--logo-marquee-padding-inline, 1px);
 	}
 }
 

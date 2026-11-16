@@ -1,0 +1,25 @@
+---
+import type { ComponentProps } from 'astro/types';
+import LogoMarquee from '../../molecules/LogoMarquee/LogoMarquee.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+
+export interface Props {
+	textBlock: ComponentProps<typeof TextBlock>;
+	marquee: ComponentProps<typeof LogoMarquee>;
+}
+
+const { textBlock, marquee } = Astro.props;
+---
+
+<section class="advertisers-clients">
+	<div class="advertisers-clients__inner global-inner">
+		<div class="advertisers-clients__text-block">
+			<TextBlock {...textBlock} />
+		</div>
+	</div>
+	<LogoMarquee {...marquee} />
+</section>
+
+<style lang="scss">
+	@use './advertisers-clients';
+</style>

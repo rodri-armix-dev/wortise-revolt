@@ -178,7 +178,27 @@ void document.fonts.ready.then(() => {
 	if (disposed) return;
 	for (const root of document.querySelectorAll<HTMLElement>('.ads-sections')) {
 		const elements = readElements(root);
-		if (elements) cleanups.push(mount(elements));
+		if (!elements) continue;
+		const range = root.dataset.range;
+		if (!range) {
+			cleanups.push(mount(elements));
+			continue;
+		}
+		const media = matchMedia(range === 'mobile' ? mediaQueries.osm : mediaQueries.l);
+		let cleanup: (() => void) | undefined;
+		const syncRange = () => {
+			if (media.matches) cleanup ??= mount(elements);
+			else {
+				cleanup?.();
+				cleanup = undefined;
+			}
+		};
+		media.addEventListener('change', syncRange);
+		syncRange();
+		cleanups.push(() => {
+			media.removeEventListener('change', syncRange);
+			cleanup?.();
+		});
 	}
 });
 

@@ -1,0 +1,98 @@
+.advertisers-cover
+{
+	isolation: isolate;
+	min-height: calc(588px + var(--layout-header-overlap));
+	overflow: clip;
+	padding-block: calc(172px + var(--layout-header-overlap)) var(--spacing-48);
+	position: relative;
+
+	&::before,
+	&::after
+	{
+		background-repeat: no-repeat;
+		background-size: contain;
+		content: '';
+		pointer-events: none;
+		position: absolute;
+		transform: translate(-50%, -50%) rotate(20.6deg);
+		z-index: -1;
+	}
+
+	&::before
+	{
+		background-image: url('../../../assets/pages/advertisers/cover-glow-mobile.svg');
+		height: 756.586px;
+		left: calc(100% - 77.68px);
+		top: calc(65.185px + var(--layout-header-overlap));
+		width: 375.48px;
+	}
+
+	&::after
+	{
+		display: none;
+	}
+
+	&__inner
+	{
+		align-items: flex-start;
+	}
+
+	&__text-block
+	{
+		--button-height: 56px;
+		--button-justify-content: space-between;
+		--button-width: 222px;
+		--description-line-height: 20px;
+		--heading-muted-color: #a0a0a0; // sass-lint:disable-line no-color-literals
+		--text-block-actions-offset: var(--spacing-24);
+		--text-block-description-max-width: 567px;
+		--text-block-heading-max-width: 320px;
+		--text-block-intro-gap: var(--spacing-16);
+
+		max-width: 587px;
+		width: 100%;
+	}
+}
+
+@include l
+{
+	.advertisers-cover
+	{
+		min-height: calc(614px + var(--layout-header-overlap));
+		padding-block-start: 207px;
+
+		&::before
+		{
+			background-image: url('../../../assets/pages/advertisers/cover-glow.svg');
+			height: 1308.78px;
+			left: calc(50% + 473.752px);
+			top: 279.31px;
+			width: 649.524px;
+		}
+
+		&::after
+		{
+			background-image: url('../../../assets/global/decorations/cover-glow-secondary.svg');
+			display: block;
+			height: 981.019px;
+			left: calc(62.5% + 355px);
+			top: 13.936px;
+			width: 538.205px;
+		}
+
+		&__inner
+		{
+			align-items: center;
+		}
+
+		&__text-block
+		{
+			--heading-muted-color: #949499; // sass-lint:disable-line no-color-literals
+			--text-block-actions-offset: 0;
+			--text-block-description-margin-inline: auto;
+			--text-block-gap: var(--spacing-24);
+			--text-block-heading-max-width: none;
+			--text-block-intro-gap: var(--spacing-24);
+		}
+	}
+}

@@ -73,6 +73,11 @@ $glow-size: 511px;
 		visibility: hidden;
 		width: 100%;
 		z-index: 1;
+
+		.ads-sections:not([data-enhanced]) & // sass-lint:disable-line force-pseudo-nesting
+		{
+			overflow: clip;
+		}
 	}
 
 	&__phone
@@ -268,6 +273,11 @@ $glow-size: 511px;
 	{
 		--ads-sections-inset: var(--spacing-8);
 		--ads-sections-item-padding-block: var(--spacing-24);
+
+		&[data-range='desktop']
+		{
+			display: none;
+		}
 	}
 }
 
@@ -276,6 +286,11 @@ $glow-size: 511px;
 	.ads-sections
 	{
 		--ads-sections-glow-offset-y: -103px;
+
+		&[data-range='mobile']
+		{
+			display: none;
+		}
 	}
 }
 

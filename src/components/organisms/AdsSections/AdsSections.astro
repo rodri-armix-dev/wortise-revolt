@@ -6,12 +6,13 @@ import type { ComponentProps } from 'astro/types';
 
 export interface Props {
 	items: ComponentProps<typeof AdsSectionsItem>[];
+	range?: 'mobile' | 'desktop';
 }
 
-const { items } = Astro.props;
+const { items, range } = Astro.props;
 ---
 
-<div class="ads-sections">
+<div class="ads-sections" data-range={range}>
 	<div class="ads-sections__viewport-measure" aria-hidden="true"></div>
 	{items.map((item) => (
 		<div class="ads-sections__glow" data-variant={item.variant} aria-hidden="true"></div>

@@ -6,6 +6,8 @@ export interface KpiItem {
 	id: string;
 	value: string;
 	label: string;
+	prefix?: string;
+	suffix?: string;
 }
 
 export interface Props {
@@ -15,6 +17,8 @@ export interface Props {
 }
 
 const { textBlock, items, variant = 'scale' } = Astro.props;
+const digits = '0123456789';
+const reel = Array.from(digits.repeat(4)).join('\n');
 ---
 
 <section class:list={['kpis', `kpis--${variant}`]}>
@@ -24,16 +28,38 @@ const { textBlock, items, variant = 'scale' } = Astro.props;
 				<TextBlock {...textBlock} heading={textBlock.heading && { ...textBlock.heading, size: { s: 'title-lg', l: variant === 'vision' ? 'display-xl' : 'display-lg' } }} />
 			</div>
 		)}
-		<dl class="kpis__items">
-			{items.map((item) => (
-				<div class="kpis__item" data-kpi={item.id}>
-					<dt class="kpis__label">{item.label}</dt>
-					<dd class="kpis__value">{item.value}</dd>
-				</div>
-			))}
-		</dl>
+		<div class="kpis__metrics">
+			<div class="kpis__line" aria-hidden="true"></div>
+			<dl class="kpis__items">
+				{items.map((item) => (
+					<div class="kpis__item" data-kpi={item.id}>
+						<dt class="kpis__label">{item.label}</dt>
+						<dd class="kpis__value">
+							<span class="kpis__value-text">{item.prefix}{Array.from(item.value, (character) => (
+								digits.includes(character) ? (
+									<span class="kpis__digit" data-kpi-digit={character}>{character}</span>
+								) : character
+							))}{item.suffix}</span>
+							{/[0-9]/.test(item.value) && (
+								<template data-kpi-odometer>
+									<span class="kpis__digit-window" aria-hidden="true">
+										<span class="kpis__reel">{reel}</span>
+									</span>
+								</template>
+							)}
+						</dd>
+					</div>
+				))}
+			</dl>
+		</div>
 	</div>
 </section>
+
+<script>
+	import { observeKpis } from './kpis-motion';
+
+	observeKpis();
+</script>
 
 <style lang="scss">
 	@use './kpis';

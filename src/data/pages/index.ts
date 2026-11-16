@@ -1,5 +1,6 @@
 import { contactPageData } from './contact';
 import { homeData } from '../home';
+import { advertisersPageData } from './advertisers';
 import { aboutPageData } from './about';
 import { developersPageData } from './developers';
 import { wortiseAdsPageData } from './wortise-ads';
@@ -14,6 +15,7 @@ import { blogPageData, blogArticlePages } from '../blog';
 export const pageData = {
 	home: homeData,
 	about: aboutPageData,
+	advertisers: advertisersPageData,
 	developers: developersPageData,
 	'wortise-ads': wortiseAdsPageData,
 	contact: contactPageData,

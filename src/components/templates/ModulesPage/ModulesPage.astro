@@ -3,6 +3,8 @@ import type ContactSection from '../../organisms/ContactSection/ContactSection.a
 import type LogoMarquee from '../../molecules/LogoMarquee/LogoMarquee.astro';
 import type Hero from '../../organisms/Hero/Hero.astro';
 import type AdsCover from '../../organisms/AdsCover/AdsCover.astro';
+import type AdvertisersClients from '../../organisms/AdvertisersClients/AdvertisersClients.astro';
+import type AdvertisersCover from '../../organisms/AdvertisersCover/AdvertisersCover.astro';
 import type DevelopersCover from '../../organisms/DevelopersCover/DevelopersCover.astro';
 import type Certifications from '../../organisms/Certifications/Certifications.astro';
 import type AdMonetNetworks from '../../organisms/AdMonetNetworks/AdMonetNetworks.astro';
@@ -20,6 +22,8 @@ export interface ModulePropsByType {
 	'contact-section': ComponentProps<typeof ContactSection>;
 	hero: ComponentProps<typeof Hero>;
 	'ads-cover': ComponentProps<typeof AdsCover>;
+	'advertisers-clients': ComponentProps<typeof AdvertisersClients>;
+	'advertisers-cover': ComponentProps<typeof AdvertisersCover>;
 	'developers-cover': ComponentProps<typeof DevelopersCover>;
 	certifications: ComponentProps<typeof Certifications>;
 	'admonet-networks': ComponentProps<typeof AdMonetNetworks>;
@@ -68,6 +72,16 @@ const { modules } = Astro.props;
 		if (module.type === 'ads-sections') {
 			const { default: AdsSections } = await import('../../organisms/AdsSections/AdsSections.astro');
 			return <AdsSections {...module.props} />;
+		}
+
+		if (module.type === 'advertisers-clients') {
+			const { default: AdvertisersClients } = await import('../../organisms/AdvertisersClients/AdvertisersClients.astro');
+			return <AdvertisersClients {...module.props} />;
+		}
+
+		if (module.type === 'advertisers-cover') {
+			const { default: AdvertisersCover } = await import('../../organisms/AdvertisersCover/AdvertisersCover.astro');
+			return <AdvertisersCover {...module.props} />;
 		}
 
 		if (module.type === 'developers-cover') {

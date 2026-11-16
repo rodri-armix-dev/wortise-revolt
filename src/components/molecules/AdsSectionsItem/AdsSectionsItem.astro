@@ -63,7 +63,7 @@ const cardStyle = (rank: number, annotation = false) => `--ads-sections-item-car
 				</div>
 			))}
 		</div>
-		<div class="ads-sections-item__content" data-ads-reveal={0} style={cardStyle(0)}>
+		<div class:list={['ads-sections-item__content', { 'ads-sections-item__content--padded-action': action.variant !== 'tertiary' }]} data-ads-reveal={0} style={cardStyle(0)}>
 			<Description {...description} />
 			<Button {...action} />
 		</div>

@@ -1,0 +1,36 @@
+.advertisers-clients
+{
+	display: grid;
+	gap: var(--spacing-16);
+	grid-template-columns: minmax(0, 1fr);
+	isolation: isolate;
+	padding-block: var(--spacing-48);
+	position: relative;
+
+	&::before
+	{
+		background: url('../../../assets/pages/glossary/particles.png') center / cover no-repeat;
+		content: '';
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		opacity: .1;
+		pointer-events: none;
+		position: absolute;
+		z-index: -1;
+	}
+
+	&__text-block
+	{
+		--text-block-intro-gap: var(--spacing-16);
+
+		max-width: 520px;
+	}
+}
+
+@include l
+{
+	.advertisers-clients
+	{
+		gap: var(--spacing-40);
+		padding-block: var(--spacing-64);
+	}
+}
