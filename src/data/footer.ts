@@ -23,7 +23,7 @@ export const footerData = {
 		brand: {
 			image: brand,
 			tagline: { primary: contentES.brand.tagline.primary, secondary: contentES.brand.tagline.secondary },
-			contact: { label: contentES.brand.contact.label, href: externalButtons.es.contactUrl, variant: 'tertiary', icon: 'arrow-up-right' },
+			contact: { label: contentES.brand.contact.label, href: '', variant: 'tertiary', icon: 'arrow-up-right' },
 		},
 		menus: [
 			{ title: contentES.menus.solutions.title, items: [contentES.menus.solutions.items.advertisers, contentES.menus.solutions.items.developers, contentES.menus.solutions.items['wortise-ads']].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
@@ -51,7 +51,7 @@ export const footerData = {
 		brand: {
 			image: brand,
 			tagline: { primary: contentEN.brand.tagline.primary, secondary: contentEN.brand.tagline.secondary },
-			contact: { label: contentEN.brand.contact.label, href: externalButtons.en.contactUrl, variant: 'tertiary', icon: 'arrow-up-right' },
+			contact: { label: contentEN.brand.contact.label, href: '', variant: 'tertiary', icon: 'arrow-up-right' },
 		},
 		menus: [
 			{ title: contentEN.menus.solutions.title, items: [contentEN.menus.solutions.items.advertisers, contentEN.menus.solutions.items.developers, contentEN.menus.solutions.items['wortise-ads']].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
@@ -79,7 +79,7 @@ export const footerData = {
 		brand: {
 			image: brand,
 			tagline: { primary: contentPT.brand.tagline.primary, secondary: contentPT.brand.tagline.secondary },
-			contact: { label: contentPT.brand.contact.label, href: externalButtons.pt.contactUrl, variant: 'tertiary', icon: 'arrow-up-right' },
+			contact: { label: contentPT.brand.contact.label, href: '', variant: 'tertiary', icon: 'arrow-up-right' },
 		},
 		menus: [
 			{ title: contentPT.menus.solutions.title, items: [contentPT.menus.solutions.items.advertisers, contentPT.menus.solutions.items.developers, contentPT.menus.solutions.items['wortise-ads']].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },

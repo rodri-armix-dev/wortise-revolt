@@ -5,6 +5,7 @@ import muglerImage from '../../assets/pages/wortise-ads/projection-dashboard.web
 import type AdsSections from '../../components/organisms/AdsSections/AdsSections.astro';
 import rawES from '../../content/pages/advertisers/es.json';
 import type { Locale } from '../../i18n/config';
+import { getPagePath } from '../../i18n/routes';
 import { clientMarqueeES } from '../client-marquee';
 import { descriptionHtml, headingHtml } from '../content/format';
 import { readContent } from '../content/validate';
@@ -13,7 +14,6 @@ import { footerCTAVisuals } from '../footer-cta';
 import type { ModulesPageData } from './page.types';
 
 const contentES = readContent(rawES, 'pages/advertisers/es');
-const contactHref = externalButtons.es.contactUrl;
 const demoHref = externalButtons.es.demoUrl;
 const { cases } = contentES;
 const creatives = {
@@ -40,7 +40,7 @@ function caseItem(brand: keyof typeof creatives, range: 'desktop' | 'mobile'): A
 			{ position: 'bottom-start', ...cases.desktop.armani.purchases },
 		] : undefined,
 		action: isDesktop
-			? { label: cases.contact, href: contactHref || undefined, variant: 'tertiary', icon: 'arrow-up-right', disabled: !contactHref }
+			? { label: cases.contact, variant: 'tertiary', icon: 'arrow-up-right', get href(): string | undefined { return getPagePath('es', 'contact'); }, get disabled(): boolean { return !this.href; } }
 			: { label: cases.demo, href: demoHref || undefined, variant: 'primary', target: '_blank', disabled: !demoHref },
 	};
 }
@@ -70,7 +70,7 @@ export const advertisersPageData = {
 					heading: { html: headingHtml(contentES.hero.title), tag: 'h1', size: { s: 'display-sm', l: 'display-xl' } },
 					description: { html: descriptionHtml(contentES.hero.description) },
 					actions: {
-						primary: { label: contentES.hero.button, variant: 'primary-special', size: 'large', href: contactHref || undefined, disabled: !contactHref },
+						primary: { label: contentES.hero.button, variant: 'primary-special', size: 'large', get href(): string | undefined { return getPagePath('es', 'contact'); }, get disabled(): boolean { return !this.href; } },
 					},
 				},
 			},

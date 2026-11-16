@@ -59,7 +59,7 @@ export const homeData = {
 			text: {
 				heading: { html: headingHtml(contactCTA.es.title), tag: 'h2' },
 				description: { html: descriptionHtml(contactCTA.es.description) },
-				actions: { primary: { label: contactCTA.es.button, href: externalButtons.es.contactUrl, variant: 'primary-special', size: 'large' } },
+				actions: { primary: { label: contactCTA.es.button, variant: 'primary-special', size: 'large' } },
 			},
 		},
 		modules: [
@@ -181,7 +181,7 @@ export const homeData = {
 			text: {
 				heading: { html: headingHtml(contactCTA.en.title), tag: 'h2' },
 				description: { html: descriptionHtml(contactCTA.en.description) },
-				actions: { primary: { label: contactCTA.en.button, href: externalButtons.en.contactUrl, variant: 'primary-special', size: 'large' } },
+				actions: { primary: { label: contactCTA.en.button, variant: 'primary-special', size: 'large' } },
 			},
 		},
 		modules: [
