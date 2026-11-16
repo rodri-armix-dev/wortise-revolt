@@ -14,7 +14,7 @@ los puntos que aplican y registrá las excepciones y los pendientes en la entreg
   `--layout-content-max-width`, `--layout-gutter` o `--global-item-gap`.
 - [ ] Cada componente hijo que requiere ajustes tiene un wrapper BEM del
   consumidor. En un módulo con `TextBlock`, seguí el patrón de
-  [FooterCTA](../src/components/organisms/FooterCTA/footer-cta.scss). El wrapper
+  [CTA](../src/components/organisms/CTA/cta.scss). El wrapper
   limita el ancho del bloque y configura por separado el de la descripción
   mediante `--text-block-description-max-width` y, cuando corresponde,
   `--text-block-description-margin-inline`.

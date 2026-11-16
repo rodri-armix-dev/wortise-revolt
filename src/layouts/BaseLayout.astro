@@ -1,7 +1,7 @@
 ---
 import type { ComponentProps } from 'astro/types';
 import WhatsAppLink from '../components/molecules/WhatsAppLink/WhatsAppLink.astro';
-import type FooterCTA from '../components/organisms/FooterCTA/FooterCTA.astro';
+import type CTA from '../components/organisms/CTA/CTA.astro';
 import { getSiteData } from '../data/site';
 import Footer from '../components/organisms/Footer/Footer.astro';
 import Header from '../components/organisms/Header/Header.astro';
@@ -10,7 +10,7 @@ import '../styles/global.scss';
 
 export interface Props {
 	locale: Locale;
-	footerCTA?: ComponentProps<typeof FooterCTA>;
+	footerCTA?: ComponentProps<typeof CTA>;
 	title: string;
 	description?: string;
 	headerOverlay?: boolean;
@@ -19,7 +19,7 @@ export interface Props {
 const { locale, title, description, footerCTA, headerOverlay = false } = Astro.props;
 const site = getSiteData(locale, Astro.url.pathname);
 const assetBase = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const FooterCTAComponent = site.includeFooterCTA && footerCTA ? (await import('../components/organisms/FooterCTA/FooterCTA.astro')).default : undefined;
+const CTAComponent = site.includeFooterCTA && footerCTA ? (await import('../components/organisms/CTA/CTA.astro')).default : undefined;
 ---
 
 <!doctype html>
@@ -45,8 +45,8 @@ const FooterCTAComponent = site.includeFooterCTA && footerCTA ? (await import('.
 		<main class:list={['base-layout__main', { 'base-layout__main--header-overlay': headerOverlay }]} id="main-content">
 			<slot />
 		</main>
-		{FooterCTAComponent && footerCTA && (
-			<FooterCTAComponent {...footerCTA} />
+		{CTAComponent && footerCTA && (
+			<CTAComponent {...footerCTA} />
 		)}
 		<Footer locale={locale} {...site.footer} />
 		{site.whatsapp && (

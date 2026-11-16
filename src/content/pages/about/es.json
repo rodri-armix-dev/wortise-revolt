@@ -7,12 +7,43 @@
   "hero": {
     "imageAlt": "Equipo de Wortise trabajando en la oficina.",
     "eyebrow": "Wortise",
-    "title": "Conectamos grandes marcas con personas",
-    "description": "Posicionamos marcas en la rutina diaria de más de 320 millones de usuarios únicos, dentro de la red de aplicaciones en español más grande del mundo."
+    "title": "*We started as developers.*\nWe became much more."
   },
-  "statistics": {
-    "eyebrow": "Nosotros",
-    "title": "*Nuestra visión se basa en un mundo en el que la publicidad se *construya desde el contexto y vaya más allá del seguimiento"
+  "history": {
+    "eyebrow": "Nuestra historia",
+    "title": "*Todo comenzó con un problema que nosotros mismos* necesitábamos resolver.",
+    "origin": "En 2016, después de varios años desarrollando aplicaciones y generando ingresos con publicidad, Nicolás comenzó a construir un sistema para monetizar sus propias apps de manera más sencilla y escalable.\n\nPoco después, Miguel se sumó al proyecto, aportando su experiencia técnica para desarrollar una plataforma de mediación publicitaria compatible con las principales redes del mercado.\n\nAmbos compartían una frustración: crear una gran aplicación era difícil, pero monetizarla correctamente podía ser todavía más complicado.",
+    "founding": "**Creíamos que tenía que existir una forma mejor.**\n\nAsí nació Wortise, de la combinación de World y Advertise, con una visión clara: permitir que cualquier desarrollador pudiera monetizar sus aplicaciones sin convertirse en un experto en publicidad."
+  },
+  "timeline": {
+    "origin": {
+      "year": "2016",
+      "title": "Built by developers, for developers.",
+      "description": "Nuestra primera solución fue una plataforma de mediación publicitaria que, mediante un único SDK, simplificaba la integración de múltiples redes publicitarias.\n\nLo que comenzó como una herramienta para nuestras propias aplicaciones pronto empezó a atraer a otros desarrolladores, que descubrían Wortise a través de foros y comunidades online.\n\nSin campañas de marketing ni equipos comerciales, el crecimiento era completamente orgánico.\n\nNo teníamos una marca reconocida.\n\nTeníamos algo más importante: **un producto que resolvía un problema real.**\n\nY los desarrolladores comenzaron a confiar en nosotros.",
+      "imageAlt": "Desarrolladores trabajando juntos frente a una computadora"
+    },
+    "platform": {
+      "year": "2019",
+      "title": "From a product to a platform.",
+      "description": "Para 2019, más de 100 aplicaciones y juegos utilizaban nuestra tecnología. Pero mientras ayudábamos a los desarrolladores a monetizar sus productos, descubrimos una oportunidad mucho mayor.\n\nAmérica Latina tenía millones de usuarios móviles y marcas que necesitaban nuevas formas de conectar con sus audiencias.\n\n**Teníamos la tecnología, los desarrolladores y el inventario publicitario. Faltaba conectar todo eso con los anunciantes.**\n\nFue entonces cuando Facundo se incorporó como tercer cofundador, aportando su experiencia en marketing y publicidad tras haber trabajado con compañías globales como Samsung y Unilever.\n\nJuntos comenzamos a construir algo mucho más grande que una plataforma de monetización.\n\nUn ecosistema que conectara desarrolladores, anunciantes y tecnología.",
+      "imageAlt": "Una persona usando un teléfono móvil"
+    },
+    "expansion": {
+      "title": "Scaling beyond borders.",
+      "description": "Combinando experiencia técnica, conocimiento comercial y una fuerte cultura de ejecución, Wortise comenzó su expansión por América Latina.\n\nAbrimos operaciones en nuevos mercados, establecimos relaciones con anunciantes internacionales y continuamos desarrollando nuestra tecnología.\n\nCada nuevo desarrollador aportaba más inventario. Cada anunciante generaba nuevas oportunidades de monetización. Y cada conexión fortalecía nuestra plataforma.\n\nLo que comenzó como una solución creada por desarrolladores, impulsada luego por la visión compartida de tres cofundadores, se estaba convirtiendo en una compañía regional de tecnología publicitaria.\n\nPero nuestra ambición siempre fue mayor.\n\n**Queríamos construir la tecnología que impulsara la próxima generación de publicidad digital.**",
+      "imageAlt": "Equipo de Wortise"
+    },
+    "today": {
+      "year": "TODAY",
+      "title": "AI at the core of everything we build.",
+      "description": "Diez años después, la publicidad digital está atravesando una de las mayores transformaciones de su historia.\n\nY creemos que la inteligencia artificial será el motor de esa transformación.\n\nPor eso, estamos integrando **AI en el núcleo de Wortise**, evolucionando nuestra infraestructura, nuestros productos y la manera en que conectamos desarrolladores y anunciantes.\n\nNo vemos la inteligencia artificial como una funcionalidad adicional, sino como una parte fundamental de nuestra tecnología.\n\nEstamos construyendo una plataforma cada vez más inteligente y autónoma, capaz de optimizar la monetización, automatizar decisiones y acelerar el crecimiento de aplicaciones, juegos y anunciantes.\n\n**Queremos que los desarrolladores se concentren en crear grandes productos y que los anunciantes se concentren en hacer crecer sus negocios. Nosotros nos encargamos de la complejidad.**\n\nNuestra visión sigue siendo la misma que nos impulsó en 2016: hacer que la publicidad sea más simple, eficiente y accesible para todos.\n\nSolo que ahora, con AI en el corazón de Wortise, las posibilidades son mucho mayores.",
+      "imageAlt": "Tecnología publicitaria de Wortise"
+    },
+    "next": {
+      "title": "We’re just getting started.",
+      "description": "Diez años después, la publicidad digital está atravesando una de las mayores transformaciones de su historia.\n\nY creemos que la inteligencia artificial será el motor de esa transformación.\n\nPor eso, estamos integrando AI en el núcleo de Wortise, evolucionando nuestra infraestructura, nuestros productos y la manera en que conectamos desarrolladores y anunciantes.\n\nNo vemos la inteligencia artificial como una funcionalidad adicional, sino como una parte fundamental de nuestra tecnología.\n\nEstamos construyendo una plataforma cada vez más inteligente y autónoma, capaz de optimizar la monetización, automatizar decisiones y acelerar el crecimiento de aplicaciones, juegos y anunciantes.\n\nQueremos que los desarrolladores se concentren en crear grandes productos y que los anunciantes se concentren en hacer crecer sus negocios. Nosotros nos encargamos de la complejidad.\n\nNuestra visión sigue siendo la misma que nos impulsó en 2016: hacer que la publicidad sea más simple, eficiente y accesible para todos.\n\nSolo que ahora, con AI en el corazón de Wortise, las posibilidades son mucho mayores.",
+      "imageAlt": "Integrantes de Wortise trabajando en la oficina."
+    }
   },
   "team": {
     "label": "La vida en las oficinas de Wortise"
@@ -36,5 +67,10 @@
     "laptop": {
       "imageAlt": "Dos integrantes del equipo trabajando con una computadora."
     }
+  },
+  "callToAction": {
+    "title": "¿Listo para descubrir clientes gracias a los anuncios de Wortise?",
+    "description": "Comienza a crear tu campaña hoy",
+    "button": "Contactar al equipo"
   }
 }

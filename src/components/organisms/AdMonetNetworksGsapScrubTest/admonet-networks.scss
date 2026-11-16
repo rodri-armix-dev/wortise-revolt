@@ -1,0 +1,218 @@
+@use './admonet-sequence';
+
+.admonet-networks
+{
+	display: grid;
+	justify-items: center;
+	// Match the preceding metrics-to-certifications gap, retaining the panel inset.
+	margin-block-start: calc(81px - var(--spacing-48) - var(--admonet-compact-panel-padding) - var(--ad-formats-inset));
+	padding-block-end: var(--spacing-40);
+
+	& :global([data-orbit-sequence-free-idle] .orbit-particles__mark)
+	{
+		animation: admonet-particle-drift 2.8s ease-in-out infinite alternate;
+	}
+
+	& :global([data-orbit-sequence-free-idle] [data-particle-motion]:nth-child(2n) .orbit-particles__mark) // sass-lint:disable-line force-pseudo-nesting
+	{
+		animation-delay: -1.2s;
+	}
+
+	& :global([data-orbit-sequence-free-idle] [data-particle-motion]:nth-child(3n) .orbit-particles__mark) // sass-lint:disable-line force-pseudo-nesting
+	{
+		animation-delay: -2.1s;
+	}
+
+	@media (prefers-reduced-motion: reduce)
+	{
+		& :global([data-orbit-sequence-free-idle] .orbit-particles__mark)
+		{
+			animation: none;
+		}
+	}
+
+	&[data-networks-outlined]
+	{
+		& :global([data-networks-panel]),
+		& :global([data-networks-overview])
+		{
+			outline: 1px dashed #82b9ff; // sass-lint:disable-line no-color-literals
+			outline-offset: -1px;
+		}
+
+		& :global([data-networks-intro]),
+		& :global([data-format-intro]),
+		& :global([data-format-content]),
+		& :global([data-networks-phone]),
+		& :global([data-networks-glow]),
+		& :global([data-orbit-motion-target]),
+		& :global([data-motion-phase='enter'] [data-particle-motion]),
+		& :global([data-motion-phase='exit'] [data-particle-motion])
+		{
+			outline: 2px solid var(--color-text-highlight);
+			outline-offset: -2px;
+		}
+
+		& :global([data-motion-phase='idle'] [data-particle-motion])
+		{
+			outline: 2px solid #ffcf75; // sass-lint:disable-line no-color-literals
+			outline-offset: -2px;
+		}
+	}
+
+	&__text-block
+	{
+		--description-line-height: 20px;
+		--text-block-gap: var(--spacing-8);
+		max-width: 665px;
+		width: 100%;
+	}
+
+	&__scene
+	{
+		--admonet-networks-mobile-orbit-height: var(--admonet-orbit-available-height, 520px);
+		--admonet-networks-hub-label-color: var(--color-text-primary);
+		--admonet-networks-hub-tagline-color: var(--color-text-muted);
+		--admonet-networks-hub-tint: rgba(79, 79, 79, .32); // sass-lint:disable-line no-color-literals
+		--glass-surface-tint: var(--admonet-networks-hub-tint);
+		display: grid;
+		isolation: isolate;
+		min-height: var(--admonet-networks-mobile-orbit-height);
+		place-items: center;
+		position: relative;
+		width: 100%;
+
+		&:has(> [data-motion-phase='exit'])
+		{
+			--admonet-networks-accent-progress: var(--orbit-particles-exit-progress, 100%);
+			--admonet-networks-hub-label-color: color-mix(in srgb, var(--color-text-primary), var(--color-text-editorial-accent) var(--admonet-networks-accent-progress));
+			--admonet-networks-hub-tagline-color: color-mix(in srgb, var(--color-text-muted), var(--color-text-primary) var(--admonet-networks-accent-progress));
+			--glass-surface-border-color: color-mix(in srgb, var(--color-border-subtle), #ff73a5 var(--admonet-networks-accent-progress)); // sass-lint:disable-line no-color-literals
+			--glass-surface-tint: color-mix(in srgb, var(--admonet-networks-hub-tint), color-mix(in srgb, var(--color-action-primary) 7%, transparent) var(--admonet-networks-accent-progress));
+		}
+	}
+
+	&__art
+	{
+		background-color: var(--admonet-orbit-backdrop, transparent);
+		background-image: url('../../../assets/pages/developers/desktop-orbit-core.svg'),
+		url('../../../assets/pages/developers/desktop-orbit-inner.svg'),
+		url('../../../assets/pages/developers/desktop-orbit-middle.svg'),
+		url('../../../assets/pages/developers/desktop-orbit-outer.svg');
+		background-position: center;
+		background-repeat: no-repeat;
+		// Scale both axes from the mobile artboard.
+		background-size: calc(432 / 402 * 100% * var(--admonet-orbit-core, 1)) calc(186 / 520 * 100% * var(--admonet-orbit-core, 1)),
+		calc(693 / 402 * 100% * var(--admonet-orbit-inner, 1)) calc(303 / 520 * 100% * var(--admonet-orbit-inner, 1)),
+		calc(840 / 402 * 100% * var(--admonet-orbit-middle, 1)) calc(380 / 520 * 100% * var(--admonet-orbit-middle, 1)),
+		calc(980 / 402 * 100% * var(--admonet-orbit-outer, 1)) calc(455 / 520 * 100% * var(--admonet-orbit-outer, 1));
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		isolation: isolate;
+		pointer-events: none;
+		position: absolute;
+
+		&--backdrop
+		{
+			--admonet-orbit-backdrop: var(--color-background-page);
+		}
+	}
+
+	&__hub
+	{
+		display: grid;
+		gap: var(--spacing-12);
+		padding-block: calc(var(--spacing-24) - 1px);
+		padding-inline: var(--spacing-24);
+		text-align: center;
+		width: 244px;
+	}
+
+	&__hub-label
+	{
+		color: var(--admonet-networks-hub-label-color);
+		font-size: var(--font-size-title-md);
+		font-weight: 500;
+		line-height: 38px;
+	}
+
+	&__hub-tagline
+	{
+		color: var(--admonet-networks-hub-tagline-color);
+		font-size: 15px;
+		line-height: 20px;
+	}
+}
+
+@include osm
+{
+	.admonet-networks
+	{
+		&__panel--format
+		{
+			--ad-format-panel-stacked-alignment: center;
+		}
+	}
+}
+
+@include l
+{
+	.admonet-networks
+	{
+		margin-block-start: calc(150px - var(--spacing-32) - var(--admonet-compact-panel-padding) - var(--ad-formats-inset));
+
+		&__text-block
+		{
+			--description-color: var(--color-text-muted);
+			--description-line-height: 23px;
+			--text-block-gap: var(--spacing-12);
+			--text-block-intro-gap: var(--spacing-12);
+		}
+
+		&__scene
+		{
+			--admonet-networks-desktop-scale: calc(var(--layout-content-max-width) / var(--layout-content-max-width-xl, 1344px));
+			--admonet-networks-reference-width: 1312px;
+			--orbit-particles-desktop-size-reference: calc(var(--admonet-networks-reference-width) * var(--admonet-networks-desktop-scale));
+
+			aspect-ratio: 1312 / 634; // sass-lint:disable-line no-misspelled-properties
+			container-type: inline-size; // sass-lint:disable-line no-misspelled-properties
+			// The XL layout cap of 1344px gives the 1312px scene from Figma.
+			max-width: min(100%, calc(var(--layout-content-max-width) * 1312 / 1344), calc(var(--admonet-orbit-available-height, 100vw) * 1312 / 634));
+			min-height: var(--admonet-orbit-available-height, 0);
+			min-width: 0;
+		}
+
+		&__art
+		{
+			background-image: url('../../../assets/pages/developers/desktop-orbit-core.svg'),
+			url('../../../assets/pages/developers/desktop-orbit-inner.svg'),
+			url('../../../assets/pages/developers/desktop-orbit-middle.svg'),
+			url('../../../assets/pages/developers/desktop-orbit-outer.svg');
+			background-position: center;
+			background-size: calc(432 / 1312 * 100% * var(--admonet-orbit-core, 1)) calc(186 / 634 * 100% * var(--admonet-orbit-core, 1)),
+			calc(780 / 1312 * 100% * var(--admonet-orbit-inner, 1)) calc(336 / 634 * 100% * var(--admonet-orbit-inner, 1)),
+			calc(980 / 1312 * 100% * var(--admonet-orbit-middle, 1)) calc(474 / 634 * 100% * var(--admonet-orbit-middle, 1)),
+			calc(100% * var(--admonet-orbit-outer, 1)) calc(100% * var(--admonet-orbit-outer, 1));
+		}
+
+		&__panel--format
+		{
+			--ad-format-panel-description-font-size: 21px;
+			--ad-format-panel-description-line-height: 28px;
+			--ad-format-panel-intro-max-width: 480px;
+		}
+	}
+}
+
+@keyframes admonet-particle-drift
+{
+	from
+	{
+		transform: translate(-1px, 1px);
+	}
+
+	to
+	{
+		transform: translate(1px, -2px);
+	}
+}

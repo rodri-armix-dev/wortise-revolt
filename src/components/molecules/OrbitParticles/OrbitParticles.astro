@@ -23,9 +23,10 @@ export interface Props {
 	durations: Record<MotionPhase, number>;
 	textured: Particle[];
 	glass?: Particle[];
+	fixedMobileSize?: boolean;
 }
 
-const { frames, durations, glass, textured } = Astro.props;
+const { frames, durations, glass, textured, fixedMobileSize = false } = Astro.props;
 const ui = getUiText(getLocaleFromPath(Astro.url.pathname));
 const groupName = `orbit-particles-${crypto.randomUUID()}`;
 const variants = [
@@ -45,6 +46,7 @@ function position([x, y, width, height = width]: Bounds, frame: Frame, range: 'm
 		[`--orbit-particles-${range}-center-x`]: `${(x + width / 2) / frame.width * 100}%`,
 		...(range === 'desktop'
 			? {
+				'--orbit-particles-desktop-center-y': `${(y + height / 2) / frame.height * 100}%`,
 				'--orbit-particles-desktop-top': `${y / frame.height * 100}%`,
 				'--orbit-particles-desktop-width-ratio': width / frame.width,
 			}
@@ -58,7 +60,7 @@ function position([x, y, width, height = width]: Bounds, frame: Frame, range: 'm
 }
 ---
 
-<orbit-particles class="orbit-particles" data-motion-phase="outside" data-motion-frame={JSON.stringify(frames.desktop)} data-motion-durations={JSON.stringify(durations)}>
+<orbit-particles class:list={['orbit-particles', { 'orbit-particles--fixed-mobile-size': fixedMobileSize }]} data-motion-phase="outside" data-motion-frame={JSON.stringify(frames.desktop)} data-motion-durations={JSON.stringify(durations)}>
 	{glass && (
 		<details class="orbit-particles__editor">
 			<summary class="orbit-particles__toggle" aria-label={ui.editOrbitParticles} title={ui.editOrbitParticles}>

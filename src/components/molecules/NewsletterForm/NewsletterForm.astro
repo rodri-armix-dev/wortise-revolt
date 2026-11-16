@@ -1,0 +1,31 @@
+---
+import type { Locale } from '../../../i18n/config';
+import { getUiText } from '../../../i18n/ui';
+import Button from '../../atoms/Button/Button.astro';
+
+export interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
+const ui = getUiText(locale);
+---
+
+<newsletter-form class="newsletter" data-unavailable-label={ui.blogNewsletterUnavailable}>
+	<form class="newsletter__form" method="dialog">
+		<fieldset class="newsletter__fields" disabled>
+			<input class="newsletter__input" id="newsletter-email" name="email" type="email" aria-label={ui.blogEmailLabel} placeholder={ui.blogEmailPlaceholder} autocomplete="email" required />
+			<div class="newsletter__action">
+				<Button label={ui.blogSubscribe} variant="primary-special" size="large" type="submit" />
+			</div>
+		</fieldset>
+	</form>
+	<p class="newsletter__status" role="status" data-newsletter-status></p>
+</newsletter-form>
+
+<script>
+	import './newsletter';
+</script>
+
+<style lang="scss">
+	@use './newsletter';
+</style>

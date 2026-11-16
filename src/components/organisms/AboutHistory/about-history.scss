@@ -1,0 +1,45 @@
+.about-history
+{
+	padding-block: var(--spacing-32) var(--spacing-64);
+
+	&__inner
+	{
+		align-items: stretch;
+	}
+
+	&__text-block
+	{
+		--text-block-intro-gap: var(--spacing-16);
+
+		max-width: 637px;
+	}
+
+	&__columns
+	{
+		--description-line-height: 26px;
+
+		display: grid;
+		gap: var(--spacing-24);
+	}
+}
+
+@include l
+{
+	.about-history
+	{
+		padding-block-end: calc(var(--spacing-64) + var(--spacing-40));
+		padding-block-start: calc(var(--spacing-64) + var(--spacing-48));
+
+		&__inner
+		{
+			--global-item-gap: var(--spacing-48);
+		}
+
+		&__columns
+		{
+			gap: var(--spacing-64);
+			grid-template-columns: repeat(2, minmax(0, 596px));
+			justify-content: space-between;
+		}
+	}
+}

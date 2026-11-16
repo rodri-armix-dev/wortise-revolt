@@ -1,6 +1,10 @@
-import { externalButtons } from '../external-buttons';
+import nextImage from '../../assets/pages/about/timeline/next.webp';
+import todayImage from '../../assets/pages/about/timeline/today.webp';
+import expansionImage from '../../assets/pages/about/timeline/expansion.webp';
+import platformImage from '../../assets/pages/about/timeline/platform.webp';
+import originImage from '../../assets/pages/about/timeline/origin.webp';
 import { headingHtml, descriptionHtml } from '../content/format';
-import { contactCTA } from '../contact-cta';
+import { homeRecruitingModuleES } from '../home';
 import { readContent } from '../content/validate';
 import rawES from '../../content/pages/about/es.json';
 
@@ -8,7 +12,6 @@ import { footerCTAVisuals } from '../footer-cta';
 import type { Locale } from '../../i18n/config';
 import type { ModulesPageData } from './page.types';
 import aboutUsCoverImage from '../../assets/pages/about/team-cover.webp';
-import { kpiItems } from '../kpis';
 import { aboutGalleryItems } from '../gallery';
 
 const contentES = readContent(rawES, 'pages/about/es');
@@ -29,9 +32,9 @@ export const aboutPageData = {
 			actionPage: 'contact',
 			...footerCTAVisuals,
 			text: {
-				heading: { html: headingHtml(contactCTA.es.title), tag: 'h2' },
-				description: { html: descriptionHtml(contactCTA.es.description) },
-				actions: { primary: { label: contactCTA.es.button, href: externalButtons.es.contactUrl, variant: 'primary-special', size: 'large' } },
+				heading: { html: headingHtml(contentES.callToAction.title), tag: 'h2' },
+				description: { html: descriptionHtml(contentES.callToAction.description) },
+				actions: { primary: { label: contentES.callToAction.button, variant: 'primary-special', size: 'large' } },
 			},
 		},
 		modules: [
@@ -45,31 +48,23 @@ export const aboutPageData = {
 						loading: 'eager',
 					},
 					textBlock: {
-						alignment: 'left',
-						responsiveAlignment: { m: 'center' },
+						alignment: 'center',
 						eyebrow: { label: contentES.hero.eyebrow },
 						heading: {
 							html: headingHtml(contentES.hero.title),
 							tag: 'h1',
 						},
-						description: {
-							html: descriptionHtml(contentES.hero.description),
-						},
 					},
 				},
 			},
 			{
-				type: 'kpis',
+				type: 'about-history',
 				props: {
-					variant: 'vision',
 					textBlock: {
-						eyebrow: { label: contentES.statistics.eyebrow },
-						heading: {
-							tag: 'h2',
-							html: headingHtml(contentES.statistics.title),
-						},
+						eyebrow: { label: contentES.history.eyebrow },
+						heading: { html: headingHtml(contentES.history.title), tag: 'h2', size: { s: 'title-lg', l: 'display-xl' } },
 					},
-					items: kpiItems,
+					columns: [descriptionHtml(contentES.history.origin), descriptionHtml(contentES.history.founding)],
 				},
 			},
 			{
@@ -80,6 +75,21 @@ export const aboutPageData = {
 					items: aboutGalleryItems,
 				},
 			},
+			{
+				type: 'about-timeline',
+				props: {
+					items: Object.entries({ origin: originImage, platform: platformImage, expansion: expansionImage, today: todayImage, next: nextImage }).map(([key, src]) => {
+						const item = contentES.timeline[key as keyof typeof contentES.timeline];
+						return {
+							year: 'year' in item ? item.year : undefined,
+							title: headingHtml(item.title),
+							description: descriptionHtml(item.description),
+							image: { src, alt: item.imageAlt },
+						};
+					}),
+				},
+			},
+			homeRecruitingModuleES,
 		],
 	},
 } satisfies Partial<Record<Locale, AboutPageData>>;

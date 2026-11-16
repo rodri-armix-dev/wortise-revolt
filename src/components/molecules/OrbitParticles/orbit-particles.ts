@@ -84,29 +84,37 @@ class OrbitParticles extends HTMLElement {
 					const [endX, endY] = points.at(-1)!;
 					const targetX = focus ? (focus.x + focus.width / 2 - box.x - box.width / 2) * frame.width / width : endX;
 					const targetY = focus ? (focus.y + focus.height / 2 - box.y - box.height / 2) * frame.height / height : endY;
-					const exitDistanceSquared = endX ** 2 + endY ** 2;
+					const [startX, startY] = focus && this.dataset.orbitSequencePhase ? points[0] : [0, 0];
+					const exitX = endX - startX;
+					const exitY = endY - startY;
+					const exitDistanceSquared = exitX ** 2 + exitY ** 2;
 					const segmentDuration = duration / (points.length - 1);
+					const [currentX, currentY] = current[index] ?? [];
+					const freeExit = next === 'exit' && this.hasAttribute('data-orbit-sequence-free-idle');
+					const offsetX = freeExit && currentX ? parseFloat(currentX) * frame.width / 100 - startX : 0;
+					const offsetY = freeExit && currentY ? parseFloat(currentY) * frame.height / 100 - startY : 0;
 					const poses = points.map(([x, y], pointIndex) => {
 						const progress = pointIndex / (points.length - 1);
 						// Preserve the authored path while fitting the responsive entry and exit.
 						const scale = 1 + (entryScale - 1) * (1 - progress);
-						const convergence = focus && exitDistanceSquared ? (x * endX + y * endY) / exitDistanceSquared : 0;
+						const blend = Math.max(0, 1 - progress / .4);
+						const continuity = blend * blend * (3 - 2 * blend);
+						const convergence = focus && exitDistanceSquared ? ((x - startX) * exitX + (y - startY) * exitY) / exitDistanceSquared : 0;
 						return {
-							[translateX]: `${(x * scale + (targetX - endX) * convergence) / frame.width * 100}cqw`,
-							[translateY]: `${(y * scale + (targetY - endY) * convergence) / frame.height * 100}cqh`,
+							[translateX]: `${(x * scale + offsetX * continuity + (targetX - endX) * convergence) / frame.width * 100}cqw`,
+							[translateY]: `${(y * scale + offsetY * continuity + (targetY - endY) * convergence) / frame.height * 100}cqh`,
 							opacity: next === 'exit' ? Math.min(1, (1 - progress) / .25) : 1,
 						};
 					});
 
 					const first = poses[0];
-					const [currentX, currentY] = current[index] ?? [];
 					gsap.set(item, {
 						...first,
 						[translateX]: currentX || first[translateX],
 						[translateY]: currentY || first[translateY],
 					});
 					const keyframes = poses.slice(1).map((pose) => ({ ...pose, duration: segmentDuration, ease: 'none' }));
-					if (next === 'idle') {
+					if (next === 'idle' && !this.dataset.orbitSequencePhase) {
 						// Close the loop from the last Figma sample to the first.
 						keyframes.push({ ...first, duration: .3, ease: 'sine.inOut' });
 					}
@@ -131,9 +139,37 @@ class OrbitParticles extends HTMLElement {
 			}, this);
 		};
 
+		let wasDriven = false;
+		let idleTime = 0;
+		const drivenPhase = () => this.dataset.orbitSequencePhase as 'enter' | 'idle' | 'exit' | undefined;
 		const sync = () => {
 			if (mode !== 'auto') return;
 			const sequenceProgress = this.dataset.orbitSequenceProgress;
+			const requestedPhase = drivenPhase();
+			if (requestedPhase && sequenceProgress !== undefined) {
+				wasDriven = true;
+				const freeIdle = this.hasAttribute('data-orbit-sequence-free-idle');
+				if (freeIdle && requestedPhase === 'idle') {
+					if (phase !== 'idle') {
+						const returning = phase === 'exit';
+						play('idle', false, true);
+						timeline?.time(returning ? idleTime : 0, true);
+					}
+					timeline?.paused(!visible);
+					return;
+				}
+				if (phase !== requestedPhase) {
+					const fromIdle = freeIdle && phase === 'idle' && requestedPhase === 'exit';
+					if (fromIdle) idleTime = timeline?.time() ?? 0;
+					play(requestedPhase, fromIdle, true);
+				}
+				timeline?.pause().progress(Number(sequenceProgress), true);
+				return;
+			}
+			if (wasDriven) {
+				wasDriven = false;
+				play('outside');
+			}
 			if (sequenceProgress !== undefined) {
 				const progress = Number(sequenceProgress);
 				if (progress > 0) {
@@ -172,7 +208,11 @@ class OrbitParticles extends HTMLElement {
 			}, { signal });
 		}
 		const refresh = () => {
-			if (mode === 'auto' && Number(this.dataset.orbitSequenceProgress) > 0) {
+			const requestedPhase = drivenPhase();
+			if (mode === 'auto' && requestedPhase) {
+				play(requestedPhase, false, true);
+				sync();
+			} else if (mode === 'auto' && Number(this.dataset.orbitSequenceProgress) > 0) {
 				play('exit', false, true);
 				sync();
 			} else play(mode === 'auto' ? phase : mode);

@@ -1,0 +1,319 @@
+.admonet-networks
+{
+	--ad-formats-inset: 0;
+	--ad-formats-panel-margin: var(--ad-formats-inset);
+	--ad-formats-phone-width: min(100%, 180px, calc(50dvh * 410 / 788));
+	--admonet-compact-panel-padding: var(--spacing-24);
+	--admonet-viewport-panel-height: 100dvh;
+
+	&__track
+	{
+		min-width: 0;
+		position: relative;
+		width: 100%;
+	}
+
+	&__measure
+	{
+		height: var(--admonet-viewport-panel-height);
+		pointer-events: none;
+		position: absolute;
+		visibility: hidden;
+	}
+
+	&__stage
+	{
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		position: relative;
+	}
+
+	&__panel
+	{
+		scroll-margin-block-start: var(--layout-header-height); // sass-lint:disable-line no-misspelled-properties
+		scroll-snap-align: start;
+	}
+
+	&__overview
+	{
+		align-content: center;
+		display: grid;
+		gap: var(--spacing-64);
+		grid-template-columns: minmax(0, 1fr);
+		isolation: isolate;
+		overflow: clip;
+		padding-block: var(--admonet-overview-padding, 0);
+		place-items: center;
+		position: relative;
+	}
+
+	&__glow
+	{
+		grid-row: 1 / 2;
+		height: var(--admonet-orbit-height, 520px);
+		inset: auto 0 var(--admonet-overview-padding, 0); // sass-lint:disable-line no-misspelled-properties
+		overflow: clip;
+		pointer-events: none;
+		position: absolute;
+
+		&::before
+		{
+			--admonet-glow-ambient: var(--admonet-glow-color, rgba(209, 14, 78, .26)); // sass-lint:disable-line no-color-literals
+			--admonet-glow-fill-opacity: var(--admonet-glow-fill, 0%);
+			--admonet-glow-fill-edge-color: color-mix(in srgb, var(--admonet-glow-fill-edge, transparent) var(--admonet-glow-fill-opacity), transparent);
+			background-image:
+			radial-gradient(ellipse closest-side, color-mix(in srgb, transparent var(--admonet-glow-fill-opacity), var(--admonet-glow-ambient)), transparent),
+			linear-gradient(var(--admonet-glow-fill-angle, 90deg),
+				var(--admonet-glow-fill-edge-color) var(--admonet-glow-fill-start, 6.528%),
+				color-mix(in srgb, var(--admonet-glow-ambient) var(--admonet-glow-fill-opacity), transparent) var(--admonet-glow-fill-center, 50.317%),
+				var(--admonet-glow-fill-edge-color) var(--admonet-glow-fill-end, 92.083%));
+			background-position: center calc(50% + var(--admonet-glow-offset, 0px)), center; // sass-lint:disable-line zero-unit
+			background-repeat: no-repeat;
+			background-size: calc(min(var(--admonet-glow-width, 447px), 120vw) * var(--admonet-glow-scale, 1)) calc(var(--admonet-glow-height, 483px) * var(--admonet-glow-scale, 1)), 100% 100%;
+			content: '';
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+			position: absolute;
+		}
+
+		&::after
+		{
+			aspect-ratio: 410 / 788; // sass-lint:disable-line no-misspelled-properties
+			border: calc(var(--ad-formats-phone-width) * 7.809 / 278.509) solid var(--admonet-halo-color, transparent);
+			border-radius: 12.77% / 6.82%;
+			content: '';
+			filter: blur(calc(var(--ad-formats-phone-width) * 20.606 / 278.509));
+			left: 50%;
+			opacity: var(--admonet-halo-opacity, 0);
+			position: absolute;
+			top: var(--admonet-phone-center-y, 50%);
+			transform: translate(-50%, calc(-50% + var(--ad-formats-phone-y, 0%)));
+			width: var(--ad-formats-phone-width);
+		}
+	}
+
+	&__phone
+	{
+		display: none;
+	}
+
+	&__screens,
+	&__screen
+	{
+		height: 100%;
+		width: 100%;
+	}
+
+	&__screen
+	{
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+
+	&[data-networks-stack]
+	{
+		--ad-formats-panel-height: var(--admonet-viewport-panel-height);
+
+		--ad-formats-preview-display: none;
+		--admonet-stack-phone-height: calc(var(--ad-formats-phone-width) * 788 / 410);
+		--admonet-stack-phone-offset: max(0px, calc((var(--admonet-viewport-panel-height) - var(--admonet-stack-phone-height)) / 2)); // sass-lint:disable-line zero-unit
+
+		.admonet-networks__stage
+		{
+			grid-template-rows: repeat(var(--admonet-stack-rows), var(--admonet-viewport-panel-height));
+		}
+
+		.admonet-networks__glow
+		{
+			align-self: start;
+			grid-column: 1;
+			grid-row: 1 / -1;
+			height: var(--admonet-viewport-panel-height);
+			inset: var(--layout-header-height) auto auto; // sass-lint:disable-line no-misspelled-properties
+			position: sticky;
+		}
+
+		.admonet-networks__phone
+		{
+			align-self: start;
+			display: block;
+			grid-column: 1;
+			grid-row: 2 / -1;
+			justify-self: center;
+			margin-block-start: var(--admonet-stack-phone-offset);
+			pointer-events: none;
+			position: sticky;
+			top: calc(var(--layout-header-height) + var(--admonet-stack-phone-offset));
+			width: var(--ad-formats-phone-width);
+		}
+
+		.admonet-networks__screen:not(:first-child) // sass-lint:disable-line force-pseudo-nesting
+		{
+			visibility: hidden;
+		}
+
+		.admonet-networks__panel
+		{
+			grid-column: 1;
+			grid-row: var(--admonet-stack-row, 1);
+			height: var(--admonet-viewport-panel-height);
+			overflow: auto;
+		}
+
+		.admonet-networks__overview
+		{
+			gap: var(--spacing-32);
+			grid-template-rows: auto minmax(240px, 1fr);
+		}
+
+		.admonet-networks__scene
+		{
+			align-self: stretch;
+			aspect-ratio: auto; // sass-lint:disable-line no-misspelled-properties
+			min-height: 0;
+		}
+	}
+
+	&[data-networks-scroll]
+	{
+		.admonet-networks__track
+		{
+			min-height: calc(var(--admonet-viewport-panel-height) * (var(--admonet-scroll-panels) + 1));
+		}
+
+		.admonet-networks__stage
+		{
+			position: sticky;
+			top: 0;
+		}
+	}
+
+	&[data-networks-playback]
+	{
+		--ad-formats-panel-height: var(--admonet-viewport-panel-height);
+		--ad-formats-panel-margin: 0;
+		--ad-formats-preview-display: none;
+		--admonet-overview-padding: var(--admonet-compact-panel-padding);
+
+		.admonet-networks__stage
+		{
+			background-color: var(--color-background-page);
+			display: block;
+			height: var(--ad-formats-panel-height);
+			isolation: isolate;
+			overflow: clip;
+		}
+
+		.admonet-networks__panel
+		{
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+			position: absolute;
+		}
+
+		.admonet-networks__inner,
+		.admonet-networks__scene,
+		.admonet-networks__panel[data-networks-panel]
+		{
+			will-change: transform, opacity;
+		}
+
+		.admonet-networks__phone
+		{
+			display: block;
+			left: 50%;
+			pointer-events: none;
+			position: absolute;
+			top: var(--admonet-phone-center-y, 50%);
+			transform: translate(-50%, calc(-50% + var(--ad-formats-phone-y, 0%)));
+			width: var(--ad-formats-phone-width);
+			will-change: transform, opacity;
+		}
+
+		.admonet-networks__screen
+		{
+			will-change: transform;
+		}
+
+		.admonet-networks__glow
+		{
+			grid-row: auto;
+			height: auto;
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+		}
+	}
+
+	&[data-networks-playback='stacked']
+	{
+		--ad-format-panel-alignment: stretch;
+		--ad-format-panel-content-margin-start: auto;
+		--ad-formats-panel-padding: var(--admonet-compact-panel-padding);
+		--orbit-particles-editor-top: 0;
+	}
+}
+
+@include osm
+{
+	.admonet-networks
+	{
+		--ad-formats-inset: var(--spacing-8);
+		--ad-formats-panel-padding: var(--admonet-compact-panel-padding);
+		--admonet-compact-panel-padding: calc(var(--spacing-48) * 2);
+		--admonet-overview-padding: var(--admonet-compact-panel-padding);
+	}
+}
+
+@include os
+{
+	.admonet-networks
+	{
+		--ad-formats-panel-margin: 0;
+		--admonet-compact-panel-padding: var(--spacing-40);
+
+		&__overview
+		{
+			align-content: start;
+		}
+	}
+}
+
+@include l
+{
+	.admonet-networks
+	{
+		--ad-formats-panel-padding: var(--admonet-compact-panel-padding);
+		--ad-formats-phone-width: min(230px, calc((var(--admonet-viewport-panel-height) - var(--spacing-64) * 2) * 410 / 788));
+		--admonet-compact-panel-padding: calc(var(--spacing-48) * 2);
+		--admonet-orbit-height: calc(min(100vw, var(--layout-content-max-width) * 1312 / 1344) * 634 / 1312);
+		--admonet-overview-padding: var(--admonet-compact-panel-padding);
+
+		&__overview
+		{
+			// Distance from the text block to the orbit frame in the desktop layout.
+			gap: var(--admonet-overview-gap, 122px);
+		}
+
+		&[data-networks-playback='pin']
+		{
+			.admonet-networks__stage
+			{
+				margin-block: var(--ad-formats-inset);
+			}
+		}
+	}
+}
+
+@include xl
+{
+	.admonet-networks
+	{
+		--ad-formats-phone-width: min(280px, calc((var(--admonet-viewport-panel-height) - var(--spacing-64) * 2) * 410 / 788));
+	}
+}
+
+@include xxl
+{
+	.admonet-networks
+	{
+		--ad-formats-phone-width: min(380px, calc((var(--admonet-viewport-panel-height) - var(--spacing-64) * 2) * 410 / 788));
+	}
+}

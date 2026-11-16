@@ -1,0 +1,86 @@
+---
+import Icon from '../../atoms/Icon/Icon.astro';
+import { getLocaleFromPath } from '../../../i18n/routes';
+import { getUiText } from '../../../i18n/ui';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+
+export interface Props {
+	eyebrow: string;
+	heading: string;
+	description: string;
+	searchLabel: string;
+}
+
+const { eyebrow, heading, description, searchLabel } = Astro.props;
+const { glossaryClearSearch } = getUiText(getLocaleFromPath(Astro.url.pathname));
+---
+
+<section class="glossary-intro">
+	<div class="glossary-intro__inner global-inner">
+		<div class="glossary-intro__text-block">
+			<TextBlock alignment="center" eyebrow={{ label: eyebrow }} heading={{ html: heading, tag: 'h1', size: { s: 'display-sm', l: 'display-xl' } }} description={{ html: description }} />
+		</div>
+		<div class="glossary-intro__search">
+			<label class="glossary-intro__field">
+				<span class="glossary-intro__icon">
+					<Icon name="search" />
+				</span>
+				<input class="glossary-intro__input" type="search" aria-label={searchLabel} placeholder={searchLabel} data-glossary-search />
+			</label>
+			<kbd class="glossary-intro__shortcut" aria-hidden="true" data-glossary-shortcut></kbd>
+			<button class="glossary-intro__clear" type="button" aria-label={glossaryClearSearch} data-glossary-clear hidden>
+				<Icon name="x" />
+			</button>
+		</div>
+	</div>
+</section>
+
+<script>
+	const field = document.querySelector<HTMLInputElement>('[data-glossary-search]');
+	const hint = document.querySelector('[data-glossary-shortcut]');
+	const search = field?.closest('.glossary-intro__search');
+	const clear = search?.querySelector<HTMLButtonElement>('[data-glossary-clear]');
+
+	if (field && hint && search && clear) {
+		const isMac = /Macintosh/.test(navigator.userAgent);
+		hint.textContent = isMac ? '⌘ K' : 'Ctrl K';
+		field.setAttribute('aria-keyshortcuts', isMac ? 'Meta+K' : 'Control+K');
+
+		const updateControls = () => {
+			const hasQuery = [...field.value.trim().normalize('NFC')].length > 1;
+			clear.hidden = !hasQuery;
+			hint.toggleAttribute('hidden', hasQuery);
+		};
+
+		field.addEventListener('input', updateControls);
+		field.addEventListener('glossary:search-sync', updateControls);
+		updateControls();
+
+		clear.addEventListener('click', () => {
+			field.value = '';
+			field.blur();
+			clear.blur();
+			field.dispatchEvent(new Event('input', { bubbles: true }));
+		});
+
+		field.addEventListener('focus', () => {
+			const offset = parseFloat(getComputedStyle(search).scrollMarginBlockStart);
+			window.scrollTo({
+				top: window.scrollY + search.getBoundingClientRect().top - offset,
+				behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+			});
+		});
+
+		document.addEventListener('keydown', (event) => {
+			const shortcut = isMac ? event.metaKey && !event.ctrlKey : event.ctrlKey && !event.metaKey;
+			if (event.defaultPrevented || event.isComposing || !shortcut || event.altKey || event.shiftKey || event.key.toLowerCase() !== 'k') return;
+
+			event.preventDefault();
+			field.focus({ preventScroll: true });
+		});
+	}
+</script>
+
+<style lang="scss">
+	@use './glossary-intro';
+</style>

@@ -7,8 +7,14 @@ export type { Page } from '../data/pages';
 // Utility routes have no editorial modules and declare availability explicitly.
 const utilityPageSlugs: Record<string, Partial<Record<Locale, string>>> = {
 	ui: { [defaultLocale]: 'ui' },
+	'admonet-networks-test': { [defaultLocale]: 'admonet-networks-test' },
+	'admonet-networks-scroll-test': { [defaultLocale]: 'admonet-networks-scroll-test' },
+	'admonet-networks-sticky-test': { [defaultLocale]: 'admonet-networks-sticky-test' },
+	'admonet-networks-gsap-snap-test': { [defaultLocale]: 'admonet-networks-gsap-snap-test' },
+	'admonet-networks-events-test': { [defaultLocale]: 'admonet-networks-events-test' },
+	'admonet-networks-gsap-scrub-test': { [defaultLocale]: 'admonet-networks-gsap-scrub-test' },
 };
-type RoutePage = Page | 'ui';
+type RoutePage = Page | 'ui' | 'admonet-networks-test' | 'admonet-networks-scroll-test' | 'admonet-networks-sticky-test' | 'admonet-networks-gsap-snap-test' | 'admonet-networks-gsap-scrub-test' | 'admonet-networks-events-test';
 
 export function normalizePath(pathname: string): string {
 	return `${pathname.replace(/\/+$/, '')}/`;

@@ -75,7 +75,7 @@ export const mainMenuData: Record<Locale, NavigationLink[]> = {
 				{
 					id: 'glossary',
 					label: contentES.menu.resources.children.glossary.label,
-					href: externalButtons.es.glossaryUrl,
+					href: '',
 				},
 				{
 					id: 'sdk-documentation',
@@ -94,7 +94,7 @@ export const mainMenuData: Record<Locale, NavigationLink[]> = {
 			id: 'resources', label: contentEN.menu.resources.label, href: '',
 			children: [
 				{ id: 'blog', label: contentEN.menu.resources.children.blog.label, href: '' },
-				{ id: 'glossary', label: contentEN.menu.resources.children.glossary.label, href: externalButtons.en.glossaryUrl },
+				{ id: 'glossary', label: contentEN.menu.resources.children.glossary.label, href: '' },
 				{ id: 'sdk-documentation', label: contentEN.menu.resources.children['sdk-documentation'].label, href: externalButtons.en.sdkDocumentationUrl },
 			],
 		},
@@ -108,7 +108,7 @@ export const mainMenuData: Record<Locale, NavigationLink[]> = {
 			id: 'resources', label: contentPT.menu.resources.label, href: '',
 			children: [
 				{ id: 'blog', label: contentPT.menu.resources.children.blog.label, href: '' },
-				{ id: 'glossary', label: contentPT.menu.resources.children.glossary.label, href: externalButtons.pt.glossaryUrl },
+				{ id: 'glossary', label: contentPT.menu.resources.children.glossary.label, href: '' },
 				{ id: 'sdk-documentation', label: contentPT.menu.resources.children['sdk-documentation'].label, href: externalButtons.pt.sdkDocumentationUrl },
 			],
 		},

@@ -21,15 +21,18 @@ export function getStaticPaths() {
 const { locale, page } = Astro.props;
 const BlogIndex = page.template === 'blog' ? (await import('../../components/templates/BlogIndex/BlogIndex.astro')).default : undefined;
 const BlogArticle = page.template === 'blog-article' ? (await import('../../components/templates/BlogArticle/BlogArticle.astro')).default : undefined;
+const GlossaryIndex = page.template === 'glossary' ? (await import('../../components/templates/GlossaryIndex/GlossaryIndex.astro')).default : undefined;
 ---
 
-<BaseLayout locale={locale} title={page.meta.title} description={page.meta.description} footerCTA={'footerCTA' in page ? page.footerCTA : undefined} headerOverlay={'modules' in page && page.modules[0]?.type === 'ads-cover'}>
+<BaseLayout locale={locale} title={page.meta.title} description={page.meta.description} footerCTA={'footerCTA' in page ? page.footerCTA : undefined} headerOverlay={'modules' in page && ['ads-cover', 'advertisers-cover'].includes(page.modules[0]?.type ?? '')}>
 	{page.template === 'legal' ? (
 		<LegalPage locale={locale} {...page.content} />
 	) : page.template === 'blog' && BlogIndex ? (
 		<BlogIndex locale={locale} />
 	) : page.template === 'blog-article' && BlogArticle ? (
 		<BlogArticle locale={locale} post={page.content} />
+	) : page.template === 'glossary' && GlossaryIndex ? (
+		<GlossaryIndex content={page.content} />
 	) : (
 		'modules' in page && <ModulesPage modules={page.modules} />
 	)}

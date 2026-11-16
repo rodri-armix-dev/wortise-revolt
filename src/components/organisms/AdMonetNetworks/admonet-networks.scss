@@ -8,12 +8,6 @@
 	margin-block-start: calc(81px - var(--spacing-48) - var(--admonet-compact-panel-padding) - var(--ad-formats-inset));
 	padding-block-end: var(--spacing-40);
 
-	&__scroll-space
-	{
-		background-color: var(--color-surface-card);
-		min-height: 100svh;
-	}
-
 	&__text-block
 	{
 		--description-line-height: 20px;

@@ -1,0 +1,39 @@
+---
+import Eyebrow from '../../atoms/Eyebrow/Eyebrow.astro';
+import Icon from '../../atoms/Icon/Icon.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+
+export interface Props {
+	eyebrow: string;
+	heading: string;
+	label: string;
+	letters: readonly string[];
+}
+
+const { eyebrow, heading, label, letters } = Astro.props;
+---
+
+<section class="glossary-letter-nav" data-glossary-letter-nav>
+	<div class="glossary-letter-nav__inner global-inner">
+		<TextBlock eyebrow={{ label: eyebrow }} heading={{ html: heading, tag: 'h2', size: { s: 'display-sm', l: 'display-md' } }} />
+		<div class="glossary-letter-nav__index">
+			<Eyebrow label={label} />
+			<ul class="glossary-letter-nav__letters">
+				{letters.map((letter) => (
+					<li>
+						<button class="glossary-letter-nav__letter" type="button" data-glossary-letter={letter} aria-pressed="false">
+							{letter}
+							<span class="glossary-letter-nav__indicator" aria-hidden="true">
+								<Icon name="x" />
+							</span>
+						</button>
+					</li>
+				))}
+			</ul>
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './glossary-letter-nav';
+</style>

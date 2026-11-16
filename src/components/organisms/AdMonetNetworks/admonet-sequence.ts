@@ -13,6 +13,16 @@ const maximumOverviewSpeed = 1.5;
 const reverseGestureFinishSpeed = 2.8;
 const gestureTolerance = 8;
 const pinEdgeBuffer = 32;
+const viewportSettleDelay = 150;
+const viewportGrowthDuration = .25;
+const viewportGrowthProperties = [
+	'--ad-formats-panel-height',
+	'--ad-formats-panel-padding',
+	'--ad-formats-phone-width',
+	'--admonet-orbit-available-height',
+	'--admonet-overview-padding',
+	'--admonet-phone-center-y',
+];
 const overviewTiming = {
 	convergeEnd: .42,
 	hold: .18,
@@ -113,6 +123,9 @@ function mount(root: HTMLElement) {
 	let gestureEvents: AbortController | undefined;
 	let trigger: ScrollTrigger | undefined;
 	let frame = 0;
+	let viewportTimer: number | undefined;
+	let viewportWidth = track.clientWidth;
+	let viewportHeight = measure.clientHeight;
 	let geometry = '';
 	let rebuilding = false;
 
@@ -158,8 +171,14 @@ function mount(root: HTMLElement) {
 		...contents.map((element) => element.offsetHeight),
 	].join(':');
 
-	const rebuild = () => {
+	const rebuild = (settledViewport = false) => {
 		const previous = trigger?.isActive ? trigger.progress : undefined;
+		const height = measure.clientHeight;
+		const growthFrom = settledViewport && previous !== undefined && height > stage.clientHeight
+			? Object.fromEntries(viewportGrowthProperties.map((property) => [property, root.style.getPropertyValue(property)]))
+			: undefined;
+		viewportWidth = track.clientWidth;
+		viewportHeight = height;
 		rebuilding = true;
 		reset();
 		if (reduced.matches) {
@@ -169,21 +188,29 @@ function mount(root: HTMLElement) {
 		}
 
 		const mobile = stacked.matches;
-		const height = measure.clientHeight;
-		const introHeight = Math.max(...intros.map((element) => element.offsetHeight));
-		const contentHeight = Math.max(...contents.map((element) => element.offsetHeight));
-		const textHeight = Math.max(introHeight, contentHeight);
-		const gap = parseFloat(getComputedStyle(firstPanel.firstElementChild!).rowGap);
+		const introHeight = Math.ceil(Math.max(...intros.map((element) => element.getBoundingClientRect().height)));
+		const contentHeight = Math.ceil(Math.max(...contents.map((element) => element.getBoundingClientRect().height)));
+		const panelInner = firstPanel.firstElementChild as HTMLElement;
+		const gap = parseFloat(getComputedStyle(panelInner).rowGap);
 		const compactPadding = parseFloat(getComputedStyle(overview).paddingBlockStart);
 		const naturalOverviewGap = parseFloat(getComputedStyle(overview).rowGap);
 		const minimumOverviewGap = parseFloat(getComputedStyle(root).getPropertyValue('--spacing-32'));
-		const overviewGap = mobile ? naturalOverviewGap : Math.min(naturalOverviewGap, Math.max(minimumOverviewGap, height - overviewIntro.offsetHeight - compactPadding * 2 - 240));
-		const overviewOrbitHeight = height - overviewIntro.offsetHeight - overviewGap - compactPadding * 2;
+		const preferredOrbitHeight = 240;
+		const minimumPhoneHeight = 120;
+		const overviewIntroHeight = overviewIntro.offsetHeight;
+		const overviewGap = mobile ? naturalOverviewGap : Math.min(naturalOverviewGap, Math.max(minimumOverviewGap, height - overviewIntroHeight - compactPadding * 2 - preferredOrbitHeight));
+		const minimumMobilePadding = parseFloat(getComputedStyle(root).getPropertyValue('--spacing-24'));
+		const textAndGapsHeight = introHeight + contentHeight + gap * 2;
 		const padding = mobile
-			? compactPadding
+			? Math.max(minimumMobilePadding, Math.min(
+				compactPadding,
+				Math.floor((height - overviewIntroHeight - overviewGap - preferredOrbitHeight) / 2),
+				Math.floor((height - minimumPhoneHeight - textAndGapsHeight) / 2),
+			))
 			: parseFloat(getComputedStyle(firstPanel).paddingBlockStart);
-		const available = height - (padding + textHeight + gap) * 2;
-		if ((mobile ? available < 120 : textHeight > height - padding * 2) || overviewOrbitHeight < (mobile ? 240 : 160)) {
+		const overviewOrbitHeight = height - overviewIntroHeight - overviewGap - (mobile ? padding : compactPadding) * 2;
+		const available = height - padding * 2 - textAndGapsHeight;
+		if ((mobile ? available < minimumPhoneHeight : Math.max(introHeight, contentHeight) > height - padding * 2) || overviewOrbitHeight < (mobile ? preferredOrbitHeight : 160)) {
 			geometry = signature();
 			rebuilding = false;
 			return;
@@ -200,10 +227,18 @@ function mount(root: HTMLElement) {
 			gsap.set(root, { '--admonet-orbit-available-height': `${overviewOrbitHeight}px` });
 			if (!mobile) gsap.set(root, { '--admonet-overview-gap': `${overviewGap}px` });
 			if (mobile) {
+				const phoneWidth = Math.min(available * 410 / 788, panelInner.clientWidth, 320);
+				const phoneCenterY = padding + introHeight + gap + phoneWidth * 788 / 410 / 2;
 				gsap.set(root, {
+					'--ad-format-panel-content-height': `${contentHeight}px`,
+					'--ad-format-panel-intro-height': `${introHeight}px`,
+					'--ad-formats-panel-height': `${height}px`,
+					'--ad-formats-panel-padding': `${padding}px`,
+					'--ad-formats-phone-width': `${phoneWidth}px`,
+					'--admonet-overview-padding': `${padding}px`,
+					'--admonet-phone-center-y': `${phoneCenterY}px`,
+					'--admonet-sticky-height': `${height}px`,
 					'--admonet-track-distance': `${distance}px`,
-					'--ad-formats-text-height': `${textHeight}px`,
-					'--ad-formats-phone-width': `${Math.min(available * 410 / 788, 320)}px`,
 				});
 			}
 
@@ -467,6 +502,10 @@ function mount(root: HTMLElement) {
 				ScrollTrigger.update();
 			}
 			update(trigger, true);
+			if (growthFrom) {
+				const growthTo = Object.fromEntries(viewportGrowthProperties.map((property) => [property, root.style.getPropertyValue(property)]));
+				gsap.fromTo(root, growthFrom, { ...growthTo, duration: viewportGrowthDuration, ease: 'power2.out' });
+			}
 		}, root);
 		geometry = signature();
 	};
@@ -474,7 +513,12 @@ function mount(root: HTMLElement) {
 	const schedule = () => {
 		cancelAnimationFrame(frame);
 		frame = requestAnimationFrame(() => {
-			if (geometry !== signature()) rebuild();
+			clearTimeout(viewportTimer);
+			if (geometry === signature()) return;
+			if (root.dataset.networksPlayback === 'sticky' && !reduced.matches && stacked.matches
+				&& track.clientWidth === viewportWidth && measure.clientHeight !== viewportHeight) {
+				viewportTimer = window.setTimeout(() => rebuild(true), viewportSettleDelay);
+			} else rebuild();
 		});
 	};
 	const observer = new ResizeObserver(schedule);
@@ -498,6 +542,7 @@ function mount(root: HTMLElement) {
 		events.abort();
 		observer.disconnect();
 		cancelAnimationFrame(frame);
+		clearTimeout(viewportTimer);
 		reset();
 	};
 }

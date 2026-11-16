@@ -44,7 +44,8 @@
 {
 	:root
 	{
-		--layout-content-max-width: 1344px;
+		--layout-content-max-width: var(--layout-content-max-width-xl);
+		--layout-content-max-width-xl: 1344px;
 		--layout-header-height: 90px;
 	}
 }

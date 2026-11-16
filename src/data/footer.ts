@@ -27,7 +27,12 @@ export const footerData = {
 		},
 		menus: [
 			{ title: contentES.menus.solutions.title, items: [contentES.menus.solutions.items.advertisers, contentES.menus.solutions.items.developers, contentES.menus.solutions.items['wortise-ads']].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
-			{ title: contentES.menus.explore.title, items: [contentES.menus.explore.items.about, contentES.menus.explore.items.blog, contentES.menus.explore.items.glossary, contentES.menus.explore.items['sdk-documentation']].map((label, index) => ({ label, href: [undefined, undefined, externalButtons.es.glossaryUrl, externalButtons.es.sdkDocumentationUrl][index] ?? '', page: index === 0 ? 'about' as const : undefined })) },
+			{ title: contentES.menus.explore.title, items: [
+				{ label: contentES.menus.explore.items.about, page: 'about', href: '' },
+				{ label: contentES.menus.explore.items.blog, href: '' },
+				{ label: contentES.menus.explore.items.glossary, page: 'glossary', href: '' },
+				{ label: contentES.menus.explore.items['sdk-documentation'], href: externalButtons.es.sdkDocumentationUrl },
+			] },
 			{ title: contentES.menus.platform.title, variant: 'actions', items: [
 				{ label: contentES.menus.platform.items.login.label, href: externalButtons.es.loginUrl, button: { variant: 'primary-special', size: 'large' } },
 				{ label: contentES.menus.platform.items.demo.label, href: externalButtons.es.demoUrl, button: { variant: 'tertiary', icon: 'arrow-up-right' } },
@@ -50,7 +55,12 @@ export const footerData = {
 		},
 		menus: [
 			{ title: contentEN.menus.solutions.title, items: [contentEN.menus.solutions.items.advertisers, contentEN.menus.solutions.items.developers, contentEN.menus.solutions.items['wortise-ads']].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
-			{ title: contentEN.menus.explore.title, items: [contentEN.menus.explore.items.about, contentEN.menus.explore.items.blog, contentEN.menus.explore.items.glossary, contentEN.menus.explore.items['sdk-documentation']].map((label, index) => ({ label, href: [undefined, undefined, externalButtons.en.glossaryUrl, externalButtons.en.sdkDocumentationUrl][index] ?? '', page: index === 0 ? 'about' as const : undefined })) },
+			{ title: contentEN.menus.explore.title, items: [
+				{ label: contentEN.menus.explore.items.about, page: 'about', href: '' },
+				{ label: contentEN.menus.explore.items.blog, href: '' },
+				{ label: contentEN.menus.explore.items.glossary, page: 'glossary', href: '' },
+				{ label: contentEN.menus.explore.items['sdk-documentation'], href: externalButtons.en.sdkDocumentationUrl },
+			] },
 			{ title: contentEN.menus.platform.title, variant: 'actions', items: [
 				{ label: contentEN.menus.platform.items.login.label, href: externalButtons.en.loginUrl, button: { variant: 'primary-special', size: 'large' } },
 				{ label: contentEN.menus.platform.items.demo.label, href: externalButtons.en.demoUrl, button: { variant: 'tertiary', icon: 'arrow-up-right' } },
@@ -73,7 +83,12 @@ export const footerData = {
 		},
 		menus: [
 			{ title: contentPT.menus.solutions.title, items: [contentPT.menus.solutions.items.advertisers, contentPT.menus.solutions.items.developers, contentPT.menus.solutions.items['wortise-ads']].map((label, index) => ({ label, href: '', page: index === 2 ? 'wortise-ads' as const : undefined })) },
-			{ title: contentPT.menus.explore.title, items: [contentPT.menus.explore.items.about, contentPT.menus.explore.items.blog, contentPT.menus.explore.items.glossary, contentPT.menus.explore.items['sdk-documentation']].map((label, index) => ({ label, href: [undefined, undefined, externalButtons.pt.glossaryUrl, externalButtons.pt.sdkDocumentationUrl][index] ?? '', page: index === 0 ? 'about' as const : undefined })) },
+			{ title: contentPT.menus.explore.title, items: [
+				{ label: contentPT.menus.explore.items.about, page: 'about', href: '' },
+				{ label: contentPT.menus.explore.items.blog, href: '' },
+				{ label: contentPT.menus.explore.items.glossary, page: 'glossary', href: '' },
+				{ label: contentPT.menus.explore.items['sdk-documentation'], href: externalButtons.pt.sdkDocumentationUrl },
+			] },
 			{ title: contentPT.menus.platform.title, variant: 'actions', items: [
 				{ label: contentPT.menus.platform.items.login.label, href: externalButtons.pt.loginUrl, button: { variant: 'primary-special', size: 'large' } },
 				{ label: contentPT.menus.platform.items.demo.label, href: externalButtons.pt.demoUrl, button: { variant: 'tertiary', icon: 'arrow-up-right' } },

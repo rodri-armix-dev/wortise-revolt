@@ -1,0 +1,124 @@
+// sass-lint:disable-line force-pseudo-nesting
+:global(html:has([data-networks-pure-scrub]))
+{
+	scroll-behavior: auto;
+}
+
+.admonet-networks-test
+{
+	padding-block: 100svh;
+
+	&__controls
+	{
+		background: var(--color-surface-card);
+		border: 1px solid var(--color-border-editorial);
+		border-radius: var(--radius-md);
+		bottom: calc(var(--spacing-64) + var(--spacing-40) + env(safe-area-inset-bottom));
+		color: var(--color-text-primary);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-8);
+		left: calc(max(100%, var(--layout-min-width)) / 2);
+		max-width: calc(max(100%, var(--layout-min-width)) - var(--spacing-32));
+		min-width: 0;
+		padding: var(--spacing-8);
+		position: fixed;
+		transform: translateX(-50%);
+		width: min(420px, calc(max(100%, var(--layout-min-width)) - var(--spacing-32)));
+		z-index: 25;
+	}
+
+	&__button
+	{
+		align-self: flex-start;
+		background: var(--color-background-page);
+		border: 1px solid var(--color-border-editorial);
+		border-radius: var(--radius-menu-option);
+		color: inherit;
+		cursor: pointer;
+		display: grid;
+		flex: 0 0 auto;
+		padding-block: var(--spacing-8);
+		padding-inline: var(--spacing-12);
+	}
+
+	&__outline
+	{
+		align-items: center;
+		display: flex;
+		gap: var(--spacing-8);
+
+		input
+		{
+			accent-color: var(--color-text-highlight); // sass-lint:disable-line no-misspelled-properties
+			appearance: auto;
+		}
+	}
+
+	&__outline-legend
+	{
+		display: flex;
+		flex-wrap: wrap;
+		font-size: .75rem;
+		gap: var(--spacing-12);
+		list-style: none;
+		margin-block: var(--spacing-4) var(--spacing-8);
+
+		li:first-child // sass-lint:disable-line force-pseudo-nesting
+		{
+			color: var(--color-text-highlight);
+		}
+
+		li:nth-child(2) // sass-lint:disable-line force-pseudo-nesting
+		{
+			color: #ffcf75; // sass-lint:disable-line no-color-literals
+		}
+
+		li:last-child // sass-lint:disable-line force-pseudo-nesting
+		{
+			color: #82b9ff; // sass-lint:disable-line no-color-literals
+		}
+	}
+
+	&__scrub-speed
+	{
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-8);
+		margin-block-end: var(--spacing-8);
+
+		input
+		{
+			accent-color: var(--color-text-highlight); // sass-lint:disable-line no-misspelled-properties
+			appearance: auto;
+			width: 112px;
+		}
+
+		output
+		{
+			font-variant-numeric: tabular-nums;
+			min-width: 5ch;
+		}
+	}
+
+	&__scroll-progress
+	{
+		accent-color: var(--color-text-highlight); // sass-lint:disable-line no-misspelled-properties
+		display: block;
+		height: var(--spacing-4);
+		width: 100%;
+	}
+}
+
+@include l
+{
+	.admonet-networks-test
+	{
+		&__controls
+		{
+			bottom: calc(var(--spacing-64) + env(safe-area-inset-bottom));
+			max-width: calc(100% - (64px + var(--spacing-40)) * 2);
+		}
+	}
+}

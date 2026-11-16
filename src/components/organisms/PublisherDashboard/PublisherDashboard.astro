@@ -1,0 +1,71 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Button from '../../atoms/Button/Button.astro';
+import Description from '../../atoms/Description/Description.astro';
+import Icon from '../../atoms/Icon/Icon.astro';
+import Image from '../../atoms/Image/Image.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+
+export interface Props {
+	id: string;
+	textBlock: ComponentProps<typeof TextBlock>;
+	action: ComponentProps<typeof Button>;
+	items: {
+		id: string;
+		icon: ComponentProps<typeof Icon>['name'];
+		title: string;
+		description: ComponentProps<typeof Description>;
+		image: ComponentProps<typeof Image>;
+	}[];
+}
+
+const { id, textBlock, items, action } = Astro.props;
+---
+
+<section class="publisher-dashboard" id={id} data-publisher-dashboard>
+	<div class="publisher-dashboard__inner global-inner">
+		<div class="publisher-dashboard__text-block">
+			<TextBlock {...textBlock} />
+		</div>
+		<div class="publisher-dashboard__body">
+			<div class="publisher-dashboard__rail" aria-hidden="true">
+				<div class="publisher-dashboard__stage">
+					{items.map(({ id, image }) =>
+						<div class="publisher-dashboard__slide" data-dashboard-slide={id}>
+							<Image {...image} alt="" />
+						</div>
+					)}
+				</div>
+			</div>
+			<div class="publisher-dashboard__items">
+				{items.map((item) =>
+					<article class="publisher-dashboard__item" data-dashboard-item={item.id}>
+						<div class="publisher-dashboard__image">
+							<Image {...item.image} />
+						</div>
+						<div class="publisher-dashboard__content">
+							<div class="publisher-dashboard__icon">
+								<Icon name={item.icon} />
+							</div>
+							<div class="publisher-dashboard__copy">
+								<h3 class="publisher-dashboard__title">{item.title}</h3>
+								<Description {...item.description} />
+							</div>
+							<div class="publisher-dashboard__action">
+								<Button {...action} />
+							</div>
+						</div>
+					</article>
+				)}
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import './publisher-dashboard';
+</script>
+
+<style lang="scss">
+	@use './publisher-dashboard';
+</style>

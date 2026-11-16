@@ -45,6 +45,72 @@
       }
     }
   },
+  "callToAction": {
+    "title": "¿Te interesaría que grandes marcas muestren anuncios en tu app?",
+    "description": "Apple, McDonald's, Unilever, BBVA, Telefónica y cientos de anunciantes más ya pujan por inventario de calidad a través de nuestra demanda programática y campañas directas.",
+    "button": "Agenda una Demo"
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": {
+      "sdk-platforms": {
+        "question": "¿Qué plataformas soporta el SDK?",
+        "answer": "Android e iOS de forma nativa, además de Unity, Flutter y React Native."
+      },
+      "admonet-networks": {
+        "question": "¿Puedo usar AdMonet junto a otras redes?",
+        "answer": "Sí. Puedes combinar AdMonet con otras redes publicitarias y gestionar sus ubicaciones desde tu configuración de mediación."
+      },
+      "minimum-traffic": {
+        "question": "¿Hay un mínimo de descargas o tráfico?",
+        "answer": "Puedes solicitar el alta aunque tu app todavía esté creciendo. Revisamos cada caso según la app, su tráfico y el inventario disponible."
+      },
+      "payments": {
+        "question": "¿Cómo y cuándo se cobra?",
+        "answer": "Puedes consultar tus ingresos desde el panel. Los pagos se realizan según el método y el calendario acordados al activar tu cuenta."
+      }
+    }
+  },
+  "firstPayment": {
+    "title": "*De la integración* al primer pago",
+    "steps": {
+      "account": {
+        "title": "Crea tu cuenta",
+        "description": "Alta gratuita y revisión de tu app en menos de 24 horas."
+      },
+      "sdk": {
+        "title": "Integra el SDK",
+        "description": "Una dependencia, tus ubicaciones creadas y listo para probar."
+      },
+      "payout": {
+        "title": "Optimiza y cobra",
+        "description": "Activamos la demanda, tú ves crecer el eCPM desde el panel."
+      }
+    }
+  },
+  "dashboard": {
+    "eyebrow": "Más demanda · Más valor",
+    "title": "*Un panel que responde*\nla pregunta importante",
+    "description": "¿De dónde viene el dinero y cómo consigo más? Todo el rendimiento de tu portfolio, app por app y país por país.",
+    "button": "Empezar gratis",
+    "items": {
+      "mediation": {
+        "title": "Mediación con pujas en tiempo real",
+        "description": "Todas las redes compiten impresión a impresión. Sin waterfalls manuales, sin dejar dinero sobre la mesa.",
+        "imageAlt": "Panel de rendimiento con impresiones, clics, eCPM e ingresos por país."
+      },
+      "analytics": {
+        "title": "Analítica al detalle",
+        "description": "eCPM, fill rate, ARPDAU y LTV por país, versión, ubicación y cohorte, actualizados en tiempo real.",
+        "imageAlt": "Vista de analítica del panel de Wortise."
+      },
+      "sdk": {
+        "title": "SDK ligero",
+        "description": "Android e iOS, más Unity, Flutter y React Native. Integración en una tarde, sin impacto en el arranque.",
+        "imageAlt": "Vista del panel de Wortise para desarrolladores."
+      }
+    }
+  },
   "adNetworks": {
     "eyebrow": "Más demanda · Más valor",
     "title": "*Todas tus redes*\n en un solo lugar",

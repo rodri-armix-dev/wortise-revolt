@@ -1,0 +1,429 @@
+{
+  "slug": "glosario",
+  "meta": {
+    "title": "Glosario | Wortise",
+    "description": "Conceptos de ad tech explicados sin vueltas."
+  },
+  "intro": {
+    "eyebrow": "Glosario Wortise",
+    "heading": "El idioma de la publicidad,\n*en claro.*",
+    "description": "Conceptos de ad tech explicados sin vueltas. Buscá un término, explorá por letra o descubrí las ideas que conectan todo el ecosistema.",
+    "searchLabel": "¿Qué término querés entender?"
+  },
+  "letterNav": {
+    "eyebrow": "Navegación rápida",
+    "heading": "Encontrá lo que\nbuscás por letra.",
+    "label": "Por letra"
+  },
+  "dictionary": {
+    "eyebrow": "Diccionario",
+    "heading": "Conceptos",
+    "updatedLabel": "Actualizado en 2026",
+    "groups": [
+      {
+        "letter": "A",
+        "terms": [
+          {
+            "name": "Actualización de anuncios",
+            "definition": "Técnica que utilizan los administradores de sitios web para actualizar los anuncios en espacios con anuncios ya existentes. Su fin es generar una rotación de anuncios automática."
+          },
+          {
+            "name": "Adquisición de usuarios (UA)",
+            "definition": "Proceso para atraer nuevos usuarios a las aplicaciones utilizando tácticas de marketing."
+          },
+          {
+            "name": "Análisis competitivo",
+            "definition": "Análisis que se realiza con el objetivo de conocer cuáles son las principales debilidades y fortalezas de la competencia directa. Permite formar una estrategia de marketing más eficaz."
+          },
+          {
+            "name": "Análisis en la aplicación",
+            "definition": "Herramienta que permite guardar datos métricos en una base de datos a la que se puede ingresar con usuario y contraseña desde cualquier dispositivo."
+          },
+          {
+            "name": "Anuncios de notificación push",
+            "definition": "Sistema tecnológico que se utiliza en las aplicaciones para enviar mensajes a los usuarios de una app o sitio web."
+          },
+          {
+            "name": "Anuncios de vídeo nativos",
+            "definition": "Un formato de anuncio de video que se reproduce dentro del contenido de un sitio web o aplicación y coincide con su diseño. Su fin es integrarse para que parezca parte del contenido."
+          },
+          {
+            "name": "Anuncios intersticiales",
+            "definition": "Formato de anuncio que se caracteriza por ocupar toda la página. Suelen aparecer en pausas naturales o espacios de transición en la app o sitio web."
+          },
+          {
+            "name": "Anuncios nativos",
+            "definition": "Anuncios diseñados para integrarse con el estilo y la apariencia de una app o sitio web. Buscan crear la sensación de que no son anuncios para que el usuario no se sienta interrumpido."
+          },
+          {
+            "name": "Anuncios publicitarios",
+            "definition": "Formato publicitario que integra elementos interactivos como imágenes, textos y hasta sonido. Tiene medidas específicas y existen de tres tipos: fijos, expandibles y flotantes."
+          },
+          {
+            "name": "Anuncios reproducibles",
+            "definition": "Un tipo de anuncio interactivo que permite a los usuarios probar una demostración de una app o juego antes de descargarlo."
+          },
+          {
+            "name": "Anuncios responsivos",
+            "definition": "Anuncios publicitarios creados para ajustarse en forma y tamaño a cualquier espacio digital de manera automática."
+          },
+          {
+            "name": "ARPDAU (ingresos promedio por usuario activo diario)",
+            "definition": "El ingreso promedio por usuario activo diario es una métrica para analizar aplicaciones y un indicador clave de rendimiento (KPI) que refleja cómo los cambios en la aplicación están afectando su monetización."
+          },
+          {
+            "name": "ARPU (ingresos medios por usuario)",
+            "definition": "El ingreso promedio por usuario o unidad es un indicador clave que muestra la cantidad estimada de ingresos generados por cada usuario. Se suele calcular de forma mensual y anual."
+          },
+          {
+            "name": "Atribución",
+            "definition": "Acción de identificar qué tácticas o medios digitales son los más eficientes para impulsar las conversiones."
+          }
+        ]
+      },
+      {
+        "letter": "C",
+        "terms": [
+          {
+            "name": "Capping",
+            "definition": "Herramienta conocida como control de frecuencia que funciona para regular la cantidad de veces que se muestra un anuncio publicitario en un sitio web."
+          },
+          {
+            "name": "Cascada de anuncios",
+            "definition": "Sistema que ayuda a los administradores de redes publicitarias a organizar y listar el eCPM desde el porcentaje más alto al más bajo, con el fin de rentabilizar el proceso de monetización."
+          },
+          {
+            "name": "Compra desde la aplicación (IAP)",
+            "definition": "Término que se utiliza para describir cualquier tipo de compra que realiza un usuario dentro de la aplicación móvil."
+          },
+          {
+            "name": "Costo de adquisición de usuario (UAC)",
+            "definition": "Costos que derivan de la integración de nuevos usuarios al servicio o producto que ofrece un sitio web."
+          },
+          {
+            "name": "CPA (coste por acción)",
+            "definition": "Costo que paga un anunciante cada vez que se realiza una acción específica en su espacio digital, como una venta, un registro de usuario o una calificación de uso."
+          },
+          {
+            "name": "CPC (coste por clic)",
+            "definition": "Métrica que se utiliza para estimar el cobro y rendimiento de anuncios pagos en sitios webs, plataformas sociales o aplicaciones móviles."
+          },
+          {
+            "name": "CPI (costo por instalación)",
+            "definition": "Monto que un anunciante o empresa paga a un editor cada vez que un usuario instala una aplicación móvil a raíz de un anuncio. Se utiliza como una métrica importante para saber qué tan efectiva es una campaña en descargas e instalaciones."
+          },
+          {
+            "name": "CPM (coste por mil)",
+            "definition": "Indicador que muestra el costo que paga un anunciante por mil visualizaciones o impresiones que recibe un anuncio publicitario."
+          },
+          {
+            "name": "CTR (tasa de clics)",
+            "definition": "Métrica que permite conocer la cantidad de clics que tiene un enlace en relación a las impresiones. A nivel móvil, el CTR es la cantidad de clics de un anuncio en comparación con las visitas totales."
+          }
+        ]
+      },
+      {
+        "letter": "D",
+        "terms": [
+          {
+            "name": "DAU (Usuarios activos diarios)",
+            "definition": "Indicador que muestra la cantidad de usuarios que interactúan con una aplicación móvil en un periodo de 24 horas."
+          },
+          {
+            "name": "DSP (Plataforma de Demanda)",
+            "definition": "Plataforma del lado de la demanda que utilizan los anunciantes y agencias para comprar inventario publicitario."
+          },
+          {
+            "name": "Duración de la sesión",
+            "definition": "Medición de tiempo que suele gastar un usuario durante su visita en un sitio web, lo cual ayuda a los administradores a saber qué tan atractiva es la información que brindan."
+          }
+        ]
+      },
+      {
+        "letter": "E",
+        "terms": [
+          {
+            "name": "eCPM (coste efectivo por mil)",
+            "definition": "Métrica de rendimiento para conocer los ingresos estimados que recibe un editor por cada mil impresiones de un anuncio."
+          },
+          {
+            "name": "Experiencia de usuario (UX)",
+            "definition": "Factores que definen la relación, percepción y respuestas de los usuarios con una marca. Básicamente es la forma en que los clientes se sienten al interactuar con una empresa."
+          },
+          {
+            "name": "Experiencia de usuario por primera vez (FTUE)",
+            "definition": "Experiencia que se le brinda a un usuario por primera vez tras interactuar con una aplicación o sitio web."
+          }
+        ]
+      },
+      {
+        "letter": "F",
+        "terms": [
+          {
+            "name": "Fraude publicitario",
+            "definition": "Actividades fraudulentas para manipular artificialmente las métricas de rendimiento de las campañas publicitarias. Estas prácticas involucran frecuentemente bots que imitan el comportamiento humano para obtener ingresos de manera ilegal."
+          },
+          {
+            "name": "Fraude publicitario móvil",
+            "definition": "Acción en la que se intenta cometer fraude a los anunciantes o proveedores a través de publicidad móvil no solo para robar ingresos sino también suplantar SKDs."
+          }
+        ]
+      },
+      {
+        "letter": "G",
+        "terms": [
+          {
+            "name": "Generación de demanda",
+            "definition": "Rama del marketing online en la cual se llevan a cabo diferentes estrategias para aumentar el interés de los usuarios en los productos o servicios de un negocio."
+          },
+          {
+            "name": "Granja de clicks",
+            "definition": "Lugares físicos creados con el propósito de generar clics masivos a través de dispositivos electrónicos, generalmente para cometer fraude."
+          }
+        ]
+      },
+      {
+        "letter": "H",
+        "terms": [
+          {
+            "name": "Header bidding",
+            "definition": "Compra y venta de anuncios a través de subastas dentro de aplicaciones móviles."
+          }
+        ]
+      },
+      {
+        "letter": "I",
+        "terms": [
+          {
+            "name": "Impresión",
+            "definition": "Métrica que mide la cantidad de veces que se muestra un anuncio a los usuarios sin requerir interacción directa."
+          },
+          {
+            "name": "Informes en tiempo real",
+            "definition": "Práctica que se realiza en una empresa para recopilar datos actualizados tras generar información de sus usuarios que requieren una respuesta, para que se puedan tomar decisiones rápidas y acertadas."
+          },
+          {
+            "name": "Ingresos publicitarios",
+            "definition": "Herramienta que permite a los profesionales del marketing distribuir y evaluar los ingresos publicitarios de acuerdo a la fuente de adquisición del usuario."
+          },
+          {
+            "name": "Intercambio de anuncios",
+            "definition": "Plataforma tecnológica que fomenta la compra y venta de inventarios publicitarios de manera automatizada. Se le conoce como marketplace y funciona mediante subastas en tiempo real."
+          },
+          {
+            "name": "Inventario de anuncios",
+            "definition": "Cantidad de espacio publicitario o anuncios que un editor tiene disponible para la venta en su app o sitio web."
+          },
+          {
+            "name": "Inyección o generacion de clicks",
+            "definition": "Proceso que se lleva a cabo cuando un estafador virtual envía un compromiso falso en el enlace de descarga de una aplicación para tomar permisos de una fuente externa."
+          }
+        ]
+      },
+      {
+        "letter": "L",
+        "terms": [
+          {
+            "name": "Limitación de frecuencia",
+            "definition": "Cuota máxima de veces o tiempo que se muestra un anuncio publicitario a un usuario."
+          }
+        ]
+      },
+      {
+        "letter": "M",
+        "terms": [
+          {
+            "name": "Marketing de retención",
+            "definition": "Estrategias que usan los negocios para evitar la mayor cantidad de pérdidas en sus clientes y así evitar una reducción de ingresos."
+          },
+          {
+            "name": "MAU (Usuarios Activos Mensuales)",
+            "definition": "Métrica que sirve para medir, en un periodo de 30 días, la cantidad total de usuarios únicos que interactuaron con una app."
+          },
+          {
+            "name": "Mediación publicitaria",
+            "definition": "Uso de una plataforma tecnológica para administrar múltiples redes publicitarias y optimizar la entrega de anuncios, lo que ayuda a los editores a maximizar sus ingresos."
+          },
+          {
+            "name": "Métricas de participación del usuario",
+            "definition": "Métrica que permite saber a los administradores la cantidad de tiempo que los usuarios participan activamente en su sitio web."
+          },
+          {
+            "name": "Monetización",
+            "definition": "Beneficio que puede conseguirse en plataformas digitales a través de publicidad en apps, redes sociales o sitios web; ventas de productos y más."
+          }
+        ]
+      },
+      {
+        "letter": "O",
+        "terms": [
+          {
+            "name": "Oferta de encabezado",
+            "definition": "Estrategia de venta de publicidad a precios elevados mediante subastas donde los ad exchanges pujan para obtener el espacio."
+          },
+          {
+            "name": "Optimización creativa",
+            "definition": "Herramienta estratégica que permite a los desarrolladores optimizar su publicidad mediante el uso de tecnología en tiempo real."
+          },
+          {
+            "name": "Optimización de la tienda de aplicaciones (ASO)",
+            "definition": "Proceso en el cual se optimiza una app móvil con el objetivo de posicionarse entre los primeros resultados de búsquedas de los usuarios en las tiendas de aplicaciones móviles."
+          },
+          {
+            "name": "Optimización del piso",
+            "definition": "Ajuste dinámico de precios mínimos en subastas para maximizar ingresos."
+          },
+          {
+            "name": "Orientación contextual",
+            "definition": "Método que se utiliza para analizar la visibilidad y efectividad de un anuncio publicitario en una página web, para así determinar cuáles son los temas más relevantes para las campañas."
+          },
+          {
+            "name": "Orientación de anuncios",
+            "definition": "Acción de separar en grupos a los diferentes usuarios de una plataforma con el objetivo de hacerles llegar el mensaje adecuado para cada uno."
+          },
+          {
+            "name": "Orientación geográfica",
+            "definition": "Técnica que permite orientar publicidad específica a los usuarios de acuerdo a la zona geográfica en la que habitan."
+          }
+        ]
+      },
+      {
+        "letter": "P",
+        "terms": [
+          {
+            "name": "Piloto automático",
+            "definition": "En este estado la aplicación se optimiza de forma automática. El SDK de Wortise ajusta dinámicamente el orden de prioridad de las redes integradas según variables detectadas, con el objetivo de maximizar los ingresos del editor. Esto permite una optimización constante sin intervención manual."
+          },
+          {
+            "name": "Programática directa",
+            "definition": "Mecanismo que permite la compra y venta de publicidad entre anunciantes y editores de forma directa, sin intermediarios."
+          },
+          {
+            "name": "Promoción cruzada",
+            "definition": "Estrategia que permite a dos personas o empresas intercambiar anuncios entre aplicaciones."
+          },
+          {
+            "name": "Pruebas A/B",
+            "definition": "Experimento o práctica que compara dos versiones de un mismo contenido para comprobar cuál funciona mejor."
+          },
+          {
+            "name": "Publicidad contextual",
+            "definition": "Estrategia de publicidad que permite a los administradores de sitios web y aplicaciones a seleccionar el contenido publicitario correcto para sus diferentes usuarios."
+          },
+          {
+            "name": "Publicidad de respuesta directa",
+            "definition": "Tipo de estrategia de marketing que logra una respuesta directa de clientes potenciales tras generar anuncios atractivos con el fin de hacer un llamado a la acción."
+          },
+          {
+            "name": "Publicidad en la aplicación",
+            "definition": "Técnica o estrategia que se utiliza para mostrar anuncios publicitarios dentro de una aplicación móvil mientras es utilizada por un usuario."
+          },
+          {
+            "name": "Publicidad gráfica",
+            "definition": "Formato de publicidad online que incluye una mezcla de música, textos, imágenes o videos."
+          },
+          {
+            "name": "Publicidad programática",
+            "definition": "Compra y venta de anuncios de manera automatizada con el uso de algoritmos y datos, lo que permite conocer el historial del usuario, el comportamiento en línea, la ubicación y otros datos para ser más efectivos."
+          }
+        ]
+      },
+      {
+        "letter": "R",
+        "terms": [
+          {
+            "name": "Red publicitaria",
+            "definition": "Plataforma o empresa que conecta a los anunciantes con aplicaciones o sitios web que desean mostrar anuncios. Una red publicitaria se caracteriza por sumar la oferta publicitaria de los editores y coincidir con la de los anunciantes."
+          },
+          {
+            "name": "ROAS (retorno de la inversión publicitaria)",
+            "definition": "Estadística que se utiliza para medir el retorno de una inversión publicitaria en una campaña. Regularmente se toma en cuenta los ingresos obtenidos por cada dólar gastado en publicidad."
+          },
+          {
+            "name": "RTB (ofertas en tiempo real)",
+            "definition": "Proceso de subasta automatizada en tiempo real que permite la compra y venta de espacios publicitarios."
+          }
+        ]
+      },
+      {
+        "letter": "S",
+        "terms": [
+          {
+            "name": "Segmentación",
+            "definition": "Práctica común para clasificar a los usuarios en función de su comportamiento, zona geográfica y otros intereses."
+          },
+          {
+            "name": "Segmentación de audiencia",
+            "definition": "División de un mercado en grupos pequeños con características específicas como el comportamiento en línea, gustos y ubicación geográfica. Se utiliza para realizar campañas efectivas y acordes a las necesidades de cada persona."
+          },
+          {
+            "name": "Segmentación de usuarios",
+            "definition": "Proceso o táctica de dividir a los usuarios en diferentes grupos según intereses predeterminados."
+          },
+          {
+            "name": "Solicitud de anuncio",
+            "definition": "Un tipo de señal que se emite a una plataforma de ad exchange para atraer un anuncio que coincida con un espacio vacío de una página web o app."
+          },
+          {
+            "name": "SSP (Plataforma de Oferta)",
+            "definition": "Plataforma del lado de la oferta que utilizan los editores para facilitar la venta de espacios publicitarios en webs y apps."
+          }
+        ]
+      },
+      {
+        "letter": "T",
+        "terms": [
+          {
+            "name": "Tasa de conversión",
+            "definition": "Métrica que muestra el porcentaje de acciones realizadas por los usuarios tras hacer clic en un anuncio. Las acciones pueden ser una compra, instalación de app, reserva, etc."
+          },
+          {
+            "name": "Tasa de instalación a la acción",
+            "definition": "Métrica que permite conocer qué tan efectiva es una app al convertir a los interesados en usuarios activos. Se mide mediante las acciones que realizan los usuarios al ingresar a la app."
+          },
+          {
+            "name": "Tasa de llenado",
+            "definition": "Indicador que se utiliza en el sector logístico para saber qué pedidos se entregan a tiempo. En la publicidad digital se utiliza para medir los porcentajes de impresiones de anuncios que tuvieron éxito."
+          },
+          {
+            "name": "Tasa de participación",
+            "definition": "Indicador del porcentaje de interacción que ha tenido un perfil de negocios en redes sociales con sus seguidores."
+          },
+          {
+            "name": "Tasa de retención",
+            "definition": "Métrica que define la cantidad de clientes que una empresa puede retener durante un determinado periodo de tiempo."
+          },
+          {
+            "name": "Tasa de visibilidad de anuncios",
+            "definition": "Indicador de medición en la publicidad digital que permite conocer, en números exactos, la probabilidad de que un anuncio publicitario sea visto por un usuario o consumidor."
+          },
+          {
+            "name": "Tecnología publicitaria",
+            "definition": "Tecnología que los anunciantes y editores utilizan para ofrecer publicidad digital a las audiencias. Permiten comprar, vender, gestionar y medir anuncios."
+          },
+          {
+            "name": "Tráfico fraudulento",
+            "definition": "Tipo de tráfico en línea que no es generado por personas reales sino por bots que registran interacciones con clics, promoviendo fraudulentamente los ingresos."
+          }
+        ]
+      },
+      {
+        "letter": "V",
+        "terms": [
+          {
+            "name": "Valor de vida del cliente (CLV)",
+            "definition": "Cálculo que se utiliza para medir el “valor de vida” que ha tenido un cliente con una empresa. Permite promediar la ganancia generada por el cliente a lo largo del tiempo."
+          },
+          {
+            "name": "Video recompensado",
+            "definition": "Tipo de anuncio con recompensa que motiva al usuario a visualizar toda la publicidad a cambio de una recompensa."
+          },
+          {
+            "name": "Visibilidad",
+            "definition": "Revela la visibilidad que tienen los anuncios publicitarios en Internet. El solo hecho de que un anuncio aparezca a un usuario ya se toma como una oportunidad de visibilidad, aunque el usuario no lo haya visto."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+---
+import type { GlossaryGroup } from '../../../data/pages/glossary';
+import { getLocaleFromPath } from '../../../i18n/routes';
+import { getUiText } from '../../../i18n/ui';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+
+export interface Props {
+	eyebrow: string;
+	heading: string;
+	updatedLabel: string;
+	groups: readonly GlossaryGroup[];
+}
+
+const { eyebrow, heading, updatedLabel, groups } = Astro.props;
+const { glossaryNoResults, glossaryTerm, glossaryTerms } = getUiText(getLocaleFromPath(Astro.url.pathname));
+const total = groups.reduce((count, group) => count + group.terms.length, 0);
+---
+
+<section class="glossary-dictionary">
+	<div class="glossary-dictionary__inner global-inner">
+		<header class="glossary-dictionary__header">
+			<TextBlock eyebrow={{ label: eyebrow }} heading={{ html: heading, tag: 'h2', size: 'display-md' }} />
+			<p class="glossary-dictionary__summary">
+				<span data-glossary-count data-singular={glossaryTerm} data-plural={glossaryTerms}>{total} {total === 1 ? glossaryTerm : glossaryTerms}</span> · {updatedLabel}
+			</p>
+		</header>
+		<p class="glossary-dictionary__status" role="status" data-glossary-status={glossaryNoResults}></p>
+		{groups.map(({ letter, terms }) => (
+			<section class="glossary-dictionary__group" data-glossary-group={letter}>
+				<h3 class="glossary-dictionary__letter">{letter}</h3>
+				<dl class="glossary-dictionary__terms">
+					{terms.map(({ name, definition }) => (
+						<div class="glossary-dictionary__term" data-glossary-term>
+							<dt class="glossary-dictionary__name">{name}</dt>
+							<dd class="glossary-dictionary__definition">{definition}</dd>
+						</div>
+					))}
+				</dl>
+			</section>
+		))}
+	</div>
+</section>
+
+<style lang="scss">
+	@use './glossary-dictionary';
+</style>

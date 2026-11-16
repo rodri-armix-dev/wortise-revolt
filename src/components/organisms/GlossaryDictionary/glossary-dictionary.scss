@@ -1,0 +1,169 @@
+.glossary-dictionary
+{
+	padding-block-end: var(--spacing-64);
+
+	&__inner
+	{
+		--global-item-gap: var(--spacing-40);
+
+		align-items: stretch;
+	}
+
+	&__header
+	{
+		--heading-color: #e1e1f3; // sass-lint:disable-line no-color-literals
+		--text-block-intro-gap: var(--spacing-24);
+	}
+
+	&__summary
+	{
+		display: none;
+	}
+
+	&__status
+	{
+		margin: 0;
+
+		&:empty
+		{
+			position: absolute;
+		}
+	}
+
+	&__group
+	{
+		display: grid;
+		gap: var(--spacing-24);
+
+		&[hidden]
+		{
+			display: none;
+		}
+	}
+
+	&__letter
+	{
+		color: #ed0957; // sass-lint:disable-line no-color-literals
+		font-size: var(--font-size-display-xl);
+		font-weight: 400;
+		line-height: var(--line-height-display-xl);
+		margin: 0;
+	}
+
+	&__terms
+	{
+		display: grid;
+		gap: var(--spacing-40);
+		margin: 0;
+	}
+
+	&__term
+	{
+		border-bottom: 1px solid var(--color-border-subtle);
+		display: grid;
+		gap: var(--spacing-12);
+		padding-bottom: var(--spacing-32);
+
+		&[hidden]
+		{
+			display: none;
+		}
+
+		:global(mark)
+		{
+			background: var(--color-text-highlight);
+			border-radius: var(--radius-active-indicator);
+			color: var(--color-background-page);
+			padding-block: calc(var(--spacing-4) / 2);
+			padding-inline: var(--spacing-4);
+		}
+	}
+
+	&__name
+	{
+		font-size: var(--font-size-title-sm);
+		font-weight: 500;
+		line-height: var(--line-height-title-sm);
+	}
+
+	&__definition
+	{
+		color: var(--color-text-muted);
+		line-height: 1.25;
+		margin: 0;
+	}
+}
+
+@include l
+{
+	.glossary-dictionary
+	{
+		isolation: isolate;
+		overflow: clip;
+		padding-block-end: calc(var(--spacing-64) + var(--spacing-48));
+		position: relative;
+
+		&::after
+		{
+			background: url('../../../assets/pages/glossary/particles.png') center top / cover no-repeat;
+			bottom: 0;
+			content: '';
+			height: 608px;
+			inset-inline: 0;
+			opacity: .1;
+			pointer-events: none;
+			position: absolute;
+			z-index: -1;
+		}
+
+		&__inner
+		{
+			--global-item-gap: var(--spacing-64);
+		}
+
+		&__header
+		{
+			align-items: end;
+			display: flex;
+			gap: var(--spacing-24);
+			justify-content: space-between;
+		}
+
+		&__summary
+		{
+			color: var(--color-text-muted);
+			display: block;
+			font-size: 12px;
+			font-weight: 500;
+			letter-spacing: .26em;
+			line-height: 1.1667;
+			margin: 0;
+			text-transform: uppercase;
+		}
+
+		&__group
+		{
+			grid-template-columns: 1fr 2fr;
+		}
+
+		&__letter
+		{
+			align-self: start;
+			font-size: 168px;
+			font-weight: 300;
+			inset-block-start: var(--spacing-24);
+			line-height: 180px;
+			position: sticky;
+		}
+
+		&__term
+		{
+			padding-bottom: var(--spacing-40);
+		}
+
+		&__definition
+		{
+			max-width: 690px;
+		}
+	}
+}

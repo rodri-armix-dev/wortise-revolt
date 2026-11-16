@@ -1,4 +1,6 @@
 ---
+import type AboutTimeline from '../../organisms/AboutTimeline/AboutTimeline.astro';
+import type AboutHistory from '../../organisms/AboutHistory/AboutHistory.astro';
 import type ContactSection from '../../organisms/ContactSection/ContactSection.astro';
 import type LogoMarquee from '../../molecules/LogoMarquee/LogoMarquee.astro';
 import type Hero from '../../organisms/Hero/Hero.astro';
@@ -15,6 +17,9 @@ import type WorldSolutions from '../../organisms/WorldSolutions/WorldSolutions.a
 import type Kpis from '../../organisms/Kpis/Kpis.astro';
 import type VideoSection from '../../organisms/VideoSection/VideoSection.astro';
 import type ImageGallery from '../../organisms/ImageGallery/ImageGallery.astro';
+import type PublisherDashboard from '../../organisms/PublisherDashboard/PublisherDashboard.astro';
+import type FaqSection from '../../organisms/FaqSection/FaqSection.astro';
+import type ProcessTimeline from '../../organisms/ProcessTimeline/ProcessTimeline.astro';
 import type RecruitingSection from '../../organisms/RecruitingSection/RecruitingSection.astro';
 import type { ComponentProps } from 'astro/types';
 
@@ -29,12 +34,17 @@ export interface ModulePropsByType {
 	'admonet-networks': ComponentProps<typeof AdMonetNetworks>;
 	'ads-sections': ComponentProps<typeof AdsSections>;
 	'logo-marquee': ComponentProps<typeof LogoMarquee>;
+	'about-timeline': ComponentProps<typeof AboutTimeline>;
+	'about-history': ComponentProps<typeof AboutHistory>;
 	'about-us-cover': ComponentProps<typeof AboutUsCover>;
 	'audience-sections': ComponentProps<typeof AudienceSections>;
 	'world-solutions': ComponentProps<typeof WorldSolutions>;
 	kpis: ComponentProps<typeof Kpis>;
 	'video-section': ComponentProps<typeof VideoSection>;
 	'image-gallery': ComponentProps<typeof ImageGallery>;
+	'publisher-dashboard': ComponentProps<typeof PublisherDashboard>;
+	'faq-section': ComponentProps<typeof FaqSection>;
+	'process-timeline': ComponentProps<typeof ProcessTimeline>;
 	'recruiting-section': ComponentProps<typeof RecruitingSection>;
 }
 
@@ -129,9 +139,34 @@ const { modules } = Astro.props;
 			return <ImageGallery {...module.props} />;
 		}
 
+		if (module.type === 'publisher-dashboard') {
+			const { default: PublisherDashboard } = await import('../../organisms/PublisherDashboard/PublisherDashboard.astro');
+			return <PublisherDashboard {...module.props} />;
+		}
+
+		if (module.type === 'faq-section') {
+			const { default: FaqSection } = await import('../../organisms/FaqSection/FaqSection.astro');
+			return <FaqSection {...module.props} />;
+		}
+
+		if (module.type === 'process-timeline') {
+			const { default: ProcessTimeline } = await import('../../organisms/ProcessTimeline/ProcessTimeline.astro');
+			return <ProcessTimeline {...module.props} />;
+		}
+
 		if (module.type === 'recruiting-section') {
 			const { default: RecruitingSection } = await import('../../organisms/RecruitingSection/RecruitingSection.astro');
 			return <RecruitingSection {...module.props} />;
+		}
+
+		if (module.type === 'about-timeline') {
+			const { default: AboutTimeline } = await import('../../organisms/AboutTimeline/AboutTimeline.astro');
+			return <AboutTimeline {...module.props} />;
+		}
+
+		if (module.type === 'about-history') {
+			const { default: AboutHistory } = await import('../../organisms/AboutHistory/AboutHistory.astro');
+			return <AboutHistory {...module.props} />;
 		}
 
 		const { default: AboutUsCover } = await import('../../organisms/AboutUsCover/AboutUsCover.astro');

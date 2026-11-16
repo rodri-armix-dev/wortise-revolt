@@ -1,0 +1,48 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Description from '../../atoms/Description/Description.astro';
+import Heading from '../../atoms/Heading/Heading.astro';
+
+interface FaqItem {
+	id: string;
+	question: string;
+	answer: ComponentProps<typeof Description>['html'];
+}
+
+export interface Props {
+	id: string;
+	heading: ComponentProps<typeof Heading>['html'];
+	items: readonly FaqItem[];
+}
+
+const { id, heading, items } = Astro.props;
+---
+
+<section id={id} class="faq-section" aria-labelledby={`${id}-heading`}>
+	<div class="faq-section__inner global-inner">
+		<div class="faq-section__heading">
+			<Heading id={`${id}-heading`} html={heading} tag="h2" size={{ s: 'title-lg', l: 'display-md' }} />
+		</div>
+		<div class="faq-section__items">
+			{items.map((item, index) => (
+				<details id={`${id}-${item.id}`} class="faq-section__item" name={id} open={index === 0}>
+					<summary class="faq-section__question">
+						{item.question}
+						<span class="faq-section__indicator" aria-hidden="true"></span>
+					</summary>
+					<div class="faq-section__answer">
+						<Description html={item.answer} size="normal" />
+					</div>
+				</details>
+			))}
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './faq-section';
+</style>
+
+<script>
+	import './faq-section-motion';
+</script>

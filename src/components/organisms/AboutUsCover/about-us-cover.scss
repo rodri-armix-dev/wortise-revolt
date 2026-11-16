@@ -1,23 +1,45 @@
 .about-us-cover
 {
+	isolation: isolate;
+	overflow: clip;
 	padding-block: var(--spacing-32);
+	position: relative;
 
 	&__inner
 	{
-		--global-item-gap: var(--spacing-48);
-		align-items: stretch;
+		--global-item-gap: var(--spacing-64);
+	}
+
+	&::before
+	{
+		background: url('../../../assets/pages/about/cover-glow.svg') center / contain no-repeat;
+		content: '';
+		height: 1121.67px;
+		left: calc(37.5% + 598.2px);
+		pointer-events: none;
+		position: absolute;
+		top: calc(312.1px - var(--layout-header-height));
+		transform: translate(-50%, -50%) rotate(69.83deg);
+		width: 558.41px;
+		z-index: -1;
 	}
 
 	&__text-block
 	{
-		--description-line-height: 20px;
-		margin-inline: auto;
-		max-width: 663px;
+		max-width: 795px;
 		width: 100%;
 	}
 
 	&__media
 	{
 		width: 100%;
+	}
+}
+
+@include l
+{
+	.about-us-cover
+	{
+		padding-block-start: calc(var(--spacing-64) + var(--spacing-24));
 	}
 }

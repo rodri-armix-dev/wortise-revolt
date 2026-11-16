@@ -1,8 +1,13 @@
+import { clientMarqueeES } from '../client-marquee';
+import { footerCTAVisuals } from '../footer-cta';
 import { externalButtons } from '../external-buttons';
 import { headingHtml, descriptionHtml } from '../content/format';
 import { readContent } from '../content/validate';
 import rawES from '../../content/pages/developers/es.json';
 
+import mediationDashboard from '../../assets/pages/developers/mediation-dashboard.png';
+import analyticsDashboard from '../../assets/pages/developers/analytics-dashboard.png';
+import sdkDashboard from '../../assets/pages/developers/sdk-dashboard.png';
 import rewardedScreen from '../../assets/pages/developers/rewarded-ad-screen.webp';
 import interstitialScreen from '../../assets/pages/developers/interstitial-ad-screen.webp';
 import nativeScreen from '../../assets/pages/developers/native-ad-screen.webp';
@@ -14,6 +19,14 @@ import googleBuyerBadge from '../../assets/certifications/google-authorized-buye
 
 const contentES = readContent(rawES, 'pages/developers/es');
 
+const dashboardImages = {
+	mediation: mediationDashboard,
+	analytics: analyticsDashboard,
+	sdk: sdkDashboard,
+};
+const firstPaymentSteps = ['account', 'sdk', 'payout'] as const;
+const dashboardItems = ['mediation', 'analytics', 'sdk'] as const;
+
 export const developersPageData = {
 	es: {
 		key: 'developers',
@@ -21,6 +34,17 @@ export const developersPageData = {
 		meta: {
 			title: contentES.meta.title,
 			description: contentES.meta.description,
+		},
+		footerCTA: {
+			...footerCTAVisuals,
+			marquee: clientMarqueeES,
+			text: {
+				heading: { html: headingHtml(contentES.callToAction.title), tag: 'h2' },
+				description: { html: descriptionHtml(contentES.callToAction.description) },
+				actions: {
+					primary: { label: contentES.callToAction.button, href: externalButtons.es.demoUrl, target: '_blank', variant: 'primary-special', size: 'large', disabled: !externalButtons.es.demoUrl },
+				},
+			},
 		},
 		modules: [
 			{
@@ -125,6 +149,66 @@ export const developersPageData = {
 							action: { label: contentES.adNetworks.items.offerwall.button, variant: 'primary-special', size: 'medium', href: externalButtons.es.developersStartUrl || undefined, disabled: !externalButtons.es.developersStartUrl },
 						},
 					],
+				},
+			},
+			{
+				type: 'publisher-dashboard',
+				props: {
+					id: 'panel',
+					textBlock: {
+						alignment: 'center',
+						eyebrow: { label: contentES.dashboard.eyebrow },
+						heading: {
+							html: headingHtml(contentES.dashboard.title),
+							tag: 'h2',
+							size: { s: 'title-lg', l: 'display-lg' },
+						},
+						description: {
+							html: descriptionHtml(contentES.dashboard.description),
+							responsiveSize: { l: 'large' },
+						},
+					},
+					action: {
+						label: contentES.dashboard.button,
+						variant: 'tertiary',
+						icon: 'arrow-up-right',
+						href: externalButtons.es.developersStartUrl || undefined,
+						disabled: !externalButtons.es.developersStartUrl,
+					},
+					items: dashboardItems.map((id) => {
+						const item = contentES.dashboard.items[id];
+
+						return {
+							id,
+							icon: id,
+							title: item.title,
+							description: { html: descriptionHtml(item.description) },
+							image: { src: dashboardImages[id], alt: item.imageAlt },
+						};
+					}),
+				},
+			},
+			{
+				type: 'process-timeline',
+				props: {
+					id: 'primer-pago',
+					heading: headingHtml(contentES.firstPayment.title),
+					steps: firstPaymentSteps.map((id) => {
+						const step = contentES.firstPayment.steps[id];
+						return { id, title: headingHtml(step.title), description: descriptionHtml(step.description) };
+					}),
+				},
+			},
+			{
+				type: 'faq-section',
+				props: {
+					id: 'preguntas-frecuentes',
+					heading: headingHtml(contentES.faq.title),
+					items: Object.entries(contentES.faq.items).map(([id, item]) => ({
+						id,
+						question: item.question,
+						answer: descriptionHtml(item.answer),
+					})),
 				},
 			},
 		],

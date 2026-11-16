@@ -1,6 +1,6 @@
 import contracts from './contracts.json';
 
-type Contract = 'string' | { [key: string]: Contract };
+type Contract = 'string' | [Contract] | { [key: string]: Contract };
 
 export function validateContent(value: unknown, contract: Contract, path = 'content'): void {
 	if (contract === 'string') {
@@ -15,6 +15,11 @@ export function validateContent(value: unknown, contract: Contract, path = 'cont
 		if (isUrl && value && !value.startsWith('#')) {
 			try { new URL(value); } catch { throw new Error(`${path}: URL inválida.`); }
 		}
+		return;
+	}
+	if (Array.isArray(contract)) {
+		if (!Array.isArray(value)) throw new Error(`${path}: se esperaba una lista.`);
+		value.forEach((item, index) => validateContent(item, contract[0], `${path}[${index}]`));
 		return;
 	}
 	if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${path}: se esperaba un objeto.`);

@@ -1,0 +1,55 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Description from '../../atoms/Description/Description.astro';
+import Heading from '../../atoms/Heading/Heading.astro';
+import Image from '../../atoms/Image/Image.astro';
+import texture from '../../../assets/pages/about/timeline/texture.webp';
+
+interface TimelineItem {
+	year?: string;
+	title: string;
+	description: string;
+	image: ComponentProps<typeof Image>;
+}
+
+export interface Props {
+	items: readonly TimelineItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="about-timeline" style={`--about-timeline-texture: url("${texture.src}")`}>
+	<div class="about-timeline__inner global-inner">
+		<ol class="about-timeline__list" data-about-timeline role="list">
+			{items.map(({ year, title, description, image }, index) => (
+				<li class="about-timeline__item">
+					<div class="about-timeline__image">
+						<Image {...image} />
+					</div>
+					<span class="about-timeline__dot" data-about-timeline-dot aria-hidden="true"></span>
+					<div class="about-timeline__content">
+						{year && (
+							<p class="about-timeline__year">{year}</p>
+						)}
+						<Heading html={title} tag="h2" size={{ s: 'title-md', l: 'display-sm', xl: 'display-lg' }} />
+						<div class="about-timeline__description">
+							<Description html={description} size="normal" responsiveSize={{ l: 'large' }} />
+						</div>
+					</div>
+					{index === items.length - 1 && (
+						<span class="about-timeline__end" aria-hidden="true"></span>
+					)}
+				</li>
+			))}
+		</ol>
+	</div>
+</div>
+
+<script>
+	import './about-timeline-motion';
+</script>
+
+<style lang="scss">
+	@use './about-timeline';
+</style>

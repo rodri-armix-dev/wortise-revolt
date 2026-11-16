@@ -6,13 +6,19 @@ import { blogIntro, blogNewsletter } from '../../../data/blog/content';
 import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
 import ArticleCard from '../../molecules/ArticleCard/ArticleCard.astro';
 import BlogFeed from '../../organisms/BlogFeed/BlogFeed.astro';
-import Newsletter from '../../organisms/Newsletter/Newsletter.astro';
+import CTA from '../../organisms/CTA/CTA.astro';
+import NewsletterForm from '../../molecules/NewsletterForm/NewsletterForm.astro';
+import { footerCTAVisuals } from '../../../data/footer-cta';
 
 export interface Props {
 	locale: Locale;
 }
 const { locale } = Astro.props;
 const ui = getUiText(locale);
+const newsletterText = {
+	heading: { html: blogNewsletter.title, id: 'newsletter-heading', size: { s: 'display-sm', l: 'display-xl' } } as const,
+	description: { html: blogNewsletter.description },
+};
 const lead = getBlogCard(locale, 'programmatic-guaranteed');
 ---
 
@@ -31,7 +37,9 @@ const lead = getBlogCard(locale, 'programmatic-guaranteed');
 	</section>
 	<BlogFeed id="featured-posts" title={ui.blogFeatured} locale={locale} cards={getBlogCards(locale, featuredPostIds)} />
 	<BlogFeed id="more-stories" title={ui.blogStories} locale={locale} cards={getBlogCards(locale, storyPostIds)} mode="stories" />
-	<Newsletter locale={locale} {...blogNewsletter} />
+	<CTA {...footerCTAVisuals} text={newsletterText}>
+		<NewsletterForm slot="form" locale={locale} />
+	</CTA>
 </div>
 
 <style lang="scss">

@@ -1,0 +1,99 @@
+---
+import Play from '@lucide/astro/icons/play';
+import Pause from '@lucide/astro/icons/pause';
+import Rewind from '@lucide/astro/icons/rewind';
+import RotateCcw from '@lucide/astro/icons/rotate-ccw';
+import Scan from '@lucide/astro/icons/scan';
+import AdMonetNetworksStickyTest from '../../components/organisms/AdMonetNetworksStickyTest/AdMonetNetworksStickyTest.astro';
+import { developersPageData } from '../../data/pages/developers';
+import { isLocale, locales } from '../../i18n/config';
+import { getPagePath } from '../../i18n/routes';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+	return locales.filter((locale) => getPagePath(locale, 'admonet-networks-sticky-test')).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) return new Response(null, { status: 404 });
+
+const networks = developersPageData.es.modules.find((module) => module.type === 'admonet-networks');
+if (!networks) throw new Error('Missing AdMonet Networks module in the developers page');
+const panelCount = networks.props.items.length + 1;
+const phases = [
+	{ code: 'E', label: 'Entrada' },
+	{ code: 'I', label: 'Espera' },
+	{ code: 'S', label: 'Salida' },
+];
+const panelPhases = Array.from({ length: panelCount }, (_, index) => phases.filter(({ code }) => index !== panelCount - 1 || code !== 'S'));
+---
+
+<BaseLayout locale={locale} title="AdMonet Networks · CSS Snap">
+	<div class="admonet-networks-test">
+		<AdMonetNetworksStickyTest {...networks.props} />
+		<div class="admonet-networks-test__controls" role="group" aria-label="Depuración de la animación">
+			<div class="admonet-networks-test__buttons">
+				<button class="admonet-networks-test__button" type="button" data-networks-debug-toggle="wortise:css-snap:debug-hidden" aria-expanded="true" aria-controls="admonet-debug-tools admonet-debug-scroll-progress admonet-debug-timeline">Ocultar debug</button>
+				<div class="admonet-networks-test__tools" id="admonet-debug-tools">
+					<button class="admonet-networks-test__button" type="button" disabled data-networks-toggle aria-label="Reproducir" title="Reproducir">
+						<span data-networks-play-icon><Play size={18} aria-hidden="true" /></span>
+						<span data-networks-pause-icon hidden><Pause size={18} aria-hidden="true" /></span>
+					</button>
+					<button class="admonet-networks-test__button" type="button" disabled data-networks-restart aria-label="Reiniciar" title="Reiniciar">
+						<RotateCcw size={18} aria-hidden="true" />
+					</button>
+					<button class="admonet-networks-test__button" type="button" disabled data-networks-reverse aria-label="Reversa" aria-pressed="false" title="Reversa">
+						<Rewind size={18} aria-hidden="true" />
+					</button>
+					<button class="admonet-networks-test__button" type="button" data-networks-center aria-label="Centrar" title="Centrar">
+						<Scan size={18} aria-hidden="true" />
+					</button>
+					<div class="admonet-networks-test__loop">
+						<select class="admonet-networks-test__select" aria-label="Modo de reproducción" data-networks-mode>
+							<option value="stack" data-networks-snap-option>Apilado</option>
+							<option value="scroll">Scroll</option>
+							<option value="manual">Manual</option>
+						</select>
+						<select class="admonet-networks-test__select" aria-label="Fase en bucle" disabled data-networks-loop>
+							<option value="">Sin bucle</option>
+							{panelPhases.flatMap((options, index) => options.map(({ code, label }) => (
+								<option value={`P${index}${code}`}>P{index}{code} · {label}</option>
+							)))}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="admonet-networks-test__scroll-ruler" id="admonet-debug-scroll-progress">
+				<progress class="admonet-networks-test__scroll-progress" data-networks-scroll-progress aria-label="Progreso del scroll de la página" max="100" value="0"></progress>
+				{panelPhases.map((_, index) => (
+					<span class="admonet-networks-test__scroll-mark" data-networks-snap-mark={index} title={`Snap P${index}`} hidden></span>
+				))}
+			</div>
+			<ol class="admonet-networks-test__timeline" id="admonet-debug-timeline" aria-label="Secuencia de animaciones">
+				{panelPhases.map((options, index) => (
+					<li class="admonet-networks-test__segment" aria-label={`Panel ${index}`}>
+						<div class="admonet-networks-test__phases">
+							{options.map(({ code, label }) => (
+								<span class="admonet-networks-test__phase" data-networks-phase={code} data-networks-panel-index={index} title={label}>
+									<span class="admonet-networks-test__duration" data-networks-duration></span>
+									<span>P{index}{code}</span>
+									{index >= 2 && code === 'E' && (
+										<span class="admonet-networks-test__panel-marker" data-networks-panel-marker aria-hidden="true"></span>
+									)}
+								</span>
+							))}
+						</div>
+					</li>
+				))}
+			</ol>
+		</div>
+	</div>
+</BaseLayout>
+
+<script>
+	import '../../lib/admonet-debug-visibility';
+</script>
+
+<style lang="scss">
+	@use '../../components/organisms/AdMonetNetworksStickyTest/admonet-networks-sticky-test-page';
+</style>

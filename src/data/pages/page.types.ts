@@ -1,7 +1,8 @@
 import type { ComponentProps } from 'astro/types';
-import type FooterCTA from '../../components/organisms/FooterCTA/FooterCTA.astro';
+import type CTA from '../../components/organisms/CTA/CTA.astro';
 import ModulesPage from '../../components/templates/ModulesPage/ModulesPage.astro';
 import type LegalPage from '../../components/templates/LegalPage/LegalPage.astro';
+import type { GlossaryContent } from './glossary';
 import type { BlogPost } from '../blog/types';
 
 interface BasePageData<Key extends string = string> {
@@ -15,7 +16,7 @@ interface BasePageData<Key extends string = string> {
 
 export interface ModulesPageData<Key extends string = string> extends BasePageData<Key> {
 	template?: 'modules';
-	footerCTA?: ComponentProps<typeof FooterCTA>;
+	footerCTA?: ComponentProps<typeof CTA>;
 	modules: ComponentProps<typeof ModulesPage>['modules'];
 }
 
@@ -31,7 +32,12 @@ export interface BlogIndexPageData<Key extends string = string> extends BasePage
 export interface BlogArticlePageData<Key extends string = string> extends BasePageData<Key> {
 	template: 'blog-article';
 	content: BlogPost;
-	footerCTA?: ComponentProps<typeof FooterCTA>;
+	footerCTA?: ComponentProps<typeof CTA>;
 }
 
-export type EditorialPageData = ModulesPageData | LegalPageData | BlogIndexPageData | BlogArticlePageData;
+export interface GlossaryPageData<Key extends string = string> extends BasePageData<Key> {
+	template: 'glossary';
+	content: GlossaryContent;
+}
+
+export type EditorialPageData = ModulesPageData | LegalPageData | BlogIndexPageData | BlogArticlePageData | GlossaryPageData;

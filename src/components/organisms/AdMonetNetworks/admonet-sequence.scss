@@ -1,10 +1,11 @@
 .admonet-networks
 {
 	--ad-formats-inset: 0px; // sass-lint:disable-line zero-unit
-	--ad-formats-panel-height: calc(100svh - var(--ad-formats-inset) * 2);
+	--ad-formats-panel-height: var(--admonet-viewport-panel-height);
 	--ad-formats-panel-margin: var(--ad-formats-inset);
-	--ad-formats-phone-width: min(100%, 180px, calc(50svh * 410 / 788));
+	--ad-formats-phone-width: min(100%, 180px, calc(50dvh * 410 / 788));
 	--admonet-compact-panel-padding: var(--spacing-24);
+	--admonet-viewport-panel-height: calc(100dvh - var(--ad-formats-inset) * 2);
 
 	&__track
 	{
@@ -15,7 +16,7 @@
 
 	&__measure
 	{
-		height: var(--ad-formats-panel-height);
+		height: var(--admonet-viewport-panel-height);
 		pointer-events: none;
 		position: absolute;
 		visibility: hidden;
@@ -79,7 +80,7 @@
 			left: 50%;
 			opacity: var(--admonet-halo-opacity, 0);
 			position: absolute;
-			top: 50%;
+			top: var(--admonet-phone-center-y, 50%);
 			transform: translate(-50%, calc(-50% + var(--ad-formats-phone-y, 0%)));
 			width: var(--ad-formats-phone-width);
 		}
@@ -125,15 +126,28 @@
 			position: absolute;
 		}
 
+		.admonet-networks__inner,
+		.admonet-networks__scene,
+		.admonet-networks__panel[data-networks-panel]
+		{
+			will-change: transform, opacity;
+		}
+
 		.admonet-networks__phone
 		{
 			display: block;
 			left: 50%;
 			pointer-events: none;
 			position: absolute;
-			top: 50%;
+			top: var(--admonet-phone-center-y, 50%);
 			transform: translate(-50%, calc(-50% + var(--ad-formats-phone-y, 0%)));
 			width: var(--ad-formats-phone-width);
+			will-change: transform, opacity;
+		}
+
+		.admonet-networks__screen
+		{
+			will-change: transform;
 		}
 
 		.admonet-networks__glow
@@ -146,12 +160,14 @@
 
 	&[data-networks-playback='sticky']
 	{
+		--ad-format-panel-alignment: stretch;
+		--ad-format-panel-content-margin-start: auto;
 		--ad-formats-panel-padding: var(--admonet-compact-panel-padding);
 		--orbit-particles-editor-top: 0;
 
 		.admonet-networks__track
 		{
-			height: calc(var(--ad-formats-panel-height) + var(--admonet-track-distance) + var(--ad-formats-inset) * 2);
+			height: calc(var(--admonet-sticky-height) + var(--admonet-track-distance) + var(--ad-formats-inset) * 2);
 			padding-block: var(--ad-formats-inset);
 		}
 
@@ -168,19 +184,6 @@
 	}
 }
 
-@include os
-{
-	.admonet-networks
-	{
-		--ad-formats-panel-margin: 0;
-
-		&__overview
-		{
-			align-content: start;
-		}
-	}
-}
-
 @include osm
 {
 	.admonet-networks
@@ -192,11 +195,24 @@
 	}
 }
 
+@include os
+{
+	.admonet-networks
+	{
+		--ad-formats-panel-margin: 0;
+		--admonet-compact-panel-padding: var(--spacing-40);
+
+		&__overview
+		{
+			align-content: start;
+		}
+	}
+}
+
 @include l
 {
 	.admonet-networks
 	{
-		--ad-formats-panel-height: calc(100dvh - var(--ad-formats-inset) * 2);
 		--ad-formats-panel-padding: var(--admonet-compact-panel-padding);
 		--ad-formats-phone-width: min(230px, calc((var(--ad-formats-panel-height) - var(--spacing-64) * 2) * 410 / 788));
 		--admonet-compact-panel-padding: calc(var(--spacing-48) * 2);

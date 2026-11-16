@@ -1,0 +1,90 @@
+---
+import Scan from '@lucide/astro/icons/scan';
+import AdMonetNetworksGsapSnapTest from '../../components/organisms/AdMonetNetworksGsapSnapTest/AdMonetNetworksGsapSnapTest.astro';
+import { developersPageData } from '../../data/pages/developers';
+import { isLocale, locales } from '../../i18n/config';
+import { getPagePath } from '../../i18n/routes';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+	return locales.filter((locale) => getPagePath(locale, 'admonet-networks-events-test')).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) return new Response(null, { status: 404 });
+
+const networks = developersPageData.es.modules.find((module) => module.type === 'admonet-networks');
+if (!networks) throw new Error('Missing AdMonet Networks module in the developers page');
+const activeFormatCount = 2;
+const activeItems = networks.props.items.slice(0, activeFormatCount);
+const panelCount = activeItems.length + 1;
+const phases = [
+	{ code: 'E', label: 'Entrada' },
+	{ code: 'I', label: 'Espera' },
+	{ code: 'S', label: 'Salida' },
+];
+const panelPhases = Array.from({ length: panelCount }, (_, index) => phases.filter(({ code }) => index !== panelCount - 1 || code !== 'S'));
+---
+
+<BaseLayout locale={locale} title="Events">
+	<div class="admonet-networks-test">
+		<AdMonetNetworksGsapSnapTest {...networks.props} items={activeItems} />
+		<div class="admonet-networks-test__controls" role="group" aria-label="Depuración de la animación">
+			<div class="admonet-networks-test__buttons">
+				<button class="admonet-networks-test__button" type="button" data-networks-debug-toggle="wortise:gsap-snap:debug-hidden" aria-expanded="true" aria-controls="admonet-debug-tools admonet-debug-scroll-progress admonet-debug-timeline">Ocultar debug</button>
+				<div class="admonet-networks-test__tools" id="admonet-debug-tools">
+					<button class="admonet-networks-test__button" type="button" data-networks-center aria-label="Centrar" title="Centrar">
+						<Scan size={18} aria-hidden="true" />
+					</button>
+					<div class="admonet-networks-test__speed">
+						<label for="events-scroll-multiplier">Recorrido global</label>
+						<input class="admonet-networks-test__speed-number" id="events-scroll-multiplier" type="number" min="0.05" max="20" step="0.01" value="1" data-networks-scroll-multiplier />
+						<span aria-hidden="true">×</span>
+					</div>
+					{activeItems.length > 1 && phases.map(({ code, label }) => (
+						<div class="admonet-networks-test__speed">
+							<label for={`events-bulk-${code}`}>{label} P1–P{activeItems.length}</label>
+							<select class="admonet-networks-test__select" id={`events-bulk-${code}`} data-networks-bulk-duration={code}>
+								<option value="">Elegir duración</option>
+							</select>
+						</div>
+					))}
+				</div>
+			</div>
+			<div class="admonet-networks-test__scroll-ruler" id="admonet-debug-scroll-progress">
+				<progress class="admonet-networks-test__scroll-progress" data-networks-scroll-progress aria-label="Progreso del scroll de la página" max="100" value="0"></progress>
+				{panelPhases.map((_, index) => (
+					<span class="admonet-networks-test__scroll-range" data-networks-scroll-range hidden>
+						<button type="button" data-networks-go-to-panel={index} aria-label={`Ir a P${index}`} title={`Ir a P${index}`}>P{index}</button>
+					</span>
+				))}
+			</div>
+			<ol class="admonet-networks-test__timeline" id="admonet-debug-timeline" aria-label="Secuencia de animaciones">
+				{panelPhases.map((options, index) => (
+					<li class="admonet-networks-test__segment" aria-label={`Panel ${index}`}>
+						<div class="admonet-networks-test__phases">
+							{options.map(({ code, label }) => (
+								<span class="admonet-networks-test__phase" data-networks-phase={code} data-networks-panel-index={index} title={label}>
+									<select class="admonet-networks-test__phase-mode" data-networks-phase-duration aria-label={`Duración de P${index}${code} en segundos`}></select>
+									<span>P{index}{code}</span>
+									{index >= 2 && code === 'E' && (
+										<span class="admonet-networks-test__panel-marker" data-networks-panel-marker aria-hidden="true"></span>
+									)}
+								</span>
+							))}
+						</div>
+					</li>
+				))}
+			</ol>
+		</div>
+	</div>
+</BaseLayout>
+
+<script>
+	import '../../lib/admonet-debug-visibility';
+	import '../../components/organisms/AdMonetNetworksGsapSnapTest/admonet-events-sequence';
+</script>
+
+<style lang="scss">
+	@use '../../components/organisms/AdMonetNetworksGsapSnapTest/admonet-networks-gsap-snap-test-page';
+</style>

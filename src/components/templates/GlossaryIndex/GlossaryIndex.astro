@@ -1,0 +1,131 @@
+---
+import type { GlossaryContent } from '../../../data/pages/glossary';
+import GlossaryIntro from '../../organisms/GlossaryIntro/GlossaryIntro.astro';
+import GlossaryLetterNav from '../../organisms/GlossaryLetterNav/GlossaryLetterNav.astro';
+import GlossaryDictionary from '../../organisms/GlossaryDictionary/GlossaryDictionary.astro';
+
+export interface Props {
+	content: GlossaryContent;
+}
+
+const { content } = Astro.props;
+const { dictionary } = content;
+const groups = dictionary.groups.filter(({ terms }) => terms.length > 0);
+const letters = groups.map(({ letter }) => letter);
+---
+
+<div class="glossary-index" data-glossary-index>
+	<GlossaryIntro {...content.intro} />
+	<div class="glossary-index__letter-nav" data-glossary-letter-nav-wrapper>
+		<GlossaryLetterNav {...content.letterNav} letters={letters} />
+	</div>
+	<GlossaryDictionary {...dictionary} groups={groups} />
+</div>
+
+<script>
+	import { filterGlossaryGroup, normalizeGlossaryText } from '../../organisms/GlossaryDictionary/glossary-search';
+
+	for (const glossary of document.querySelectorAll('[data-glossary-index]')) {
+		const buttons = glossary.querySelectorAll<HTMLButtonElement>('[data-glossary-letter]');
+		const groups = glossary.querySelectorAll<HTMLElement>('[data-glossary-group]');
+		const letterNav = glossary.querySelector('[data-glossary-letter-nav]');
+		const letterNavWrapper = glossary.querySelector<HTMLElement>('[data-glossary-letter-nav-wrapper]');
+		const search = glossary.querySelector<HTMLInputElement>('[data-glossary-search]');
+		const status = glossary.querySelector<HTMLElement>('[data-glossary-status]');
+		const countLabel = glossary.querySelector<HTMLElement>('[data-glossary-count]');
+		let filter = '';
+
+		function isLetterFilter(value: string) {
+			return [...value].length === 1;
+		}
+
+		function updateLetterNav() {
+			if (letterNavWrapper && search) {
+				letterNavWrapper.inert = search.matches(':focus') || search.value.length > 0;
+			}
+		}
+
+		function updateResults() {
+			updateLetterNav();
+			const selectedLetter = isLetterFilter(filter) ? filter.toUpperCase() : undefined;
+			const query = selectedLetter ? '' : normalizeGlossaryText(filter);
+			for (const button of buttons) {
+				button.setAttribute('aria-pressed', String(button.dataset.glossaryLetter === selectedLetter));
+			}
+			let count = 0;
+			for (const group of groups) {
+				const matchesLetter = selectedLetter === undefined || group.dataset.glossaryGroup === selectedLetter;
+				const groupCount = matchesLetter ? filterGlossaryGroup(group, query) : 0;
+				group.hidden = groupCount === 0;
+				count += groupCount;
+			}
+			if (countLabel) {
+				const unit = count === 1 ? countLabel.dataset.singular : countLabel.dataset.plural;
+				countLabel.textContent = `${count} ${unit}`;
+			}
+			if (status) status.textContent = filter && count === 0 ? status.dataset.glossaryStatus ?? '' : '';
+		}
+
+		function setSearchValue(value: string) {
+			if (!search) return;
+			search.value = value;
+			search.dispatchEvent(new Event('glossary:search-sync'));
+		}
+
+		function readFilterFromUrl() {
+			const url = new URL(window.location.href);
+			let fragment = '';
+			try {
+				fragment = decodeURIComponent(url.hash.slice(1));
+			} catch {
+				// An invalid fragment is ignored.
+			}
+			if (fragment && document.getElementById(fragment)) return;
+
+			const value = fragment || url.searchParams.get('q') || url.searchParams.get('letter') || '';
+			filter = value.trim().normalize('NFC');
+			setSearchValue(isLetterFilter(filter) ? '' : filter);
+			updateResults();
+		}
+
+		function writeFilterToUrl(mode: 'replace' | 'push') {
+			const url = new URL(window.location.href);
+			const value = isLetterFilter(filter) ? filter.toLowerCase() : filter;
+			url.hash = encodeURIComponent(value);
+			url.searchParams.delete('q');
+			url.searchParams.delete('letter');
+
+			if (url.href === window.location.href) return;
+			if (mode === 'push') history.pushState(history.state, '', url);
+			else history.replaceState(history.state, '', url);
+		}
+
+		search?.addEventListener('focus', updateLetterNav);
+		search?.addEventListener('blur', updateLetterNav);
+		search?.addEventListener('input', () => {
+			filter = search.value.trim().normalize('NFC');
+			updateResults();
+			writeFilterToUrl('replace');
+		});
+
+		for (const button of buttons) {
+			button.addEventListener('click', () => {
+				const letter = button.dataset.glossaryLetter ?? '';
+				filter = filter.toUpperCase() === letter ? '' : letter;
+				setSearchValue('');
+				updateResults();
+				writeFilterToUrl('push');
+				if (filter) {
+					letterNav?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+				}
+			});
+		}
+
+		window.addEventListener('popstate', readFilterFromUrl);
+		readFilterFromUrl();
+	}
+</script>
+
+<style lang="scss">
+	@use './glossary-index';
+</style>

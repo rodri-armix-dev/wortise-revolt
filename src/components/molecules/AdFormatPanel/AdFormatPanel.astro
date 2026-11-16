@@ -11,15 +11,16 @@ export interface Props {
 	description: NonNullable<ComponentProps<typeof TextBlock>['description']>;
 	action: NonNullable<ComponentProps<typeof TextBlock>['actions']>['primary'];
 	image: ComponentProps<typeof Image>;
+	responsiveAlignment?: ComponentProps<typeof TextBlock>['responsiveAlignment'];
 }
 
-const { id, eyebrow, heading, description, action, image } = Astro.props;
+const { id, eyebrow, heading, description, action, image, responsiveAlignment = { os: 'center' } } = Astro.props;
 ---
 
 <section class="ad-format-panel" id={id} data-format-panel aria-labelledby={`${id}-heading`}>
 	<div class="ad-format-panel__inner global-inner">
 		<div class="ad-format-panel__intro" data-format-intro>
-			<TextBlock eyebrow={eyebrow} heading={{ ...heading, id: `${id}-heading`, tag: 'h2', size: { s: 'title-lg', l: 'display-md' } }} responsiveAlignment={{ os: 'center' }} />
+			<TextBlock eyebrow={eyebrow} heading={{ ...heading, id: `${id}-heading`, tag: 'h2', size: heading.size ?? { s: 'title-lg', l: 'display-md' } }} responsiveAlignment={responsiveAlignment} />
 		</div>
 		<div class="ad-format-panel__visual">
 			<div class="ad-format-panel__visual-image">
@@ -27,7 +28,7 @@ const { id, eyebrow, heading, description, action, image } = Astro.props;
 			</div>
 		</div>
 		<div class="ad-format-panel__content" data-format-content>
-			<TextBlock description={description} actions={{ primary: action }} responsiveAlignment={{ os: 'center' }} />
+			<TextBlock description={description} actions={{ primary: action }} responsiveAlignment={responsiveAlignment} />
 		</div>
 	</div>
 </section>

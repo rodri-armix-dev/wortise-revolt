@@ -1,0 +1,89 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Image from '../../atoms/Image/Image.astro';
+import AdFormatPanel from '../../molecules/AdFormatPanel/AdFormatPanel.astro';
+import PhoneMockup from '../../molecules/PhoneMockup/PhoneMockup.astro';
+import GlassSurface from '../../atoms/GlassSurface/GlassSurface.astro';
+import OrbitParticles from '../../molecules/OrbitParticles/OrbitParticles.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import { particleDurations, smoothIdleLoop } from './particle-motion';
+import { particleFrames, texturedParticles } from './particle-layout';
+
+export interface Props {
+	id: string;
+	items: ComponentProps<typeof AdFormatPanel>[];
+	textBlock: Pick<ComponentProps<typeof TextBlock>, 'eyebrow' | 'description'> & {
+		heading: NonNullable<ComponentProps<typeof TextBlock>['heading']>;
+	};
+	hub: {
+		label: string;
+		tagline: string;
+	};
+}
+
+const { id, textBlock, hub, items } = Astro.props;
+const headingId = `${id}-heading`;
+const hubOptics = {
+	lightAngle: -45,
+	lightIntensity: 23,
+	refraction: 100,
+	depth: 1,
+	dispersion: 44,
+	frost: 19,
+	splay: 0,
+} satisfies ComponentProps<typeof GlassSurface>['optics'];
+const glassParticles = import.meta.env.DEV ? (await import('./particle-preview')).glassParticles.map(smoothIdleLoop) : undefined;
+---
+
+<section class="admonet-networks" id={id} aria-labelledby={headingId} data-networks-stack>
+	<div class="admonet-networks__track" data-networks-track>
+		<div class="admonet-networks__measure" data-networks-measure aria-hidden="true"></div>
+		<div class="admonet-networks__stage" data-networks-stage style={{ '--admonet-stack-rows': items.length + 1 }}>
+			<div class="admonet-networks__glow" data-networks-glow aria-hidden="true"></div>
+			<div class="admonet-networks__panel admonet-networks__panel--0 admonet-networks__overview" data-networks-overview>
+				<div class="admonet-networks__inner global-inner" data-networks-intro>
+					<div class="admonet-networks__text-block">
+						<TextBlock {...textBlock} heading={{ ...textBlock.heading, id: headingId, tag: 'h2', size: { s: 'title-lg', l: 'display-md' } }} alignment="center" />
+					</div>
+				</div>
+				<div class="admonet-networks__scene" data-glass-scene data-networks-orbit-scene>
+					<div class="admonet-networks__art" data-glass-source aria-hidden="true"></div>
+					<GlassSurface optics={hubOptics}>
+						<div class="admonet-networks__art admonet-networks__art--backdrop" slot="backdrop"></div>
+						<div class="admonet-networks__hub" data-orbit-motion-target data-orbit-motion-accent={455}>
+							<p class="admonet-networks__hub-label">{hub.label}</p>
+							<p class="admonet-networks__hub-tagline">{hub.tagline}</p>
+						</div>
+					</GlassSurface>
+					<OrbitParticles fixedMobileSize frames={particleFrames} durations={particleDurations} glass={glassParticles} textured={texturedParticles.map(smoothIdleLoop)} />
+				</div>
+			</div>
+			{items.map((item, index) => (
+				<div class:list={['admonet-networks__panel', `admonet-networks__panel--${index + 1}`, 'admonet-networks__panel--format']} data-networks-panel style={{ '--admonet-stack-row': index + 2 }}>
+					<AdFormatPanel {...item} responsiveAlignment={{ osm: 'center' }} heading={{ ...item.heading, size: { s: 'title-lg', l: 'display-md', xl: 'display-xl' } }} />
+				</div>
+			))}
+			{items[0] && (
+				<div class="admonet-networks__phone" data-networks-phone aria-hidden="true">
+					<PhoneMockup image={items[0].image}>
+						<div class="admonet-networks__screens" slot="screen">
+							{items.map(({ image }) => (
+								<div class="admonet-networks__screen" data-networks-screen>
+									<Image {...image} loading="eager" />
+								</div>
+							))}
+						</div>
+					</PhoneMockup>
+				</div>
+			)}
+		</div>
+	</div>
+</section>
+
+<script>
+	import './admonet-sequence';
+</script>
+
+<style lang="scss">
+	@use './admonet-networks';
+</style>

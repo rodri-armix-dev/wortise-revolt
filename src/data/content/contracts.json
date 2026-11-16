@@ -705,12 +705,43 @@
     "hero": {
       "imageAlt": "string",
       "eyebrow": "string",
-      "title": "string",
-      "description": "string"
-    },
-    "statistics": {
-      "eyebrow": "string",
       "title": "string"
+    },
+    "history": {
+      "eyebrow": "string",
+      "title": "string",
+      "origin": "string",
+      "founding": "string"
+    },
+    "timeline": {
+      "origin": {
+        "year": "string",
+        "title": "string",
+        "description": "string",
+        "imageAlt": "string"
+      },
+      "platform": {
+        "year": "string",
+        "title": "string",
+        "description": "string",
+        "imageAlt": "string"
+      },
+      "expansion": {
+        "title": "string",
+        "description": "string",
+        "imageAlt": "string"
+      },
+      "today": {
+        "year": "string",
+        "title": "string",
+        "description": "string",
+        "imageAlt": "string"
+      },
+      "next": {
+        "title": "string",
+        "description": "string",
+        "imageAlt": "string"
+      }
     },
     "team": {
       "label": "string"
@@ -734,6 +765,113 @@
       "laptop": {
         "imageAlt": "string"
       }
+    },
+    "callToAction": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    }
+  },
+  "pages/glossary/es": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "intro": {
+      "eyebrow": "string",
+      "heading": "string",
+      "description": "string",
+      "searchLabel": "string"
+    },
+    "letterNav": {
+      "eyebrow": "string",
+      "heading": "string",
+      "label": "string"
+    },
+    "dictionary": {
+      "eyebrow": "string",
+      "heading": "string",
+      "updatedLabel": "string",
+      "groups": [
+        {
+          "letter": "string",
+          "terms": [
+            {
+              "name": "string",
+              "definition": "string"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "pages/glossary/en": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "intro": {
+      "eyebrow": "string",
+      "heading": "string",
+      "description": "string",
+      "searchLabel": "string"
+    },
+    "letterNav": {
+      "eyebrow": "string",
+      "heading": "string",
+      "label": "string"
+    },
+    "dictionary": {
+      "eyebrow": "string",
+      "heading": "string",
+      "updatedLabel": "string",
+      "groups": [
+        {
+          "letter": "string",
+          "terms": [
+            {
+              "name": "string",
+              "definition": "string"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "pages/glossary/pt": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "intro": {
+      "eyebrow": "string",
+      "heading": "string",
+      "description": "string",
+      "searchLabel": "string"
+    },
+    "letterNav": {
+      "eyebrow": "string",
+      "heading": "string",
+      "label": "string"
+    },
+    "dictionary": {
+      "eyebrow": "string",
+      "heading": "string",
+      "updatedLabel": "string",
+      "groups": [
+        {
+          "letter": "string",
+          "terms": [
+            {
+              "name": "string",
+              "definition": "string"
+            }
+          ]
+        }
+      ]
     }
   },
   "pages/blog/es": {
@@ -1033,93 +1171,6 @@
       "label": "string"
     }
   },
-  "pages/developers/es": {
-    "slug": "string",
-    "meta": {
-      "title": "string",
-      "description": "string"
-    },
-    "hero": {
-      "eyebrow": "string",
-      "title": "string",
-      "description": "string",
-      "button": "string",
-      "secondaryButton": "string"
-    },
-    "statistics": {
-      "items": {
-        "apps": {
-          "value": "string",
-          "label": "string"
-        },
-        "countries": {
-          "value": "string",
-          "label": "string"
-        },
-        "requests": {
-          "value": "string",
-          "label": "string"
-        },
-        "uptime": {
-          "value": "string",
-          "label": "string"
-        }
-      }
-    },
-    "certifications": {
-      "eyebrow": "string",
-      "title": "string",
-      "items": {
-        "1": {
-          "title": "string",
-          "description": "string"
-        },
-        "2": {
-          "title": "string",
-          "description": "string"
-        }
-      }
-    },
-    "adNetworks": {
-      "eyebrow": "string",
-      "title": "string",
-      "description": "string",
-      "hub": {
-        "label": "string",
-        "tagline": "string"
-      },
-      "items": {
-        "rewarded": {
-          "imageAlt": "string",
-          "eyebrow": "string",
-          "title": "string",
-          "description": "string",
-          "button": "string"
-        },
-        "interstitial": {
-          "imageAlt": "string",
-          "eyebrow": "string",
-          "title": "string",
-          "description": "string",
-          "button": "string"
-        },
-        "native": {
-          "imageAlt": "string",
-          "eyebrow": "string",
-          "title": "string",
-          "description": "string",
-          "button": "string"
-        },
-        "offerwall": {
-          "imageAlt": "string",
-          "eyebrow": "string",
-          "title": "string",
-          "description": "string",
-          "button": "string"
-        }
-      }
-    }
-  },
   "pages/advertisers/es": {
     "slug": "string",
     "meta": {
@@ -1192,6 +1243,159 @@
       "title": "string",
       "description": "string",
       "button": "string"
+    }
+  },
+  "pages/developers/es": {
+    "slug": "string",
+    "meta": {
+      "title": "string",
+      "description": "string"
+    },
+    "hero": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string",
+      "button": "string",
+      "secondaryButton": "string"
+    },
+    "statistics": {
+      "items": {
+        "apps": {
+          "value": "string",
+          "label": "string"
+        },
+        "countries": {
+          "value": "string",
+          "label": "string"
+        },
+        "requests": {
+          "value": "string",
+          "label": "string"
+        },
+        "uptime": {
+          "value": "string",
+          "label": "string"
+        }
+      }
+    },
+    "certifications": {
+      "eyebrow": "string",
+      "title": "string",
+      "items": {
+        "1": {
+          "title": "string",
+          "description": "string"
+        },
+        "2": {
+          "title": "string",
+          "description": "string"
+        }
+      }
+    },
+    "callToAction": {
+      "title": "string",
+      "description": "string",
+      "button": "string"
+    },
+    "faq": {
+      "title": "string",
+      "items": {
+        "sdk-platforms": {
+          "question": "string",
+          "answer": "string"
+        },
+        "admonet-networks": {
+          "question": "string",
+          "answer": "string"
+        },
+        "minimum-traffic": {
+          "question": "string",
+          "answer": "string"
+        },
+        "payments": {
+          "question": "string",
+          "answer": "string"
+        }
+      }
+    },
+    "firstPayment": {
+      "title": "string",
+      "steps": {
+        "account": {
+          "title": "string",
+          "description": "string"
+        },
+        "sdk": {
+          "title": "string",
+          "description": "string"
+        },
+        "payout": {
+          "title": "string",
+          "description": "string"
+        }
+      }
+    },
+    "dashboard": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string",
+      "button": "string",
+      "items": {
+        "mediation": {
+          "title": "string",
+          "description": "string",
+          "imageAlt": "string"
+        },
+        "analytics": {
+          "title": "string",
+          "description": "string",
+          "imageAlt": "string"
+        },
+        "sdk": {
+          "title": "string",
+          "description": "string",
+          "imageAlt": "string"
+        }
+      }
+    },
+    "adNetworks": {
+      "eyebrow": "string",
+      "title": "string",
+      "description": "string",
+      "hub": {
+        "label": "string",
+        "tagline": "string"
+      },
+      "items": {
+        "rewarded": {
+          "imageAlt": "string",
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "button": "string"
+        },
+        "interstitial": {
+          "imageAlt": "string",
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "button": "string"
+        },
+        "native": {
+          "imageAlt": "string",
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "button": "string"
+        },
+        "offerwall": {
+          "imageAlt": "string",
+          "eyebrow": "string",
+          "title": "string",
+          "description": "string",
+          "button": "string"
+        }
+      }
     }
   }
 }

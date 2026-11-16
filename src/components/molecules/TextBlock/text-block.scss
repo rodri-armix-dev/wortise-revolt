@@ -43,6 +43,11 @@
 		max-width: var(--text-block-eyebrow-max-width, none);
 	}
 
+	&__heading
+	{
+		max-width: var(--text-block-heading-max-width, none);
+	}
+
 	&__description
 	{
 		margin-inline: var(--text-block-description-margin-inline, 0);

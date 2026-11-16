@@ -1,0 +1,51 @@
+---
+import AdMonetNetworksGsapScrubTest from '../../components/organisms/AdMonetNetworksGsapScrubTest/AdMonetNetworksGsapScrubTest.astro';
+import { developersPageData } from '../../data/pages/developers';
+import { isLocale, locales } from '../../i18n/config';
+import { getPagePath } from '../../i18n/routes';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+	return locales.filter((locale) => getPagePath(locale, 'admonet-networks-gsap-scrub-test')).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) return new Response(null, { status: 404 });
+
+const networks = developersPageData.es.modules.find((module) => module.type === 'admonet-networks');
+if (!networks) throw new Error('Missing AdMonet Networks module in the developers page');
+---
+
+<BaseLayout locale={locale} title="AdMonet Networks · GSAP Scrub">
+	<div class="admonet-networks-test" data-networks-pure-scrub>
+		<AdMonetNetworksGsapScrubTest {...networks.props} />
+		<div class="admonet-networks-test__controls" role="group" aria-label="Depuración de la animación">
+			<button class="admonet-networks-test__button" type="button" data-networks-debug-toggle="wortise:gsap-scrub:debug-hidden" aria-expanded="true" aria-controls="admonet-debug-scroll-progress">Ocultar debug</button>
+			<div id="admonet-debug-scroll-progress">
+				<label class="admonet-networks-test__outline">
+					<input type="checkbox" data-networks-outline />
+					Contornos
+				</label>
+				<ul class="admonet-networks-test__outline-legend" aria-label="Colores de los contornos">
+					<li>Scrub</li>
+					<li>Flotación</li>
+					<li>Layout</li>
+				</ul>
+				<label class="admonet-networks-test__scrub-speed">
+					<span>Seguimiento del scrub</span>
+					<input type="range" min="0.25" max="0.5" step="0.01" value="0.5" data-networks-scrub-duration />
+					<output data-networks-scrub-duration-value>0,5 s</output>
+				</label>
+				<progress class="admonet-networks-test__scroll-progress" data-networks-section-progress aria-label="Progreso del scroll en AdMonet Networks" max="100" value="0"></progress>
+			</div>
+		</div>
+	</div>
+</BaseLayout>
+
+<script>
+	import '../../lib/admonet-debug-visibility';
+</script>
+
+<style lang="scss">
+	@use '../../components/organisms/AdMonetNetworksGsapScrubTest/admonet-networks-gsap-scrub-test-page';
+</style>

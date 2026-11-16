@@ -2,6 +2,10 @@ import { defaultLocale, isLocale, type Locale } from './config';
 
 export const uiText = {
 	es: {
+		glossaryClearSearch: 'Borrar búsqueda',
+		glossaryNoResults: 'No encontramos términos para tu búsqueda.',
+		glossaryTerm: 'término',
+		glossaryTerms: 'términos',
 		blogFeatured: 'Publicaciones destacadas',
 		blogStories: 'Más historias',
 		blogMore: 'Cargar más publicaciones',
@@ -60,6 +64,10 @@ export const uiText = {
 		legalEffectiveAt: 'Fecha de vigencia',
 	},
 	en: {
+		glossaryClearSearch: 'Clear search',
+		glossaryNoResults: 'No terms match your search.',
+		glossaryTerm: 'term',
+		glossaryTerms: 'terms',
 		blogFeatured: 'Featured posts',
 		blogStories: 'More stories',
 		blogMore: 'Load more posts',
@@ -118,6 +126,10 @@ export const uiText = {
 		legalEffectiveAt: 'Effective date',
 	},
 	pt: {
+		glossaryClearSearch: 'Limpar busca',
+		glossaryNoResults: 'Nenhum termo encontrado para sua busca.',
+		glossaryTerm: 'termo',
+		glossaryTerms: 'termos',
 		blogFeatured: 'Publicações em destaque',
 		blogStories: 'Mais histórias',
 		blogMore: 'Carregar mais publicações',

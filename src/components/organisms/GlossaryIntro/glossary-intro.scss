@@ -1,0 +1,192 @@
+.glossary-intro
+{
+	isolation: isolate;
+	overflow: clip;
+	padding-block: calc(var(--spacing-64) + var(--spacing-48)) calc(var(--spacing-64) + var(--spacing-16));
+	position: relative;
+
+	&::before
+	{
+		background: url('../../../assets/pages/glossary/glow-mobile.svg') center / contain no-repeat;
+		content: '';
+		height: 1085.66px;
+		left: 89px;
+		pointer-events: none;
+		position: absolute;
+		top: -495px;
+		transform: rotate(20.6deg);
+		width: 550.614px;
+		z-index: -1;
+	}
+
+	&__inner
+	{
+		--global-item-gap: var(--spacing-40);
+	}
+
+	&__text-block
+	{
+		--text-block-description-margin-inline: auto;
+		--text-block-description-max-width: 567px;
+		--text-block-intro-gap: var(--spacing-16);
+
+		max-width: 703px;
+	}
+
+	&__search
+	{
+		align-items: center;
+		background: var(--color-background-page);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-full);
+		color: var(--color-text-secondary);
+		display: flex;
+		gap: var(--spacing-16);
+		line-height: 1.25;
+		max-width: 751px;
+		min-height: 66px;
+		padding-block: var(--spacing-12);
+		padding-inline: var(--spacing-24);
+		scroll-margin-block-start: var(--spacing-40); // sass-lint:disable-line no-misspelled-properties
+		width: 100%;
+
+		&:focus-within
+		{
+			border-color: var(--color-border-focus);
+			box-shadow: 0 0 0 1px var(--color-border-focus);
+		}
+	}
+
+	&__field
+	{
+		align-items: center;
+		display: flex;
+		flex: 1;
+		gap: var(--spacing-16);
+		min-width: 0;
+	}
+
+	&__input
+	{
+		background: none;
+		border: 0;
+		color: inherit;
+		flex: 1;
+		min-width: 0;
+		padding: 0;
+
+		&:focus-visible
+		{
+			outline: none;
+		}
+
+		&::-webkit-search-cancel-button // sass-lint:disable-line no-vendor-prefixes
+		{
+			display: none;
+		}
+
+		&::placeholder
+		{
+			color: inherit;
+			opacity: 1;
+		}
+	}
+
+	&__icon
+	{
+		--icon-color: #ed0957; // sass-lint:disable-line no-color-literals
+		--icon-size: 24px;
+
+		display: flex;
+		flex: none;
+	}
+
+	&__shortcut
+	{
+		display: none;
+	}
+
+	&__clear
+	{
+		--icon-size: 16px;
+
+		align-items: center;
+		background: var(--color-surface-card);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-full);
+		color: var(--color-text-muted);
+		cursor: pointer;
+		display: flex;
+		flex: none;
+		height: var(--spacing-32);
+		justify-content: center;
+		padding: 0;
+		width: var(--spacing-32);
+
+		&[hidden]
+		{
+			display: none;
+		}
+	}
+}
+
+@include l
+{
+	.glossary-intro
+	{
+		padding-block-end: 0;
+		padding-block-start: calc(var(--spacing-64) + var(--spacing-64));
+
+		&::before
+		{
+			background-image: url('../../../assets/pages/glossary/glow.svg');
+			top: -585px;
+		}
+
+		&::after
+		{
+			background: url('../../../assets/pages/glossary/glow-secondary.svg') center / contain no-repeat;
+			content: '';
+			height: 981.019px;
+			left: calc(62.5% + 86px);
+			pointer-events: none;
+			position: absolute;
+			top: -566px;
+			transform: rotate(20.6deg);
+			width: 538.205px;
+			z-index: -1;
+		}
+
+		&__inner
+		{
+			--global-item-gap: var(--spacing-64);
+		}
+
+		&__text-block
+		{
+			--text-block-gap: var(--spacing-24);
+		}
+
+		&__search
+		{
+			background: var(--color-surface-card);
+		}
+
+		&__shortcut
+		{
+			color: var(--color-text-muted);
+			display: block;
+			font-family: inherit;
+			font-size: 14px;
+			font-weight: 500;
+			margin-inline-start: auto;
+			padding-inline: var(--spacing-16);
+			white-space: nowrap;
+
+			&[hidden]
+			{
+				display: none;
+			}
+		}
+	}
+}

@@ -1,0 +1,29 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Description from '../../atoms/Description/Description.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+
+export interface Props {
+	textBlock: ComponentProps<typeof TextBlock>;
+	columns: readonly string[];
+}
+
+const { textBlock, columns } = Astro.props;
+---
+
+<section class="about-history">
+	<div class="about-history__inner global-inner">
+		<div class="about-history__text-block">
+			<TextBlock {...textBlock} />
+		</div>
+		<div class="about-history__columns">
+			{columns.map((html) => (
+				<Description html={html} size="large" />
+			))}
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './about-history';
+</style>

@@ -1,0 +1,50 @@
+.glossary-index
+{
+	--glossary-section-gap: var(--spacing-32);
+
+	display: grid;
+	gap: var(--glossary-section-gap);
+	grid-template-columns: minmax(0, 1fr);
+	transition: gap 180ms ease;
+
+	&:has(> .glossary-index__letter-nav[inert])
+	{
+		gap: calc(var(--glossary-section-gap) / 2);
+	}
+
+	&__letter-nav
+	{
+		display: grid;
+		grid-template-rows: minmax(0, 1fr);
+		opacity: 1;
+		overflow: clip;
+		transition: grid-template-rows 180ms ease, opacity 180ms ease;
+
+		&[inert]
+		{
+			grid-template-rows: minmax(0, 0fr);
+			opacity: 0;
+		}
+	}
+}
+
+@include l
+{
+	.glossary-index
+	{
+		--glossary-section-gap: var(--spacing-64);
+	}
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+	.glossary-index
+	{
+		transition: none;
+
+		&__letter-nav
+		{
+			transition: none;
+		}
+	}
+}

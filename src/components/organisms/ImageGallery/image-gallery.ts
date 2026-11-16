@@ -57,7 +57,7 @@ class ImageGallery extends HTMLElement {
 						start: 'center center',
 						end: () => `+=${distance}`,
 						scrub: true,
-						anticipatePin: 1,
+						anticipatePin: this.classList.contains('image-gallery--office') ? 2 : 1,
 						invalidateOnRefresh: true,
 						onToggle: self => scene.style.setProperty('--image-carousel-will-change', self.isActive ? 'transform' : 'auto'),
 					},

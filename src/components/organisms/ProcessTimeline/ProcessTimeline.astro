@@ -1,0 +1,51 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Description from '../../atoms/Description/Description.astro';
+import Heading from '../../atoms/Heading/Heading.astro';
+
+interface Step {
+	id: string;
+	title: string;
+	description: ComponentProps<typeof Description>['html'];
+}
+
+export interface Props {
+	id: string;
+	heading: ComponentProps<typeof Heading>['html'];
+	steps: readonly Step[];
+}
+
+const { id, heading, steps } = Astro.props;
+---
+
+<section id={id} class="process-timeline" data-process-timeline>
+	<div class="process-timeline__inner global-inner">
+		<div class="process-timeline__heading">
+			<Heading html={heading} tag="h2" size={{ s: 'title-lg', l: 'display-md' }} />
+		</div>
+		<div class="process-timeline__sequence">
+			<div class="process-timeline__track" aria-hidden="true">
+				<div class="process-timeline__progress"></div>
+			</div>
+			<ol class="process-timeline__steps" style={{ '--process-timeline-step-count': steps.length }} role="list">
+				{steps.map((step, index) => (
+					<li class="process-timeline__step" data-step={step.id} style={{ '--process-timeline-step-index': index }}>
+						<div class="process-timeline__card">
+							<span class="process-timeline__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}.</span>
+							<Heading html={step.title} tag="h3" size={{ s: 'title-sm', l: 'title-md', xl: 'title-lg' }} />
+							<Description html={step.description} size="normal" />
+						</div>
+					</li>
+				))}
+			</ol>
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	@use './process-timeline';
+</style>
+
+<script>
+	import './process-timeline-motion';
+</script>

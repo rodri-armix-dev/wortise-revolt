@@ -10,6 +10,7 @@ $sizes: (
 	color: var(--description-color, var(--color-text-secondary));
 	line-height: var(--description-line-height, 1.5);
 	overflow-wrap: break-word;
+	text-wrap: var(--description-text-wrap, inherit); // sass-lint:disable-line no-misspelled-properties
 
 	@each $name, $value in $sizes
 	{

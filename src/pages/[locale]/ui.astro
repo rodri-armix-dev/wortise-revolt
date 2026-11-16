@@ -21,7 +21,7 @@ type ButtonState = NonNullable<ButtonProps['state']>;
 type ButtonVariant = NonNullable<ButtonProps['variant']>;
 import { isLocale, locales } from '../../i18n/config';
 import { getPagePath } from '../../i18n/routes';
-import type FooterCTA from '../../components/organisms/FooterCTA/FooterCTA.astro';
+import type CTA from '../../components/organisms/CTA/CTA.astro';
 import { footerCTAVisuals } from '../../data/footer-cta';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -39,7 +39,7 @@ const footerCTA = {
 		description: { html: '<p>Cuéntanos qué quieres lograr. El equipo de Wortise te ayuda a encontrar el mejor punto de partida.</p>' },
 		actions: { primary: { label: 'Contactar al equipo', href: '', variant: 'primary-special', size: 'large' } },
 	},
-} satisfies ComponentProps<typeof FooterCTA>;
+} satisfies ComponentProps<typeof CTA>;
 
 const states: ButtonState[] = ['default', 'hover', 'pressed', 'disabled'];
 const headingSizes: HeadingSize[] = ['title-xs', 'title-sm', 'title-md', 'title-lg', 'display-sm', 'display-md', 'display-lg', 'display-xl'];

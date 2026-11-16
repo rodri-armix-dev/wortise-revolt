@@ -1,7 +1,8 @@
+import { glossaryPageData } from './glossary';
 import { contactPageData } from './contact';
 import { homeData } from '../home';
-import { advertisersPageData } from './advertisers';
 import { aboutPageData } from './about';
+import { advertisersPageData } from './advertisers';
 import { developersPageData } from './developers';
 import { wortiseAdsPageData } from './wortise-ads';
 import type { Locale } from '../../i18n/config';
@@ -23,6 +24,7 @@ export const pageData = {
 	privacy: privacyPageData,
 	'sdk-terms': sdkTermsPageData,
 	blog: blogPageData,
+	glossary: glossaryPageData,
 	...blogArticlePages,
 } satisfies Record<string, Partial<Record<Locale, EditorialPageData>>>;
 

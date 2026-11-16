@@ -1,0 +1,48 @@
+---
+import type { ImageMetadata } from 'astro';
+import type { ComponentProps } from 'astro/types';
+import Logo from '../../atoms/Logo/Logo.astro';
+import { getDestinationHref } from '../../../data/destinations';
+import { getLocaleFromPath, isPage } from '../../../i18n/routes';
+import LogoMarquee from '../../molecules/LogoMarquee/LogoMarquee.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+export interface Props {
+	logo: ComponentProps<typeof Logo>;
+	text: ComponentProps<typeof TextBlock>;
+	background: ImageMetadata;
+	actionPage?: string;
+	marquee?: ComponentProps<typeof LogoMarquee>;
+}
+
+const { logo, text, background, actionPage, marquee } = Astro.props;
+const hasForm = Astro.slots.has('form');
+const headingSize = text.heading?.size ?? { s: 'display-sm', xl: 'display-xl' } as const;
+const href = actionPage && isPage(actionPage) ? getDestinationHref(getLocaleFromPath(Astro.url.pathname), actionPage) : undefined;
+const resolvedText = actionPage && text.actions?.primary ? { ...text, actions: { ...text.actions, primary: { ...text.actions.primary, href: href ?? '', disabled: !href } } } : text;
+const headingId = text.heading?.html.trim() ? text.heading.id ?? 'footer-cta-heading' : undefined;
+---
+
+<section class:list={['cta', { 'cta--with-form': hasForm, 'cta--with-marquee': marquee }]} style={{ '--cta-background': `url("${background.src}")` }} aria-labelledby={headingId}>
+	<div class="cta__inner global-inner">
+		<div class="cta__logo">
+			<Logo {...logo} />
+		</div>
+		<div class="cta__text-block">
+			<TextBlock {...resolvedText} heading={text.heading && { ...text.heading, id: headingId, size: headingSize }} alignment="center" />
+		</div>
+		{hasForm && (
+			<div class="cta__form">
+				<slot name="form" />
+			</div>
+		)}
+	</div>
+	{marquee && (
+		<div class="cta__marquee">
+			<LogoMarquee {...marquee} />
+		</div>
+	)}
+</section>
+
+<style lang="scss">
+	@use './cta';
+</style>
