@@ -34,6 +34,6 @@ const GlossaryIndex = page.template === 'glossary' ? (await import('../../compon
 	) : page.template === 'glossary' && GlossaryIndex ? (
 		<GlossaryIndex content={page.content} />
 	) : (
-		'modules' in page && <ModulesPage modules={page.modules} />
+		'modules' in page && <ModulesPage modules={page.modules} locale={locale} />
 	)}
 </BaseLayout>

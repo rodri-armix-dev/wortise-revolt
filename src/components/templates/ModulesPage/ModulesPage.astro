@@ -1,4 +1,5 @@
 ---
+import type { Locale } from '../../../i18n/config';
 import type AboutTimeline from '../../organisms/AboutTimeline/AboutTimeline.astro';
 import type AboutHistory from '../../organisms/AboutHistory/AboutHistory.astro';
 import type ContactSection from '../../organisms/ContactSection/ContactSection.astro';
@@ -57,9 +58,10 @@ export type PageModule = {
 
 export interface Props {
 	modules: PageModule[];
+	locale: Locale;
 }
 
-const { modules } = Astro.props;
+const { modules, locale } = Astro.props;
 ---
 
 <div class="modules-page">
@@ -115,8 +117,8 @@ const { modules } = Astro.props;
 		}
 
 		if (module.type === 'audience-sections') {
-			const { default: AudienceSections } = await import('../../organisms/AudienceSections/AudienceSections.astro');
-			return <AudienceSections {...module.props} />;
+			const { default: HomeScrollDriven } = await import('../../organisms/HomeScrollDriven/HomeScrollDriven.astro');
+			return <HomeScrollDriven {...module.props} locale={locale} />;
 		}
 
 		if (module.type === 'world-solutions') {
