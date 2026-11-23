@@ -107,8 +107,8 @@ const { modules, locale } = Astro.props;
 		}
 
 		if (module.type === 'admonet-networks') {
-			const { default: AdMonetNetworks } = await import('../../organisms/AdMonetNetworks/AdMonetNetworks.astro');
-			return <AdMonetNetworks {...module.props} />;
+			const { default: AdMonetNetworksDemo } = await import('../../organisms/AdMonetNetworksDemo/AdMonetNetworksDemo.astro');
+			return <AdMonetNetworksDemo {...module.props} />;
 		}
 
 		if (module.type === 'logo-marquee') {
