@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import ScrollPositionDemo from '../../../workshop/organisms/ScrollPositionDemo/ScrollPositionDemo.astro';
+import { scrollPositionDemos } from '../../../workshop/data/scroll-position-demos';
+import { locales } from '../../../i18n/config';
+import { getPagePath } from '../../../i18n/routes';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export const getStaticPaths = (() => locales.flatMap((locale) => scrollPositionDemos.flatMap((demo) =>
+	getPagePath(locale, `scroll-position-${demo.mode}`)
+		? [{ params: { locale, mode: demo.mode }, props: { locale, demo } }]
+		: [],
+))) satisfies GetStaticPaths;
+
+export interface Props extends InferGetStaticPropsType<typeof getStaticPaths> {}
+
+const { locale, demo } = Astro.props;
+const links = scrollPositionDemos.flatMap(({ mode, title }) => {
+	const href = getPagePath(locale, `scroll-position-${mode}`);
+	return href ? [{ href, title, current: mode === demo.mode }] : [];
+});
+---
+
+<BaseLayout locale={locale} title={`${demo.title} | Pruebas de scroll`}>
+	<ScrollPositionDemo demo={demo} links={links} />
+</BaseLayout>

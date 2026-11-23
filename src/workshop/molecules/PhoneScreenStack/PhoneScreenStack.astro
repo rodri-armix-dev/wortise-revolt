@@ -1,0 +1,27 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Image from '../../../components/atoms/Image/Image.astro';
+
+export interface Props {
+	screens: { image: ComponentProps<typeof Image>; range?: string }[];
+	transition: 'cover' | 'push';
+	elementLabel?: string;
+}
+
+const { screens, transition, elementLabel } = Astro.props;
+---
+
+<div class="phone-screen-stack" data-transition={transition} aria-hidden="true">
+	{screens.map(({ image, range }, index) => (
+		<div class="phone-screen-stack__screen" style={`--phone-screen-stack-enter: ${range ?? 'normal'}; --phone-screen-stack-exit: ${screens[index + 1]?.range ?? 'normal'};`}>
+			{elementLabel && (
+				<span class="phone-screen-stack__label">{elementLabel}</span>
+			)}
+			<Image {...image} alt="" loading="eager" />
+		</div>
+	))}
+</div>
+
+<style lang="scss">
+	@use './phone-screen-stack';
+</style>

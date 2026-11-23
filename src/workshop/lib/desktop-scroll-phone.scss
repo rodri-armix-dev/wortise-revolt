@@ -1,0 +1,27 @@
+@mixin desktop-scroll-phone($root)
+{ // sass-lint:disable-line indentation
+	@include l
+	{
+		#{$root}
+		{
+			--workshop-desktop-phone-max-width: 230px;
+			--workshop-desktop-phone-width: min(var(--workshop-desktop-phone-max-width), calc(68svh * 410 / 788));
+		}
+	}
+
+	@include xl
+	{
+		#{$root}
+		{
+			--workshop-desktop-phone-max-width: 270px;
+		}
+	}
+
+	@include xxl
+	{
+		#{$root}
+		{
+			--workshop-desktop-phone-max-width: 380px;
+		}
+	}
+}

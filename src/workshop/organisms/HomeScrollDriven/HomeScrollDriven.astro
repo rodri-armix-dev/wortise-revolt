@@ -1,0 +1,97 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Button from '../../../components/atoms/Button/Button.astro';
+import Description from '../../../components/atoms/Description/Description.astro';
+import Eyebrow from '../../../components/atoms/Eyebrow/Eyebrow.astro';
+import Heading from '../../../components/atoms/Heading/Heading.astro';
+import type AudienceSectionsItem from '../../../components/molecules/AudienceSectionsItem/AudienceSectionsItem.astro';
+import PhoneMockup from '../../../components/molecules/PhoneMockup/PhoneMockup.astro';
+import type { Locale } from '../../../i18n/config';
+import { getPagePath, isPage } from '../../../i18n/routes';
+import PhoneScreenStack from '../../molecules/PhoneScreenStack/PhoneScreenStack.astro';
+import ScrollTimingControls from '../../molecules/ScrollTimingControls/ScrollTimingControls.astro';
+import { getScreenRange, scrollTimingDefaultsStyle } from '../../lib/scroll-timing';
+
+export interface Props {
+	items: ComponentProps<typeof AudienceSectionsItem>[];
+	locale: Locale;
+	originalHref?: string;
+}
+
+const { items, locale, originalHref } = Astro.props;
+const first = items[0];
+const panels = items.map((item) => {
+	const page = item.action.page ?? item.variant;
+	return {
+		...item,
+		headingId: `home-scroll-${item.variant}-heading`,
+		href: isPage(page) ? getPagePath(locale, page) : undefined,
+	};
+});
+const screens = panels.map(({ image }, index) => ({
+	image,
+	range: index === 0 ? undefined : getScreenRange(index),
+}));
+---
+
+<div class="home-scroll" data-text-transition="fade" data-scroll-timing style={scrollTimingDefaultsStyle}>
+	<header class="home-scroll__header global-inner">
+		<Heading tag="h1" html="Soluciones del home" size={{ s: 'display-sm', l: 'display-lg' }} />
+		{originalHref && (
+			<a href={originalHref}>Comparar con el home</a>
+		)}
+	</header>
+	{items.length === 3 && (
+		<div class="home-scroll__settings global-inner">
+			<ScrollTimingControls id="home-scroll-timing" />
+		</div>
+	)}
+	{first && (
+		<div class:list={['home-scroll__track', { 'home-scroll__track--animated': items.length === 3 }]} data-phone-bounce={items.length === 3 ? '' : undefined}>
+			{items.length === 3 && (
+				<div class="home-scroll__markers" aria-hidden="true">
+					<span class="home-scroll__marker home-scroll__marker--appearance" data-bounce-marker="appearance"></span>
+					<span class="home-scroll__marker home-scroll__marker--wait" data-bounce-marker="wait"></span>
+				</div>
+			)}
+			<div class="home-scroll__anchor">
+				<div class="home-scroll__scene">
+					<div class="home-scroll__inner global-inner">
+						<div class="home-scroll__phone" aria-hidden="true">
+							<div class="home-scroll__phone-bounce">
+								<PhoneMockup image={first.image}>
+									<PhoneScreenStack slot="screen" screens={screens} transition="push" />
+								</PhoneMockup>
+							</div>
+						</div>
+						{panels.map(({ variant, eyebrow, heading, description, image, action, headingId, href }, index) => (
+							<section class="home-scroll__panel" data-variant={variant} style={`--home-scroll-index: ${index};`} aria-labelledby={headingId}>
+								<div class="home-scroll__intro">
+									<Eyebrow label={eyebrow} />
+									<Heading id={headingId} html={heading} size={{ s: 'title-lg', l: 'display-lg' }} />
+								</div>
+								<div class="home-scroll__preview">
+									<PhoneMockup image={image} />
+								</div>
+								<div class="home-scroll__content">
+									<div class="home-scroll__description">
+										<Description html={description} />
+									</div>
+									<Button label={action.label} href={href} variant="primary-special" size="medium" disabled={!href} />
+								</div>
+							</section>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	)}
+</div>
+
+<script>
+	import './home-scroll-bounce';
+</script>
+
+<style lang="scss">
+	@use './home-scroll-driven';
+</style>

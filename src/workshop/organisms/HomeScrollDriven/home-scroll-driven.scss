@@ -1,0 +1,521 @@
+@use '../../lib/desktop-scroll-phone' as *;
+@use '../../lib/glow-edge-fade' as *;
+@use '../../lib/mobile-scroll-layout' as *;
+@use '../../lib/phone-bounce' as *;
+@use '../../lib/scroll-text-transition' as *;
+@use '../../lib/scroll-timing' as *;
+@use './iphone-safari' as *;
+
+$glow-ease: cubic-bezier(.5, 0, .5, 1);
+$rise-range: entry 25% entry 100%;
+
+.home-scroll
+{
+	@include scroll-text-transition;
+	--home-scroll-arrival-distance: var(--home-scroll-copy-travel);
+	--home-scroll-content-column: 1;
+	--home-scroll-content-row: 3;
+	--home-scroll-copy-travel: var(--spacing-32);
+	--home-scroll-device-width: clamp(140px, calc((100svh - 450px) * 410 / 788), 220px);
+	--home-scroll-height: 100svh;
+	--home-scroll-mobile-device-max-width: #{$mobile-scroll-phone-width-s};
+	--home-scroll-phone-column: 1;
+	--home-scroll-phone-row: 2;
+	--home-scroll-pin-inset: 0px; // sass-lint:disable-line zero-unit
+	--home-scroll-pinned-travel: calc(2 * var(--scroll-step) + var(--scroll-pause));
+	--home-scroll-timeline-end-inset: calc(100dvh - 100svh);
+	--home-scroll-wait-start: min(6svh, var(--scroll-pause) * .2);
+
+	&__anchor
+	{
+		display: contents;
+	}
+
+	&__settings
+	{
+		margin-block-end: var(--spacing-24);
+	}
+
+	&__markers
+	{
+		display: none;
+	}
+
+	&__header
+	{
+		--global-item-gap: var(--spacing-16);
+		align-items: start;
+		min-height: calc(75svh - var(--layout-header-height));
+		padding-block: var(--spacing-48);
+
+		a
+		{
+			text-decoration: underline;
+		}
+	}
+
+	&__inner
+	{
+		--global-item-gap: var(--spacing-32);
+		display: grid;
+		gap: 0;
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	&__panel
+	{
+		align-items: center;
+		display: grid;
+		gap: var(--global-item-gap);
+		grid-template-columns: minmax(0, 1fr);
+		isolation: isolate;
+		justify-items: center;
+		min-height: var(--home-scroll-height);
+		padding-block: var(--spacing-32);
+		position: relative;
+
+		&[data-variant='developers']
+		{
+			--home-scroll-backdrop: radial-gradient(ellipse 46% 95% at center, #630f2b, #26020e 67%, transparent 100%); // sass-lint:disable-line no-color-literals
+		}
+
+		&[data-variant='advertisers']
+		{
+			--home-scroll-backdrop: radial-gradient(ellipse 46% 95% at center, #130d39, #120a0d 67%, transparent 100%); // sass-lint:disable-line no-color-literals
+		}
+
+		&[data-variant='wortise-ads']
+		{
+			--home-scroll-backdrop: radial-gradient(ellipse at center, rgba(97, 93, 134, .35), transparent 65%); // sass-lint:disable-line no-color-literals
+		}
+
+		&::before
+		{
+			background: var(--home-scroll-backdrop);
+			bottom: 0;
+			content: '';
+			left: 50%;
+			pointer-events: none;
+			position: absolute;
+			top: 0;
+			transform: translateX(-50%);
+			width: max(100vw, var(--layout-min-width));
+			z-index: -1;
+		}
+	}
+
+	&__intro
+	{
+		--eyebrow-white-space: normal;
+		--heading-text-wrap: balance;
+		display: grid;
+		gap: var(--spacing-16);
+		grid-area: 1 / 1;
+		max-width: $mobile-scroll-column-width;
+		min-width: 0;
+		text-align: center;
+		width: 100%;
+	}
+
+	&__content
+	{
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-24);
+		grid-column: var(--home-scroll-content-column);
+		grid-row: var(--home-scroll-content-row);
+		max-width: $mobile-scroll-column-width;
+		min-width: 0;
+		text-align: center;
+	}
+
+	&__description
+	{
+		--description-color: var(--color-text-secondary);
+		--description-line-height: var(--line-height-title-xs);
+		font-size: 18px;
+	}
+
+	&__phone
+	{
+		display: none;
+	}
+
+	&__preview
+	{
+		grid-column: var(--home-scroll-phone-column);
+		grid-row: var(--home-scroll-phone-row);
+		width: var(--home-scroll-device-width);
+	}
+
+}
+
+@include desktop-scroll-phone('.home-scroll');
+
+@include l
+{
+	.home-scroll
+	{
+		--home-scroll-content-column: 3;
+		--home-scroll-content-row: 1;
+		--home-scroll-copy-travel: calc(var(--home-scroll-height) / 2);
+		--home-scroll-device-width: var(--workshop-desktop-phone-width);
+		--home-scroll-phone-column: 2;
+		--home-scroll-phone-row: 1;
+
+		&__panel
+		{
+			grid-template-columns: minmax(0, 1fr) var(--home-scroll-device-width) minmax(0, 1fr);
+		}
+
+		&__intro
+		{
+			--heading-text-wrap: wrap;
+			justify-self: start;
+			text-align: left;
+		}
+
+		&__content
+		{
+			align-items: start;
+			gap: var(--spacing-32);
+			max-width: 346px;
+			text-align: left;
+		}
+
+		&__description
+		{
+			font-size: var(--font-size-title-xs);
+			font-weight: 500;
+		}
+	}
+}
+
+@include xl
+{
+	.home-scroll
+	{
+		&__inner
+		{
+			--layout-content-max-width: 1308px;
+		}
+
+		&__content
+		{
+			justify-self: end;
+			margin-inline-end: var(--spacing-48);
+		}
+	}
+}
+
+@include xxl
+{
+	.home-scroll
+	{
+		&__inner
+		{
+			--layout-content-max-width: 1584px;
+		}
+	}
+}
+
+@include om
+{
+	.home-scroll
+	{
+		--home-scroll-mobile-device-max-width: #{$mobile-scroll-phone-width-m};
+	}
+}
+
+@scope (html:not([data-workshop-reduce])) // sass-lint:disable-line space-after-colon
+{
+	@supports (animation-timeline: view()) and (animation-range: entry 25% contain 100%) and (grid-template-rows: subgrid)
+	{
+		@media (prefers-reduced-motion: no-preference)
+		{
+			@media (min-height: $mobile-scroll-min-height), #{media-query(l)} and (min-height: 540px)
+			{
+				.home-scroll
+				{
+					&__track
+					{
+						&--animated
+						{
+							height: calc(var(--home-scroll-height) + var(--home-scroll-pinned-travel));
+							position: relative;
+							view-timeline-inset: var(--home-scroll-pin-inset) calc(var(--home-scroll-timeline-end-inset) + var(--home-scroll-pin-inset)); // sass-lint:disable-line no-misspelled-properties
+							view-timeline-name: --home-scroll-track; // sass-lint:disable-line no-misspelled-properties
+						}
+					}
+
+					&__markers
+					{
+						display: block;
+						pointer-events: none;
+					}
+
+					&__marker
+					{
+						left: 0;
+						position: absolute;
+						width: 1px;
+
+						&--appearance
+						{
+							// Initial entrance through the first pause.
+							height: calc(var(--home-scroll-height) * .69 + max(1px, var(--scroll-pause)));
+							top: calc(var(--home-scroll-height) * -.69 - var(--home-scroll-pin-inset));
+						}
+
+						&--wait
+						{
+							height: max(1px, calc(var(--scroll-pause) - var(--home-scroll-wait-start)));
+							top: calc(var(--home-scroll-wait-start) - var(--home-scroll-pin-inset));
+						}
+					}
+
+					&__scene
+					{
+						.home-scroll__track--animated &
+						{
+							background-color: var(--color-background-page);
+							height: var(--home-scroll-height);
+							isolation: isolate;
+							overflow: clip;
+							position: sticky;
+							top: 0;
+						}
+					}
+
+					&__inner
+					{
+						.home-scroll__track--animated &
+						{
+							align-content: center;
+							gap: var(--global-item-gap);
+							height: 100%;
+							padding-block: var(--spacing-32);
+						}
+					}
+
+					&__panel
+					{
+						.home-scroll__track--animated &
+						{
+							@include scroll-panel-timing(var(--home-scroll-index));
+							--home-scroll-glow-enter-range: contain calc(var(--scroll-panel-enter) + var(--scroll-transition) * .15) contain calc(var(--scroll-panel-enter) + var(--scroll-transition) * .65);
+							--home-scroll-glow-exit-range: contain calc(var(--scroll-panel-exit) + var(--scroll-transition) * .15) contain calc(var(--scroll-panel-exit) + var(--scroll-transition) * .65);
+							--home-scroll-text-enter-range: contain calc(var(--scroll-panel-stop) - var(--scroll-transition) * .5) contain var(--scroll-panel-stop);
+							--home-scroll-text-exit-range: contain var(--scroll-panel-exit) contain calc(var(--scroll-panel-exit) + var(--scroll-transition) * .5);
+							grid-area: 1 / 1 / -1 / -1;
+							grid-template-columns: subgrid;
+							grid-template-rows: subgrid;
+							isolation: auto;
+							justify-self: stretch;
+							min-height: 0;
+							padding-block: 0;
+							position: static;
+						}
+
+						.home-scroll__track--animated &[data-variant='developers']
+						{
+							--home-scroll-glow-enter-range: entry 42% contain 0%;
+							--home-scroll-text-enter-range: entry 31% contain 0%;
+							--home-scroll-text-entry-offset: 0px; // sass-lint:disable-line zero-unit
+						}
+
+						.home-scroll__track--animated &[data-variant='wortise-ads']
+						{
+							--home-scroll-glow-exit: none;
+							--home-scroll-text-exit: none;
+						}
+
+						.home-scroll__track--animated &::before
+						{
+							animation-duration: auto;
+							animation-fill-mode: both, forwards;
+							animation-name: home-scroll-glow-enter, var(--home-scroll-glow-exit, home-scroll-glow-exit);
+							animation-range: var(--home-scroll-glow-enter-range), var(--home-scroll-glow-exit-range); // sass-lint:disable-line no-misspelled-properties
+							animation-timeline: --home-scroll-track; // sass-lint:disable-line no-misspelled-properties
+							animation-timing-function: $glow-ease;
+						}
+					}
+
+					&__intro,
+					&__content,
+					&__preview
+					{
+						.home-scroll__track--animated &
+						{
+							animation-duration: auto;
+							animation-fill-mode: both, forwards, backwards;
+							animation-name: home-scroll-copy-enter, var(--home-scroll-text-exit, home-scroll-copy-exit), var(--home-scroll-copy-rise, none);
+							animation-range: var(--home-scroll-text-enter-range), var(--home-scroll-text-exit-range), $rise-range; // sass-lint:disable-line no-misspelled-properties
+							animation-timeline: --home-scroll-track; // sass-lint:disable-line no-misspelled-properties
+							animation-timing-function: ease-in-out;
+						}
+
+						.home-scroll__track--animated [data-variant='developers'] &
+						{
+							--home-scroll-copy-rise: home-scroll-rise;
+						}
+					}
+
+					&__preview
+					{
+						.home-scroll__track--animated &
+						{
+							clip-path: inset(50%); // sass-lint:disable-line no-misspelled-properties
+							height: 1px;
+							overflow: hidden;
+							position: absolute;
+							width: 1px;
+						}
+					}
+
+					&__phone
+					{
+						.home-scroll__track--animated &
+						{
+							--home-scroll-arrival-distance: var(--home-scroll-height);
+							--phone-screen-stack-timeline: --home-scroll-track;
+							animation-duration: auto;
+							animation-fill-mode: backwards;
+							animation-name: home-scroll-rise;
+							animation-range: $rise-range; // sass-lint:disable-line no-misspelled-properties
+							animation-timeline: --home-scroll-track; // sass-lint:disable-line no-misspelled-properties
+							display: block;
+							grid-column: var(--home-scroll-phone-column);
+							grid-row: var(--home-scroll-phone-row);
+							justify-self: center;
+							pointer-events: none;
+							width: var(--home-scroll-device-width);
+							z-index: 1;
+						}
+					}
+
+					&__phone-bounce
+					{
+						.home-scroll__track--animated[data-bounce-played] &
+						{
+							@include phone-bounce-motion;
+						}
+					}
+				}
+			}
+		}
+
+		@media (prefers-reduced-motion: no-preference) and #{media-query(osm)} and (min-height: $mobile-scroll-min-height)
+		{
+			@include iphone-safari-anchor;
+
+			.home-scroll
+			{
+				&__inner
+				{
+					.home-scroll__track--animated &
+					{
+						@include mobile-scroll-rows(var(--home-scroll-mobile-device-max-width));
+						--global-item-gap: var(--home-scroll-mobile-spacing);
+						--home-scroll-mobile-spacing: clamp(var(--spacing-16), 3.85svh, var(--spacing-32));
+						padding-block: var(--home-scroll-mobile-spacing);
+					}
+				}
+
+				&__panel
+				{
+					.home-scroll__track--animated &::before
+					{
+						@include glow-edge-fade;
+					}
+				}
+
+				&__phone
+				{
+					.home-scroll__track--animated &
+					{
+						--phone-mockup-width: min(100cqw, calc(100cqh * 410 / 788));
+						align-self: stretch;
+						container-type: size; // sass-lint:disable-line no-misspelled-properties
+						display: grid;
+						place-items: center; // sass-lint:disable-line no-misspelled-properties
+						width: 100%;
+					}
+				}
+
+				&__phone-bounce
+				{
+					display: grid;
+					place-items: center; // sass-lint:disable-line no-misspelled-properties
+					width: 100%;
+				}
+			}
+		}
+
+		@media (prefers-reduced-motion: no-preference) and #{media-query(l)} and (min-height: 540px)
+		{
+			.home-scroll
+			{
+				&__inner
+				{
+					.home-scroll__track--animated &
+					{
+						grid-template-columns: minmax(0, 1fr) var(--home-scroll-device-width) minmax(0, 1fr);
+						grid-template-rows: max-content;
+					}
+				}
+			}
+		}
+	}
+}
+
+// The rise follows scroll and ends as the first panel starts its hold.
+@keyframes home-scroll-rise
+{
+	from
+	{
+		animation-timing-function: cubic-bezier(.2, .65, .35, 1);
+		translate: 0 var(--home-scroll-arrival-distance); // sass-lint:disable-line no-misspelled-properties
+	}
+
+	to
+	{
+		translate: none; // sass-lint:disable-line no-misspelled-properties
+	}
+}
+
+// The incoming text takes over after the outgoing text leaves the tab order.
+@include scroll-text-keyframes(
+	home-scroll-copy-enter,
+	home-scroll-copy-exit,
+	translateY(var(--home-scroll-text-entry-offset, var(--home-scroll-copy-travel))),
+	translateY(calc(-1 * var(--home-scroll-copy-travel))),
+	translateY(0)
+);
+
+@keyframes home-scroll-glow-enter
+{
+	from
+	{
+		opacity: 0;
+	}
+
+	to
+	{
+		opacity: 1;
+	}
+}
+
+@keyframes home-scroll-glow-exit
+{
+	from
+	{
+		opacity: 1;
+	}
+
+	to
+	{
+		opacity: 0;
+	}
+}

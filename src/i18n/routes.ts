@@ -1,5 +1,6 @@
 import { getPublicationProfile } from '../../config/publication';
 import { pageData, type Page, type LocalizedPages } from '../data/pages';
+import { scrollPositionDemos, type ScrollPositionDemo } from '../workshop/data/scroll-position-demos';
 import { defaultLocale, isLocale, locales, type Locale } from './config';
 
 export type { Page } from '../data/pages';
@@ -7,14 +8,21 @@ export type { Page } from '../data/pages';
 // Utility routes have no editorial modules and declare availability explicitly.
 const utilityPageSlugs: Record<string, Partial<Record<Locale, string>>> = {
 	ui: { [defaultLocale]: 'ui' },
+	'home-scroll-driven-test': { [defaultLocale]: 'home-scroll-driven-test' },
+	'wortise-ads-scroll-driven-test': { [defaultLocale]: 'wortise-ads-scroll-driven-test' },
+	'admonet-networks-scroll-driven-test': { [defaultLocale]: 'admonet-networks-scroll-driven-test' },
 	'admonet-networks-test': { [defaultLocale]: 'admonet-networks-test' },
 	'admonet-networks-scroll-test': { [defaultLocale]: 'admonet-networks-scroll-test' },
 	'admonet-networks-sticky-test': { [defaultLocale]: 'admonet-networks-sticky-test' },
 	'admonet-networks-gsap-snap-test': { [defaultLocale]: 'admonet-networks-gsap-snap-test' },
 	'admonet-networks-events-test': { [defaultLocale]: 'admonet-networks-events-test' },
 	'admonet-networks-gsap-scrub-test': { [defaultLocale]: 'admonet-networks-gsap-scrub-test' },
+	...Object.fromEntries(scrollPositionDemos.map(({ mode }) => [
+		`scroll-position-${mode}`,
+		{ [defaultLocale]: `scroll-position-test/${mode}` },
+	])),
 };
-type RoutePage = Page | 'ui' | 'admonet-networks-test' | 'admonet-networks-scroll-test' | 'admonet-networks-sticky-test' | 'admonet-networks-gsap-snap-test' | 'admonet-networks-gsap-scrub-test' | 'admonet-networks-events-test';
+type RoutePage = Page | 'ui' | 'home-scroll-driven-test' | 'wortise-ads-scroll-driven-test' | 'admonet-networks-scroll-driven-test' | 'admonet-networks-test' | 'admonet-networks-scroll-test' | 'admonet-networks-sticky-test' | 'admonet-networks-gsap-snap-test' | 'admonet-networks-gsap-scrub-test' | 'admonet-networks-events-test' | `scroll-position-${ScrollPositionDemo['mode']}`;
 
 export function normalizePath(pathname: string): string {
 	return `${pathname.replace(/\/+$/, '')}/`;

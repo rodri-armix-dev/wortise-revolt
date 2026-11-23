@@ -1,0 +1,35 @@
+@use '../../lib/iphone-sticky-viewport' as *;
+
+@mixin iphone-safari-anchor
+{
+	.home-scroll
+	{
+		&__track
+		{
+			&--animated[data-iphone-safari]
+			{
+				@include iphone-sticky-viewport(var(--spacing-8));
+				--home-scroll-height: var(--iphone-sticky-height);
+				--home-scroll-pin-inset: var(--iphone-sticky-inset);
+				--home-scroll-timeline-end-inset: 0px; // sass-lint:disable-line zero-unit
+			}
+		}
+
+		&__anchor
+		{
+			.home-scroll__track--animated[data-iphone-safari] &
+			{
+				@include iphone-sticky-anchor;
+				display: block;
+			}
+		}
+
+		&__scene
+		{
+			.home-scroll__track--animated[data-iphone-safari] &
+			{
+				@include iphone-sticky-scene;
+			}
+		}
+	}
+}

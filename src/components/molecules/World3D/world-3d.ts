@@ -17,7 +17,7 @@ class World3D extends HTMLElement {
 				this.dispatchEvent(new CustomEvent('world-3d:unavailable', { bubbles: true }));
 				if (import.meta.env.DEV) console.warn('World3D: static fallback enabled.', error);
 			});
-		}, { rootMargin: '200px' });
+		}, { rootMargin: `${window.innerHeight}px 0px` });
 		this.observer.observe(this);
 	}
 

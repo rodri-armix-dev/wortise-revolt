@@ -1,0 +1,131 @@
+@use '../../lib/glow-edge-fade' as *;
+@use './scroll-timeline' as *;
+
+.networks-scroll
+{
+	&__light
+	{
+		display: none;
+	}
+}
+
+@include l
+{
+	.networks-scroll
+	{
+		&__light
+		{
+			filter: brightness(1.25);
+
+			&[data-format='interstitiales-app-open']
+			{
+				--networks-scroll-ambient-size: min(100%, 1120px) 165%;
+			}
+		}
+	}
+}
+
+@mixin panel-lighting-motion
+{
+	.networks-scroll
+	{
+		&__light
+		{
+			@include format-layer-animation;
+			// sass-lint:disable no-color-literals
+			--networks-scroll-ambient: rgba(210, 14, 78, .35);
+			--networks-scroll-halo: rgba(210, 14, 66, .65);
+			animation-name: networks-scroll-light-enter, networks-scroll-light-exit;
+			background-image: radial-gradient(ellipse, var(--networks-scroll-ambient), transparent 69%);
+			background-position: center var(--networks-scroll-phone-center, 50%);
+			background-repeat: no-repeat;
+			background-size: var(--networks-scroll-ambient-size, min(100%, 620px) 96%);
+			display: block;
+			pointer-events: none;
+
+			&::after
+			{
+				aspect-ratio: 410 / 788; // sass-lint:disable-line no-misspelled-properties
+				border: 5px solid var(--networks-scroll-halo);
+				border-radius: 12% / 6%;
+				content: '';
+				filter: blur(18px);
+				left: 50%;
+				position: absolute;
+				top: var(--networks-scroll-phone-center, 50%);
+				transform: translate(-50%, -50%);
+				width: var(--ad-formats-phone-width);
+			}
+
+			&[data-format='video-recompensado']
+			{
+				--networks-scroll-slide-enter: var(--networks-scroll-phone-start);
+				animation-timing-function: linear, var(--networks-scroll-screen-slide-ease);
+
+				&::after
+				{
+					@include scroll-animation;
+					animation-name: networks-scroll-phone;
+					animation-range: contain var(--networks-scroll-phone-start) contain var(--networks-scroll-step); // sass-lint:disable-line no-misspelled-properties
+					animation-timing-function: ease-in-out;
+				}
+			}
+
+			&[data-format='interstitiales-app-open']
+			{
+				--networks-scroll-ambient: #0d2839;
+				--networks-scroll-halo: rgba(14, 203, 210, .58);
+			}
+
+			&[data-format='nativos-banners']
+			{
+				--networks-scroll-ambient: #5f0322;
+				--networks-scroll-halo: #d10e4e;
+			}
+
+			&[data-format='ofertas-muros']
+			{
+				--networks-scroll-ambient: rgba(97, 93, 134, .35);
+				--networks-scroll-halo: rgba(210, 14, 56, .84);
+			}
+
+			&[data-last]
+			{
+				animation-name: networks-scroll-light-enter, none;
+			}
+			// sass-lint:enable no-color-literals
+		}
+	}
+}
+
+@include osm
+{
+	.networks-scroll
+	{
+		&__light
+		{
+			@include glow-edge-fade;
+		}
+	}
+}
+
+@keyframes networks-scroll-light-enter
+{
+	from
+	{
+		opacity: 0;
+	}
+
+	to
+	{
+		opacity: 1;
+	}
+}
+
+@keyframes networks-scroll-light-exit
+{
+	to
+	{
+		opacity: 0;
+	}
+}

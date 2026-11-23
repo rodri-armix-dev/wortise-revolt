@@ -226,7 +226,47 @@ No aplicar esos ajustes a todas las secciones automáticamente. Verificar Safari
 con sus barras expandidas y contraídas, además de Firefox y Chromium. Revisar el
 recorrido con mouse, Magic Mouse, trackpad, teclado y entrada táctil según alcance.
 
+### Anclaje sticky de AdMonet en Safari de iPhone
+
+Safari podía extender el color de la escena a sus barras y conservar el tinte
+al llegar al footer. En el iPhone, el efecto se reprodujo con cada capa sticky
+por separado, tanto con la escena visual como con los textos. La variante que
+simulaba la fijación mediante una animación de scroll eliminó el tinte, pero
+perdió fluidez en el dispositivo.
+
+La demo usa un único anclaje transparente de **1 × 1 px** con
+`position: sticky`. La escena y los textos conservan su tamaño dentro de él.
+El anclaje deja que se pinten fuera de su caja mediante el valor por defecto
+`overflow: visible`. Aplicar `overflow: hidden` o `overflow: clip` al
+anclaje recortaría el contenido. El margen inferior del anclaje compensa el
+alto de la escena menos 1 px para que se libere al final del recorrido previsto.
+
+Durante la fijación, la demo prueba `100dvh - 12px` y reserva **6 px en cada
+borde** del viewport dinámico. Es el umbral observado en el
+[registro de AdsSections](../src/components/organisms/AdsSections/README.md#bug-pendiente-de-safari-absorción-de-colores).
+
+El ajuste vive en [iphone-safari.scss](../src/workshop/organisms/AdMonetNetworksDemo/iphone-safari.scss)
+y se aplica solo a Safari de iPhone en el rango móvil. En la prueba en iPhone
+con 8 px por borde, el scroll volvió a sentirse fluido y «Glosario» se veía
+desenfocado detrás del reloj al llegar al footer. Queda por repetir la entrada y
+la salida con 6 px y altura dinámica, en ambos sentidos y con las barras abiertas y contraídas.
+
+Home, AdMonet y Ads comparten la geometría del anclaje en el workshop. Home y
+Ads reservan 8 px por borde, y AdMonet reserva 6 px. Las tres escenas usan una
+máscara vertical que desvanece solo la luz en el 12 % superior e inferior.
+Queda pendiente comparar Ads con 8 y 6 px en un iPhone real, con las barras
+abiertas y contraídas, antes de decidir si conviene reducir su margen.
+
+En S y M, los tres demos reservan las filas de título y contenido según los
+bloques más altos de sus paneles. El celular usa la fila central y mantiene
+su proporción, con un ancho máximo de 220 px en S. En M, el máximo es de 280 px
+en Home y AdMonet y de 240 px en Ads. Las tarjetas de Ads usan una columna
+centrada de hasta 414 px. Las escenas se animan desde
+560 px de altura de viewport. Con menos altura, los paneles quedan en flujo.
+
 ## Referencias del proyecto
+
+- [Guía para migrar de GSAP a CSS scroll-driven con AdMonet como referencia](../src/workshop/organisms/AdMonetNetworksDemo/README.md).
 
 - Paneles de Ads: `src/components/organisms/AdsSections/ads-sections.ts` y sus
   controladores `ads-sections-pin.ts` y `ads-sections-sticky.ts`.

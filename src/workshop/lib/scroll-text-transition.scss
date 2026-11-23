@@ -1,0 +1,52 @@
+$scroll-text-hidden-opacity: var(--scroll-text-hidden-opacity, 1);
+
+@mixin scroll-text-transition
+{
+	&[data-text-transition='fade']
+	{
+		--scroll-text-hidden-opacity: 0;
+	}
+}
+
+@mixin scroll-text-keyframes($enter, $exit, $enter-transform: null, $exit-transform: null, $rest-transform: null)
+{ // sass-lint:disable-line indentation
+	@keyframes #{$enter}
+	{
+		from
+		{
+			opacity: $scroll-text-hidden-opacity;
+			transform: $enter-transform;
+			visibility: hidden;
+		}
+
+		to
+		{
+			opacity: 1;
+			transform: $rest-transform;
+			visibility: visible;
+		}
+	}
+
+	@keyframes #{$exit}
+	{
+		from
+		{
+			opacity: 1;
+			transform: $rest-transform;
+			visibility: visible;
+		}
+
+		to
+		{
+			opacity: $scroll-text-hidden-opacity;
+			transform: $exit-transform;
+			visibility: hidden;
+		}
+	}
+}
+
+@mixin scroll-text-mobile-ranges($enter, $exit)
+{ // sass-lint:disable-line indentation
+	--scroll-text-enter-range: contain calc(#{$enter} + var(--scroll-transition) * var(--scroll-text-enter-start, .55)) contain calc(#{$enter} + var(--scroll-transition) * var(--scroll-text-enter-end, .9));
+	--scroll-text-exit-range: contain calc(#{$exit} + var(--scroll-transition) * .2) contain calc(#{$exit} + var(--scroll-transition) * .55);
+}

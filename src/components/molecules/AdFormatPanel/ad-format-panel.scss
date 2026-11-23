@@ -26,7 +26,7 @@
 	{
 		--description-line-height: var(--ad-format-panel-description-line-height, var(--line-height-title-xs));
 		--text-block-actions-offset: 0;
-		--text-block-gap: var(--spacing-32);
+		--text-block-gap: var(--ad-format-panel-content-gap, var(--spacing-32));
 		align-content: end;
 		display: grid;
 		margin-block-start: var(--ad-format-panel-content-margin-start, 0);
@@ -40,6 +40,7 @@
 		align-self: center;
 		aspect-ratio: 410 / 788; // sass-lint:disable-line no-misspelled-properties
 		display: grid;
+		justify-self: center;
 		max-width: 100%;
 		overflow: hidden;
 		width: var(--ad-formats-phone-width);
@@ -56,15 +57,38 @@
 {
 	.ad-format-panel
 	{
-		&__intro,
-		&__content
+		display: var(--ad-format-panel-stacked-root-display, flex);
+		grid-row: var(--ad-format-panel-stacked-span, auto);
+		grid-template-rows: var(--ad-format-panel-stacked-root-rows, none);
+
+		&__inner
+		{
+			--global-item-gap: var(--ad-format-panel-stacked-gap, var(--spacing-32));
+			align-items: var(--ad-format-panel-stacked-items, flex-start);
+			display: var(--ad-format-panel-stacked-display, flex);
+			grid-row: var(--ad-format-panel-stacked-span, auto);
+			grid-template-columns: minmax(0, 1fr);
+			grid-template-rows: var(--ad-format-panel-stacked-rows, none);
+			height: var(--ad-format-panel-stacked-height, auto);
+			justify-items: center;
+		}
+
+		&__intro
 		{
 			align-self: var(--ad-format-panel-stacked-alignment, auto);
+		}
+
+		&__visual
+		{
+			align-self: var(--ad-format-panel-stacked-visual-alignment, center);
+			aspect-ratio: var(--ad-format-panel-stacked-visual-ratio, 410 / 788); // sass-lint:disable-line no-misspelled-properties
+			width: var(--ad-format-panel-stacked-visual-width, var(--ad-formats-phone-width));
 		}
 
 		&__content
 		{
 			--description-text-wrap: balance;
+			align-self: var(--ad-format-panel-content-alignment, var(--ad-format-panel-stacked-alignment, auto));
 		}
 	}
 }
@@ -73,10 +97,14 @@
 {
 	.ad-format-panel
 	{
-		&__intro,
-		&__content
+		&__intro
 		{
 			align-self: center;
+		}
+
+		&__content
+		{
+			align-self: var(--ad-format-panel-content-alignment, center);
 		}
 	}
 }
@@ -101,7 +129,6 @@
 		&__visual
 		{
 			grid-column: 2;
-			justify-self: center;
 		}
 
 		&__content

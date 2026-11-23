@@ -1,0 +1,47 @@
+---
+import type { Locale } from '../../../i18n/config';
+import { getPagePath } from '../../../i18n/routes';
+
+const demos = [
+	{ page: 'home-scroll-driven-test', label: 'Home' },
+	{ page: 'admonet-networks-scroll-driven-test', label: 'AdMonet' },
+	{ page: 'wortise-ads-scroll-driven-test', label: 'Wortise Ads' },
+] as const;
+
+export interface Props {
+	locale: Locale;
+	current: (typeof demos)[number]['page'];
+}
+
+const { locale, current } = Astro.props;
+const links = demos.flatMap(({ page, label }) => {
+	const href = getPagePath(locale, page);
+	return href ? [{ page, label, href }] : [];
+});
+---
+
+<nav class="scroll-demo-nav global-inner" aria-label="Demos de animación">
+	<ul class="scroll-demo-nav__list">
+		{links.map(({ page, label, href }) => (
+			<li>
+				<a class="scroll-demo-nav__link" href={href} aria-current={page === current ? 'page' : undefined}>{label}</a>
+			</li>
+		))}
+	</ul>
+</nav>
+
+<script is:inline>
+	if (new URLSearchParams(window.location.search).get('reduce') === '1') {
+		document.documentElement.setAttribute('data-workshop-reduce', '');
+
+		for (const link of document.querySelectorAll('.scroll-demo-nav__link')) {
+			const url = new URL(link.href);
+			url.searchParams.set('reduce', '1');
+			link.href = url.href;
+		}
+	}
+</script>
+
+<style lang="scss">
+	@use './scroll-demo-nav';
+</style>

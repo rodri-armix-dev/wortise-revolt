@@ -1,3 +1,5 @@
+@use './element-label' as *;
+
 // Cards, badges and metrics use this module's design colors.
 // sass-lint:disable no-color-literals
 .ads-sections-item
@@ -6,6 +8,46 @@
 	display: flex;
 	min-height: var(--ads-sections-item-height, 100dvh);
 	padding-block: var(--ads-sections-item-padding-block, var(--spacing-48));
+
+	&[data-element-labels]
+	{
+		--ads-sections-item-label-position: relative;
+	}
+
+	&__title-card,
+	&__heading,
+	&__badge,
+	&__preview,
+	&__content
+	{
+		position: var(--ads-sections-item-label-position, static);
+	}
+
+	&__element-label
+	{
+		@include ads-element-label;
+
+		&--heading,
+		&--phone,
+		&--screen
+		{
+			bottom: auto;
+			top: var(--spacing-4);
+		}
+
+		&--heading,
+		&--screen
+		{
+			left: auto;
+			right: var(--spacing-4);
+		}
+
+		&--badge
+		{
+			left: auto;
+			right: 0;
+		}
+	}
 
 	&__title-card,
 	&__content
@@ -17,9 +59,21 @@
 		opacity: var(--ads-sections-item-card-opacity, 1);
 	}
 
+	&__title-card,
+	&__heading,
+	&__content,
+	&__annotation
+	{
+		animation-duration: auto;
+		animation-fill-mode: both, forwards;
+		animation-range: var(--ads-sections-item-scroll-range, normal); // sass-lint:disable-line no-misspelled-properties
+		animation-timeline: var(--ads-sections-item-scroll-timeline, auto); // sass-lint:disable-line no-misspelled-properties
+		animation-timing-function: linear;
+	}
+
 	&__inner
 	{
-		--global-item-gap: 14px;
+		--global-item-gap: var(--ads-sections-item-scroll-gap, 14px);
 		align-items: stretch;
 		display: var(--ads-sections-item-display, flex);
 		grid-template-rows: var(--ads-sections-item-rows, none);
@@ -36,12 +90,19 @@
 
 	&__title-card
 	{
+		animation-name: var(--ads-sections-item-title-animation, none);
 		border-radius: var(--radius-ads-card);
 		display: flex;
 		flex-direction: column;
 		gap: 13px;
+		outline: var(--ads-sections-item-title-outline, none);
 		padding-block: var(--spacing-16);
 		padding-inline: var(--spacing-24);
+	}
+
+	&__heading
+	{
+		outline: var(--ads-sections-item-heading-outline, none);
 	}
 
 	&__badge
@@ -51,6 +112,7 @@
 		align-self: flex-start;
 		background-color: var(--color-background-page);
 		border-radius: var(--radius-full);
+		outline: var(--ads-sections-item-badge-outline, none);
 		padding-block: var(--spacing-8);
 		padding-inline: var(--spacing-16);
 
@@ -92,6 +154,11 @@
 
 	&__annotation
 	{
+		animation-direction: var(--ads-sections-item-annotation-direction, normal);
+		animation-duration: var(--ads-sections-item-annotation-duration, auto);
+		animation-name: var(--ads-sections-item-annotation-animation, none);
+		animation-range: var(--ads-sections-item-annotation-range, var(--ads-sections-item-scroll-range, normal)); // sass-lint:disable-line no-misspelled-properties
+		animation-timeline: var(--ads-sections-item-annotation-timeline, var(--ads-sections-item-scroll-timeline, auto)); // sass-lint:disable-line no-misspelled-properties
 		backdrop-filter: blur(22px) saturate(125%); // sass-lint:disable-line no-misspelled-properties
 		background-color: rgba(45, 37, 44, .48);
 		background-image: linear-gradient(135deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .015));
@@ -101,12 +168,24 @@
 		flex-direction: column;
 		gap: var(--spacing-8);
 		opacity: var(--ads-sections-item-card-opacity, var(--ads-sections-item-annotations-opacity, 1));
+		outline: var(--ads-sections-item-annotation-outline, none);
 		padding: var(--spacing-16);
 		position: absolute;
 		transform: translateX(-50%);
 		transition: opacity var(--ads-sections-item-annotations-fade-duration, .48s) ease-in-out;
+		visibility: var(--ads-sections-item-annotation-visibility, visible);
 		width: max-content;
 		z-index: 1;
+
+		&[data-ads-reveal='3']
+		{
+			animation-name: var(--ads-sections-item-annotation-late-animation, none);
+		}
+
+		&[data-ads-reveal='2']
+		{
+			animation-name: var(--ads-sections-item-annotation-middle-animation, var(--ads-sections-item-annotation-late-animation, none));
+		}
 
 		// Ratios use the visible phone in the design, excluding the source PNG margins.
 		&--top-end,
@@ -216,12 +295,19 @@
 		--rich-text-strong-color: var(--color-text-primary);
 		--rich-text-strong-font-weight: 400;
 		align-items: flex-start;
+		animation-duration: var(--ads-sections-item-content-duration, auto);
+		animation-name: var(--ads-sections-item-content-animation, none);
+		animation-range: var(--ads-sections-item-content-range, var(--ads-sections-item-scroll-range, normal)); // sass-lint:disable-line no-misspelled-properties
+		animation-timeline: var(--ads-sections-item-content-timeline, var(--ads-sections-item-scroll-timeline, auto)); // sass-lint:disable-line no-misspelled-properties
 		border-radius: var(--radius-ads-card);
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-16);
 		min-width: 0;
+		outline: var(--ads-sections-item-content-outline, none);
 		padding: var(--spacing-24);
+		pointer-events: var(--ads-sections-item-content-pointer-events, inherit);
+		visibility: var(--ads-sections-item-content-visibility, visible);
 
 		&--padded-action
 		{
@@ -234,8 +320,19 @@
 {
 	.ads-sections-item
 	{
+		display: var(--ads-sections-item-stacked-display, flex);
+		grid-row: var(--ads-sections-item-stacked-span, auto);
+		grid-template-rows: var(--ads-sections-item-stacked-rows, none);
+
+		&__inner
+		{
+			grid-row: var(--ads-sections-item-stacked-span, auto);
+		}
+
 		&__intro
 		{
+			align-self: var(--ads-sections-item-scroll-intro-alignment, auto);
+			grid-row: var(--ads-sections-item-stacked-intro-row, auto);
 			opacity: var(--ads-sections-item-top-opacity, 1);
 
 			:global(.ads-sections[data-enhanced]) &
@@ -244,9 +341,16 @@
 			}
 		}
 
+		&__visual
+		{
+			display: var(--ads-sections-item-stacked-visual-display, block);
+		}
+
 		&__content
 		{
 			--description-font-size: 15px;
+			align-self: var(--ads-sections-item-scroll-content-alignment, auto);
+			grid-row: var(--ads-sections-item-stacked-content-row, auto);
 			opacity: var(--ads-sections-item-bottom-opacity, 1);
 
 			:global(.ads-sections[data-enhanced]) &
@@ -272,29 +376,53 @@
 {
 	.ads-sections-item
 	{
+		display: var(--ads-sections-item-desktop-display, flex);
+
 		&__inner
 		{
 			--global-item-gap: var(--spacing-32);
 			align-items: center;
-			display: grid;
+			display: var(--ads-sections-item-desktop-inner-display, grid);
 			grid-template-columns: repeat(3, minmax(0, 1fr));
-			min-height: calc(var(--ads-sections-item-height, 100dvh) - var(--spacing-48) * 2);
+			min-height: var(--ads-sections-item-desktop-inner-min-height, calc(var(--ads-sections-item-height, 100dvh) - var(--spacing-48) * 2));
 		}
 
 		&__intro
 		{
 			max-width: 367px;
+			opacity: var(--ads-sections-item-intro-opacity, 1);
+			transform: var(--ads-sections-item-intro-transform, none);
+			transition: var(--ads-sections-item-intro-transition, none);
+			visibility: var(--ads-sections-item-intro-visibility, visible);
+			width: var(--ads-sections-item-desktop-card-width, auto);
 		}
 
 		&__title-card
 		{
-			gap: 26px;
+			gap: var(--ads-sections-item-title-gap, 26px);
 			padding: var(--spacing-24);
+			transition: var(--ads-sections-item-title-transition, none);
 		}
 
 		&__visual
 		{
+			left: var(--ads-sections-item-desktop-visual-left, auto);
+			position: var(--ads-sections-item-desktop-visual-position, relative);
+			top: var(--ads-sections-item-desktop-visual-top, auto);
+			transform: var(--ads-sections-item-desktop-visual-transform, none);
 			width: var(--ads-sections-item-phone-width, 230px);
+		}
+
+		&__heading
+		{
+			animation-name: var(--ads-sections-item-heading-animation, none);
+			display: var(--ads-sections-item-heading-display, block);
+			grid-template-rows: var(--ads-sections-item-heading-rows, none);
+			opacity: var(--ads-sections-item-heading-opacity, 1);
+			overflow: var(--ads-sections-item-heading-overflow, visible);
+			transform: var(--ads-sections-item-heading-transform, none);
+			transition: var(--ads-sections-item-heading-transition, none);
+			visibility: var(--ads-sections-item-heading-visibility, visible);
 		}
 
 		&__annotation
@@ -306,7 +434,11 @@
 		{
 			justify-self: end;
 			max-width: 367px;
-			width: 100%;
+			position: var(--ads-sections-item-desktop-content-position, var(--ads-sections-item-label-position, static));
+			right: var(--ads-sections-item-desktop-content-right, auto);
+			top: var(--ads-sections-item-desktop-content-top, auto);
+			translate: var(--ads-sections-item-desktop-content-translate, none); // sass-lint:disable-line no-misspelled-properties
+			width: var(--ads-sections-item-desktop-card-width, 100%);
 		}
 	}
 }

@@ -1,0 +1,119 @@
+@use './scroll-timeline' as *;
+
+// Place details within the first transition, after the introductory pause.
+@function transition-at($fraction)
+{
+	@return calc(var(--networks-scroll-pause) + var(--networks-scroll-transition) * $fraction);
+}
+
+.networks-scroll
+{
+	&__overview
+	{
+		align-content: center;
+		display: grid;
+		gap: var(--spacing-32);
+		justify-items: center;
+		min-height: var(--networks-scroll-height);
+		overflow: clip;
+		padding-block: var(--spacing-32);
+	}
+
+	&__text
+	{
+		--text-block-gap: var(--spacing-12);
+		margin-inline: auto;
+		max-width: 665px;
+	}
+
+	&__orbit
+	{
+		height: min(520px, 124vw);
+		isolation: isolate;
+		max-height: 45dvh;
+		position: relative;
+		width: min(100%, 420px);
+	}
+
+	&__rings
+	{
+		background-image: url('../../../assets/pages/developers/desktop-orbit-core.svg'),
+		url('../../../assets/pages/developers/desktop-orbit-inner.svg'),
+		url('../../../assets/pages/developers/desktop-orbit-middle.svg'),
+		url('../../../assets/pages/developers/desktop-orbit-outer.svg'),
+		radial-gradient(ellipse closest-side, color-mix(in srgb, var(--color-action-primary) 22%, transparent), transparent);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 107% 36%, 172% 58%, 209% 73%, 244% 88%, 100% 100%;
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		position: absolute;
+	}
+}
+
+@include l
+{
+	.networks-scroll
+	{
+		&__orbit
+		{
+			aspect-ratio: 1312 / 634; // sass-lint:disable-line no-misspelled-properties
+			height: auto;
+			width: min(100%, 1312px);
+		}
+
+		&__rings
+		{
+			background-size: 33% 29%, 59% 53%, 75% 75%, 100% 100%, 45% 90%;
+		}
+	}
+}
+
+@mixin intro-panel-motion
+{
+	.networks-scroll
+	{
+		&__overview
+		{
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+			position: absolute;
+		}
+
+		&__orbit
+		{
+			// Leave room for the introductory copy above the orbit.
+			max-height: 56svh;
+		}
+
+		&__inner
+		{
+			@include scroll-animation;
+			animation-name: networks-scroll-overview-copy;
+			animation-range: contain #{transition-at(0)} contain #{transition-at(.5)}; // sass-lint:disable-line no-misspelled-properties
+		}
+
+		&__rings
+		{
+			@include scroll-animation;
+			animation-name: networks-scroll-rings;
+			animation-range: contain #{transition-at(0)} contain #{transition-at(.4)}; // sass-lint:disable-line no-misspelled-properties
+		}
+	}
+}
+
+@keyframes networks-scroll-overview-copy
+{
+	to
+	{
+		opacity: 0;
+		transform: translateY(-48px);
+	}
+}
+
+@keyframes networks-scroll-rings
+{
+	to
+	{
+		opacity: 0;
+		transform: translateY(-10svh) scale(.13);
+	}
+}

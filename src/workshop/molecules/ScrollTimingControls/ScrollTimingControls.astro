@@ -1,0 +1,73 @@
+---
+import Heading from '../../../components/atoms/Heading/Heading.astro';
+import { scrollTimingDefaults } from '../../lib/scroll-timing';
+
+export interface Props {
+	id: string;
+	outlinesId?: string;
+}
+
+const { id, outlinesId } = Astro.props;
+const disclosureLabel = outlinesId ? 'Mostrar ajustes y outlines' : 'Mostrar ajustes de animación';
+const controlledIds = [`${id}-controls`, outlinesId].filter(Boolean).join(' ');
+const profiles = { mobile: 'Móvil', desktop: 'Escritorio' } as const;
+const fields = [
+	{ name: 'pause', label: 'Pausa', min: 0, max: 500 },
+	{ name: 'transition', label: 'Transición', min: 10, max: 500 },
+	{ name: 'screen-start', label: 'Inicio del cambio de imagen', min: 0, max: 90 },
+] as const;
+---
+
+<section class="scroll-timing" aria-label="Ajustes de animación">
+	{(Object.keys(profiles) as (keyof typeof profiles)[]).map((profile) => (
+		<label class:list={['scroll-timing__toggle', `scroll-timing__toggle--${profile}`]}>
+			<input type="checkbox" data-scroll-timing-toggle={profile} checked={profile === 'desktop'} aria-controls={controlledIds} />
+			{disclosureLabel}
+		</label>
+	))}
+	<div class="scroll-timing__controls" id={`${id}-controls`}>
+		<Heading html="Recorrido por panel" tag="h2" size="title-xs" />
+		<p>El ancho de la ventana determina qué perfil está activo. La pausa y la transición usan una distancia fija de referencia de {scrollTimingDefaults.mobile.reference} px en móvil y {scrollTimingDefaults.desktop.reference} px en escritorio. El cambio de imagen termina al 100 % de la transición.</p>
+		<div class="scroll-timing__profiles">
+			{(Object.keys(profiles) as (keyof typeof profiles)[]).map((profile) => (
+				<fieldset class="scroll-timing__profile" data-timing-profile={profile}>
+					<legend class="scroll-timing__legend">{profiles[profile]}</legend>
+					<div class="scroll-timing__fields">
+						{fields.map(({ name, label, min, max }) => (
+							<label class="scroll-timing__field">
+								{label}
+								<select class="scroll-timing__select" id={`${id}-${profile}-${name}`} data-timing-field={name}>
+									{Array.from({ length: (max - min) / 10 + 1 }, (_, index) => min + index * 10).map((value) => (
+										<option value={value} selected={value === scrollTimingDefaults[profile][name]}>{value} %</option>
+									))}
+								</select>
+							</label>
+						))}
+						<div class="scroll-timing__field">
+							<label for={`${id}-${profile}-total`}>Recorrido total</label>
+							<output class="scroll-timing__total" id={`${id}-${profile}-total`} for={`${id}-${profile}-pause ${id}-${profile}-transition`}></output>
+						</div>
+					</div>
+				</fieldset>
+			))}
+		</div>
+	</div>
+</section>
+
+<script>
+	for (const root of document.querySelectorAll('[data-scroll-timing-pending]')) {
+		const styles = getComputedStyle(root);
+		for (const profile of root.querySelectorAll<HTMLElement>('[data-timing-profile]')) {
+			for (const select of profile.querySelectorAll<HTMLSelectElement>('[data-timing-field]')) {
+				const preset = styles.getPropertyValue(`--scroll-${profile.dataset.timingProfile}-${select.dataset.timingField}-preset`).trim();
+				const option = Array.from(select.options).find(({ value }) => value === preset);
+				if (option) select.value = option.value;
+			}
+		}
+		root.removeAttribute('data-scroll-timing-pending');
+	}
+</script>
+
+<style lang="scss">
+	@use './scroll-timing-controls';
+</style>

@@ -1,0 +1,25 @@
+---
+import AdMonetNetworksDemo from '../../workshop/organisms/AdMonetNetworksDemo/AdMonetNetworksDemo.astro';
+import { developersPageData } from '../../data/pages/developers';
+import { isLocale, locales } from '../../i18n/config';
+import { getPagePath } from '../../i18n/routes';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollDemoNav from '../../workshop/molecules/ScrollDemoNav/ScrollDemoNav.astro';
+
+export function getStaticPaths() {
+	return locales.filter((locale) => getPagePath(locale, 'admonet-networks-scroll-driven-test')).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) return new Response(null, { status: 404 });
+
+const networks = developersPageData.es.modules.find((module) => module.type === 'admonet-networks');
+if (!networks) throw new Error('Missing AdMonet Networks module in the developers page');
+
+const original = getPagePath(locale, 'developers');
+---
+
+<BaseLayout locale={locale} title="AdMonet Networks · CSS Scroll-driven">
+	<ScrollDemoNav locale={locale} current="admonet-networks-scroll-driven-test" />
+	<AdMonetNetworksDemo {...networks.props} originalHref={original && `${original}#${networks.props.id}`} />
+</BaseLayout>

@@ -1,0 +1,259 @@
+.networks-scroll
+{
+	// Entry and fade.
+	--networks-particle-entry-duration: 1500ms;
+	// Slow down as the logos arrive. Set to initial for the Figma curves.
+	--networks-particle-entry-ease: cubic-bezier(.22, .61, .36, 1);
+	--networks-particle-fade-duration: 480ms;
+	--networks-particle-upper-range-end: -20svh;
+	--networks-particle-upper-range-start: -45svh;
+
+	// Idle durations are one way. The full loop takes twice as long.
+	--networks-particle-idle-ease: cubic-bezier(.4, 0, .6, 1);
+	--networks-particle-idle-base-duration: 2s;
+	--networks-particle-idle-base-x: 20px;
+	--networks-particle-idle-base-y: -9px;
+	--networks-particle-idle-even-duration: 3s;
+	--networks-particle-idle-even-x: -2px;
+	--networks-particle-idle-even-y: -14px;
+	--networks-particle-idle-third-duration: 4s;
+	--networks-particle-idle-third-y: -14px;
+
+	&__orbit-marker
+	{
+		display: none;
+	}
+
+	&__particles
+	{
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		pointer-events: none;
+		position: absolute;
+	}
+
+	&__particle
+	{
+		--networks-particle-frame-x: var(--networks-particle-mobile-frame-x);
+		--networks-particle-frame-y: var(--networks-particle-mobile-frame-y);
+		--networks-particle-position-x: var(--networks-scroll-mobile-x);
+		--networks-particle-position-y: var(--networks-scroll-mobile-y);
+		left: var(--networks-particle-position-x);
+		position: absolute;
+		top: var(--networks-particle-position-y);
+		transform: translate(-50%, -50%);
+		width: var(--networks-scroll-mobile-width);
+	}
+}
+
+@include l
+{
+	.networks-scroll
+	{
+		&__particle
+		{
+			--networks-particle-frame-x: var(--networks-particle-desktop-frame-x);
+			--networks-particle-frame-y: var(--networks-particle-desktop-frame-y);
+			--networks-particle-position-x: var(--networks-scroll-desktop-x);
+			--networks-particle-position-y: var(--networks-scroll-desktop-y);
+			width: var(--networks-scroll-desktop-width);
+		}
+	}
+}
+
+@mixin orbit-particles-motion
+{
+	.networks-scroll
+	{
+		--networks-particle-exit-range: contain var(--networks-scroll-pause) contain var(--networks-scroll-convergence-end);
+		--networks-particle-upper-range: contain var(--networks-particle-upper-range-start) contain min(var(--networks-particle-upper-range-end), calc(var(--networks-particle-upper-range-start) + var(--networks-particle-upper-exit-length, 100svh)));
+
+		&__track
+		{
+			// Keep the layer mounted after entry so it can reappear without replaying.
+			animation: networks-particles-enter-window 1ms step-end both;
+			animation-range: contain var(--networks-particle-upper-range-start) contain calc(var(--networks-particle-upper-range-start) + 1px); // sass-lint:disable-line no-misspelled-properties
+			animation-timeline: --networks-scroll-track; // sass-lint:disable-line no-misspelled-properties
+			position: relative;
+
+			&[data-orbit-playback]
+			{
+				--networks-particle-upper-animation: none;
+				animation-name: none;
+			}
+
+			&[data-orbit-upper-exit]
+			{
+				--networks-particle-upper-animation: networks-particle-upper-travel;
+			}
+
+			&[data-orbit-playback='hidden']
+			{
+				--networks-particle-idle-play-state: paused;
+			}
+		}
+
+		&__orbit-marker
+		{
+			display: block;
+			height: calc(var(--networks-scroll-convergence-end) - var(--networks-particle-upper-range-start));
+			left: 0;
+			pointer-events: none;
+			position: absolute;
+			top: calc(var(--networks-particle-upper-range-start) - var(--networks-scroll-safari-inset, 0px)); // sass-lint:disable-line zero-unit
+			width: 1px;
+
+			&--upper
+			{
+				height: calc(var(--networks-particle-upper-range-end) - var(--networks-particle-upper-range-start));
+			}
+		}
+
+		&__particles
+		{
+			display: var(--networks-particles-overview-display, block);
+
+			[data-orbit-playback='waiting'] &
+			{
+				display: none;
+			}
+		}
+
+		&__particle
+		{
+			animation: networks-particle-x var(--networks-particle-entry-duration) var(--networks-particle-entry-ease, var(--networks-particle-ease-x)) both,
+			networks-particle-y var(--networks-particle-entry-duration) var(--networks-particle-entry-ease, var(--networks-particle-ease-y)) both,
+			networks-particle-idle var(--networks-particle-idle-duration, var(--networks-particle-idle-base-duration)) var(--networks-particle-idle-ease) infinite alternate,
+			networks-particles-fade var(--networks-particle-fade-duration) ease-in-out both,
+			var(--networks-particle-upper-animation, networks-particle-upper-travel) 1ms ease-in-out both,
+			networks-particle-exit 1ms var(--networks-particle-exit-samples) both,
+			networks-particles-exit-fade 1ms linear both;
+			animation-composition: add, add, add, replace, add, replace, add; // sass-lint:disable-line no-misspelled-properties
+			animation-delay: 0s, 0s, var(--networks-particle-entry-duration), 0s, 0s, 0s, 0s;
+			animation-play-state: running, running, var(--networks-particle-idle-play-state, running), running, running, running, running;
+			animation-range: normal, normal, normal, normal, var(--networks-particle-upper-range), var(--networks-particle-exit-range), var(--networks-particle-exit-range); // sass-lint:disable-line no-misspelled-properties
+			animation-timeline: auto, auto, auto, auto, --networks-scroll-track, --networks-scroll-track, --networks-scroll-track; // sass-lint:disable-line no-misspelled-properties
+
+			&:nth-child(even)
+			{
+				--networks-particle-idle-duration: var(--networks-particle-idle-even-duration);
+				--networks-particle-idle-x: var(--networks-particle-idle-even-x);
+				--networks-particle-idle-y: var(--networks-particle-idle-even-y);
+			}
+
+			&:nth-child(3n)
+			{
+				--networks-particle-idle-duration: var(--networks-particle-idle-third-duration);
+				--networks-particle-idle-y: var(--networks-particle-idle-third-y);
+			}
+		}
+	}
+}
+
+@keyframes networks-particles-fade
+{
+	from
+	{
+		opacity: 0;
+	}
+
+	to
+	{
+		opacity: 1;
+	}
+}
+
+@keyframes networks-particle-upper-travel
+{
+	from
+	{
+		filter: opacity(0);
+		translate: calc((var(--networks-particle-entry-x) - var(--networks-particle-rest-x)) * var(--networks-particle-frame-x)) calc((var(--networks-particle-entry-y) - var(--networks-particle-rest-y)) * var(--networks-particle-frame-y)); // sass-lint:disable-line no-misspelled-properties
+	}
+
+	to
+	{
+		filter: opacity(1);
+		translate: 0 0; // sass-lint:disable-line no-misspelled-properties
+	}
+}
+
+@keyframes networks-particle-x
+{
+	from
+	{
+		transform: translateX(calc(var(--networks-particle-entry-x) * var(--networks-particle-frame-x)));
+	}
+
+	to
+	{
+		transform: translateX(calc(var(--networks-particle-rest-x) * var(--networks-particle-frame-x)));
+	}
+}
+
+@keyframes networks-particle-y
+{
+	from
+	{
+		transform: translateY(calc(var(--networks-particle-entry-y) * var(--networks-particle-frame-y)));
+	}
+
+	to
+	{
+		transform: translateY(calc(var(--networks-particle-rest-y) * var(--networks-particle-frame-y)));
+	}
+}
+
+@keyframes networks-particle-idle
+{
+	from
+	{
+		transform: translate(0, 0);
+	}
+
+	to
+	{
+		transform: translate(var(--networks-particle-idle-x, var(--networks-particle-idle-base-x)), var(--networks-particle-idle-y, var(--networks-particle-idle-base-y)));
+	}
+}
+
+@keyframes networks-particle-exit
+{
+	from
+	{
+		left: var(--networks-particle-position-x);
+		top: var(--networks-particle-position-y);
+	}
+
+	to
+	{
+		left: 50%;
+		top: 50%;
+	}
+}
+
+@keyframes networks-particles-exit-fade
+{
+	0%,
+	75%
+	{
+		filter: opacity(1);
+	}
+
+	100%
+	{
+		filter: opacity(0);
+	}
+}
+
+@keyframes networks-particles-enter-window
+{
+	from
+	{
+		--networks-particles-overview-display: none;
+	}
+
+	to
+	{
+		--networks-particles-overview-display: block;
+	}
+}

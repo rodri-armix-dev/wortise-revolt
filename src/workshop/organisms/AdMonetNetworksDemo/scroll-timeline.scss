@@ -1,0 +1,64 @@
+@use '../../lib/scroll-timing' as *;
+
+@mixin scroll-animation
+{
+	animation-duration: auto;
+	animation-fill-mode: both;
+	animation-timeline: --networks-scroll-track; // sass-lint:disable-line no-misspelled-properties
+	animation-timing-function: linear;
+}
+
+@mixin panel-timing
+{
+	@include scroll-panel-timing(var(--networks-scroll-index));
+	--networks-scroll-enter: var(--scroll-panel-enter);
+	--networks-scroll-exit: var(--scroll-panel-exit);
+	--networks-scroll-next: var(--scroll-panel-next);
+	--networks-scroll-stop: var(--scroll-panel-stop);
+}
+
+@mixin format-layer-animation
+{
+	@include scroll-animation;
+	@include panel-timing;
+	--networks-scroll-slide-offset: var(--scroll-screen-offset);
+	--networks-scroll-slide-enter: calc(var(--networks-scroll-enter) + var(--networks-scroll-slide-offset));
+	animation-fill-mode: both, forwards;
+	animation-range: contain var(--networks-scroll-slide-enter) contain var(--networks-scroll-stop), contain calc(var(--networks-scroll-exit) + var(--networks-scroll-slide-offset)) contain var(--networks-scroll-next); // sass-lint:disable-line no-misspelled-properties
+	animation-timing-function: var(--networks-scroll-screen-slide-ease);
+	inset: 0; // sass-lint:disable-line no-misspelled-properties
+	position: absolute;
+}
+
+@mixin scroll-timeline-motion
+{
+	.networks-scroll
+	{
+		--ad-formats-preview-display: none;
+		// Complete convergence before the phone takes over the center.
+		--networks-scroll-convergence-end: calc(var(--networks-scroll-pause) + var(--networks-scroll-transition) * .62);
+		--networks-scroll-hub-fade-start: calc(var(--networks-scroll-pause) + var(--networks-scroll-transition) * .72);
+		--networks-scroll-phone-start: var(--networks-scroll-convergence-end);
+		--networks-scroll-pause: var(--scroll-pause);
+		--networks-scroll-step: var(--scroll-step);
+		--networks-scroll-transition: var(--scroll-transition);
+
+		&__track
+		{
+			display: grid;
+			min-height: calc(var(--networks-scroll-height) + var(--networks-scroll-format-count) * var(--networks-scroll-step) + var(--networks-scroll-pause));
+			view-timeline-name: --networks-scroll-track; // sass-lint:disable-line no-misspelled-properties
+		}
+
+		&__stage
+		{
+			align-self: start;
+			grid-area: 1 / 1;
+			height: var(--networks-scroll-height);
+			isolation: isolate;
+			overflow: clip;
+			position: sticky;
+			top: 0;
+		}
+	}
+}

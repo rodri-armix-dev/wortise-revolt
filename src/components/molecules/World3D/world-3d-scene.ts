@@ -321,7 +321,7 @@ export function createGlobe(host: HTMLElement, canvas: HTMLCanvasElement, points
 		if (!visible) { endDrag(); settleRotation(); }
 		stop();
 		if (visible) requestRender();
-	});
+	}, { rootMargin: `${window.innerHeight}px 0px` });
 	const settleRotation = () => {
 		if (!rotationMotion.active()) return;
 		if (focusedCity) {

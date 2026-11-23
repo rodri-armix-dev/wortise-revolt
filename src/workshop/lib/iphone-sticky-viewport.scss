@@ -1,0 +1,22 @@
+@mixin iphone-sticky-viewport($inset)
+{ // sass-lint:disable-line indentation
+	--iphone-sticky-height: calc(100dvh - 2 * var(--iphone-sticky-inset));
+	--iphone-sticky-inset: #{$inset};
+}
+
+@mixin iphone-sticky-anchor
+{
+	height: 1px;
+	margin-block-end: calc(var(--iphone-sticky-height) - 1px);
+	overflow: visible;
+	position: sticky;
+	top: var(--iphone-sticky-inset);
+	width: 1px;
+}
+
+@mixin iphone-sticky-scene
+{
+	position: relative;
+	top: auto;
+	width: max(100vw, var(--layout-min-width));
+}

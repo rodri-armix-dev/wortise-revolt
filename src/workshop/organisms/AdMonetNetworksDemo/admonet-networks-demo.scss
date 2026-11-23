@@ -1,0 +1,68 @@
+@use './scroll-timeline' as *;
+@use '../../lib/mobile-scroll-layout' as *;
+@use './intro-panel' as *;
+@use './admonet-hub' as *;
+@use './orbit-particles' as *;
+@use './format-panels' as *;
+@use './shared-phone' as *;
+@use './panel-lighting' as *;
+// Uncomment to show the mobile element outlines and labels.
+// @use './debug-outlines';
+@use './iphone-safari' as *;
+@use './reduced-motion' as *;
+
+// Set to false to follow the system motion preference.
+$preview-reduced-motion: false;
+
+.networks-scroll
+{
+	--ad-formats-panel-height: var(--networks-scroll-height);
+	--networks-scroll-height: 100dvh;
+
+	&__intro
+	{
+		--global-item-gap: var(--spacing-16);
+		padding-block: var(--spacing-48);
+
+		a
+		{
+			align-self: flex-start;
+			text-decoration: underline;
+		}
+	}
+}
+
+@if $preview-reduced-motion
+{
+	@include reduced-motion-layout;
+}
+@else
+{
+	@media (prefers-reduced-motion: reduce), #{media-query(osm)} and (height < $mobile-scroll-min-height)
+	{
+		@include reduced-motion-layout;
+	}
+
+	:global([data-workshop-reduce])
+	{
+		@include reduced-motion-layout;
+	}
+
+	@scope (html:not([data-workshop-reduce])) // sass-lint:disable-line space-after-colon
+	{
+		@media (prefers-reduced-motion: no-preference)
+		{
+			@media #{media-query(l)}, (min-height: $mobile-scroll-min-height)
+			{
+				@include scroll-timeline-motion;
+				@include intro-panel-motion;
+				@include admonet-hub-motion;
+				@include orbit-particles-motion;
+				@include format-panels-motion;
+				@include shared-phone-motion;
+				@include panel-lighting-motion;
+				@include iphone-safari-motion;
+			}
+		}
+	}
+}

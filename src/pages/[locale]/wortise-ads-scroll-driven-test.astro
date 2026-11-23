@@ -1,0 +1,30 @@
+---
+import AdsSectionsScrollDriven from '../../workshop/organisms/AdsSectionsScrollDriven/AdsSectionsScrollDriven.astro';
+import AdsCover from '../../components/organisms/AdsCover/AdsCover.astro';
+import VideoSection from '../../components/organisms/VideoSection/VideoSection.astro';
+import { wortiseAdsPageData } from '../../data/pages/wortise-ads';
+import { isLocale, locales } from '../../i18n/config';
+import { getPagePath } from '../../i18n/routes';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollDemoNav from '../../workshop/molecules/ScrollDemoNav/ScrollDemoNav.astro';
+
+export function getStaticPaths() {
+	return locales.filter((locale) => getPagePath(locale, 'wortise-ads-scroll-driven-test')).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) return new Response(null, { status: 404 });
+
+const page = wortiseAdsPageData[locale];
+const cover = page.modules.find((module) => module.type === 'ads-cover');
+const ads = page.modules.find((module) => module.type === 'ads-sections');
+const video = page.modules.find((module) => module.type === 'video-section');
+if (!cover || !ads || !video) throw new Error('Missing module in the Wortise Ads page');
+---
+
+<BaseLayout locale={locale} title="Wortise Ads · CSS Scroll-driven" description={page.meta.description} footerCTA={page.footerCTA}>
+	<ScrollDemoNav locale={locale} current="wortise-ads-scroll-driven-test" />
+	<AdsCover {...cover.props} />
+	<AdsSectionsScrollDriven {...ads.props} />
+	<VideoSection {...video.props} />
+</BaseLayout>

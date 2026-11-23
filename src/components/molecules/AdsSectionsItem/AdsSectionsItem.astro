@@ -7,6 +7,8 @@ import Description from '../../atoms/Description/Description.astro';
 import Button from '../../atoms/Button/Button.astro';
 import type { ComponentProps } from 'astro/types';
 
+type AnnotationPosition = 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'side-end';
+
 export interface Props {
 	id: string;
 	variant: 'efficiency' | 'projection' | 'creative' | 'reporting';
@@ -16,14 +18,23 @@ export interface Props {
 	description: ComponentProps<typeof Description>;
 	action: Omit<ComponentProps<typeof Button>, 'class'>;
 	annotations?: {
-		position: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'side-end';
+		position: AnnotationPosition;
 		icon?: ComponentProps<typeof Icon>['name'];
 		value?: string;
 		label?: string;
 	}[];
+	elementLabels?: {
+		titleCard: string;
+		heading: string;
+		badge: string;
+		content: string;
+		phone: string;
+		screen: string;
+		annotations: Record<AnnotationPosition, string>;
+	};
 }
 
-const { id, variant, heading, badge, image, description, action, annotations = [] } = Astro.props;
+const { id, variant, heading, badge, image, description, action, annotations = [], elementLabels } = Astro.props;
 const headingId = `ads-${id}-heading`;
 const annotationPositions = { 'top-start': 0, 'top-end': 0, 'side-end': 1, 'bottom-start': 2, 'bottom-end': 2 };
 const annotationOrder = annotations.map((annotation, index) => ({ index, position: annotationPositions[annotation.position] })).sort((a, b) => a.position - b.position);
@@ -31,14 +42,23 @@ const cardStyle = (rank: number, annotation = false) => `--ads-sections-item-car
 
 ---
 
-<section class:list={['ads-sections-item', `ads-sections-item--${variant}`]} id={`ads-${id}`} aria-labelledby={headingId}>
+<section class:list={['ads-sections-item', `ads-sections-item--${variant}`]} id={`ads-${id}`} aria-labelledby={headingId} data-element-labels={elementLabels ? '' : undefined}>
 	<div class="ads-sections-item__inner global-inner">
 		<div class="ads-sections-item__intro">
 			<div class="ads-sections-item__title-card">
+				{elementLabels && (
+					<span class="ads-sections-item__element-label" aria-hidden="true">{elementLabels.titleCard}</span>
+				)}
 				<div class="ads-sections-item__heading">
+					{elementLabels && (
+						<span class="ads-sections-item__element-label ads-sections-item__element-label--heading" aria-hidden="true">{elementLabels.heading}</span>
+					)}
 					<Heading html={heading} tag="h2" id={headingId} size={{ s: 'title-sm', l: 'title-md' }} />
 				</div>
 				<div class="ads-sections-item__badge">
+					{elementLabels && (
+						<span class="ads-sections-item__element-label ads-sections-item__element-label--badge" aria-hidden="true">{elementLabels.badge}</span>
+					)}
 					<Eyebrow label={badge} />
 				</div>
 			</div>
@@ -46,9 +66,18 @@ const cardStyle = (rank: number, annotation = false) => `--ads-sections-item-car
 		<div class="ads-sections-item__visual">
 			<div class="ads-sections-item__preview">
 				<PhoneMockup image={image} />
+				{elementLabels && (
+					<>
+						<span class="ads-sections-item__element-label ads-sections-item__element-label--phone" aria-hidden="true">{elementLabels.phone}</span>
+						<span class="ads-sections-item__element-label ads-sections-item__element-label--screen" aria-hidden="true">{elementLabels.screen}</span>
+					</>
+				)}
 			</div>
 			{annotations.map(({ position, icon, value, label }, index) => (
 				<div class:list={['ads-sections-item__annotation', `ads-sections-item__annotation--${position}`]} data-ads-reveal={1 + annotationOrder.findIndex((annotation) => annotation.index === index)} style={cardStyle(1 + annotationOrder.findIndex((annotation) => annotation.index === index), true)}>
+					{elementLabels && (
+						<span class="ads-sections-item__element-label" aria-hidden="true">{elementLabels.annotations[position]}</span>
+					)}
 					{icon && (
 						<div class="ads-sections-item__annotation-icon" data-icon={icon}>
 							<Icon name={icon} />
@@ -64,6 +93,9 @@ const cardStyle = (rank: number, annotation = false) => `--ads-sections-item-car
 			))}
 		</div>
 		<div class:list={['ads-sections-item__content', { 'ads-sections-item__content--padded-action': action.variant !== 'tertiary' }]} data-ads-reveal={0} style={cardStyle(0)}>
+			{elementLabels && (
+				<span class="ads-sections-item__element-label" aria-hidden="true">{elementLabels.content}</span>
+			)}
 			<Description {...description} />
 			<Button {...action} />
 		</div>
@@ -71,5 +103,5 @@ const cardStyle = (rank: number, annotation = false) => `--ads-sections-item-car
 </section>
 
 <style lang="scss">
-	@use './ads-sections-item';
+	@use './ads-sections-item' as ads-item-elements;
 </style>

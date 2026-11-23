@@ -1,0 +1,1182 @@
+@use '../../../components/molecules/AdsSectionsItem/element-label' as *;
+@use '../../lib/desktop-scroll-phone' as *;
+@use '../../lib/glow-edge-fade' as *;
+@use '../../lib/iphone-sticky-viewport' as *;
+@use '../../lib/mobile-scroll-layout' as *;
+@use '../../lib/phone-bounce' as *;
+@use '../../lib/scroll-text-transition' as *;
+@use '../../lib/scroll-timing' as *;
+
+@property --ads-scroll-phone-scale
+{
+	// sass-lint:disable no-misspelled-properties
+	inherits: true;
+	initial-value: 1;
+	syntax: '<number>';
+	// sass-lint:enable no-misspelled-properties
+}
+
+.ads-scroll
+{
+	@include scroll-text-transition;
+
+	--scroll-desktop-pause-preset: 20;
+	--scroll-desktop-screen-start-preset: 0;
+	--scroll-desktop-transition-preset: 80;
+
+	// sass-lint:disable no-color-literals
+	--ads-scroll-outline-entry: #b7ef1b;
+	--ads-scroll-outline-exit: #ff404d;
+	--ads-scroll-outline-flow: #36a6ff;
+	--ads-scroll-outline-pause: #f3f4f6;
+	--ads-scroll-outline-play: #8d46ff;
+	--ads-scroll-outline-scene-entry: #00e5cd;
+	--ads-scroll-outline-scene-exit: #ffe337;
+	--ads-scroll-outline-scrub: #ff7a00;
+	--ads-scroll-outline-sticky: #ff3baa;
+	// sass-lint:enable no-color-literals
+
+	// Moment stays as the default without relational selector support.
+	--ads-scroll-card-outline-color: var(--ads-scroll-outline-entry);
+	--ads-scroll-frame-outline-color: var(--ads-scroll-frame-entry-color, transparent);
+	--ads-scroll-heading-outline-color: var(--ads-scroll-heading-exit-color, transparent);
+	--ads-scroll-layer-outline-color: var(--ads-scroll-outline-exit);
+	--ads-scroll-mobile-phone-width: #{$mobile-scroll-phone-width-s};
+	--ads-sections-item-annotation-outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-annotation-outline-color, var(--ads-scroll-card-outline-color));
+	--ads-sections-item-badge-outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-badge-outline-color, transparent);
+	--ads-sections-item-content-outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-content-outline-color, var(--ads-scroll-card-outline-color));
+	--ads-sections-item-heading-outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-heading-outline-color);
+	--ads-sections-item-title-outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-card-outline-color);
+	--phone-mockup-frame-outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-preview-outline-color, transparent);
+	--phone-mockup-screen-outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-preview-outline-color, transparent);
+	--ads-element-label-display: var(--scroll-timing-label-display, block);
+	--ads-scroll-outline-width: var(--scroll-timing-outline-width, 2px);
+
+	&:has([data-ads-scroll-outline-axis='playback']:checked) // sass-lint:disable-line force-pseudo-nesting
+	{
+		--ads-scroll-card-outline-color: var(--ads-scroll-outline-scrub);
+		--ads-scroll-frame-outline-color: var(--ads-scroll-frame-scrub-color, transparent);
+		--ads-scroll-heading-outline-color: var(--ads-scroll-heading-scrub-color, transparent);
+		--ads-scroll-layer-outline-color: var(--ads-scroll-outline-scrub);
+	}
+
+	&:has([data-ads-scroll-outline-axis='anchor']:checked) // sass-lint:disable-line force-pseudo-nesting
+	{
+		--ads-scroll-annotation-outline-color: var(--ads-scroll-desktop-anchor-color, var(--ads-scroll-outline-flow));
+		--ads-scroll-badge-outline-color: var(--ads-scroll-outline-flow);
+		--ads-scroll-card-outline-color: var(--ads-scroll-outline-flow);
+		--ads-scroll-content-outline-color: var(--ads-scroll-desktop-anchor-color, var(--ads-scroll-outline-flow));
+		--ads-scroll-frame-outline-color: var(--ads-scroll-outline-sticky);
+		--ads-scroll-heading-outline-color: var(--ads-scroll-outline-flow);
+		--ads-scroll-layer-outline-color: var(--ads-scroll-outline-sticky);
+		--ads-scroll-preview-outline-color: var(--ads-scroll-outline-flow);
+	}
+
+	&__settings
+	{
+		margin-block: var(--spacing-24);
+	}
+
+	&__visual
+	{
+		display: none;
+	}
+
+	&__annotation-marker,
+	&__stack-marker,
+	&__bounce-marker
+	{
+		display: none;
+	}
+
+	&__element-label
+	{
+		@include ads-element-label;
+
+		&--glow
+		{
+			bottom: auto;
+			left: 14%;
+			top: 14%;
+		}
+	}
+
+	&__anchor
+	{
+		display: contents;
+	}
+
+	&__stage
+	{
+		position: relative;
+	}
+
+	&__legend
+	{
+		background: var(--color-background-page);
+		border: 1px solid var(--color-border-editorial);
+		border-radius: var(--radius-normal);
+		bottom: var(--spacing-8);
+		display: var(--scroll-timing-controls-display, block);
+		font-size: 12px;
+		left: var(--spacing-8);
+		line-height: 1.25;
+		max-width: calc(100% - 2 * var(--spacing-8));
+		padding: var(--spacing-8);
+		pointer-events: none;
+		position: absolute;
+		z-index: 3;
+	}
+
+	&__legend-toggle
+	{
+		cursor: pointer;
+		display: list-item;
+		pointer-events: auto;
+		width: max-content;
+	}
+
+	&__legend-axes
+	{
+		display: grid;
+		gap: var(--spacing-8);
+		margin-top: var(--spacing-8);
+	}
+
+	&__legend-axis
+	{
+		align-items: center;
+		display: grid;
+		gap: var(--spacing-8);
+		grid-template-columns: 96px minmax(0, 1fr);
+	}
+
+	&__legend-option
+	{
+		align-items: center;
+		cursor: pointer;
+		display: flex;
+		gap: var(--spacing-4);
+		pointer-events: auto;
+
+		input
+		{
+			appearance: auto;
+		}
+	}
+
+	&__legend-list
+	{
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-8);
+		list-style: none;
+	}
+
+	&__legend-item
+	{
+		align-items: center;
+		display: flex;
+		gap: var(--spacing-4);
+		white-space: nowrap;
+
+		&::before
+		{
+			border: 2px solid var(--ads-scroll-legend-swatch);
+			content: '';
+			height: var(--spacing-8);
+			width: var(--spacing-8);
+		}
+	}
+
+	&__panel,
+	&__glow
+	{
+		// sass-lint:disable no-color-literals
+		background-image: radial-gradient(circle closest-side, rgb(var(--ads-scroll-glow-rgb) / min(var(--ads-scroll-glow-strength, .35), var(--ads-scroll-glow-cap, 1))), rgb(var(--ads-scroll-glow-edge-rgb, var(--ads-scroll-glow-rgb)) / 0));
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: var(--ads-scroll-glow-size, 511px) var(--ads-scroll-glow-size, 511px);
+
+		&[data-variant='efficiency']
+		{
+			--ads-scroll-glow-rgb: 204 14 210;
+		}
+
+		&[data-variant='projection']
+		{
+			--ads-scroll-glow-rgb: 14 17 210;
+		}
+
+		&[data-variant='creative']
+		{
+			--ads-scroll-glow-rgb: 204 46 64;
+			--ads-scroll-glow-strength: .32;
+		}
+
+		&[data-variant='reporting']
+		{
+			--ads-scroll-glow-rgb: 210 14 128;
+		}
+		// sass-lint:enable no-color-literals
+	}
+}
+
+@include m
+{
+	.ads-scroll
+	{
+		--ads-scroll-mobile-phone-width: 240px;
+	}
+}
+
+@include desktop-scroll-phone('.ads-scroll');
+
+@include l
+{
+	.ads-scroll
+	{
+		--ads-sections-item-phone-max-width: var(--workshop-desktop-phone-width);
+		--ads-sections-item-phone-width: var(--workshop-desktop-phone-width);
+	}
+}
+
+@include osm
+{
+	.ads-scroll
+	{
+		--ads-scroll-glow-cap: .24;
+		--ads-scroll-glow-size: min(380px, 92vw);
+
+		&__panel-content
+		{
+			--layout-content-max-width: #{$mobile-scroll-column-width};
+		}
+	}
+}
+
+@mixin ads-scroll-motion
+{
+	.ads-scroll
+	{
+		--ads-scroll-inset: var(--spacing-8);
+		--ads-scroll-height: calc(100svh - 2 * var(--ads-scroll-inset));
+		--ads-sections-item-height: var(--ads-scroll-height);
+		--ads-sections-item-preview-opacity: 0;
+
+		&__track
+		{
+			--ads-bounce-entry: calc(var(--ads-scroll-height) * -.5);
+			--ads-bounce-wait: max(1px, var(--ads-scroll-pause));
+			--ads-scroll-distance: calc(var(--ads-scroll-step) * var(--ads-scroll-count));
+			--ads-scroll-lead-in: calc(-1 * var(--ads-scroll-transition));
+			--ads-scroll-pause: var(--scroll-pause);
+			// The stage changes first, then the incoming cards use the rest of the transition.
+			--ads-scroll-scrub-length: calc(var(--ads-scroll-transition) * .6);
+			--ads-scroll-step: var(--scroll-step);
+			--ads-scroll-transition: var(--scroll-transition);
+			min-height: calc(var(--ads-scroll-height) + var(--ads-scroll-distance));
+			position: relative;
+			view-timeline-inset: var(--ads-scroll-inset); // sass-lint:disable-line no-misspelled-properties
+			view-timeline-name: --ads-scroll-track; // sass-lint:disable-line no-misspelled-properties
+		}
+
+		&__bounce-marker
+		{
+			@include phone-bounce-marker;
+
+			&--appearance
+			{
+				height: calc(var(--ads-bounce-wait) - var(--ads-bounce-entry));
+				top: var(--ads-bounce-entry);
+			}
+
+			&--wait
+			{
+				height: var(--ads-bounce-wait);
+				top: calc(-1 * var(--ads-scroll-inset));
+			}
+		}
+
+		&__phone-bounce
+		{
+			.ads-scroll__track[data-bounce-played] &
+			{
+				@include phone-bounce-motion;
+			}
+		}
+
+		&__stage
+		{
+			height: var(--ads-scroll-height);
+			isolation: isolate;
+			overflow: clip;
+			position: sticky;
+			top: var(--ads-scroll-inset);
+		}
+
+		&__visual,
+		&__layers,
+		&__panels,
+		&__phone-layout,
+		&__panel
+		{
+			inset: 0; // sass-lint:disable-line no-misspelled-properties
+			position: absolute;
+		}
+
+		&__stage,
+		&__layers,
+		&__phone-layout,
+		&__panel
+		{
+			@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+			{
+				// Keep Safari's edge-sampling mitigation on the fixed scene and its layers.
+				backdrop-filter: opacity(1); // sass-lint:disable-line no-misspelled-properties
+			}
+		}
+
+		&__glow,
+		&__panel
+		{
+			@include scroll-panel-timing(var(--ads-scroll-index));
+			--ads-scroll-start: var(--scroll-panel-enter);
+			--ads-scroll-exit: var(--scroll-panel-exit);
+			--ads-scroll-stop: var(--scroll-panel-stop);
+			--ads-scroll-entry-start: calc(var(--ads-scroll-start) + var(--ads-scroll-scrub-length));
+			--ads-scroll-exit-end: calc(var(--ads-scroll-exit) + var(--ads-scroll-exit-length, var(--ads-scroll-scrub-length)));
+			--ads-scroll-enter-range: contain var(--ads-scroll-entry-start) contain var(--ads-scroll-stop);
+			--ads-scroll-scrub-range: contain var(--ads-scroll-start) contain var(--ads-scroll-entry-start);
+			--ads-scroll-exit-range: contain var(--ads-scroll-exit) contain var(--ads-scroll-exit-end);
+			animation-duration: auto;
+			animation-fill-mode: both;
+			animation-timeline: --ads-scroll-track; // sass-lint:disable-line no-misspelled-properties
+			animation-timing-function: linear;
+		}
+
+		&__visual
+		{
+			--phone-mockup-frame-outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-frame-outline-color);
+			--phone-mockup-screen-outline: none;
+			--phone-screen-stack-outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-layer-outline-color);
+			--phone-screen-stack-timeline: --ads-scroll-track;
+			display: block;
+			pointer-events: none;
+		}
+
+		&__glow
+		{
+			animation-fill-mode: both, forwards;
+			animation-name: ads-scroll-glow-enter, ads-scroll-glow-exit;
+			animation-range: var(--ads-scroll-scrub-range), var(--ads-scroll-exit-range); // sass-lint:disable-line no-misspelled-properties
+			border-radius: 50%;
+			height: var(--ads-scroll-glow-size, 511px);
+			left: var(--ads-scroll-glow-left, 50%);
+			outline: var(--ads-scroll-outline-width, 2px) solid var(--ads-scroll-layer-outline-color);
+			outline-offset: -2px;
+			position: absolute;
+			top: 50%;
+			translate: -50% -50%; // sass-lint:disable-line no-misspelled-properties
+			width: var(--ads-scroll-glow-size, 511px);
+
+			&:first-child
+			{
+				--ads-scroll-glow-start: var(--ads-scroll-glow-opacity, 1);
+			}
+
+			&:last-child
+			{
+				--ads-scroll-glow-end: var(--ads-scroll-glow-opacity, 1);
+			}
+		}
+
+		&__phone
+		{
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			translate: -50% -50%; // sass-lint:disable-line no-misspelled-properties
+			width: var(--ads-sections-item-phone-width);
+		}
+
+		&__panel
+		{
+			--ads-sections-item-content-pointer-events: auto;
+			--ads-sections-item-scroll-range: var(--ads-scroll-enter-range), var(--ads-scroll-exit-range);
+			--ads-sections-item-scroll-timeline: --ads-scroll-track;
+			background-image: none;
+			pointer-events: none;
+
+			&:last-child
+			{
+				--ads-scroll-exit-length: var(--ads-scroll-transition);
+			}
+		}
+	}
+}
+
+@supports (view-timeline-name: --ads-scroll-track) and (view-timeline-inset: 8px) and (animation-range: contain -40svh contain 0svh)
+{
+	@media (prefers-reduced-motion: no-preference) and (min-height: 42rem) and #{media-query(l)}
+	{
+		:global(html:not([data-workshop-reduce]):has([data-ads-snap-active]:not([data-ads-snap-suspended]))) // sass-lint:disable-line force-pseudo-nesting
+		{
+			scroll-snap-type: y mandatory; // sass-lint:disable-line no-misspelled-properties
+		}
+	}
+}
+
+@scope (html:not([data-workshop-reduce])) // sass-lint:disable-line space-after-colon
+{
+	@supports (view-timeline-name: --ads-scroll-track) and (view-timeline-inset: 8px) and (animation-range: contain -40svh contain 0svh)
+	{
+		@media (prefers-reduced-motion: no-preference)
+		{
+			@supports (grid-template-rows: subgrid)
+			{
+				@media #{media-query(osm)} and (min-height: $mobile-scroll-min-height)
+				{
+					@include ads-scroll-motion;
+
+					.ads-scroll
+					{
+						--ads-scroll-frame-entry-color: var(--ads-scroll-outline-entry);
+						--ads-scroll-frame-scrub-color: var(--ads-scroll-outline-scrub);
+						--ads-scroll-glow-opacity: .7;
+						--ads-scroll-mobile-padding: var(--spacing-24);
+						--ads-scroll-mobile-gap: var(--spacing-12);
+
+						&[data-iphone-safari]
+						{
+							@include iphone-sticky-viewport(var(--spacing-8));
+							--ads-scroll-height: var(--iphone-sticky-height);
+							--ads-scroll-inset: var(--iphone-sticky-inset);
+						}
+
+						&__anchor
+						{
+							.ads-scroll[data-iphone-safari] &
+							{
+								@include iphone-sticky-anchor;
+								display: block;
+							}
+						}
+
+						&__stage
+						{
+							.ads-scroll[data-iphone-safari] &
+							{
+								@include iphone-sticky-scene;
+							}
+						}
+
+						&__layers,
+						&__phone-layout,
+						&__panel
+						{
+							@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+							{
+								// Keep the scene filter and avoid stacking several backdrop filters on iOS.
+								backdrop-filter: none; // sass-lint:disable-line no-misspelled-properties
+							}
+						}
+
+						&__panels
+						{
+							@include mobile-scroll-rows(var(--ads-scroll-mobile-phone-width));
+							align-content: center;
+							display: grid;
+							gap: var(--ads-scroll-mobile-gap);
+							grid-template-columns: minmax(0, 1fr);
+							padding-block: var(--ads-scroll-mobile-padding);
+						}
+
+						&__panel-content,
+						&__panel
+						{
+							display: grid;
+							grid-area: 1 / 1 / -1 / -1;
+							grid-template-rows: subgrid;
+							min-height: 0;
+						}
+
+						&__phone-layout
+						{
+							container-type: size; // sass-lint:disable-line no-misspelled-properties
+						}
+
+						&__visual
+						{
+							--ads-sections-item-phone-width: min(var(--ads-scroll-mobile-phone-width), 100cqw, calc(100cqh * 410 / 788));
+							animation-duration: auto;
+							animation-fill-mode: both, forwards;
+							animation-name: ads-scroll-phone-arrival, ads-scroll-phone-departure;
+							animation-range: contain var(--ads-scroll-lead-in) contain calc(var(--ads-scroll-lead-in) + var(--ads-scroll-scrub-length)), contain calc(var(--ads-scroll-distance) - var(--ads-scroll-transition)) contain var(--ads-scroll-distance); // sass-lint:disable-line no-misspelled-properties
+							animation-timeline: --ads-scroll-track; // sass-lint:disable-line no-misspelled-properties
+							grid-area: 2 / 1;
+							position: relative;
+						}
+
+						&__phone
+						{
+							scale: var(--ads-scroll-phone-scale); // sass-lint:disable-line no-misspelled-properties
+						}
+
+						&__panel
+						{
+							@include scroll-text-mobile-ranges(var(--ads-scroll-start), var(--ads-scroll-exit));
+							--ads-sections-item-content-animation: scroll-text-fixed-enter, scroll-text-fixed-exit;
+							--ads-sections-item-display: grid;
+							--ads-sections-item-height: 0px; // sass-lint:disable-line zero-unit
+							--ads-sections-item-padding-block: 0px; // sass-lint:disable-line zero-unit
+							--ads-sections-item-rows: subgrid;
+							--ads-sections-item-scroll-content-alignment: end;
+							--ads-sections-item-scroll-gap: var(--ads-scroll-mobile-gap);
+							--ads-sections-item-scroll-intro-alignment: start;
+							--ads-sections-item-scroll-range: var(--scroll-text-enter-range), var(--scroll-text-exit-range);
+							--ads-sections-item-stacked-content-row: 3;
+							--ads-sections-item-stacked-display: grid;
+							--ads-sections-item-stacked-intro-row: 1;
+							--ads-sections-item-stacked-rows: subgrid;
+							--ads-sections-item-stacked-span: 1 / -1;
+							--ads-sections-item-stacked-visual-display: none;
+							--ads-sections-item-title-animation: scroll-text-fixed-enter, scroll-text-fixed-exit;
+							position: static;
+
+							&[data-first-panel]
+							{
+								--ads-sections-item-content-animation: ads-scroll-first-content-enter, scroll-text-fixed-exit;
+								--ads-sections-item-title-animation: ads-scroll-first-title-enter, scroll-text-fixed-exit;
+								--scroll-text-enter-range: var(--ads-scroll-enter-range);
+							}
+
+							&:last-child
+							{
+								--scroll-text-exit-range: contain var(--ads-scroll-exit) contain calc(var(--ads-scroll-exit) + var(--ads-scroll-transition) * .65);
+							}
+						}
+
+						&__panel-glow
+						{
+							@include glow-edge-fade;
+							inset: 0; // sass-lint:disable-line no-misspelled-properties
+							pointer-events: none;
+							position: absolute;
+							z-index: -1;
+						}
+
+						&__glow
+						{
+
+							.ads-scroll__panel:not([data-first-panel]) & // sass-lint:disable-line force-pseudo-nesting
+							{
+								--ads-scroll-glow-start: 0;
+							}
+
+							.ads-scroll__panel:not(:last-child) & // sass-lint:disable-line force-pseudo-nesting
+							{
+								--ads-scroll-glow-end: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@media (prefers-reduced-motion: no-preference) and (min-height: 42rem)
+		{
+			@include l
+			{
+				@include ads-scroll-motion;
+
+				.ads-scroll
+				{
+					--ads-scroll-desktop-anchor-color: var(--ads-scroll-outline-sticky);
+					--ads-scroll-heading-exit-color: var(--ads-scroll-outline-exit);
+					--ads-scroll-heading-scrub-color: var(--ads-scroll-outline-scrub);
+					--ads-scroll-column-gap: var(--spacing-32);
+					--ads-scroll-column: calc((100% - 2 * var(--ads-scroll-column-gap)) / 3);
+					--ads-scroll-card-width: min(367px, var(--ads-scroll-column));
+					--ads-scroll-glow-left: calc(var(--ads-scroll-card-width) + max(0px, 50% - var(--ads-sections-item-phone-width) / 2 - var(--ads-scroll-card-width)) / 8); // sass-lint:disable-line zero-unit
+					--ads-scroll-scene-gutter: max(var(--layout-gutter), (100% - var(--layout-content-max-width)) / 2);
+
+					&__track
+					{
+						--ads-scroll-distance: calc(var(--ads-scroll-step) * var(--ads-scroll-count) - var(--ads-scroll-transition));
+					}
+
+					&__layers,
+					&__panels
+					{
+						inset-inline: var(--ads-scroll-scene-gutter); // sass-lint:disable-line no-misspelled-properties
+					}
+
+					&__panels
+					{
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						pointer-events: none;
+
+						@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+						{
+							backdrop-filter: opacity(1); // sass-lint:disable-line no-misspelled-properties
+						}
+					}
+
+					&__stack-marker
+					{
+						@include scroll-panel-timing(var(--ads-scroll-index));
+						@include phone-bounce-marker;
+						height: var(--ads-scroll-step);
+						top: calc(var(--scroll-panel-stop) - var(--ads-scroll-inset));
+					}
+
+					&__annotation-marker
+					{
+						@include scroll-panel-timing(var(--ads-scroll-index));
+						@include phone-bounce-marker;
+						height: max(1px, var(--ads-scroll-pause));
+						top: calc(var(--scroll-panel-stop) - var(--ads-scroll-inset));
+
+						&::before
+						{
+							content: '';
+							height: 1px;
+							position: absolute;
+							scroll-snap-align: start; // sass-lint:disable-line no-misspelled-properties
+							top: min(var(--spacing-8), calc(var(--ads-scroll-pause) / 2));
+							width: 1px;
+						}
+					}
+
+					&__panel-glow
+					{
+						inset: 0; // sass-lint:disable-line no-misspelled-properties
+						position: absolute;
+						z-index: 0;
+					}
+
+					&__visual
+					{
+						z-index: 1;
+					}
+
+					&__panel-content
+					{
+						z-index: 2;
+					}
+
+					&__glow
+					{
+						animation-name: ads-scroll-glow-desktop-enter, ads-scroll-glow-desktop-exit;
+						animation-range: contain var(--ads-scroll-start) contain var(--ads-scroll-stop), contain var(--ads-scroll-exit) contain var(--scroll-panel-next); // sass-lint:disable-line no-misspelled-properties
+						opacity: var(--ads-scroll-glow-opacity, 1);
+						top: calc(var(--ads-scroll-height) / 2 - 103px);
+
+						.ads-scroll__panel[data-first-panel] &
+						{
+							--ads-scroll-glow-entry-y: 0px; // sass-lint:disable-line zero-unit
+						}
+
+						.ads-scroll__panel:last-child & // sass-lint:disable-line force-pseudo-nesting
+						{
+							--ads-scroll-glow-exit-y: 0px; // sass-lint:disable-line zero-unit
+						}
+					}
+
+					&__panel
+					{
+						--ads-sections-item-height: 0px; // sass-lint:disable-line zero-unit
+						--ads-sections-item-padding-block: 0px; // sass-lint:disable-line zero-unit
+						--ads-sections-item-desktop-display: block;
+						--ads-sections-item-desktop-inner-display: block;
+						--ads-sections-item-desktop-inner-min-height: 0px; // sass-lint:disable-line zero-unit
+						--ads-sections-item-desktop-card-width: var(--ads-scroll-card-width);
+						--ads-sections-item-desktop-content-position: absolute;
+						--ads-sections-item-desktop-content-right: 0px; // sass-lint:disable-line zero-unit
+						--ads-sections-item-desktop-content-top: 50%;
+						--ads-sections-item-desktop-content-translate: 0 -50%;
+						--ads-sections-item-desktop-visual-left: 50%;
+						--ads-sections-item-desktop-visual-position: absolute;
+						--ads-sections-item-desktop-visual-top: 50%;
+						--ads-sections-item-desktop-visual-transform: translate(-50%, -50%);
+						--ads-sections-item-heading-display: grid;
+						--ads-sections-item-heading-overflow: hidden;
+						--ads-sections-item-title-animation: ads-scroll-title-desktop-enter, ads-scroll-title-desktop-exit;
+						--ads-sections-item-heading-animation: none, ads-scroll-heading-collapse;
+						--ads-sections-item-content-animation: var(--ads-scroll-content-entry, ads-scroll-content-bounce-enter), var(--ads-scroll-content-exit, ads-scroll-content-bounce-exit);
+						--ads-sections-item-annotation-direction: normal, reverse;
+						--ads-sections-item-annotation-animation: var(--ads-scroll-annotation-entry, ads-scroll-annotation-efficiency-enter), var(--ads-scroll-annotation-exit, ads-scroll-annotation-efficiency-exit);
+						--ads-sections-item-annotation-late-animation: var(--ads-scroll-annotation-entry, ads-scroll-annotation-efficiency-late-enter), var(--ads-scroll-annotation-exit, ads-scroll-annotation-efficiency-late-exit);
+						--layout-gutter: 0px; // sass-lint:disable-line zero-unit
+						animation-name: ads-scroll-stack-row;
+						animation-range: var(--ads-scroll-enter-range); // sass-lint:disable-line no-misspelled-properties
+						display: grid;
+						flex-shrink: 0;
+						position: static;
+
+						&[data-variant='efficiency']
+						{
+							--ads-scroll-glow-edge-rgb: 210 14 168;
+						}
+
+						&[data-variant='projection']
+						{
+							--ads-scroll-glow-edge-rgb: 14 50 210;
+						}
+
+						&[data-variant='creative']
+						{
+							--ads-scroll-glow-edge-rgb: 203 40 60;
+						}
+
+						&[data-variant='reporting']
+						{
+							--ads-scroll-glow-edge-rgb: 210 14 161;
+						}
+
+						.ads-scroll__track[data-annotation-observer] &
+						{
+							--ads-sections-item-annotation-duration: 650ms;
+							--ads-sections-item-annotation-range: normal;
+							--ads-sections-item-annotation-timeline: auto;
+							--ads-sections-item-annotation-visibility: hidden;
+							--ads-sections-item-content-duration: 650ms;
+							--ads-sections-item-content-range: normal;
+							--ads-sections-item-content-timeline: auto;
+							--ads-sections-item-content-visibility: hidden;
+						}
+
+						.ads-scroll__track[data-annotation-observer] &:not([data-annotation-playback='enter']) // sass-lint:disable-line force-pseudo-nesting
+						{
+							--ads-scroll-annotation-entry: none;
+						}
+
+						.ads-scroll__track[data-annotation-observer] &:not([data-annotation-playback='enter'], [data-content-held]) // sass-lint:disable-line force-pseudo-nesting
+						{
+							--ads-scroll-content-entry: none;
+						}
+
+						.ads-scroll__track[data-annotation-observer] &:not([data-annotation-playback='exit']) // sass-lint:disable-line force-pseudo-nesting
+						{
+							--ads-scroll-annotation-exit: none;
+							--ads-scroll-content-exit: none;
+						}
+
+						&[data-content-held]
+						{
+							--ads-scroll-content-exit: none;
+						}
+
+						.ads-scroll__track[data-annotation-observer] &[data-annotation-playback='exit']:not([data-content-held]) // sass-lint:disable-line force-pseudo-nesting
+						{
+							--ads-scroll-content-exit-scale: .86;
+							--ads-sections-item-content-duration: 260ms;
+						}
+
+						&[data-first-panel]
+						{
+							--ads-scroll-stack-gap: 0px; // sass-lint:disable-line zero-unit
+						}
+
+						&[data-variant='projection']
+						{
+							--ads-sections-item-title-animation: ads-scroll-title-projection-enter, ads-scroll-title-projection-exit;
+							--ads-sections-item-content-animation: var(--ads-scroll-content-entry, ads-scroll-content-projection-enter), var(--ads-scroll-content-exit, ads-scroll-content-projection-exit);
+							--ads-sections-item-annotation-animation: var(--ads-scroll-annotation-entry, ads-scroll-annotation-projection-enter), var(--ads-scroll-annotation-exit, ads-scroll-annotation-projection-exit);
+							--ads-sections-item-annotation-late-animation: var(--ads-scroll-annotation-entry, ads-scroll-annotation-projection-late-enter), var(--ads-scroll-annotation-exit, ads-scroll-annotation-projection-late-exit);
+							--ads-sections-item-annotation-middle-animation: var(--ads-scroll-annotation-entry, ads-scroll-annotation-audience-enter), var(--ads-scroll-annotation-exit, ads-scroll-annotation-audience-exit);
+							animation-name: ads-scroll-stack-row-projection;
+						}
+
+						&[data-variant='creative'],
+						&[data-variant='reporting']
+						{
+							--ads-sections-item-content-animation: var(--ads-scroll-content-entry, ads-scroll-content-creative-enter), var(--ads-scroll-content-exit, ads-scroll-content-creative-exit);
+							--ads-sections-item-annotation-animation: var(--ads-scroll-annotation-entry, ads-scroll-annotation-creative-enter), var(--ads-scroll-annotation-exit, ads-scroll-annotation-creative-exit);
+							--ads-sections-item-annotation-late-animation: var(--ads-scroll-annotation-entry, ads-scroll-annotation-creative-late-enter), var(--ads-scroll-annotation-exit, ads-scroll-annotation-creative-late-exit);
+						}
+
+						&:last-child
+						{
+							--ads-scroll-card-exit-opacity: 1;
+							--ads-scroll-card-exit-y: 0px; // sass-lint:disable-line zero-unit
+							--ads-scroll-card-exit-visibility: visible;
+							--ads-scroll-heading-end-row: 1fr;
+							--ads-scroll-title-end-gap: 26px;
+
+							.ads-scroll__track[data-annotation-observer] &
+							{
+								--ads-scroll-card-exit-opacity: 0;
+								--ads-scroll-card-exit-visibility: hidden;
+								--ads-scroll-card-exit-y: initial;
+							}
+						}
+
+						&[data-stack-state]
+						{
+							--ads-scroll-stack-duration: 650ms;
+							--ads-scroll-stack-ease: cubic-bezier(.2, .65, .3, 1);
+							--ads-sections-item-heading-animation: none;
+							--ads-sections-item-heading-rows: minmax(0, 1fr);
+							--ads-sections-item-heading-transition: grid-template-rows var(--ads-scroll-stack-duration) var(--ads-scroll-stack-ease), opacity 320ms ease-in-out, transform 320ms ease-in-out, visibility 320ms;
+							--ads-sections-item-intro-transition: opacity var(--ads-scroll-stack-duration) var(--ads-scroll-stack-ease), transform var(--ads-scroll-stack-duration) var(--ads-scroll-stack-ease), visibility var(--ads-scroll-stack-duration);
+							--ads-sections-item-title-animation: none;
+							--ads-sections-item-title-transition: gap var(--ads-scroll-stack-duration) var(--ads-scroll-stack-ease);
+							animation-name: none;
+							grid-template-rows: minmax(0, 1fr);
+							margin-top: var(--ads-scroll-stack-gap, var(--spacing-20));
+							transition: grid-template-rows var(--ads-scroll-stack-duration) var(--ads-scroll-stack-ease), margin-top var(--ads-scroll-stack-duration) var(--ads-scroll-stack-ease);
+						}
+
+						&[data-stack-state='pending']
+						{
+							--ads-sections-item-intro-opacity: 0;
+							--ads-sections-item-intro-transform: translateY(20px) scale(.6);
+							--ads-sections-item-intro-visibility: hidden;
+							grid-template-rows: minmax(0, 0fr);
+							margin-top: 0;
+						}
+
+						&[data-stack-state='past']
+						{
+							--ads-sections-item-heading-opacity: 0;
+							--ads-sections-item-heading-rows: minmax(0, 0fr);
+							--ads-sections-item-heading-transform: translateY(-18px);
+							--ads-sections-item-heading-visibility: hidden;
+							--ads-sections-item-title-gap: 0px; // sass-lint:disable-line zero-unit
+						}
+
+						// The scene already supplies Safari's filter. A filter on the
+						// stack row would make it the containing block for the phone overlays.
+						@supports (-webkit-touch-callout: none) // sass-lint:disable-line no-vendor-prefixes
+						{
+							backdrop-filter: none; // sass-lint:disable-line no-misspelled-properties
+						}
+					}
+				}
+			}
+
+			@include xl
+			{
+				.ads-scroll
+				{
+					--ads-scroll-column-gap: var(--spacing-64);
+				}
+			}
+		}
+	}
+}
+
+@keyframes ads-scroll-glow-enter
+{
+	from
+	{
+		opacity: var(--ads-scroll-glow-start, 0);
+	}
+
+	to
+	{
+		opacity: var(--ads-scroll-glow-opacity, 1);
+	}
+}
+
+@keyframes ads-scroll-glow-exit
+{
+	from
+	{
+		opacity: var(--ads-scroll-glow-opacity, 1);
+	}
+
+	to
+	{
+		opacity: var(--ads-scroll-glow-end, 0);
+	}
+}
+
+@keyframes ads-scroll-glow-desktop-enter
+{
+	from
+	{
+		animation-timing-function: ease-in-out;
+		transform: translateY(var(--ads-scroll-glow-entry-y, 118svh));
+	}
+
+	to
+	{
+		transform: translateY(0);
+	}
+}
+
+@keyframes ads-scroll-glow-desktop-exit
+{
+	from
+	{
+		transform: translateY(0);
+	}
+
+	to
+	{
+		transform: translateY(var(--ads-scroll-glow-exit-y, -122svh));
+	}
+}
+
+@mixin ads-scroll-phone-expanded
+{
+	--ads-scroll-phone-scale: 1.5;
+}
+
+@mixin ads-scroll-phone-settled
+{
+	--ads-scroll-phone-scale: 1;
+}
+
+@keyframes ads-scroll-phone-arrival
+{
+	0%,
+	10%
+	{
+		animation-timing-function: ease-in-out;
+		@include ads-scroll-phone-expanded;
+	}
+
+	80%,
+	100%
+	{
+		@include ads-scroll-phone-settled;
+	}
+}
+
+@keyframes ads-scroll-phone-departure
+{
+	0%
+	{
+		animation-timing-function: ease-in-out;
+		@include ads-scroll-phone-settled;
+	}
+
+	to
+	{
+		@include ads-scroll-phone-expanded;
+	}
+}
+
+// The first panel enters before the shared panel-to-panel fade windows.
+@mixin ads-scroll-first-card-entry($name, $start, $settled, $distance)
+{ // sass-lint:disable-line indentation
+	@keyframes #{$name}
+	{
+		0%,
+		#{$start}
+		{
+			animation-timing-function: ease-out;
+			opacity: $scroll-text-hidden-opacity;
+			transform: translateY($distance);
+			visibility: hidden;
+		}
+
+		#{$settled},
+		100%
+		{
+			opacity: 1;
+			transform: translateY(0);
+			visibility: visible;
+		}
+	}
+}
+
+@include scroll-text-keyframes(scroll-text-fixed-enter, scroll-text-fixed-exit);
+@include ads-scroll-first-card-entry(ads-scroll-first-title-enter, 8%, 78%, 16px);
+@include ads-scroll-first-card-entry(ads-scroll-first-content-enter, 26%, 98%, 20px);
+
+@mixin ads-scroll-stack-row($name, $start)
+{ // sass-lint:disable-line indentation
+	@keyframes #{$name}
+	{
+		0%,
+		#{$start}
+		{
+			animation-timing-function: ease-out;
+			grid-template-rows: minmax(0, 0fr);
+			margin-top: 0;
+		}
+
+		100%
+		{
+			grid-template-rows: minmax(0, 1fr);
+			margin-top: var(--ads-scroll-stack-gap, var(--spacing-20));
+		}
+	}
+}
+
+@include ads-scroll-stack-row(ads-scroll-stack-row, 16%);
+@include ads-scroll-stack-row(ads-scroll-stack-row-projection, 48%);
+
+@mixin ads-scroll-desktop-title($name, $start, $visible)
+{ // sass-lint:disable-line indentation
+	@keyframes #{$name}-enter
+	{
+		0%,
+		#{$start}
+		{
+			animation-timing-function: cubic-bezier(.3, -1.2, .45, 1);
+			opacity: 0;
+			transform: translateY(20px) scale(.6);
+			visibility: hidden;
+		}
+
+		#{$visible},
+		100%
+		{
+			opacity: 1;
+			transform: none;
+			visibility: visible;
+		}
+	}
+
+	@keyframes #{$name}-exit
+	{
+		from
+		{
+			animation-timing-function: ease-in-out;
+			gap: 26px;
+		}
+
+		64%,
+		to
+		{
+			gap: var(--ads-scroll-title-end-gap, 0);
+		}
+	}
+}
+
+@include ads-scroll-desktop-title(ads-scroll-title-desktop, 16%, 80%);
+@include ads-scroll-desktop-title(ads-scroll-title-projection, 48%, 96%);
+
+@keyframes ads-scroll-heading-collapse
+{
+	0%
+	{
+		animation-timing-function: ease-in-out;
+		grid-template-rows: minmax(0, 1fr);
+		opacity: 1;
+		transform: none;
+		visibility: visible;
+	}
+
+	28%
+	{
+		opacity: var(--ads-scroll-card-exit-opacity, 0);
+		transform: translateY(var(--ads-scroll-card-exit-y, -18px));
+	}
+
+	64%,
+	100%
+	{
+		grid-template-rows: minmax(0, var(--ads-scroll-heading-end-row, 0fr));
+		opacity: var(--ads-scroll-card-exit-opacity, 0);
+		transform: none;
+		visibility: var(--ads-scroll-card-exit-visibility, hidden);
+	}
+}
+
+@mixin ads-scroll-desktop-content($name, $start, $bounce, $settled, $entry-y, $overshoot, $exit-y)
+{ // sass-lint:disable-line indentation
+	@keyframes #{$name}-enter
+	{
+		0%,
+		#{$start}
+		{
+			animation-timing-function: cubic-bezier(.15, .52, .5, 1);
+			opacity: 0;
+			transform: translateY($entry-y) scale(.6);
+			visibility: hidden;
+		}
+
+		#{$bounce}
+		{
+			animation-timing-function: ease-out;
+			opacity: 1;
+			transform: translateY($overshoot) scale(.86);
+			visibility: visible;
+		}
+
+		#{$settled},
+		100%
+		{
+			opacity: 1;
+			transform: none;
+			visibility: visible;
+		}
+	}
+
+	@keyframes #{$name}-exit
+	{
+		from
+		{
+			animation-timing-function: ease-in-out;
+			opacity: 1;
+			transform: none;
+			visibility: visible;
+		}
+
+		68%,
+		to
+		{
+			opacity: var(--ads-scroll-card-exit-opacity, 0);
+			transform: translateY(var(--ads-scroll-card-exit-y, #{$exit-y})) scale(var(--ads-scroll-content-exit-scale, 1));
+			visibility: var(--ads-scroll-card-exit-visibility, hidden);
+		}
+	}
+}
+
+@include ads-scroll-desktop-content(ads-scroll-content-bounce, 28%, 52%, 92%, 20px, 27px, -253px);
+@include ads-scroll-desktop-content(ads-scroll-content-projection, 60%, 76%, 99%, 20px, 27px, -213px);
+@include ads-scroll-desktop-content(ads-scroll-content-creative, 44%, 68%, 96%, 20px, 29px, -213px);
+
+@mixin ads-scroll-desktop-annotation($name, $start, $overshoot-at, $settled, $entry, $overshoot, $scale: 1, $overshoot-scale: 1)
+{ // sass-lint:disable-line indentation
+	@each $phase in enter, exit
+	{
+		@keyframes #{$name}-#{$phase}
+		{
+			0%,
+			#{$start}
+			{
+				animation-timing-function: ease-out;
+				opacity: 0;
+				scale: $scale; // sass-lint:disable-line no-misspelled-properties
+				translate: $entry; // sass-lint:disable-line no-misspelled-properties
+				visibility: hidden;
+			}
+
+			#{$overshoot-at}
+			{
+				animation-timing-function: ease-out;
+				opacity: 1;
+				scale: $overshoot-scale; // sass-lint:disable-line no-misspelled-properties
+				translate: $overshoot; // sass-lint:disable-line no-misspelled-properties
+				visibility: visible;
+			}
+
+			#{$settled},
+			100%
+			{
+				opacity: 1;
+				scale: 1; // sass-lint:disable-line no-misspelled-properties
+				translate: none; // sass-lint:disable-line no-misspelled-properties
+				visibility: visible;
+			}
+		}
+	}
+}
+
+@include ads-scroll-desktop-annotation(ads-scroll-annotation-efficiency, 42%, 66%, 92%, 30px 30px, 12px 8px, 0, .75);
+@include ads-scroll-desktop-annotation(ads-scroll-annotation-efficiency-late, 32%, 58%, 86%, 0 -40px, 0 -12px);
+@include ads-scroll-desktop-annotation(ads-scroll-annotation-projection, 46%, 72%, 96%, 0 82px, 0 16px);
+@include ads-scroll-desktop-annotation(ads-scroll-annotation-projection-late, 54%, 80%, 99%, 0 82px, 0 16px);
+@include ads-scroll-desktop-annotation(ads-scroll-annotation-audience, 44%, 56%, 68%, none, none);
+@include ads-scroll-desktop-annotation(ads-scroll-annotation-creative, 48%, 74%, 96%, 40px -80px, -20px -20px);
+@include ads-scroll-desktop-annotation(ads-scroll-annotation-creative-late, 36%, 64%, 90%, 0 65px, 0 12px);

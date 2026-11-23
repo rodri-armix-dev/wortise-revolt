@@ -1,0 +1,328 @@
+---
+import Heading from '../../../components/atoms/Heading/Heading.astro';
+import Icon from '../../../components/atoms/Icon/Icon.astro';
+import { scrollPositionPanels, type ScrollPositionDemo } from '../../data/scroll-position-demos';
+
+export interface Props {
+	demo: ScrollPositionDemo;
+	links: readonly { href: string; title: string; current: boolean }[];
+}
+
+const { demo, links } = Astro.props;
+const isSticky = demo.mode === 'sticky';
+const isScrollDriven = demo.mode === 'scroll-driven';
+const hasStickyPanels = demo.mode === 'sticky-panels';
+const holdsScene = isSticky || demo.mode === 'pin';
+const usesSharedScene = holdsScene || isScrollDriven;
+const hasPanelSettings = usesSharedScene || hasStickyPanels;
+
+type SnapField = {
+	name: string;
+	label: string;
+	help: string;
+	showFor?: 'fixed' | 'range';
+} & (
+	{ min: number; max: number; value: number }
+	| { options: [value: string, label: string][]; value?: string }
+);
+
+const panelStops = scrollPositionPanels.map(({ title }, index): [string, string] => [String(index), title]);
+const panelFields = [
+	{
+		name: 'travel', label: 'Recorrido', value: 200, disabled: true,
+		help: 'La suma de la pausa y la transición. Indica cuánto scroll hay entre el inicio de un panel y el inicio del siguiente.',
+	},
+	{
+		name: 'pause', label: 'Pausa', min: 0, max: 500, value: 100,
+		help: 'Cuánto scroll se mantiene quieto cada panel antes de empezar el paso al siguiente. El último panel hace esta pausa antes de salir de la sección.',
+	},
+	{
+		name: 'transition', label: 'Transición', min: 1, max: 500, value: 100, disabled: hasStickyPanels,
+		help: hasStickyPanels
+			? 'La salida natural ocupa una pantalla de scroll. Este modo usa siempre 100 %.'
+			: 'Cuánto scroll ocupa el Paso continuo. Con Corte directo, se agrega al tramo en que el panel queda quieto.',
+	},
+];
+const snapFields: SnapField[] = [
+	{ name: 'delay', label: 'Espera (ms)', help: 'Cuánto espera Snap después de que dejás de hacer scroll, antes de mover la página hacia una parada.', min: 0, max: 5000, value: 140 },
+	{
+		name: 'durationMode', label: 'Duración',
+		help: 'Elegí si el ajuste tarda siempre lo mismo o si puede variar entre una duración mínima y una máxima.',
+		options: [['fixed', 'Fija'], ['range', 'Mínima y máxima']],
+	},
+	{ name: 'duration', label: 'Duración fija (ms)', help: 'Cuánto tarda el ajuste en llegar a la parada una vez que empieza a moverse.', showFor: 'fixed', min: 10, max: 5000, value: 240 },
+	{ name: 'minDuration', label: 'Duración mínima (ms)', help: 'El tiempo más corto que puede durar el ajuste en modo variable.', showFor: 'range', min: 10, max: 5000, value: 120 },
+	{ name: 'maxDuration', label: 'Duración máxima (ms)', help: 'El tiempo más largo que puede durar el ajuste en modo variable.', showFor: 'range', min: 10, max: 5000, value: 400 },
+	{
+		name: 'ease', label: 'Curva',
+		help: 'Cómo cambia la velocidad durante el ajuste. Lineal mantiene una velocidad constante y las demás curvas hacen que acelere, frene o ambas cosas.',
+		options: [['power3.out', 'Frenado marcado (power3.out)'], ['power1.out', 'Frenado suave (power1.out)'], ['power2.inOut', 'Acelera y frena (power2.inOut)'], ['none', 'Lineal']],
+	},
+	{
+		name: 'destination', label: 'Destino',
+		help: 'En qué puntos puede quedar el scroll. Podés usar el inicio de cada panel, solo los extremos del tramo o también las mitades entre paneles.',
+		options: [['panels', 'Inicio de cada panel'], ['edges', 'Solo extremos del tramo'], ['midpoints', 'Inicio de paneles y puntos medios']],
+	},
+	{
+		name: 'direction', label: 'Dirección',
+		help: 'El destino más cercano puede quedar hacia atrás. En el sentido del scroll, Snap busca una parada en la última dirección en la que te moviste.',
+		options: [['nearest', 'Destino más cercano'], ['directional', 'En el sentido del scroll']],
+	},
+	{
+		name: 'inertia', label: 'Inercia',
+		help: 'Hace que la velocidad del gesto influya en el destino. Un movimiento rápido puede llevarte a una parada más lejana.',
+		options: [['off', 'Sin inercia'], ['on', 'Con inercia']],
+	},
+	{
+		name: 'start', label: 'Inicio del tramo',
+		help: 'El inicio del panel a partir del cual Snap puede ajustar el scroll.',
+		options: panelStops.slice(0, -1),
+	},
+	{
+		name: 'end', label: 'Fin del tramo',
+		help: 'El inicio del último panel que puede ajustar Snap. Si seguís bajando desde ahí, el scroll vuelve a ser libre.',
+		options: panelStops.slice(1), value: panelStops.at(-1)?.[0],
+	},
+];
+const cssSnapFields: SnapField[] = [
+	{
+		name: 'strictness', label: 'Intensidad',
+		help: 'Proximidad ajusta el scroll cuando soltás cerca de una parada. Obligatorio hace que el navegador busque una parada válida al terminar el desplazamiento.',
+		options: [['proximity', 'Proximidad'], ['mandatory', 'Obligatorio']],
+	},
+	{
+		name: 'align', label: 'Alineación',
+		help: 'Alinea el inicio, centro o final del área de Snap con la ventana. En las escenas fijas, esa área es el tramo de scroll del panel. Si el área y la ventana tienen la misma altura, las tres pueden coincidir.',
+		options: [['start', 'Inicio'], ['center', 'Centro'], ['end', 'Final']],
+	},
+	{
+		name: 'stop', label: 'Parada',
+		help: 'Con Siempre, un gesto de desplazamiento direccional se detiene en la primera parada que atraviesa. Con Normal puede pasar de largo.',
+		options: [['normal', 'Normal'], ['always', 'Siempre']],
+	},
+	{ name: 'padding', label: 'Espacio superior (px)', help: 'Reserva espacio arriba de la ventana para el ajuste, por ejemplo para un encabezado fijo. Usa scroll-padding-top.', min: 0, max: 300, value: 0 },
+	{ name: 'margin', label: 'Margen superior (px)', help: 'Extiende hacia arriba el área de Snap de cada panel. Usa scroll-margin-top y puede sumarse al espacio superior.', min: 0, max: 300, value: 0 },
+];
+---
+
+<div class="scroll-position-demo" data-scroll-position={demo.mode}>
+	<header class="scroll-position-demo__intro global-inner global-inner--reading">
+		<Heading tag="h1" html={demo.title} size={{ s: 'display-sm', l: 'display-md' }} />
+		<p>{demo.description}</p>
+		{isScrollDriven && (
+			<p class="scroll-position-demo__timeline-fallback">Este navegador muestra los paneles en flujo normal. La transición con línea de tiempo de CSS requiere un navegador compatible.</p>
+		)}
+		<nav class="scroll-position-demo__control-section scroll-position-demo__nav" id="scroll-position-examples" aria-labelledby="scroll-position-mode-label">
+			<Heading id="scroll-position-mode-label" html="Posición de la escena" size="title-xs" />
+			<div class="scroll-position-demo__choices">
+				{links.map(({ href, title, current }) => (
+					<Fragment>
+						<a class="scroll-position-demo__option" href={href} aria-current={current ? 'page' : undefined}>{title}</a>
+						{current && hasPanelSettings && (
+							<button class="scroll-position-demo__option scroll-position-demo__gear" type="button" aria-label={`Configurar ${demo.title}`} aria-controls="scroll-position-panel-settings" aria-expanded="false" data-scroll-position-panel-gear hidden>
+								<Icon name="settings" />
+							</button>
+						)}
+					</Fragment>
+				))}
+			</div>
+			{hasPanelSettings && (
+				<form class="scroll-position-demo__settings" id="scroll-position-panel-settings" aria-labelledby="scroll-position-panel-settings-title" data-scroll-position-panel-settings hidden>
+					<Heading id="scroll-position-panel-settings-title" html="Recorrido por panel" tag="h3" size="title-xs" />
+					<p>100 % equivale a una pantalla de scroll. La pausa y la transición se comparten entre las tres demos.</p>
+					<div class="scroll-position-demo__fields scroll-position-demo__fields--panel">
+						{panelFields.map(({ name, label, min, max, value, help, disabled }) => {
+							const id = `scroll-position-panel-${name}`;
+							const helpId = `${id}-help`;
+							return (
+								<div class="scroll-position-demo__field">
+									<div class="scroll-position-demo__field-heading">
+										<label for={id}>{label}</label>
+										<button class="scroll-position-demo__help" type="button" aria-label={`Ayuda sobre ${label}`} aria-controls={helpId} aria-expanded="false" data-scroll-position-settings-help>
+											<Icon name="help" />
+										</button>
+									</div>
+									<input id={id} name={disabled ? undefined : name} type="number" min={min} max={max} value={value} aria-describedby={helpId} data-scroll-position-travel={name === 'travel' ? '' : undefined} disabled={disabled} required={!disabled} />
+									<p class="scroll-position-demo__help-text" id={helpId} hidden>{help}</p>
+								</div>
+							);
+						})}
+					</div>
+					<details>
+						<summary class="scroll-position-demo__implementation-toggle">
+							<Heading html="Código con estos valores" tag="span" size="title-xs" />
+						</summary>
+						<div class="scroll-position-demo__implementation-code">
+							<pre class="scroll-position-demo__code"><code data-scroll-position-css></code></pre>
+							{holdsScene && (
+								<pre class="scroll-position-demo__code"><code data-scroll-position-js></code></pre>
+							)}
+						</div>
+					</details>
+					<div class="scroll-position-demo__choices">
+						<button class="scroll-position-demo__option" type="button" data-scroll-position-settings-reset>Restablecer</button>
+					</div>
+					<output class="scroll-position-demo__status" data-scroll-position-settings-status></output>
+				</form>
+			)}
+		</nav>
+		<hr class="scroll-position-demo__divider" />
+		<section class="scroll-position-demo__control-section" aria-labelledby="scroll-position-snap-label">
+			<Heading id="scroll-position-snap-label" html="Snap" size="title-xs" />
+			<div class="scroll-position-demo__choices" role="group" aria-labelledby="scroll-position-snap-label" data-scroll-position-snap-control hidden>
+				<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="on" aria-pressed="false">Snap GSAP</button>
+				<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="css" aria-pressed="false" aria-describedby="scroll-position-css-snap-help">Snap CSS</button>
+				<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="off" aria-pressed="true">Sin Snap</button>
+				<button class="scroll-position-demo__option scroll-position-demo__gear" type="button" aria-label="Configurar Snap GSAP" aria-controls="scroll-position-snap-settings" aria-expanded="false" data-scroll-position-snap-gear>
+					<Icon name="settings" />
+				</button>
+				<button class="scroll-position-demo__option scroll-position-demo__gear" type="button" aria-label="Configurar Snap CSS" aria-controls="scroll-position-css-snap-settings" aria-expanded="false" data-scroll-position-css-snap-gear hidden>
+					<Icon name="settings" />
+				</button>
+			</div>
+			<p id="scroll-position-css-snap-help" data-scroll-position-css-snap-help hidden>El navegador ajusta el scroll y decide la duración del movimiento. Usá el engranaje para cambiar las reglas de ajuste.</p>
+			{([
+				{ id: 'scroll-position-snap-settings', label: 'Snap GSAP', fields: snapFields },
+				{ id: 'scroll-position-css-snap-settings', label: 'Snap CSS', fields: cssSnapFields },
+			]).map(({ id: formId, label: formLabel, fields }) => (
+				<form class="scroll-position-demo__settings" id={formId} aria-label={`Configuración de ${formLabel}`} data-scroll-position-snap-settings={fields === snapFields ? '' : undefined} hidden>
+					<div class="scroll-position-demo__fields">
+						{fields.map((field) => {
+							const id = `${formId.replace(/-settings$/, '')}-${field.name}`;
+							const helpId = `${id}-help`;
+							const hidden = field.showFor === 'range';
+							return (
+								<div class="scroll-position-demo__field" data-snap-duration={field.showFor} hidden={hidden}>
+									<div class="scroll-position-demo__field-heading">
+										<label for={id}>{field.label}</label>
+										<button class="scroll-position-demo__help" type="button" aria-label={`Ayuda sobre ${field.label}`} aria-controls={helpId} aria-expanded="false" data-scroll-position-settings-help>
+											<Icon name="help" />
+										</button>
+									</div>
+									{'options' in field ? (
+										<select id={id} name={field.name} aria-describedby={helpId} required>
+											{field.options.map(([value, label]) => (
+												<option value={value} selected={value === field.value}>{label}</option>
+											))}
+										</select>
+									) : (
+										<input id={id} name={field.name} type="number" min={field.min} max={field.max} value={field.value} aria-describedby={helpId} required disabled={hidden} />
+									)}
+									<p class="scroll-position-demo__help-text" id={helpId} hidden>{field.help}</p>
+								</div>
+							);
+						})}
+					</div>
+					<div class="scroll-position-demo__choices">
+						<button class="scroll-position-demo__option" type="button" data-scroll-position-settings-reset>Restablecer</button>
+					</div>
+					<output class="scroll-position-demo__status" data-scroll-position-settings-status></output>
+				</form>
+			))}
+		</section>
+		<hr class="scroll-position-demo__divider" />
+		<section class="scroll-position-demo__control-section" aria-labelledby="scroll-position-passage-label">
+			<Heading id="scroll-position-passage-label" html="Paso entre paneles" size="title-xs" />
+			<div class="scroll-position-demo__choices" role="group" aria-labelledby="scroll-position-passage-label" data-scroll-position-transition-control hidden={usesSharedScene}>
+				<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="on" aria-pressed="true">Paso continuo</button>
+				<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="off" aria-pressed="false" disabled={!usesSharedScene}>Corte directo</button>
+			</div>
+			{holdsScene && (
+				<div class="scroll-position-demo__choices" role="group" aria-label="Scroll táctil" data-scroll-position-normalize-control hidden>
+					<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="off" aria-pressed="true">Scroll nativo</button>
+					<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="on" aria-pressed="false">Scroll sincronizado</button>
+				</div>
+			)}
+		</section>
+		<hr class="scroll-position-demo__divider" />
+		<section class="scroll-position-demo__control-section" aria-labelledby="scroll-position-scrub-label">
+			<Heading id="scroll-position-scrub-label" html="Scrub" size="title-xs" />
+			<div class="scroll-position-demo__choices" role="group" aria-labelledby="scroll-position-scrub-label" data-scroll-position-scrub-control hidden>
+				<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="on" aria-pressed="true">{isScrollDriven ? 'Scrub JS' : 'Con Scrub'}</button>
+				{isScrollDriven && (
+					<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="css" aria-pressed="false" hidden>Scrub CSS</button>
+				)}
+				<button class="scroll-position-demo__option" type="button" data-scroll-position-choice="off" aria-pressed="false">Sin Scrub</button>
+				<button class="scroll-position-demo__option scroll-position-demo__gear" type="button" aria-label="Configurar Scrub" aria-controls="scroll-position-scrub-settings" aria-expanded="false" data-scroll-position-scrub-gear hidden>
+					<Icon name="settings" />
+				</button>
+			</div>
+			<p id="scroll-position-scrub-phase-note">Fases del Panel B. 100 % equivale a la altura de un panel.</p>
+			<div class="scroll-position-demo__fields scroll-position-demo__fields--panel scroll-position-demo__scrub-legend" role="group" aria-labelledby="scroll-position-scrub-phase-note">
+				{([['entry', 'Entrada'], ['hold', 'Espera'], ['exit', 'Salida']] as const).map(([phase, label]) => (
+					<div class="scroll-position-demo__field">
+						<label for={`scroll-position-scrub-${phase}`} data-scrub-phase={phase}>{label}</label>
+						<input id={`scroll-position-scrub-${phase}`} type="text" value="—" disabled />
+					</div>
+				))}
+			</div>
+			<form class="scroll-position-demo__settings" id="scroll-position-scrub-settings" aria-label="Configuración de Scrub" data-scroll-position-scrub-settings hidden>
+				<div class="scroll-position-demo__field">
+					<div class="scroll-position-demo__field-heading">
+						<label for="scroll-position-scrub-duration">Suavizado (ms)</label>
+						<button class="scroll-position-demo__help" type="button" aria-label="Ayuda sobre suavizado" aria-controls="scroll-position-scrub-help" aria-expanded="false" data-scroll-position-settings-help>
+							<Icon name="help" />
+						</button>
+					</div>
+					<input id="scroll-position-scrub-duration" name="smoothing" type="number" min="0" max="3000" value="0" aria-describedby="scroll-position-scrub-help" required />
+					<p class="scroll-position-demo__help-text" id="scroll-position-scrub-help" hidden>Con 0 ms, la barra sigue el scroll directamente. Con un valor mayor, tarda ese tiempo en alcanzar la posición del scroll cuando frenás.</p>
+				</div>
+				<div class="scroll-position-demo__choices">
+					<button class="scroll-position-demo__option" type="button" data-scroll-position-settings-reset>Restablecer</button>
+				</div>
+				<output class="scroll-position-demo__status" data-scroll-position-settings-status></output>
+			</form>
+		</section>
+	</header>
+	<section class="scroll-position-demo__track" aria-label="Recorrido de prueba" data-scroll-position-track>
+		<div class="scroll-position-demo__slot">
+			<div class="scroll-position-demo__stage" data-scroll-position-stage>
+				{holdsScene && (
+					<p class="scroll-position-demo__state" data-scroll-position-state hidden></p>
+				)}
+				{scrollPositionPanels.map(({ id, title, description }, index) => (
+					<section class:list={['scroll-position-demo__panel', { 'scroll-position-demo__panel--track': hasStickyPanels }]} data-scroll-position-panel={id} style={isScrollDriven ? `--scroll-position-demo-panel-index: ${index}` : undefined}>
+						<div class:list={['scroll-position-demo__panel-inner', 'global-inner', { 'scroll-position-demo__panel-inner--sticky': hasStickyPanels }]}>
+							<Heading html={title} size={{ s: 'display-md', l: 'display-xl' }} />
+							<p>{description}</p>
+							<div class="scroll-position-demo__progress" role="progressbar" aria-label={`Progreso de ${title}`} aria-valuenow="0" data-scroll-position-progress hidden>
+								<span class="scroll-position-demo__progress-fill" aria-hidden="true"></span>
+							</div>
+						</div>
+					</section>
+				))}
+			</div>
+		</div>
+		{usesSharedScene && (
+			<div class:list={['scroll-position-demo__rail', { 'scroll-position-demo__rail--timeline': isScrollDriven }]} data-scroll-position-rail hidden={!isScrollDriven}>
+				{scrollPositionPanels.map(({ id }, index) => (
+					<div class:list={['scroll-position-demo__beat', { 'scroll-position-demo__beat--last-panel': index === scrollPositionPanels.length - 1 }]} data-scroll-position-cut={id} aria-hidden="true"></div>
+				))}
+				<div class="scroll-position-demo__beat" data-scroll-position-release aria-hidden="true" hidden={demo.mode !== 'pin'}></div>
+				<div class="scroll-position-demo__beat">
+					{demo.mode === 'pin' && (
+						<div class="scroll-position-demo__continuation global-inner global-inner--reading">
+							<Heading html="El pin ya se soltó" size="title-lg" />
+							<p>Este tramo todavía forma parte de la sección. Seguí bajando hasta el borde inferior.</p>
+						</div>
+					)}
+				</div>
+			</div>
+		)}
+	</section>
+	<section class="scroll-position-demo__summary">
+		<div class="scroll-position-demo__outro global-inner global-inner--reading">
+			<Heading html="Fuera de la sección" size="title-md" />
+			<p>{demo.result}</p>
+			<a href="#scroll-position-examples">Volver a los ejemplos</a>
+		</div>
+	</section>
+</div>
+
+<script>
+	import './scroll-position-demo';
+</script>
+
+<style lang="scss">
+	@use './scroll-position-demo';
+</style>

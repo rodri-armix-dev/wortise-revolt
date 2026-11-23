@@ -1,0 +1,42 @@
+$phone-bounce-distance: clamp(10px, 1.7svh, 18px);
+$phone-bounce-duration: 720ms;
+
+@mixin phone-bounce-marker
+{
+	display: block;
+	left: 0;
+	pointer-events: none;
+	position: absolute;
+	width: 1px;
+}
+
+@mixin phone-bounce-motion
+{
+	animation: phone-bounce $phone-bounce-duration;
+}
+
+@keyframes phone-bounce
+{
+	from
+	{
+		animation-timing-function: ease-out;
+		translate: none; // sass-lint:disable-line no-misspelled-properties
+	}
+
+	34%
+	{
+		animation-timing-function: ease-in-out;
+		translate: 0 calc(-1 * $phone-bounce-distance); // sass-lint:disable-line no-misspelled-properties
+	}
+
+	75%
+	{
+		animation-timing-function: ease-out;
+		translate: 0 calc($phone-bounce-distance * .08); // sass-lint:disable-line no-misspelled-properties
+	}
+
+	to
+	{
+		translate: none; // sass-lint:disable-line no-misspelled-properties
+	}
+}

@@ -1,0 +1,108 @@
+@use './scroll-timeline' as *;
+@use '../../lib/desktop-scroll-phone' as *;
+@use '../../lib/mobile-scroll-layout' as *;
+@use '../../lib/phone-bounce' as *;
+
+.networks-scroll
+{
+	--ad-formats-phone-width: min(var(--networks-scroll-phone-max-width), calc(var(--networks-scroll-phone-height) * 410 / 788));
+	--networks-scroll-phone-max-width: #{$mobile-scroll-phone-width-s};
+	// The screen slide and glow change use the same delay and easing.
+	--networks-scroll-screen-slide-ease: ease-in-out;
+
+	&__phone
+	{
+		display: none;
+	}
+
+	&__bounce-marker
+	{
+		display: none;
+	}
+}
+
+@include m
+{
+	.networks-scroll
+	{
+		--networks-scroll-phone-max-width: #{$mobile-scroll-phone-width-m};
+	}
+}
+
+@include desktop-scroll-phone('.networks-scroll');
+
+@include l
+{
+	.networks-scroll
+	{
+		--ad-formats-phone-width: var(--workshop-desktop-phone-width);
+	}
+}
+
+@mixin shared-phone-motion
+{
+	.networks-scroll
+	{
+		&__track
+		{
+			--networks-bounce-wait: max(1px, var(--networks-scroll-pause));
+		}
+
+		&__bounce-marker
+		{
+			@include phone-bounce-marker;
+
+			&--appearance
+			{
+				height: calc(var(--networks-scroll-step) + var(--networks-bounce-wait));
+				top: 0;
+			}
+
+			&--wait
+			{
+				height: var(--networks-bounce-wait);
+				top: calc(var(--networks-scroll-step) - var(--networks-scroll-safari-inset, 0px)); // sass-lint:disable-line zero-unit
+			}
+		}
+
+		&__phone-bounce
+		{
+			.networks-scroll__track[data-bounce-played] &
+			{
+				@include phone-bounce-motion;
+			}
+		}
+
+		&__phone
+		{
+			@include scroll-animation;
+			--phone-screen-stack-timeline: --networks-scroll-track;
+			animation-name: networks-scroll-phone;
+			animation-range: contain var(--networks-scroll-phone-start) contain var(--networks-scroll-step); // sass-lint:disable-line no-misspelled-properties
+			animation-timing-function: ease-in-out;
+			display: block;
+			left: 50%;
+			opacity: 1;
+			pointer-events: none;
+			position: absolute;
+			top: var(--networks-scroll-phone-center, 50%);
+			transform: translate(-50%, -50%);
+			width: var(--ad-formats-phone-width);
+		}
+	}
+}
+
+@keyframes networks-scroll-phone
+{
+	from
+	{
+		top: 100%;
+		transform: translate(-50%, 0);
+	}
+
+	to
+	{
+		top: var(--networks-scroll-phone-center, 50%);
+		transform: translate(-50%, -50%);
+	}
+}

@@ -4,7 +4,7 @@ import Pause from '@lucide/astro/icons/pause';
 import Rewind from '@lucide/astro/icons/rewind';
 import RotateCcw from '@lucide/astro/icons/rotate-ccw';
 import Scan from '@lucide/astro/icons/scan';
-import AdMonetNetworksGsapSnapTest from '../../components/organisms/AdMonetNetworksGsapSnapTest/AdMonetNetworksGsapSnapTest.astro';
+import AdMonetNetworksGsapSnapTest from '../../workshop/organisms/AdMonetNetworksGsapSnapTest/AdMonetNetworksGsapSnapTest.astro';
 import { developersPageData } from '../../data/pages/developers';
 import { isLocale, locales } from '../../i18n/config';
 import { getPagePath } from '../../i18n/routes';
@@ -115,10 +115,10 @@ const panelPhases = Array.from({ length: panelCount }, (_, index) => phases.filt
 </BaseLayout>
 
 <script>
-	import '../../lib/admonet-debug-visibility';
-	import '../../components/organisms/AdMonetNetworksGsapSnapTest/admonet-sequence';
+	import '../../workshop/lib/admonet-debug-visibility';
+	import '../../workshop/organisms/AdMonetNetworksGsapSnapTest/admonet-sequence';
 </script>
 
 <style lang="scss">
-	@use '../../components/organisms/AdMonetNetworksGsapSnapTest/admonet-networks-gsap-snap-test-page';
+	@use '../../workshop/organisms/AdMonetNetworksGsapSnapTest/admonet-networks-gsap-snap-test-page';
 </style>

@@ -1,0 +1,151 @@
+---
+import type { ComponentProps } from 'astro/types';
+import Heading from '../../../components/atoms/Heading/Heading.astro';
+import Image from '../../../components/atoms/Image/Image.astro';
+import AdFormatPanel from '../../../components/molecules/AdFormatPanel/AdFormatPanel.astro';
+import PhoneMockup from '../../../components/molecules/PhoneMockup/PhoneMockup.astro';
+import TextBlock from '../../../components/molecules/TextBlock/TextBlock.astro';
+import type AdMonetNetworks from '../../../components/organisms/AdMonetNetworks/AdMonetNetworks.astro';
+import { particleFrames, texturedParticles } from '../../../components/organisms/AdMonetNetworks/particle-layout';
+import PhoneScreenStack from '../../molecules/PhoneScreenStack/PhoneScreenStack.astro';
+import ScrollTimingControls from '../../molecules/ScrollTimingControls/ScrollTimingControls.astro';
+import { getScreenRange, scrollTimingDefaultsStyle } from '../../lib/scroll-timing';
+
+export interface Props extends ComponentProps<typeof AdMonetNetworks> {
+	originalHref?: string;
+}
+
+const { id, items, textBlock, hub, originalHref } = Astro.props;
+const headingId = `${id}-heading`;
+const firstFormat = items[0];
+const stepStyle = (index: number) => `--networks-scroll-index: ${index + 1};`;
+const screens = items.map(({ image }, index) => ({
+	image,
+	range: index === 0 ? undefined : getScreenRange(index + 1),
+}));
+
+function particleStyles(particle: (typeof texturedParticles)[number]) {
+	const desktopWidth = particleFrames.desktop.width;
+	const positions = (['mobile', 'desktop'] as const).flatMap((range) => {
+		const [x, y, width, height = width] = particle[range];
+		const frame = particleFrames[range];
+		const renderedHeight = width * particle.image.height / particle.image.width;
+		return [
+			[`--networks-particle-${range}-frame-x`, `${frame.width / width * 100}%`],
+			[`--networks-particle-${range}-frame-y`, `${frame.width / renderedHeight * 100}%`],
+			[`--networks-scroll-${range}-x`, `${(x + width / 2) / frame.width * 100}%`],
+			[`--networks-scroll-${range}-y`, `${(y + height / 2) / frame.height * 100}%`],
+			[`--networks-scroll-${range}-width`, `${width / frame.width * 100}%`],
+		];
+	});
+
+	const entry = (['x', 'y'] as const).flatMap((axis, index) => {
+		const samples = particle.motion.enter.map((point) => point[index]);
+		const start = samples[0] ?? 0;
+		const end = samples.at(-1) ?? start;
+		const distance = end - start;
+		const stops = distance === 0 ? [] : samples.map((sample) => Number(((sample - start) / distance).toFixed(5)));
+
+		return [
+			[`--networks-particle-entry-${axis}`, start / desktopWidth],
+			[`--networks-particle-rest-${axis}`, end / desktopWidth],
+			[`--networks-particle-ease-${axis}`, stops.length ? `linear(${stops.join(', ')})` : 'linear'],
+		];
+	});
+
+	const exit = particle.motion.exit;
+	const [startX, startY] = exit[0];
+	const [endX, endY] = exit[exit.length - 1];
+	const deltaX = endX - startX;
+	const deltaY = endY - startY;
+	const distanceSquared = deltaX ** 2 + deltaY ** 2;
+	// Project each Figma sample onto its exit direction, then aim that progress at the hub.
+	const exitStops = exit.map(([x, y]) => Number((((x - startX) * deltaX + (y - startY) * deltaY) / distanceSquared).toFixed(5)));
+
+	return {
+		...Object.fromEntries([...positions, ...entry]),
+		'--networks-particle-exit-samples': distanceSquared ? `linear(${exitStops.join(', ')})` : 'linear',
+	};
+}
+---
+
+<section class="networks-scroll" id={id} aria-labelledby={headingId} data-text-transition="fade" data-scroll-timing style={scrollTimingDefaultsStyle}>
+	<div class="networks-scroll__intro global-inner">
+		<Heading html="AdMonet Networks · CSS Scroll-driven" tag="h1" size={{ s: 'title-lg', l: 'display-lg' }} />
+		<p>Desplazate para recorrer la introducción y los cuatro formatos. Si frenás en medio de un cambio, la animación queda en ese punto.</p>
+		{originalHref && (
+			<a href={originalHref}>Ver la animación original</a>
+		)}
+		<ScrollTimingControls id={`${id}-scroll-timing`} />
+	</div>
+
+	{/* The sticky stage starts with the overview, followed by shared format layers. */}
+	<div class="networks-scroll__track" style={`--networks-scroll-format-count: ${items.length};`} data-phone-bounce={firstFormat ? '' : undefined}>
+		{firstFormat && (
+			<Fragment>
+				<span class="networks-scroll__bounce-marker networks-scroll__bounce-marker--appearance" data-bounce-marker="appearance" aria-hidden="true"></span>
+				<span class="networks-scroll__bounce-marker networks-scroll__bounce-marker--wait" data-bounce-marker="wait" aria-hidden="true"></span>
+			</Fragment>
+		)}
+		<span class="networks-scroll__orbit-marker" data-orbit-marker aria-hidden="true"></span>
+		<span class="networks-scroll__orbit-marker networks-scroll__orbit-marker--upper" data-orbit-upper-marker aria-hidden="true"></span>
+		<div class="networks-scroll__scene">
+			<div class="networks-scroll__stage">
+				<div class="networks-scroll__overview">
+					<div class="networks-scroll__inner global-inner">
+						<div class="networks-scroll__text">
+							<TextBlock {...textBlock} heading={{ ...textBlock.heading, id: headingId, tag: 'h2', size: { s: 'title-lg', l: 'display-md' } }} alignment="center" />
+						</div>
+					</div>
+					<div class="networks-scroll__orbit">
+						<div class="networks-scroll__rings" aria-hidden="true"></div>
+						<div class="networks-scroll__particles" aria-hidden="true">
+							{texturedParticles.map((particle) => (
+								<div class="networks-scroll__particle" style={particleStyles(particle)}>
+									<Image src={particle.image} alt="" loading="eager" />
+								</div>
+							))}
+						</div>
+						<div class="networks-scroll__hub">
+							<p class="networks-scroll__hub-label">{hub.label}</p>
+							<p class="networks-scroll__hub-tagline">{hub.tagline}</p>
+						</div>
+					</div>
+				</div>
+
+				{items.map(({ id }, index) => (
+					<div class="networks-scroll__light" data-format={id} data-last={index === items.length - 1 ? '' : undefined} style={stepStyle(index)} aria-hidden="true"></div>
+				))}
+
+				{firstFormat && (
+					<div class="networks-scroll__phone" aria-hidden="true">
+						<div class="networks-scroll__phone-bounce">
+							<PhoneMockup image={firstFormat.image}>
+								<PhoneScreenStack slot="screen" screens={screens} transition="push" />
+							</PhoneMockup>
+						</div>
+					</div>
+				)}
+			</div>
+			<div class="networks-scroll__formats">
+				{items.map((item, index) => (
+					<div class="networks-scroll__format-slot" style={stepStyle(index)}>
+						<div class="networks-scroll__panel" data-format={item.id}>
+							<AdFormatPanel {...item} heading={{ ...item.heading, size: { s: 'title-lg', l: 'display-lg' } }} />
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import '../../lib/phone-bounce';
+	import './mobile-phone-fit';
+	import './orbit-playback';
+</script>
+
+<style lang="scss">
+	@use './admonet-networks-demo';
+</style>

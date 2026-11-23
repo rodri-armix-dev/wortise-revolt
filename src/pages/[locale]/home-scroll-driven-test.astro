@@ -1,0 +1,25 @@
+---
+import { homeData } from '../../data/home';
+import { isLocale, locales } from '../../i18n/config';
+import { getPagePath } from '../../i18n/routes';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollDemoNav from '../../workshop/molecules/ScrollDemoNav/ScrollDemoNav.astro';
+import HomeScrollDriven from '../../workshop/organisms/HomeScrollDriven/HomeScrollDriven.astro';
+
+export function getStaticPaths() {
+	return locales.filter((locale) => getPagePath(locale, 'home-scroll-driven-test')).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) return new Response(null, { status: 404 });
+
+const solutions = homeData.es.modules.find((module) => module.type === 'audience-sections');
+if (!solutions) throw new Error('Missing audience sections in the home page');
+
+const homeHref = getPagePath(locale, 'home');
+---
+
+<BaseLayout locale={locale} title="Soluciones del home · CSS scroll-driven">
+	<ScrollDemoNav locale={locale} current="home-scroll-driven-test" />
+	<HomeScrollDriven {...solutions.props} locale={locale} originalHref={homeHref && `${homeHref}#audience-developers-heading`} />
+</BaseLayout>

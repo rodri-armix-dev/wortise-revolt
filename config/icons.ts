@@ -8,6 +8,8 @@ import Menu from '@lucide/astro/icons/menu';
 import X from '@lucide/astro/icons/x';
 import Link from '@lucide/astro/icons/link';
 import Search from '@lucide/astro/icons/search';
+import Settings from '@lucide/astro/icons/settings';
+import CircleQuestionMark from '@lucide/astro/icons/circle-question-mark';
 import Facebook from '../src/assets/global/icons/facebook.svg';
 import LinkedIn from '../src/assets/global/icons/linkedin.svg';
 import AdsAssisted from '../src/assets/global/icons/ads-assisted.svg';
@@ -36,6 +38,8 @@ export const iconRegistry = {
 	x: { label: 'Close', ...lucideIcon(X) },
 	link: { label: 'Link', ...lucideIcon(Link) },
 	search: { label: 'Search', ...lucideIcon(Search) },
+	settings: { label: 'Settings', ...lucideIcon(Settings) },
+	help: { label: 'Help', ...lucideIcon(CircleQuestionMark) },
 	facebook: { label: 'Facebook', ...svgIcon(Facebook) },
 	linkedin: { label: 'LinkedIn', ...svgIcon(LinkedIn) },
 	'ads-assisted': { label: 'Assisted mode', ...svgIcon(AdsAssisted) },

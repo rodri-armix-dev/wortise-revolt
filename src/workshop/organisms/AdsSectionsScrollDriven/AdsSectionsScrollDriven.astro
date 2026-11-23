@@ -1,0 +1,139 @@
+---
+import type { ComponentProps } from 'astro/types';
+import AdsSectionsItem from '../../../components/molecules/AdsSectionsItem/AdsSectionsItem.astro';
+import PhoneMockup from '../../../components/molecules/PhoneMockup/PhoneMockup.astro';
+import PhoneScreenStack from '../../molecules/PhoneScreenStack/PhoneScreenStack.astro';
+import ScrollTimingControls from '../../molecules/ScrollTimingControls/ScrollTimingControls.astro';
+import { getScreenRange, scrollTimingDefaultsStyle } from '../../lib/scroll-timing';
+
+export interface Props {
+	items: ComponentProps<typeof AdsSectionsItem>[];
+}
+
+const { items } = Astro.props;
+const first = items[0];
+const stepStyle = (index: number) => `--ads-scroll-index: ${index};`;
+const screens = items.map(({ image }, index) => ({
+	image,
+	range: index === 0 ? undefined : getScreenRange(index),
+}));
+const elementLabels = {
+	titleCard: 'Tarjeta de título',
+	heading: 'Título',
+	badge: 'Etiqueta',
+	content: 'Texto y CTA',
+	phone: 'Marco del teléfono',
+	screen: 'Pantalla',
+	annotations: {
+		'top-start': 'Anotación arriba izq.',
+		'top-end': 'Anotación arriba der.',
+		'bottom-start': 'Anotación abajo izq.',
+		'bottom-end': 'Anotación abajo der.',
+		'side-end': 'Anotación lateral',
+	},
+} satisfies NonNullable<ComponentProps<typeof AdsSectionsItem>['elementLabels']>;
+const outlineLegend = [
+	{ axis: 'playback', label: 'Reproducción', categories: [
+		{ value: 'play', label: 'Play' },
+		{ value: 'scrub', label: 'Scrub' },
+	] },
+	{ axis: 'moment', label: 'Momento', categories: [
+		{ value: 'scene-entry', label: 'Entrada de escena' },
+		{ value: 'entry', label: 'Entrada' },
+		{ value: 'pause', label: 'Pausa' },
+		{ value: 'exit', label: 'Salida' },
+		{ value: 'scene-exit', label: 'Salida de escena' },
+	] },
+	{ axis: 'anchor', label: 'Anclaje', categories: [
+		{ value: 'flow', label: 'Acompaña al panel' },
+		{ value: 'sticky', label: 'Fijo en la escena' },
+	] },
+];
+---
+
+<div class="ads-scroll" data-text-transition="fade" data-scroll-timing data-scroll-timing-pending style={scrollTimingDefaultsStyle}>
+	{first && (
+		<div class="ads-scroll__settings global-inner">
+			<ScrollTimingControls id="ads-scroll-timing" outlinesId="ads-scroll-outlines" />
+		</div>
+	)}
+	{first && (
+		<div class="ads-scroll__track" style={`--ads-scroll-count: ${items.length};`} data-ads-scroll-track data-phone-bounce>
+			<span class="ads-scroll__bounce-marker ads-scroll__bounce-marker--appearance" data-bounce-marker="appearance" aria-hidden="true"></span>
+			<span class="ads-scroll__bounce-marker ads-scroll__bounce-marker--wait" data-bounce-marker="wait" aria-hidden="true"></span>
+			{items.map((_, index) => (
+				<span class="ads-scroll__annotation-marker" data-ads-annotation-marker style={stepStyle(index)} aria-hidden="true"></span>
+			))}
+			{items.map((_, index) => (
+				<span class="ads-scroll__stack-marker" data-ads-stack-marker style={stepStyle(index)} aria-hidden="true"></span>
+			))}
+			<div class="ads-scroll__anchor">
+				<div class="ads-scroll__stage">
+					<div class="ads-scroll__panels">
+						<div class="ads-scroll__visual">
+							<div class="ads-scroll__phone-layout" aria-hidden="true">
+								<div class="ads-scroll__phone">
+									<div class="ads-scroll__phone-bounce">
+										<span class="ads-scroll__element-label" aria-hidden="true">{elementLabels.phone}</span>
+										<PhoneMockup image={first.image}>
+											<PhoneScreenStack slot="screen" screens={screens} transition="push" elementLabel={elementLabels.screen} />
+										</PhoneMockup>
+									</div>
+								</div>
+							</div>
+						</div>
+						{items.map((item, index) => (
+							<div class="ads-scroll__panel" data-variant={item.variant} data-first-panel={index === 0 ? '' : undefined} style={stepStyle(index)}>
+								<div class="ads-scroll__panel-glow" aria-hidden="true">
+									<div class="ads-scroll__glow">
+										<span class="ads-scroll__element-label ads-scroll__element-label--glow" aria-hidden="true">Glow</span>
+									</div>
+								</div>
+								<div class="ads-scroll__panel-content">
+									<AdsSectionsItem {...item} elementLabels={elementLabels} />
+								</div>
+							</div>
+						))}
+					</div>
+					<details class="ads-scroll__legend" id="ads-scroll-outlines" open>
+						<summary class="ads-scroll__legend-toggle">Outlines</summary>
+						<div class="ads-scroll__legend-axes" role="radiogroup" aria-label="Colorear outlines por">
+							{outlineLegend.map(({ axis, label, categories }) => (
+								<div class="ads-scroll__legend-axis">
+									<label class="ads-scroll__legend-option">
+										<input type="radio" name="ads-scroll-outline-axis" data-ads-scroll-outline-axis={axis} checked={axis === 'moment'} />
+										{label}
+									</label>
+									<ul class="ads-scroll__legend-list">
+										{categories.map(({ value, label }) => (
+											<li class="ads-scroll__legend-item" style={`--ads-scroll-legend-swatch: var(--ads-scroll-outline-${value});`}>
+												{label}
+											</li>
+										))}
+									</ul>
+								</div>
+							))}
+						</div>
+					</details>
+				</div>
+			</div>
+		</div>
+	)}
+</div>
+
+<script>
+	import './annotation-playback';
+	import './snap-direction';
+	import './title-stack-playback';
+	import './mobile-card-fit';
+	import '../../lib/phone-bounce';
+	import { isIPhoneSafari } from '../../lib/iphone-safari';
+
+	if (isIPhoneSafari(navigator.userAgent)) {
+		for (const demo of document.querySelectorAll('.ads-scroll')) demo.setAttribute('data-iphone-safari', '');
+	}
+</script>
+
+<style lang="scss">
+	@use './ads-sections-scroll-driven' as ads-scroll-panels;
+</style>

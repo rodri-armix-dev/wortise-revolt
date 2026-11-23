@@ -1,0 +1,54 @@
+@use '../../lib/iphone-sticky-viewport' as *;
+
+@mixin iphone-safari-motion
+{
+	.networks-scroll
+	{
+		&__scene
+		{
+			display: contents;
+		}
+	}
+
+	@include osm
+	{
+		.networks-scroll
+		{
+			&[data-iphone-safari]
+			{
+				@include iphone-sticky-viewport(6px);
+				--networks-scroll-height: var(--iphone-sticky-height);
+				--networks-scroll-safari-inset: var(--iphone-sticky-inset);
+			}
+
+			&__track
+			{
+				.networks-scroll[data-iphone-safari] &
+				{
+					view-timeline-inset: var(--networks-scroll-safari-inset); // sass-lint:disable-line no-misspelled-properties
+				}
+			}
+
+			&__scene
+			{
+				.networks-scroll[data-iphone-safari] &
+				{
+					@include iphone-sticky-anchor;
+					align-self: start;
+					display: grid;
+					grid-area: 1 / 1;
+					justify-self: start;
+				}
+			}
+
+			&__stage,
+			&__formats
+			{
+				.networks-scroll[data-iphone-safari] &
+				{
+					@include iphone-sticky-scene;
+				}
+			}
+		}
+	}
+}

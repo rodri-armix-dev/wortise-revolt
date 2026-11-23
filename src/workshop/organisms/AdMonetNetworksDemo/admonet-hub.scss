@@ -1,0 +1,172 @@
+@use './scroll-timeline' as *;
+
+.networks-scroll
+{
+	// sass-lint:disable no-color-literals
+	--networks-hub-tint: rgba(79, 79, 79, .14);
+	--networks-hub-accent-tint: rgba(209, 14, 78, .07);
+	--networks-hub-accent-border: #ff73a5;
+	--networks-hub-tagline-color: #949499;
+	// sass-lint:enable no-color-literals
+	--networks-hub-blur: 2px;
+	--networks-hub-lift: 64px;
+
+	&__hub
+	{
+		align-content: center;
+		backdrop-filter: blur(var(--networks-hub-blur)); // sass-lint:disable-line no-misspelled-properties
+		background-color: var(--networks-hub-tint);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-full);
+		display: grid;
+		gap: var(--spacing-4);
+		left: 50%;
+		padding-block: var(--spacing-12);
+		padding-inline: var(--spacing-32);
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: max-content;
+
+		&::before
+		{
+			background: radial-gradient(ellipse closest-side, color-mix(in srgb, var(--color-action-primary) 25%, transparent), color-mix(in srgb, var(--color-action-primary) 9%, transparent) 55%, transparent);
+			content: '';
+			inset: -95% -65%; // sass-lint:disable-line no-misspelled-properties
+			opacity: 0;
+			pointer-events: none;
+			position: absolute;
+			z-index: -1;
+		}
+	}
+
+	&__hub-label
+	{
+		color: var(--color-text-primary);
+		font-size: var(--font-size-title-sm);
+		font-weight: 500;
+		line-height: var(--line-height-title-sm);
+	}
+
+	&__hub-tagline
+	{
+		color: var(--networks-hub-tagline-color);
+		line-height: 20px;
+	}
+}
+
+@include l
+{
+	.networks-scroll
+	{
+		--networks-hub-blur: 12px;
+		--networks-hub-lift: 136px;
+		--networks-hub-tint: rgba(79, 79, 79, .32); // sass-lint:disable-line no-color-literals
+
+		&__hub
+		{
+			gap: var(--spacing-12);
+			min-height: 118px;
+			min-width: 246px;
+			padding-inline: var(--spacing-24);
+		}
+
+		&__hub-label
+		{
+			font-size: var(--font-size-title-md);
+			line-height: 38px;
+		}
+	}
+}
+
+@mixin admonet-hub-motion
+{
+	.networks-scroll
+	{
+		--networks-hub-accent-range: contain calc(var(--networks-scroll-pause) + var(--networks-scroll-transition) * .28) contain var(--networks-scroll-convergence-end);
+		--networks-hub-lift-end: calc(var(--networks-scroll-pause) + var(--networks-scroll-transition) * .8);
+
+		&__hub
+		{
+			@include scroll-animation;
+			animation-name: networks-hub-surface-accent, networks-hub-lift, networks-hub-fade;
+			animation-range: var(--networks-hub-accent-range), contain var(--networks-scroll-convergence-end) contain var(--networks-hub-lift-end), contain var(--networks-scroll-hub-fade-start) contain var(--networks-scroll-step); // sass-lint:disable-line no-misspelled-properties
+			animation-timing-function: cubic-bezier(.5, 0, .5, 1), ease-in-out, cubic-bezier(.5, 0, .5, 1);
+
+			&::before
+			{
+				@include scroll-animation;
+				animation-name: networks-hub-glow;
+				animation-range: var(--networks-hub-accent-range); // sass-lint:disable-line no-misspelled-properties
+				animation-timing-function: cubic-bezier(.5, 0, .5, 1);
+			}
+		}
+
+		&__hub-label
+		{
+			@include scroll-animation;
+			animation-name: networks-hub-label-accent;
+			animation-range: var(--networks-hub-accent-range); // sass-lint:disable-line no-misspelled-properties
+			animation-timing-function: cubic-bezier(.5, 0, .5, 1);
+		}
+
+		&__hub-tagline
+		{
+			@include scroll-animation;
+			animation-name: networks-hub-tagline-accent;
+			animation-range: var(--networks-hub-accent-range); // sass-lint:disable-line no-misspelled-properties
+			animation-timing-function: cubic-bezier(.5, 0, .5, 1);
+		}
+	}
+}
+
+@keyframes networks-hub-surface-accent
+{
+	to
+	{
+		background-color: var(--networks-hub-accent-tint);
+		border-color: var(--networks-hub-accent-border);
+	}
+}
+
+@keyframes networks-hub-label-accent
+{
+	to
+	{
+		color: var(--color-text-editorial-accent);
+	}
+}
+
+@keyframes networks-hub-tagline-accent
+{
+	to
+	{
+		color: var(--color-text-primary);
+	}
+}
+
+@keyframes networks-hub-fade
+{
+	to
+	{
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@keyframes networks-hub-lift
+{
+	to
+	{
+		transform: translate(-50%, calc(-50% - var(--networks-hub-lift)));
+	}
+}
+
+@keyframes networks-hub-glow
+{
+	to
+	{
+		opacity: 1;
+	}
+}

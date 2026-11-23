@@ -1,0 +1,4 @@
+@mixin glow-edge-fade
+{
+	mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); // sass-lint:disable-line no-color-literals, no-misspelled-properties
+}

@@ -1,5 +1,5 @@
 ---
-import AdMonetNetworksGsapScrubTest from '../../components/organisms/AdMonetNetworksGsapScrubTest/AdMonetNetworksGsapScrubTest.astro';
+import AdMonetNetworksGsapScrubTest from '../../workshop/organisms/AdMonetNetworksGsapScrubTest/AdMonetNetworksGsapScrubTest.astro';
 import { developersPageData } from '../../data/pages/developers';
 import { isLocale, locales } from '../../i18n/config';
 import { getPagePath } from '../../i18n/routes';
@@ -43,9 +43,9 @@ if (!networks) throw new Error('Missing AdMonet Networks module in the developer
 </BaseLayout>
 
 <script>
-	import '../../lib/admonet-debug-visibility';
+	import '../../workshop/lib/admonet-debug-visibility';
 </script>
 
 <style lang="scss">
-	@use '../../components/organisms/AdMonetNetworksGsapScrubTest/admonet-networks-gsap-scrub-test-page';
+	@use '../../workshop/organisms/AdMonetNetworksGsapScrubTest/admonet-networks-gsap-scrub-test-page';
 </style>

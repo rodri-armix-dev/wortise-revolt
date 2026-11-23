@@ -1,0 +1,84 @@
+@use '../../../components/molecules/AdsSectionsItem/element-label' as *;
+
+.phone-screen-stack
+{
+	height: 100%;
+	position: relative;
+
+	&__screen
+	{
+		inset: 0; // sass-lint:disable-line no-misspelled-properties
+		outline: var(--phone-screen-stack-outline, none);
+		outline-offset: -2px;
+		position: absolute;
+
+		&:not(:first-child)
+		{
+			visibility: hidden;
+		}
+	}
+
+	&__label
+	{
+		@include ads-element-label;
+		bottom: auto;
+		left: var(--spacing-8);
+		top: var(--spacing-12);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference)
+{
+	.phone-screen-stack
+	{
+		&__screen
+		{
+			animation-duration: 1ms;
+			animation-fill-mode: both, forwards;
+			animation-name: var(--phone-screen-stack-enter-motion, none), var(--phone-screen-stack-exit-motion, none);
+			animation-range: var(--phone-screen-stack-enter), var(--phone-screen-stack-exit); // sass-lint:disable-line no-misspelled-properties
+			animation-timeline: var(--phone-screen-stack-timeline, none); // sass-lint:disable-line no-misspelled-properties
+			animation-timing-function: ease-in-out;
+
+			&:not(:first-child)
+			{
+				--phone-screen-stack-enter-motion: phone-screen-enter;
+			}
+
+			.phone-screen-stack[data-transition='push'] &:not(:last-child)
+			{
+				--phone-screen-stack-exit-motion: phone-screen-exit;
+			}
+		}
+	}
+}
+
+@keyframes phone-screen-enter
+{
+	from
+	{
+		translate: 0 100%; // sass-lint:disable-line no-misspelled-properties
+		visibility: hidden;
+	}
+
+	to
+	{
+		translate: 0 0; // sass-lint:disable-line no-misspelled-properties
+		visibility: visible;
+	}
+}
+
+@keyframes phone-screen-exit
+{
+	from
+	{
+		transform: translateY(0);
+		visibility: visible;
+	}
+
+	to
+	{
+		transform: translateY(-100%);
+		visibility: hidden;
+	}
+}

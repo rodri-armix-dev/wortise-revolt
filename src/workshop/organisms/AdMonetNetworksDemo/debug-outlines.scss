@@ -1,0 +1,84 @@
+// Temporary labels for reviewing the mobile format panels.
+@mixin debug-outline
+{
+	outline: 1px solid var(--networks-debug-color);
+	outline-offset: -1px;
+	position: relative;
+
+	&::after
+	{
+		background: var(--networks-debug-color);
+		bottom: 100%;
+		color: var(--color-background-page);
+		content: var(--networks-debug-label) / '';
+		font: 500 10px / 14px var(--font-family-primary);
+		left: 0;
+		letter-spacing: normal;
+		padding-inline: var(--spacing-4);
+		pointer-events: none;
+		position: absolute;
+		text-transform: none;
+		white-space: nowrap;
+		z-index: 1;
+	}
+}
+
+@include osm
+{
+	.networks-scroll
+	{
+		// sass-lint:disable no-color-literals
+		&__panel
+		{
+			:global([data-format-intro] p)
+			{
+				@include debug-outline;
+				--networks-debug-color: #ff9ac5;
+				--networks-debug-label: 'Eyebrow';
+			}
+
+			:global([data-format-intro] h2)
+			{
+				@include debug-outline;
+				--networks-debug-color: #f9d66c;
+				--networks-debug-label: 'Título';
+			}
+
+			:global([data-format-content] .rich-text)
+			{
+				@include debug-outline;
+				--networks-debug-color: #78e4a4;
+				--networks-debug-label: 'Descripción';
+			}
+
+			:global([data-format-content] [data-variant])
+			{
+				@include debug-outline;
+				--networks-debug-color: #ffad7a;
+				--networks-debug-label: 'Botón';
+			}
+		}
+
+		&__phone
+		{
+			@include debug-outline;
+			--networks-debug-color: #84e2f4;
+			--networks-debug-label: 'Celular';
+			position: absolute;
+		}
+
+		&__screens
+		{
+			@include debug-outline;
+			--networks-debug-color: #cbb2ff;
+			--networks-debug-label: 'Pantalla';
+
+			&::after
+			{
+				bottom: var(--spacing-8);
+				left: var(--spacing-8);
+			}
+		}
+		// sass-lint:enable no-color-literals
+	}
+}

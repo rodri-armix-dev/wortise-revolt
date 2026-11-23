@@ -1,0 +1,205 @@
+@use './scroll-timeline' as *;
+@use '../../lib/mobile-scroll-layout' as *;
+@use '../../lib/scroll-text-transition' as *;
+
+@mixin format-panels-motion
+{
+	.networks-scroll
+	{
+		@include scroll-text-transition;
+
+		&__formats
+		{
+			display: flex;
+			flex-direction: column;
+			grid-area: 1 / 1;
+			padding-block-start: var(--networks-scroll-step);
+			pointer-events: none;
+		}
+
+		&__format-slot
+		{
+			@include panel-timing;
+			height: calc(var(--networks-scroll-height) + var(--networks-scroll-pause));
+			margin-block-end: calc(var(--networks-scroll-transition) - var(--networks-scroll-height));
+			min-width: 0;
+
+			&:last-child
+			{
+				--networks-scroll-panel-exit-animation: none;
+				margin-block-end: 0;
+			}
+		}
+
+		&__panel
+		{
+			@include scroll-animation;
+			// At 100% the sticky panel travels in native flow. The offsets cover other transition lengths.
+			--networks-scroll-flow-offset: calc(var(--networks-scroll-height) - var(--networks-scroll-transition));
+			animation-duration: 1ms;
+			animation-fill-mode: both, forwards;
+			animation-name: networks-scroll-panel-enter, var(--networks-scroll-panel-exit-animation, networks-scroll-panel-exit);
+			animation-range: contain var(--networks-scroll-enter) contain var(--networks-scroll-stop), contain var(--networks-scroll-exit) contain var(--networks-scroll-next); // sass-lint:disable-line no-misspelled-properties
+			height: var(--networks-scroll-height);
+			pointer-events: auto;
+			position: sticky;
+			top: 0;
+
+			&[data-format='video-recompensado']
+			{
+				animation-fill-mode: both, both, forwards;
+				animation-name: networks-scroll-panel-enter, networks-scroll-panel-first-fade, var(--networks-scroll-panel-exit-animation, networks-scroll-panel-exit);
+				animation-range: contain var(--networks-scroll-enter) contain var(--networks-scroll-stop), contain var(--networks-scroll-phone-start) contain var(--networks-scroll-stop), contain var(--networks-scroll-exit) contain var(--networks-scroll-next); // sass-lint:disable-line no-misspelled-properties
+			}
+		}
+	}
+
+	@include osm
+	{
+		.networks-scroll
+		{
+			--ad-format-panel-alignment: stretch;
+			--ad-format-panel-content-alignment: end;
+			--ad-format-panel-content-gap: var(--spacing-16);
+			--ad-format-panel-stacked-display: grid;
+			--ad-format-panel-stacked-gap: var(--spacing-16);
+			--ad-format-panel-stacked-height: calc(var(--networks-scroll-height) - 2 * var(--spacing-24));
+			--ad-format-panel-stacked-items: center;
+			--ad-format-panel-stacked-rows: minmax(0, 28fr) minmax(0, 38fr) minmax(0, 34fr);
+			--ad-formats-panel-padding: var(--spacing-24);
+			--ad-formats-phone-width: min(var(--networks-scroll-phone-max-width), calc(100% - 2 * var(--layout-gutter)), calc(var(--networks-scroll-measured-phone-height, var(--networks-scroll-phone-height)) * 410 / 788));
+			--networks-scroll-stacked-rows-height: calc(var(--ad-format-panel-stacked-height) - 2 * var(--ad-format-panel-stacked-gap));
+			--networks-scroll-phone-center: var(--networks-scroll-measured-phone-center, calc(var(--ad-formats-panel-padding) + var(--ad-format-panel-stacked-gap) + var(--networks-scroll-stacked-rows-height) * .47));
+			--networks-scroll-phone-height: calc(var(--networks-scroll-stacked-rows-height) * .38);
+
+			&__formats
+			{
+				align-self: start;
+				display: block;
+				height: var(--networks-scroll-height);
+				padding-block-start: 0;
+				position: sticky;
+				top: 0;
+			}
+
+			&__format-slot
+			{
+				height: 100%;
+				inset: 0; // sass-lint:disable-line no-misspelled-properties
+				margin-block-end: 0;
+				position: absolute;
+
+				&:last-child
+				{
+					--networks-scroll-mobile-panel-exit-animation: none;
+				}
+			}
+
+			&__panel
+			{
+				@include scroll-text-mobile-ranges(var(--networks-scroll-enter), var(--networks-scroll-exit));
+				animation-name: scroll-text-fixed-enter, var(--networks-scroll-mobile-panel-exit-animation, scroll-text-fixed-exit);
+				animation-range: var(--scroll-text-enter-range), var(--scroll-text-exit-range); // sass-lint:disable-line no-misspelled-properties
+				position: relative;
+
+				&[data-format='video-recompensado']
+				{
+					--scroll-text-enter-end: 1;
+					--scroll-text-enter-start: .85;
+					animation-fill-mode: both, forwards;
+					animation-name: scroll-text-fixed-enter, var(--networks-scroll-mobile-panel-exit-animation, scroll-text-fixed-exit);
+					animation-range: var(--scroll-text-enter-range), var(--scroll-text-exit-range); // sass-lint:disable-line no-misspelled-properties
+				}
+			}
+		}
+
+		@supports (grid-template-rows: subgrid)
+		{
+			.networks-scroll
+			{
+				&__formats
+				{
+					@include mobile-scroll-rows(var(--networks-scroll-phone-max-width));
+					--ad-format-panel-stacked-height: auto;
+					--ad-format-panel-stacked-root-display: grid;
+					--ad-format-panel-stacked-root-rows: subgrid;
+					--ad-format-panel-stacked-rows: subgrid;
+					--ad-format-panel-stacked-span: 1 / -1;
+					--ad-format-panel-stacked-visual-alignment: stretch;
+					--ad-format-panel-stacked-visual-ratio: auto;
+					--ad-format-panel-stacked-visual-width: 100%;
+					--ad-formats-panel-height: 0;
+					--ad-formats-panel-padding: 0;
+					align-content: center;
+					display: grid;
+					gap: var(--ad-format-panel-stacked-gap);
+					padding-block: var(--spacing-24);
+				}
+
+				&__format-slot,
+				&__panel
+				{
+					display: grid;
+					grid-area: 1 / 1 / -1 / -1;
+					grid-template-rows: subgrid;
+					height: auto;
+					min-height: 0;
+				}
+
+				&__format-slot
+				{
+					position: static;
+				}
+			}
+		}
+	}
+}
+
+@keyframes networks-scroll-panel-enter
+{
+	from
+	{
+		opacity: $scroll-text-hidden-opacity;
+		transform: translateY(var(--networks-scroll-flow-offset));
+		visibility: hidden;
+	}
+
+	to
+	{
+		opacity: 1;
+		transform: translateY(0);
+		visibility: visible;
+	}
+}
+
+@keyframes networks-scroll-panel-exit
+{
+	from
+	{
+		opacity: 1;
+		translate: 0 0; // sass-lint:disable-line no-misspelled-properties
+		visibility: visible;
+	}
+
+	to
+	{
+		opacity: $scroll-text-hidden-opacity;
+		translate: 0 calc(0px - var(--networks-scroll-flow-offset)); // sass-lint:disable-line no-misspelled-properties, zero-unit
+		visibility: hidden;
+	}
+}
+
+@keyframes networks-scroll-panel-first-fade
+{
+	from
+	{
+		opacity: $scroll-text-hidden-opacity;
+	}
+
+	to
+	{
+		opacity: 1;
+	}
+}
+
+@include scroll-text-keyframes(scroll-text-fixed-enter, scroll-text-fixed-exit);

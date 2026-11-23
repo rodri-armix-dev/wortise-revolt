@@ -1,0 +1,10 @@
+$mobile-scroll-min-height: 560px;
+$mobile-scroll-column-width: 414px;
+$mobile-scroll-phone-width-s: 220px;
+$mobile-scroll-phone-width-m: 280px;
+
+@mixin mobile-scroll-rows($phone-width)
+{ // sass-lint:disable-line indentation
+	// Reserve both text rows before sizing the phone.
+	grid-template-rows: var(--mobile-scroll-intro-row, max-content) minmax(0, calc($phone-width * 788 / 410)) var(--mobile-scroll-content-row, max-content);
+}

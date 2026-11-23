@@ -2,6 +2,8 @@
 {
 	aspect-ratio: 410 / 788; // sass-lint:disable-line no-misspelled-properties
 	isolation: isolate;
+	outline: var(--phone-mockup-frame-outline, none);
+	outline-offset: -2px;
 	overflow: hidden;
 	position: relative;
 	width: var(--phone-mockup-width, 100%);
@@ -28,6 +30,8 @@
 		border-radius: 12.162162% / 5.936675%;
 		height: 96.192893%;
 		left: 4.878049%;
+		outline: var(--phone-mockup-screen-outline, none);
+		outline-offset: -2px;
 		overflow: hidden;
 		position: absolute;
 		top: 1.903553%;

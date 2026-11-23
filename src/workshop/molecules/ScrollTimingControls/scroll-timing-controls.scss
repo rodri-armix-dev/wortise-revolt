@@ -1,0 +1,190 @@
+:global([data-scroll-timing])
+{
+	--scroll-pause: calc(var(--scroll-pause-percent) * var(--scroll-reference-unit));
+	--scroll-pause-percent: var(--scroll-mobile-pause, var(--scroll-mobile-pause-preset, var(--scroll-mobile-pause-default)));
+	--scroll-reference-unit: calc(var(--scroll-mobile-reference-default) * .01px);
+	--scroll-screen-offset: calc(var(--scroll-transition) * var(--scroll-screen-start-percent) / 100);
+	--scroll-screen-start-percent: var(--scroll-mobile-screen-start, var(--scroll-mobile-screen-start-preset, var(--scroll-mobile-screen-start-default)));
+	--scroll-step: calc(var(--scroll-pause) + var(--scroll-transition));
+	--scroll-transition: calc(var(--scroll-transition-percent) * var(--scroll-reference-unit));
+	--scroll-transition-percent: var(--scroll-mobile-transition, var(--scroll-mobile-transition-preset, var(--scroll-mobile-transition-default)));
+}
+
+@include l
+{
+	:global([data-scroll-timing])
+	{
+		--scroll-pause-percent: var(--scroll-desktop-pause, var(--scroll-desktop-pause-preset, var(--scroll-desktop-pause-default)));
+		--scroll-reference-unit: calc(var(--scroll-desktop-reference-default) * .01px);
+		--scroll-screen-start-percent: var(--scroll-desktop-screen-start, var(--scroll-desktop-screen-start-preset, var(--scroll-desktop-screen-start-default)));
+		--scroll-transition-percent: var(--scroll-desktop-transition, var(--scroll-desktop-transition-preset, var(--scroll-desktop-transition-default)));
+	}
+}
+
+@each $profile in mobile, desktop
+{
+	@each $field, $min, $max in (pause, 0, 50), (transition, 1, 50), (screen-start, 0, 9)
+	{
+		@for $step from $min through $max
+		{
+			$value: $step * 10;
+
+			:global([data-scroll-timing]:has([data-timing-profile='#{$profile}'] [data-timing-field='#{$field}'] [value='#{$value}']:checked):not([data-scroll-timing-pending])) // sass-lint:disable-line force-pseudo-nesting
+			{
+				#{'--scroll-' + $profile + '-' + $field}: #{$value};
+			}
+		}
+	}
+}
+
+.scroll-timing
+{
+	display: grid;
+	gap: var(--spacing-16);
+	width: 100%;
+
+	&__toggle
+	{
+		align-items: center;
+		cursor: pointer;
+		display: none;
+		gap: var(--spacing-8);
+		justify-self: start;
+
+		input
+		{
+			appearance: auto;
+		}
+	}
+
+	&__controls
+	{
+		background: var(--color-surface-card);
+		border: 1px solid var(--color-border-editorial);
+		border-radius: var(--radius-normal);
+		display: var(--scroll-timing-controls-display, grid);
+		gap: var(--spacing-16);
+		padding: var(--spacing-16);
+	}
+
+	p
+	{
+		color: var(--color-text-secondary);
+	}
+
+	&__profiles,
+	&__fields
+	{
+		display: grid;
+		gap: var(--spacing-16);
+	}
+
+	&__profile
+	{
+		border: 1px solid var(--color-border-editorial);
+		border-radius: var(--radius-md);
+		min-width: 0;
+		padding: var(--spacing-12);
+
+		@each $profile in mobile, desktop
+		{
+			&[data-timing-profile='#{$profile}']
+			{
+				--scroll-timing-total: calc(var(--scroll-#{$profile}-pause, var(--scroll-#{$profile}-pause-preset, var(--scroll-#{$profile}-pause-default))) + var(--scroll-#{$profile}-transition, var(--scroll-#{$profile}-transition-preset, var(--scroll-#{$profile}-transition-default))));
+			}
+		}
+	}
+
+	&__legend
+	{
+		padding-inline: var(--spacing-4);
+	}
+
+	&__field
+	{
+		align-content: end;
+		color: var(--color-text-secondary);
+		display: grid;
+		gap: var(--spacing-8);
+	}
+
+	&__select,
+	&__total
+	{
+		border: 1px solid var(--color-border-editorial);
+		border-radius: var(--radius-md);
+		display: block;
+		font: inherit;
+		min-width: 0;
+		padding: var(--spacing-12);
+		width: 100%;
+	}
+
+	&__select
+	{
+		appearance: auto;
+		background: var(--color-background-page);
+		color: var(--color-text-primary);
+		color-scheme: dark; // sass-lint:disable-line no-misspelled-properties
+	}
+
+	&__total
+	{
+		background: var(--color-background-control);
+		counter-reset: scroll-timing-total var(--scroll-timing-total);
+
+		&::after
+		{
+			content: counter(scroll-timing-total) ' %';
+		}
+	}
+}
+
+@supports selector(:has(*)) // sass-lint:disable-line space-after-colon
+{
+	@each $profile, $range in (mobile, osm), (desktop, l)
+	{
+		@include media($range)
+		{
+			:global([data-scroll-timing]:has([data-scroll-timing-toggle='#{$profile}']:not(:checked))) // sass-lint:disable-line force-pseudo-nesting
+			{
+				--scroll-timing-controls-display: none;
+				--scroll-timing-label-display: none;
+				--scroll-timing-outline-width: 0;
+			}
+
+			.scroll-timing
+			{
+				&__toggle
+				{
+					&--#{$profile}
+					{
+						display: flex;
+					}
+				}
+			}
+		}
+	}
+}
+
+@include m
+{
+	.scroll-timing
+	{
+		&__fields
+		{
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+}
+
+@include l
+{
+	.scroll-timing
+	{
+		&__profiles
+		{
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+}

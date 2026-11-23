@@ -22,7 +22,7 @@ const { id, eyebrow, heading, description, action, image, responsiveAlignment = 
 		<div class="ad-format-panel__intro" data-format-intro>
 			<TextBlock eyebrow={eyebrow} heading={{ ...heading, id: `${id}-heading`, tag: 'h2', size: heading.size ?? { s: 'title-lg', l: 'display-md' } }} responsiveAlignment={responsiveAlignment} />
 		</div>
-		<div class="ad-format-panel__visual">
+		<div class="ad-format-panel__visual" data-format-visual>
 			<div class="ad-format-panel__visual-image">
 				<PhoneMockup image={image} />
 			</div>
