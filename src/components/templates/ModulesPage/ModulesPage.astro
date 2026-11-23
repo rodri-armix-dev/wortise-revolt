@@ -82,6 +82,10 @@ const { modules, locale } = Astro.props;
 		}
 
 		if (module.type === 'ads-sections') {
+			if (!module.props.range) {
+				const { default: AdsSectionsScrollDriven } = await import('../../organisms/AdsSectionsScrollDriven/AdsSectionsScrollDriven.astro');
+				return <AdsSectionsScrollDriven items={module.props.items} />;
+			}
 			const { default: AdsSections } = await import('../../organisms/AdsSections/AdsSections.astro');
 			return <AdsSections {...module.props} />;
 		}
