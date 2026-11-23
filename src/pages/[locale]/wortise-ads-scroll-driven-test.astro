@@ -1,5 +1,5 @@
 ---
-import AdsSectionsScrollDriven from '../../workshop/organisms/AdsSectionsScrollDriven/AdsSectionsScrollDriven.astro';
+import AdsSectionsScrollDriven from '../../components/organisms/AdsSectionsScrollDriven/AdsSectionsScrollDriven.astro';
 import AdsCover from '../../components/organisms/AdsCover/AdsCover.astro';
 import VideoSection from '../../components/organisms/VideoSection/VideoSection.astro';
 import { wortiseAdsPageData } from '../../data/pages/wortise-ads';
@@ -25,6 +25,6 @@ if (!cover || !ads || !video) throw new Error('Missing module in the Wortise Ads
 <BaseLayout locale={locale} title="Wortise Ads · CSS Scroll-driven" description={page.meta.description} footerCTA={page.footerCTA}>
 	<ScrollDemoNav locale={locale} current="wortise-ads-scroll-driven-test" />
 	<AdsCover {...cover.props} />
-	<AdsSectionsScrollDriven {...ads.props} />
+	<AdsSectionsScrollDriven workshop {...ads.props} />
 	<VideoSection {...video.props} />
 </BaseLayout>

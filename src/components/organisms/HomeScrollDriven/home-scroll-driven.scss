@@ -1,10 +1,12 @@
-@use '../../lib/desktop-scroll-phone' as *;
-@use '../../lib/glow-edge-fade' as *;
-@use '../../lib/mobile-scroll-layout' as *;
-@use '../../lib/phone-bounce' as *;
-@use '../../lib/scroll-text-transition' as *;
-@use '../../lib/scroll-timing' as *;
+@use '../../../lib/scroll-motion/desktop-scroll-phone' as *;
+@use '../../../lib/scroll-motion/glow-edge-fade' as *;
+@use '../../../lib/scroll-motion/mobile-scroll-layout' as *;
+@use '../../../lib/scroll-motion/phone-bounce' as *;
+@use '../../../lib/scroll-motion/scroll-text-transition' as *;
+@use '../../../lib/scroll-motion/scroll-timing' as *;
 @use './iphone-safari' as *;
+
+@include scroll-timing-profile('.home-scroll');
 
 $glow-ease: cubic-bezier(.5, 0, .5, 1);
 $rise-range: entry 25% entry 100%;

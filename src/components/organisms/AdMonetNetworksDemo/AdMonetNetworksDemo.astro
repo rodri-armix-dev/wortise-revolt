@@ -1,21 +1,22 @@
 ---
 import type { ComponentProps } from 'astro/types';
-import Heading from '../../../components/atoms/Heading/Heading.astro';
-import Image from '../../../components/atoms/Image/Image.astro';
-import AdFormatPanel from '../../../components/molecules/AdFormatPanel/AdFormatPanel.astro';
-import PhoneMockup from '../../../components/molecules/PhoneMockup/PhoneMockup.astro';
-import TextBlock from '../../../components/molecules/TextBlock/TextBlock.astro';
-import type AdMonetNetworks from '../../../components/organisms/AdMonetNetworks/AdMonetNetworks.astro';
-import { particleFrames, texturedParticles } from '../../../components/organisms/AdMonetNetworks/particle-layout';
+import Heading from '../../atoms/Heading/Heading.astro';
+import Image from '../../atoms/Image/Image.astro';
+import AdFormatPanel from '../../molecules/AdFormatPanel/AdFormatPanel.astro';
+import PhoneMockup from '../../molecules/PhoneMockup/PhoneMockup.astro';
+import TextBlock from '../../molecules/TextBlock/TextBlock.astro';
+import type AdMonetNetworks from '../AdMonetNetworks/AdMonetNetworks.astro';
+import { particleFrames, texturedParticles } from '../AdMonetNetworks/particle-layout';
 import PhoneScreenStack from '../../molecules/PhoneScreenStack/PhoneScreenStack.astro';
-import ScrollTimingControls from '../../molecules/ScrollTimingControls/ScrollTimingControls.astro';
-import { getScreenRange, scrollTimingDefaultsStyle } from '../../lib/scroll-timing';
+import { getScreenRange, scrollTimingDefaultsStyle } from '../../../lib/scroll-motion/scroll-timing';
 
 export interface Props extends ComponentProps<typeof AdMonetNetworks> {
+	workshop?: boolean;
 	originalHref?: string;
 }
 
-const { id, items, textBlock, hub, originalHref } = Astro.props;
+const { id, items, textBlock, hub, originalHref, workshop = false } = Astro.props;
+const ScrollTimingControls = workshop ? (await import('../../../workshop/molecules/ScrollTimingControls/ScrollTimingControls.astro')).default : undefined;
 const headingId = `${id}-heading`;
 const firstFormat = items[0];
 const stepStyle = (index: number) => `--networks-scroll-index: ${index + 1};`;
@@ -70,14 +71,16 @@ function particleStyles(particle: (typeof texturedParticles)[number]) {
 ---
 
 <section class="networks-scroll" id={id} aria-labelledby={headingId} data-text-transition="fade" data-scroll-timing style={scrollTimingDefaultsStyle}>
-	<div class="networks-scroll__intro global-inner">
-		<Heading html="AdMonet Networks · CSS Scroll-driven" tag="h1" size={{ s: 'title-lg', l: 'display-lg' }} />
-		<p>Desplazate para recorrer la introducción y los cuatro formatos. Si frenás en medio de un cambio, la animación queda en ese punto.</p>
-		{originalHref && (
-			<a href={originalHref}>Ver la animación original</a>
-		)}
-		<ScrollTimingControls id={`${id}-scroll-timing`} />
-	</div>
+	{ScrollTimingControls && (
+		<div class="networks-scroll__intro global-inner">
+			<Heading html="AdMonet Networks · CSS Scroll-driven" tag="h1" size={{ s: 'title-lg', l: 'display-lg' }} />
+			<p>Desplazate para recorrer la introducción y los cuatro formatos. Si frenás en medio de un cambio, la animación queda en ese punto.</p>
+			{originalHref && (
+				<a href={originalHref}>Ver en la página de desarrolladores</a>
+			)}
+			<ScrollTimingControls id={`${id}-scroll-timing`} />
+		</div>
+	)}
 
 	{/* The sticky stage starts with the overview, followed by shared format layers. */}
 	<div class="networks-scroll__track" style={`--networks-scroll-format-count: ${items.length};`} data-phone-bounce={firstFormat ? '' : undefined}>
@@ -141,7 +144,7 @@ function particleStyles(particle: (typeof texturedParticles)[number]) {
 </section>
 
 <script>
-	import '../../lib/phone-bounce';
+	import '../../../lib/scroll-motion/phone-bounce';
 	import './mobile-phone-fit';
 	import './orbit-playback';
 </script>

@@ -1,16 +1,17 @@
 ---
 import type { ComponentProps } from 'astro/types';
-import AdsSectionsItem from '../../../components/molecules/AdsSectionsItem/AdsSectionsItem.astro';
-import PhoneMockup from '../../../components/molecules/PhoneMockup/PhoneMockup.astro';
+import AdsSectionsItem from '../../molecules/AdsSectionsItem/AdsSectionsItem.astro';
+import PhoneMockup from '../../molecules/PhoneMockup/PhoneMockup.astro';
 import PhoneScreenStack from '../../molecules/PhoneScreenStack/PhoneScreenStack.astro';
-import ScrollTimingControls from '../../molecules/ScrollTimingControls/ScrollTimingControls.astro';
-import { getScreenRange, scrollTimingDefaultsStyle } from '../../lib/scroll-timing';
+import { getScreenRange, scrollTimingDefaultsStyle } from '../../../lib/scroll-motion/scroll-timing';
 
 export interface Props {
+	workshop?: boolean;
 	items: ComponentProps<typeof AdsSectionsItem>[];
 }
 
-const { items } = Astro.props;
+const { items, workshop = false } = Astro.props;
+const ScrollTimingControls = workshop ? (await import('../../../workshop/molecules/ScrollTimingControls/ScrollTimingControls.astro')).default : undefined;
 const first = items[0];
 const stepStyle = (index: number) => `--ads-scroll-index: ${index};`;
 const screens = items.map(({ image }, index) => ({
@@ -51,8 +52,8 @@ const outlineLegend = [
 ];
 ---
 
-<div class="ads-scroll" data-text-transition="fade" data-scroll-timing data-scroll-timing-pending style={scrollTimingDefaultsStyle}>
-	{first && (
+<div class="ads-scroll" data-text-transition="fade" data-scroll-timing data-scroll-timing-pending={workshop ? "" : undefined} style={workshop ? scrollTimingDefaultsStyle : `${scrollTimingDefaultsStyle}; --ads-scroll-outline-width: 0px`}>
+	{first && ScrollTimingControls && (
 		<div class="ads-scroll__settings global-inner">
 			<ScrollTimingControls id="ads-scroll-timing" outlinesId="ads-scroll-outlines" />
 		</div>
@@ -74,9 +75,9 @@ const outlineLegend = [
 							<div class="ads-scroll__phone-layout" aria-hidden="true">
 								<div class="ads-scroll__phone">
 									<div class="ads-scroll__phone-bounce">
-										<span class="ads-scroll__element-label" aria-hidden="true">{elementLabels.phone}</span>
+										{workshop && <span class="ads-scroll__element-label" aria-hidden="true">{elementLabels.phone}</span>}
 										<PhoneMockup image={first.image}>
-											<PhoneScreenStack slot="screen" screens={screens} transition="push" elementLabel={elementLabels.screen} />
+											<PhoneScreenStack slot="screen" screens={screens} transition="push" elementLabel={workshop ? elementLabels.screen : undefined} />
 										</PhoneMockup>
 									</div>
 								</div>
@@ -86,35 +87,37 @@ const outlineLegend = [
 							<div class="ads-scroll__panel" data-variant={item.variant} data-first-panel={index === 0 ? '' : undefined} style={stepStyle(index)}>
 								<div class="ads-scroll__panel-glow" aria-hidden="true">
 									<div class="ads-scroll__glow">
-										<span class="ads-scroll__element-label ads-scroll__element-label--glow" aria-hidden="true">Glow</span>
+										{workshop && <span class="ads-scroll__element-label ads-scroll__element-label--glow" aria-hidden="true">Glow</span>}
 									</div>
 								</div>
 								<div class="ads-scroll__panel-content">
-									<AdsSectionsItem {...item} elementLabels={elementLabels} />
+									<AdsSectionsItem {...item} elementLabels={workshop ? elementLabels : undefined} />
 								</div>
 							</div>
 						))}
 					</div>
-					<details class="ads-scroll__legend" id="ads-scroll-outlines" open>
-						<summary class="ads-scroll__legend-toggle">Outlines</summary>
-						<div class="ads-scroll__legend-axes" role="radiogroup" aria-label="Colorear outlines por">
-							{outlineLegend.map(({ axis, label, categories }) => (
-								<div class="ads-scroll__legend-axis">
-									<label class="ads-scroll__legend-option">
-										<input type="radio" name="ads-scroll-outline-axis" data-ads-scroll-outline-axis={axis} checked={axis === 'moment'} />
-										{label}
-									</label>
-									<ul class="ads-scroll__legend-list">
-										{categories.map(({ value, label }) => (
-											<li class="ads-scroll__legend-item" style={`--ads-scroll-legend-swatch: var(--ads-scroll-outline-${value});`}>
-												{label}
-											</li>
-										))}
-									</ul>
-								</div>
-							))}
-						</div>
-					</details>
+					{workshop && (
+						<details class="ads-scroll__legend" id="ads-scroll-outlines" open>
+							<summary class="ads-scroll__legend-toggle">Outlines</summary>
+							<div class="ads-scroll__legend-axes" role="radiogroup" aria-label="Colorear outlines por">
+								{outlineLegend.map(({ axis, label, categories }) => (
+									<div class="ads-scroll__legend-axis">
+										<label class="ads-scroll__legend-option">
+											<input type="radio" name="ads-scroll-outline-axis" data-ads-scroll-outline-axis={axis} checked={axis === 'moment'} />
+											{label}
+										</label>
+										<ul class="ads-scroll__legend-list">
+											{categories.map(({ value, label }) => (
+												<li class="ads-scroll__legend-item" style={`--ads-scroll-legend-swatch: var(--ads-scroll-outline-${value});`}>
+													{label}
+												</li>
+											))}
+										</ul>
+									</div>
+								))}
+							</div>
+						</details>
+					)}
 				</div>
 			</div>
 		</div>
@@ -126,8 +129,8 @@ const outlineLegend = [
 	import './snap-direction';
 	import './title-stack-playback';
 	import './mobile-card-fit';
-	import '../../lib/phone-bounce';
-	import { isIPhoneSafari } from '../../lib/iphone-safari';
+	import '../../../lib/scroll-motion/phone-bounce';
+	import { isIPhoneSafari } from '../../../lib/scroll-motion/iphone-safari';
 
 	if (isIPhoneSafari(navigator.userAgent)) {
 		for (const demo of document.querySelectorAll('.ads-scroll')) demo.setAttribute('data-iphone-safari', '');

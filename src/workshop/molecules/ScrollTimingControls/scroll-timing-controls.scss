@@ -1,26 +1,3 @@
-:global([data-scroll-timing])
-{
-	--scroll-pause: calc(var(--scroll-pause-percent) * var(--scroll-reference-unit));
-	--scroll-pause-percent: var(--scroll-mobile-pause, var(--scroll-mobile-pause-preset, var(--scroll-mobile-pause-default)));
-	--scroll-reference-unit: calc(var(--scroll-mobile-reference-default) * .01px);
-	--scroll-screen-offset: calc(var(--scroll-transition) * var(--scroll-screen-start-percent) / 100);
-	--scroll-screen-start-percent: var(--scroll-mobile-screen-start, var(--scroll-mobile-screen-start-preset, var(--scroll-mobile-screen-start-default)));
-	--scroll-step: calc(var(--scroll-pause) + var(--scroll-transition));
-	--scroll-transition: calc(var(--scroll-transition-percent) * var(--scroll-reference-unit));
-	--scroll-transition-percent: var(--scroll-mobile-transition, var(--scroll-mobile-transition-preset, var(--scroll-mobile-transition-default)));
-}
-
-@include l
-{
-	:global([data-scroll-timing])
-	{
-		--scroll-pause-percent: var(--scroll-desktop-pause, var(--scroll-desktop-pause-preset, var(--scroll-desktop-pause-default)));
-		--scroll-reference-unit: calc(var(--scroll-desktop-reference-default) * .01px);
-		--scroll-screen-start-percent: var(--scroll-desktop-screen-start, var(--scroll-desktop-screen-start-preset, var(--scroll-desktop-screen-start-default)));
-		--scroll-transition-percent: var(--scroll-desktop-transition, var(--scroll-desktop-transition-preset, var(--scroll-desktop-transition-default)));
-	}
-}
-
 @each $profile in mobile, desktop
 {
 	@each $field, $min, $max in (pause, 0, 50), (transition, 1, 50), (screen-start, 0, 9)

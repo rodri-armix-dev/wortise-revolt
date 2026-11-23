@@ -1,5 +1,6 @@
 @use './scroll-timeline' as *;
-@use '../../lib/mobile-scroll-layout' as *;
+@use '../../../lib/scroll-motion/scroll-timing' as *;
+@use '../../../lib/scroll-motion/mobile-scroll-layout' as *;
 @use './intro-panel' as *;
 @use './admonet-hub' as *;
 @use './orbit-particles' as *;
@@ -10,6 +11,8 @@
 // @use './debug-outlines';
 @use './iphone-safari' as *;
 @use './reduced-motion' as *;
+
+@include scroll-timing-profile('.networks-scroll');
 
 // Set to false to follow the system motion preference.
 $preview-reduced-motion: false;
@@ -50,18 +53,21 @@ $preview-reduced-motion: false;
 
 	@scope (html:not([data-workshop-reduce])) // sass-lint:disable-line space-after-colon
 	{
-		@media (prefers-reduced-motion: no-preference)
+		@supports (animation-timeline: view()) and (animation-range: contain 0px contain 100%) // sass-lint:disable-line zero-unit
 		{
-			@media #{media-query(l)}, (min-height: $mobile-scroll-min-height)
+			@media (prefers-reduced-motion: no-preference)
 			{
-				@include scroll-timeline-motion;
-				@include intro-panel-motion;
-				@include admonet-hub-motion;
-				@include orbit-particles-motion;
-				@include format-panels-motion;
-				@include shared-phone-motion;
-				@include panel-lighting-motion;
-				@include iphone-safari-motion;
+				@media #{media-query(l)}, (min-height: $mobile-scroll-min-height)
+				{
+					@include scroll-timeline-motion;
+					@include intro-panel-motion;
+					@include admonet-hub-motion;
+					@include orbit-particles-motion;
+					@include format-panels-motion;
+					@include shared-phone-motion;
+					@include panel-lighting-motion;
+					@include iphone-safari-motion;
+				}
 			}
 		}
 	}

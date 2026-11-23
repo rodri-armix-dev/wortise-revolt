@@ -1,5 +1,5 @@
-import '../../lib/phone-bounce';
-import { isIPhoneSafari } from '../../lib/iphone-safari';
+import '../../../lib/scroll-motion/phone-bounce';
+import { isIPhoneSafari } from '../../../lib/scroll-motion/iphone-safari';
 
 const iphoneSafari = isIPhoneSafari(navigator.userAgent);
 

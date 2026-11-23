@@ -3,8 +3,8 @@
 AdMonet es la referencia para las próximas migraciones. La página de prueba
 es `/es/admonet-networks-scroll-driven-test/` y su entrada es
 [admonet-networks-scroll-driven-test.astro](../../../pages/[locale]/admonet-networks-scroll-driven-test.astro).
-La implementación original de [Desarrolladores](/es/desarrolladores/) sigue
-disponible para comparar el recorrido, las curvas y los estados visuales.
+La página de [Desarrolladores](/es/desarrolladores/) usa el mismo componente,
+con los ajustes de recorrido disponibles en el workshop.
 [AdMonetNetworksDemo.astro](AdMonetNetworksDemo.astro) compone la introducción,
 los cuatro formatos y el celular compartido.
 
@@ -38,7 +38,7 @@ los cuatro formatos y el celular compartido.
 
 | Archivo | Decisión de la demo |
 | --- | --- |
-| [ScrollTimingControls.astro](../../molecules/ScrollTimingControls/ScrollTimingControls.astro) | El configurador compartido permite ajustar móvil y escritorio por separado. La pausa inicial es de 70 % en S/M y 30 % desde L. La transición es de 100 % y el cambio de imagen empieza al 30 % de ese tramo. |
+| [ScrollTimingControls.astro](../../../workshop/molecules/ScrollTimingControls/ScrollTimingControls.astro) | El configurador compartido permite ajustar móvil y escritorio por separado. La pausa inicial es de 70 % en S/M y 30 % desde L. La transición es de 100 % y el cambio de imagen empieza al 30 % de ese tramo. |
 | [scroll-timeline.scss](scroll-timeline.scss) | Una línea de tiempo gobierna el recorrido y sus rangos de entrada, pausa y salida. La pausa y la transición se expresan en unidades del viewport pequeño. |
 | [orbit-playback.ts](orbit-playback.ts) y [orbit-particles.scss](orbit-particles.scss) | `IntersectionObserver` inicia la entrada CSS de 1500 ms, que termina aunque se detenga el scroll. La convergencia al hub y la salida por arriba responden al scroll. Al volver desde los formatos, los logos retoman la flotación. Salir por arriba del todo prepara una nueva entrada. |
 | [admonet-hub.scss](admonet-hub.scss) | La cápsula se ilumina en rosa cuando convergen los logos, se eleva y se desvanece al entrar el celular. En móvil queda translúcida para que se vean las partículas. |

@@ -1,30 +1,31 @@
 ---
 import type { ComponentProps } from 'astro/types';
-import Button from '../../../components/atoms/Button/Button.astro';
-import Description from '../../../components/atoms/Description/Description.astro';
-import Eyebrow from '../../../components/atoms/Eyebrow/Eyebrow.astro';
-import Heading from '../../../components/atoms/Heading/Heading.astro';
-import type AudienceSectionsItem from '../../../components/molecules/AudienceSectionsItem/AudienceSectionsItem.astro';
-import PhoneMockup from '../../../components/molecules/PhoneMockup/PhoneMockup.astro';
+import Button from '../../atoms/Button/Button.astro';
+import Description from '../../atoms/Description/Description.astro';
+import Eyebrow from '../../atoms/Eyebrow/Eyebrow.astro';
+import Heading from '../../atoms/Heading/Heading.astro';
+import type AudienceSectionsItem from '../../molecules/AudienceSectionsItem/AudienceSectionsItem.astro';
+import PhoneMockup from '../../molecules/PhoneMockup/PhoneMockup.astro';
 import type { Locale } from '../../../i18n/config';
 import { getPagePath, isPage } from '../../../i18n/routes';
 import PhoneScreenStack from '../../molecules/PhoneScreenStack/PhoneScreenStack.astro';
-import ScrollTimingControls from '../../molecules/ScrollTimingControls/ScrollTimingControls.astro';
-import { getScreenRange, scrollTimingDefaultsStyle } from '../../lib/scroll-timing';
+import { getScreenRange, scrollTimingDefaultsStyle } from '../../../lib/scroll-motion/scroll-timing';
 
 export interface Props {
+	workshop?: boolean;
 	items: ComponentProps<typeof AudienceSectionsItem>[];
 	locale: Locale;
 	originalHref?: string;
 }
 
-const { items, locale, originalHref } = Astro.props;
+const { items, locale, originalHref, workshop = false } = Astro.props;
+const ScrollTimingControls = workshop ? (await import('../../../workshop/molecules/ScrollTimingControls/ScrollTimingControls.astro')).default : undefined;
 const first = items[0];
 const panels = items.map((item) => {
 	const page = item.action.page ?? item.variant;
 	return {
 		...item,
-		headingId: `home-scroll-${item.variant}-heading`,
+		headingId: `audience-${item.variant}-heading`,
 		href: isPage(page) ? getPagePath(locale, page) : undefined,
 	};
 });
@@ -35,13 +36,15 @@ const screens = panels.map(({ image }, index) => ({
 ---
 
 <div class="home-scroll" data-text-transition="fade" data-scroll-timing style={scrollTimingDefaultsStyle}>
-	<header class="home-scroll__header global-inner">
-		<Heading tag="h1" html="Soluciones del home" size={{ s: 'display-sm', l: 'display-lg' }} />
-		{originalHref && (
-			<a href={originalHref}>Comparar con el home</a>
-		)}
-	</header>
-	{items.length === 3 && (
+	{workshop && (
+		<header class="home-scroll__header global-inner">
+			<Heading tag="h1" html="Soluciones del home" size={{ s: 'display-sm', l: 'display-lg' }} />
+			{originalHref && (
+				<a href={originalHref}>Comparar con el home</a>
+			)}
+		</header>
+	)}
+	{ScrollTimingControls && items.length === 3 && (
 		<div class="home-scroll__settings global-inner">
 			<ScrollTimingControls id="home-scroll-timing" />
 		</div>
@@ -68,7 +71,7 @@ const screens = panels.map(({ image }, index) => ({
 							<section class="home-scroll__panel" data-variant={variant} style={`--home-scroll-index: ${index};`} aria-labelledby={headingId}>
 								<div class="home-scroll__intro">
 									<Eyebrow label={eyebrow} />
-									<Heading id={headingId} html={heading} size={{ s: 'title-lg', l: 'display-lg' }} />
+									<Heading tag="h2" id={headingId} html={heading} size={{ s: 'title-lg', l: 'display-lg' }} />
 								</div>
 								<div class="home-scroll__preview">
 									<PhoneMockup image={image} />

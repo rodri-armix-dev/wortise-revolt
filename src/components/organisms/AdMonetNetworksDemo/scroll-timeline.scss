@@ -1,4 +1,4 @@
-@use '../../lib/scroll-timing' as *;
+@use '../../../lib/scroll-motion/scroll-timing' as *;
 
 @mixin scroll-animation
 {

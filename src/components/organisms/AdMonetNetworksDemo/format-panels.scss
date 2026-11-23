@@ -1,6 +1,6 @@
 @use './scroll-timeline' as *;
-@use '../../lib/mobile-scroll-layout' as *;
-@use '../../lib/scroll-text-transition' as *;
+@use '../../../lib/scroll-motion/mobile-scroll-layout' as *;
+@use '../../../lib/scroll-motion/scroll-text-transition' as *;
 
 @mixin format-panels-motion
 {

@@ -1,5 +1,5 @@
 ---
-import AdMonetNetworksDemo from '../../workshop/organisms/AdMonetNetworksDemo/AdMonetNetworksDemo.astro';
+import AdMonetNetworksDemo from '../../components/organisms/AdMonetNetworksDemo/AdMonetNetworksDemo.astro';
 import { developersPageData } from '../../data/pages/developers';
 import { isLocale, locales } from '../../i18n/config';
 import { getPagePath } from '../../i18n/routes';
@@ -21,5 +21,5 @@ const original = getPagePath(locale, 'developers');
 
 <BaseLayout locale={locale} title="AdMonet Networks · CSS Scroll-driven">
 	<ScrollDemoNav locale={locale} current="admonet-networks-scroll-driven-test" />
-	<AdMonetNetworksDemo {...networks.props} originalHref={original && `${original}#${networks.props.id}`} />
+	<AdMonetNetworksDemo workshop {...networks.props} originalHref={original && `${original}#${networks.props.id}`} />
 </BaseLayout>

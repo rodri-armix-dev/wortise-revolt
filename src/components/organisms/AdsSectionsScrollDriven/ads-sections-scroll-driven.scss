@@ -1,11 +1,13 @@
-@use '../../../components/molecules/AdsSectionsItem/element-label' as *;
-@use '../../lib/desktop-scroll-phone' as *;
-@use '../../lib/glow-edge-fade' as *;
-@use '../../lib/iphone-sticky-viewport' as *;
-@use '../../lib/mobile-scroll-layout' as *;
-@use '../../lib/phone-bounce' as *;
-@use '../../lib/scroll-text-transition' as *;
-@use '../../lib/scroll-timing' as *;
+@use '../../molecules/AdsSectionsItem/element-label' as *;
+@use '../../../lib/scroll-motion/desktop-scroll-phone' as *;
+@use '../../../lib/scroll-motion/glow-edge-fade' as *;
+@use '../../../lib/scroll-motion/iphone-sticky-viewport' as *;
+@use '../../../lib/scroll-motion/mobile-scroll-layout' as *;
+@use '../../../lib/scroll-motion/phone-bounce' as *;
+@use '../../../lib/scroll-motion/scroll-text-transition' as *;
+@use '../../../lib/scroll-motion/scroll-timing' as *;
+
+@include scroll-timing-profile('.ads-scroll');
 
 @property --ads-scroll-phone-scale
 {

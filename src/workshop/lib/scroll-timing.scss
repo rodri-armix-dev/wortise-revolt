@@ -1,7 +1,0 @@
-@mixin scroll-panel-timing($index)
-{ // sass-lint:disable-line indentation
-	--scroll-panel-enter: calc(var(--scroll-panel-stop) - var(--scroll-transition));
-	--scroll-panel-exit: calc(var(--scroll-panel-stop) + var(--scroll-pause));
-	--scroll-panel-next: calc(var(--scroll-panel-stop) + var(--scroll-step));
-	--scroll-panel-stop: calc(#{$index} * var(--scroll-step));
-}

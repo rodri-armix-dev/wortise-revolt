@@ -245,7 +245,7 @@ Durante la fijación, la demo prueba `100dvh - 12px` y reserva **6 px en cada
 borde** del viewport dinámico. Es el umbral observado en el
 [registro de AdsSections](../src/components/organisms/AdsSections/README.md#bug-pendiente-de-safari-absorción-de-colores).
 
-El ajuste vive en [iphone-safari.scss](../src/workshop/organisms/AdMonetNetworksDemo/iphone-safari.scss)
+El ajuste vive en [iphone-safari.scss](../src/components/organisms/AdMonetNetworksDemo/iphone-safari.scss)
 y se aplica solo a Safari de iPhone en el rango móvil. En la prueba en iPhone
 con 8 px por borde, el scroll volvió a sentirse fluido y «Glosario» se veía
 desenfocado detrás del reloj al llegar al footer. Queda por repetir la entrada y
@@ -266,7 +266,7 @@ centrada de hasta 414 px. Las escenas se animan desde
 
 ## Referencias del proyecto
 
-- [Guía para migrar de GSAP a CSS scroll-driven con AdMonet como referencia](../src/workshop/organisms/AdMonetNetworksDemo/README.md).
+- [Guía para migrar de GSAP a CSS scroll-driven con AdMonet como referencia](../src/components/organisms/AdMonetNetworksDemo/README.md).
 
 - Paneles de Ads: `src/components/organisms/AdsSections/ads-sections.ts` y sus
   controladores `ads-sections-pin.ts` y `ads-sections-sticky.ts`.

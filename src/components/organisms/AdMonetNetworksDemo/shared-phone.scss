@@ -1,7 +1,7 @@
 @use './scroll-timeline' as *;
-@use '../../lib/desktop-scroll-phone' as *;
-@use '../../lib/mobile-scroll-layout' as *;
-@use '../../lib/phone-bounce' as *;
+@use '../../../lib/scroll-motion/desktop-scroll-phone' as *;
+@use '../../../lib/scroll-motion/mobile-scroll-layout' as *;
+@use '../../../lib/scroll-motion/phone-bounce' as *;
 
 .networks-scroll
 {

@@ -1,5 +1,5 @@
 import { mediaQueries } from '../../../../config/breakpoints';
-import { isIPhoneSafari } from '../../lib/iphone-safari';
+import { isIPhoneSafari } from '../../../lib/scroll-motion/iphone-safari';
 
 const mobile = window.matchMedia(mediaQueries.osm);
 const iphoneSafari = isIPhoneSafari(navigator.userAgent);
