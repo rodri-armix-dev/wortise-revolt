@@ -61,7 +61,7 @@ const isCurrent = (href: string) => normalizePath(href) === normalizePath(curren
 							<ul class="mobile-menu__sublist" id={submenuId} role="list" hidden>
 								{item.children?.map((child) =>
 									<li>
-										<a class="mobile-menu__link" href={child.href || undefined} aria-disabled={!child.href ? "true" : undefined} aria-current={isCurrent(child.href) ? 'page' : undefined} data-nested="true">
+										<a class="mobile-menu__link" href={child.href || undefined} target={child.target} rel={child.target === '_blank' ? 'noopener noreferrer' : undefined} aria-disabled={!child.href ? "true" : undefined} aria-current={isCurrent(child.href) ? 'page' : undefined} data-nested="true">
 											{isCurrent(child.href) && (
 												<span class="mobile-menu__indicator" aria-hidden="true" />
 											)}

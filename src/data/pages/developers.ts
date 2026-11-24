@@ -63,7 +63,7 @@ export const developersPageData = {
 						},
 						actions: {
 							primary: { label: contentES.hero.button, variant: 'primary-special', size: 'large', href: externalButtons.es.developersStartUrl || undefined, disabled: !externalButtons.es.developersStartUrl },
-							secondary: { label: contentES.hero.secondaryButton, size: 'medium', icon: 'arrow-up-right', href: externalButtons.es.sdkDocumentationUrl || undefined, disabled: !externalButtons.es.sdkDocumentationUrl },
+							secondary: { label: contentES.hero.secondaryButton, size: 'medium', icon: 'arrow-up-right', href: externalButtons.es.sdkDocumentationUrl || undefined, target: '_blank', disabled: !externalButtons.es.sdkDocumentationUrl },
 						},
 					},
 				},

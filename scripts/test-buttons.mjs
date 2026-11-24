@@ -17,7 +17,6 @@ try {
 		}
 		externalButtons[locale].emailUrl = `mailto:${locale}@example.com`;
 	}
-	externalButtons.es.worldContacts['buenos-aires'].url = 'https://example.com/es/team';
 	const { wortiseAdsPageData } = await server.ssrLoadModule('/src/data/pages/wortise-ads.ts');
 	const { getContactAction, getMainMenuItems } = await server.ssrLoadModule('/src/data/navigation.ts');
 	const { getDestinationHref } = await server.ssrLoadModule('/src/data/destinations.ts');
@@ -48,8 +47,6 @@ try {
 	const { contactPageData } = await server.ssrLoadModule('/src/data/pages/contact.ts');
 	assert.equal(contactPageData.es.modules[0].props.emailHref, externalButtons.es.emailUrl);
 	assert.equal(contactPageData.es.modules[0].props.telegramHref, externalButtons.es.telegramUrl);
-	const { worldLocations } = await server.ssrLoadModule('/src/data/world.ts');
-	assert.equal(worldLocations[0].contactHref, 'https://example.com/es/team');
 	externalButtons.en.contactUrl = '';
 	assert.equal(getDestinationHref('en', 'contact'), undefined);
 	assert.equal(getSiteData('en', '/en/').footer.brand.contact.disabled, true);

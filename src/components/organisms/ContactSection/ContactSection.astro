@@ -37,6 +37,7 @@ const id = `contact-${crypto.randomUUID()}`;
 		</div>
 		<div class="contact-section__panel">
 			<form class="contact-section__form" method="dialog" data-contact-form data-required-message={ui.requiredField} data-email-message={ui.invalidEmail}>
+				<input type="hidden" name="office" data-contact-office />
 				<fieldset class="contact-section__controls" disabled data-contact-controls>
 					<legend class="contact-section__accessible-label">{intro.eyebrow?.label}</legend>
 					<fieldset class="contact-section__reasons">

@@ -61,9 +61,12 @@
 	&__image
 	{
 		--image-height: 100%;
+		--image-object-fit: cover;
 
+		align-self: start;
 		aspect-ratio: 482 / 472; // sass-lint:disable-line no-misspelled-properties
 		border-radius: var(--radius-gallery-card);
+		contain: size;
 		grid-column: 2;
 		grid-row: 1;
 		overflow: hidden;

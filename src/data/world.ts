@@ -1,4 +1,3 @@
-import { externalButtons } from './external-buttons';
 import { readContent } from './content/validate';
 import rawES from '../content/pages/home/es.json';
 
@@ -17,11 +16,10 @@ export interface WorldLocation {
 	languages: string;
 	timeZone: string;
 	response: string;
-	contactHref?: string;
 }
 
 // Editorial sample content. Madrid and California details require confirmation.
-// California uses San Francisco as its geographic anchor. No contact destinations exist yet.
+// California uses San Francisco as its geographic anchor.
 const details = {
 	'buenos-aires': { city: contentES.world.locations['buenos-aires'].city, country: contentES.world.locations['buenos-aires'].country, countryCode: contentES.world.locations['buenos-aires'].countryCode, team: contentES.world.locations['buenos-aires'].team, languages: contentES.world.locations['buenos-aires'].languages, timeZone: 'America/Argentina/Buenos_Aires', response: contentES.world.locations['buenos-aires'].response },
 	madrid: { city: contentES.world.locations.madrid.city, country: contentES.world.locations.madrid.country, countryCode: contentES.world.locations.madrid.countryCode, team: contentES.world.locations.madrid.team, languages: contentES.world.locations.madrid.languages, timeZone: 'Europe/Madrid', response: contentES.world.locations.madrid.response },
@@ -31,5 +29,5 @@ const details = {
 export const worldLocations: WorldLocation[] = coordinates.map((location) => {
 	const content = details[location.id as keyof typeof details];
 	if (!content) throw new Error(`Missing world location content: ${location.id}`);
-	return { ...location, ...content, contactHref: externalButtons.es.worldContacts[location.id as keyof typeof externalButtons.es.worldContacts].url || undefined };
+	return { ...location, ...content };
 });

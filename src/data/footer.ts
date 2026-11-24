@@ -31,7 +31,7 @@ export const footerData = {
 				{ label: contentES.menus.explore.items.about, page: 'about', href: '' },
 				{ label: contentES.menus.explore.items.blog, href: '' },
 				{ label: contentES.menus.explore.items.glossary, page: 'glossary', href: '' },
-				{ label: contentES.menus.explore.items['sdk-documentation'], href: externalButtons.es.sdkDocumentationUrl },
+				{ label: contentES.menus.explore.items['sdk-documentation'], href: externalButtons.es.sdkDocumentationUrl, target: '_blank' },
 			] },
 			{ title: contentES.menus.platform.title, variant: 'actions', items: [
 				{ label: contentES.menus.platform.items.login.label, href: externalButtons.es.loginUrl, button: { variant: 'primary-special', size: 'large' } },
@@ -59,7 +59,7 @@ export const footerData = {
 				{ label: contentEN.menus.explore.items.about, page: 'about', href: '' },
 				{ label: contentEN.menus.explore.items.blog, href: '' },
 				{ label: contentEN.menus.explore.items.glossary, page: 'glossary', href: '' },
-				{ label: contentEN.menus.explore.items['sdk-documentation'], href: externalButtons.en.sdkDocumentationUrl },
+				{ label: contentEN.menus.explore.items['sdk-documentation'], href: externalButtons.en.sdkDocumentationUrl, target: '_blank' },
 			] },
 			{ title: contentEN.menus.platform.title, variant: 'actions', items: [
 				{ label: contentEN.menus.platform.items.login.label, href: externalButtons.en.loginUrl, button: { variant: 'primary-special', size: 'large' } },
@@ -87,7 +87,7 @@ export const footerData = {
 				{ label: contentPT.menus.explore.items.about, page: 'about', href: '' },
 				{ label: contentPT.menus.explore.items.blog, href: '' },
 				{ label: contentPT.menus.explore.items.glossary, page: 'glossary', href: '' },
-				{ label: contentPT.menus.explore.items['sdk-documentation'], href: externalButtons.pt.sdkDocumentationUrl },
+				{ label: contentPT.menus.explore.items['sdk-documentation'], href: externalButtons.pt.sdkDocumentationUrl, target: '_blank' },
 			] },
 			{ title: contentPT.menus.platform.title, variant: 'actions', items: [
 				{ label: contentPT.menus.platform.items.login.label, href: externalButtons.pt.loginUrl, button: { variant: 'primary-special', size: 'large' } },

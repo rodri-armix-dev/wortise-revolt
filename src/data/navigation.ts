@@ -16,6 +16,7 @@ export interface NavigationLink {
 	id: string;
 	label: string;
 	href: string;
+	target?: '_blank';
 	children?: NavigationLink[];
 }
 
@@ -81,6 +82,7 @@ export const mainMenuData: Record<Locale, NavigationLink[]> = {
 					id: 'sdk-documentation',
 					label: contentES.menu.resources.children['sdk-documentation'].label,
 					href: externalButtons.es.sdkDocumentationUrl,
+					target: '_blank',
 				},
 			],
 		},
@@ -95,7 +97,7 @@ export const mainMenuData: Record<Locale, NavigationLink[]> = {
 			children: [
 				{ id: 'blog', label: contentEN.menu.resources.children.blog.label, href: '' },
 				{ id: 'glossary', label: contentEN.menu.resources.children.glossary.label, href: '' },
-				{ id: 'sdk-documentation', label: contentEN.menu.resources.children['sdk-documentation'].label, href: externalButtons.en.sdkDocumentationUrl },
+				{ id: 'sdk-documentation', label: contentEN.menu.resources.children['sdk-documentation'].label, href: externalButtons.en.sdkDocumentationUrl, target: '_blank' },
 			],
 		},
 	],
@@ -109,7 +111,7 @@ export const mainMenuData: Record<Locale, NavigationLink[]> = {
 			children: [
 				{ id: 'blog', label: contentPT.menu.resources.children.blog.label, href: '' },
 				{ id: 'glossary', label: contentPT.menu.resources.children.glossary.label, href: '' },
-				{ id: 'sdk-documentation', label: contentPT.menu.resources.children['sdk-documentation'].label, href: externalButtons.pt.sdkDocumentationUrl },
+				{ id: 'sdk-documentation', label: contentPT.menu.resources.children['sdk-documentation'].label, href: externalButtons.pt.sdkDocumentationUrl, target: '_blank' },
 			],
 		},
 	],

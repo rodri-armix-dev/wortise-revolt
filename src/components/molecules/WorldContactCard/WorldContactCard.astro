@@ -2,6 +2,7 @@
 import Button from '../../atoms/Button/Button.astro';
 import closeIcon from '../../../assets/pages/home/contact-close.svg?url';
 import { getUiText } from '../../../i18n/ui';
+import { getLocaleFromPath, getPagePath } from '../../../i18n/routes';
 import type { WorldLocation } from '../../../data/world';
 
 export interface Props {
@@ -10,6 +11,8 @@ export interface Props {
 
 const { location } = Astro.props;
 const ui = getUiText(Astro.currentLocale);
+const contactPath = getPagePath(getLocaleFromPath(Astro.url.pathname), 'contact');
+const contactHref = contactPath ? `${contactPath}?${new URLSearchParams({ office: location.id })}` : undefined;
 const zone = new Intl.DateTimeFormat('es', { timeZone: location.timeZone, timeZoneName: 'shortOffset' }).formatToParts(new Date()).find((part) => part.type === 'timeZoneName')?.value ?? location.timeZone;
 ---
 
@@ -28,8 +31,8 @@ const zone = new Intl.DateTimeFormat('es', { timeZone: location.timeZone, timeZo
 		<p class="world-contact-card__languages">{location.languages} · {zone}</p>
 		<p>{location.response}</p>
 	</div>
-	<div class="world-contact-card__action" data-contact-pending={!location.contactHref ? 'true' : undefined}>
-		<Button label={ui.contactTeam} href={location.contactHref} />
+	<div class="world-contact-card__action" data-contact-pending={!contactHref ? 'true' : undefined}>
+		<Button label={ui.contactTeam} href={contactHref} />
 	</div>
 	<p class="world-contact-card__notice" role="status" data-contact-notice hidden>{ui.contactUnavailable}</p>
 </article>

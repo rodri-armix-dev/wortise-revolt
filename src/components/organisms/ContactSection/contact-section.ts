@@ -1,9 +1,16 @@
+import locations from '../../molecules/World3D/world-3d-locations.json';
+
 const initializedSections = new WeakSet<HTMLElement>();
 
 function initializeContactSections() {
 	for (const section of document.querySelectorAll<HTMLElement>('[data-contact-section]')) {
-		if (initializedSections.has(section)) continue;
 		const form = section.querySelector<HTMLFormElement>('[data-contact-form]');
+		const office = form?.querySelector<HTMLInputElement>('[data-contact-office]');
+		if (office) {
+			const requestedOffice = new URLSearchParams(window.location.search).get(office.name);
+			office.value = locations.find(({ id }) => id === requestedOffice)?.id ?? '';
+		}
+		if (initializedSections.has(section)) continue;
 		const controls = section.querySelector<HTMLFieldSetElement>('[data-contact-controls]');
 		const success = section.querySelector<HTMLElement>('[data-contact-success]');
 		const confirmation = section.querySelector<HTMLElement>('[data-contact-confirmation]');
